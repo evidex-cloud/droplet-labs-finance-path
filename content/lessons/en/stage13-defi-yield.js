@@ -7,21 +7,22 @@ export default {
   prereqs: ["amm-dex", "defi-lending", "risk-free-rate"],
 
   oneLiner:
-    "DeFi is plastered with \"8% APY,\" \"25% APY,\" \"200% APY.\" This lesson asks one question: **who is paying?** Real yield has only a handful of sources: interest from borrowers, fees from traders, staking rewards, funding paid by longs to shorts, and Treasury interest brought on-chain. Everything else is either a subsidy in freshly minted protocol tokens, which evaporates with the token price, or a risk you're selling without realizing it. Break any yield into \"risk-free rate + risk premium + subsidy,\" subtract expected losses, and you can tell a return from bait. **If you can't find the source of the yield, you are the yield.**",
+    "DeFi is plastered with \"8% APY,\" \"25% APY,\" \"200% APY.\" This lesson asks one question: **who is paying?** Real yield has only a handful of sources: interest from borrowers, fees from traders, staking rewards, funding paid by longs to shorts, and Treasury interest brought on-chain. Everything else is either a subsidy in freshly minted protocol tokens, which evaporates with the token price, or a risk you're selling without realizing it. Break any yield into \\(\\text{risk-free rate} + \\text{risk premium} + \\text{subsidy}\\), subtract expected losses, and you can tell a return from bait. **If you can't find the source of the yield, you are the yield.**",
 
   intuition: `
 In early 2022, the Anchor protocol in the Terra ecosystem paid about 20% a year on UST deposits. US Treasury bills yielded under 1% at the time. Plenty of people put their savings in, for a simple reason: "it's always paid." A few months later (Stage 13.2), UST went to zero.
 
 The problem was never that 20% was high. The problem was that **nobody could say who was paying it.** Borrower interest came nowhere close. A subsidy fund from the project filled the gap, and once the subsidy ran out, the yield could only come from new depositors' money.
 
-This lesson rests on **Idea ① The price of time**. Go back to Stage 2.4: the required return on any asset = **the risk-free rate + risk premia**. In September 2026 the 3-month US Treasury bill yielded about 4.24%. That's the floor for dollars everywhere, and the benchmark every DeFi yield should be measured against. **A stablecoin product paying 4% is worse than a T-bill, since it adds contract and depeg risk. One paying 8% owes its extra 4 points to some risk. One paying 40% means you've found a genuine money machine, or someone is subsidizing you, or you're selling insurance you don't understand.**
+This lesson rests on **Idea ① The price of time**. Go back to Stage 2.4: for any asset, **\\(\\text{required return} = \\text{risk-free rate} + \\text{risk premia}\\)**. In September 2026 the 3-month US Treasury bill yielded about 4.24%. That's the floor for dollars everywhere, and the benchmark every DeFi yield should be measured against. **A stablecoin product paying 4% is worse than a T-bill, since it adds contract and depeg risk. One paying 8% owes its extra 4 points to some risk. One paying 40% means you've found a genuine money machine, or someone is subsidizing you, or you're selling insurance you don't understand.**
 
 It also rests on **Idea ④ Risk & leverage**. DeFi's most common high yields come from three hidden kinds of selling: selling volatility (being an LP, Stage 13.3), selling tail risk (lending to over-collateralized borrowers, Stage 13.4), and selling liquidity (lock-ups, redemption queues). In normal times they look like steady interest. When something breaks, you give it all back at once.
 
 So the method here is simple. Itemize it like an accountant:
 
 $$
-Headline APY = real sources (interest + fees + staking + funding + Treasuries) + token subsidy − impermanent loss − expected loss − costs
+\\text{Headline APY} = \\text{real sources} + \\text{token subsidy} - \\text{impermanent loss} - \\text{expected loss} - \\text{costs}
+\\text{Real sources} = \\text{interest} + \\text{fees} + \\text{staking} + \\text{funding} + \\text{Treasuries}
 $$
 
 Then ask three questions. **① Who is paying the real part? ② How much is subsidy, and how much of it survives if the token falls? ③ After expected losses, how much does it beat the 4.24% T-bill, and is that premium worth the risk I'm taking?**
@@ -49,13 +50,13 @@ Two corollaries:
 
 ### ② Real yield I: borrower interest, trading fees and staking rewards
 
-**Borrower interest** (Stage 13.4) is the most transparent source. Supply rate = borrow rate × utilization × (1 − reserve factor). The risks are bad debt from failed liquidations and a withdrawal queue when utilization hits 100%. On September 26, 2026, the largest lending protocol, Aave, had about $13 billion of loans outstanding, which gives you the scale of demand behind this source.
+**Borrower interest** (Stage 13.4) is the most transparent source. \\(\\text{Supply rate} = \\text{borrow rate} \\times \\text{utilization} \\times (1 - \\text{reserve factor})\\). The risks are bad debt from failed liquidations and a withdrawal queue when utilization hits 100%. On September 26, 2026, the largest lending protocol, Aave, had about $13 billion of loans outstanding, which gives you the scale of demand behind this source.
 
 **Trading fees** (Stage 13.3) are the 0.05%–1% that LPs collect. They aren't net income, because you must subtract impermanent loss (more precisely the LVR that arbitrageurs keep extracting). In a volatile pair like ETH/USDC, a doubling or a halving over the year costs about 5.7 percentage points.
 
 **Staking rewards.** Since Ethereum moved to proof of stake (the "Merge") on September 15, 2022, staking ETH to help validate blocks earns newly issued ETH plus a share of transaction fees, on the order of a few percent a year (it varies with how much ETH is staked). Two caveats. It's paid in ETH, so **you carry ETH's full price risk**. And part of it is newly issued ETH, which dilutes holders who don't stake. **Liquid-staking tokens**, tradable receipts for staked ETH, let you earn the staking yield and still use the receipt as collateral. That's the first brick in the "four-brick tower" of Stage 13.1, and it's the kind of asset that went wrong in the KelpDAO incident of April 2026.
 
-**A common amplifier is looped staking.** Stake ETH and get a receipt → post it to a lending protocol and borrow ETH → stake again → borrow again. With a 3% staking yield and a 2.5% ETH borrow rate, 4x leverage yields about 3% + 3 × 0.5% = 4.5%. The extra 1.5 points pay you for extra **receipt-depeg risk** (a receipt slipping against ETH triggers liquidation) and **borrow-rate spike risk**. The yield grew a little and the risk grew fourfold.
+**A common amplifier is looped staking.** Stake ETH and get a receipt → post it to a lending protocol and borrow ETH → stake again → borrow again. With a 3% staking yield and a 2.5% ETH borrow rate, 4x leverage yields about \\(3\\% + 3 \\times 0.5\\% = 4.5\\%\\). The extra 1.5 points pay you for extra **receipt-depeg risk** (a receipt slipping against ETH triggers liquidation) and **borrow-rate spike risk**. The yield grew a little and the risk grew fourfold.
 
 ### ③ Real yield II: funding rates, basis and "synthetic dollars"
 
@@ -65,9 +66,9 @@ That creates a "directionless" yield, the **spot–perpetual basis trade (delta-
 
 - Buy 1 ETH spot, ideally staked, to earn the staking yield too;
 - Short 1 ETH in perpetual futures at the same time;
-- ETH's moves cancel across the two legs, and what you collect is **staking yield + the funding paid to shorts**.
+- ETH's moves cancel across the two legs, and what you collect is **\\(\\text{staking yield} + \\text{the funding paid to shorts}\\)**.
 
-With 3% staking and 10% annualized funding, that's roughly 13% on the ETH notional, before trading costs and the capital tied up as margin on the short. Wrap that position in a token designed to hold $1 and you have a **synthetic dollar**. Ethena's USDe is the best-known example. Its yield has reached double digits in bull markets, because at bottom it **collects rent from everyone in the market who wants to be levered long**.
+With 3% staking and 10% annualized funding, that's roughly \\(3\\% + 10\\% = 13\\%\\) on the ETH notional, before trading costs and the capital tied up as margin on the short. Wrap that position in a token designed to hold $1 and you have a **synthetic dollar**. Ethena's USDe is the best-known example. Its yield has reached double digits in bull markets, because at bottom it **collects rent from everyone in the market who wants to be levered long**.
 
 The risks are just as clear:
 
@@ -82,7 +83,7 @@ The main arena for perpetuals has moved on-chain as well. Monthly perpetual-DEX 
 **Token emissions (liquidity mining).** In June 2020 Compound began handing COMP tokens to its users, and "DeFi summer" was off. A protocol pays depositors and LPs in **freshly printed tokens of its own** to attract capital. On the dashboard it shows as "40% APY," but:
 
 - nobody is paying for a service. It **dilutes other token holders**, so it's really a marketing expense;
-- it's paid in the token. If the token falls 80% over the year, a "40% APY" is really about 8%, and since every farmer is dumping rewards, the farming itself pushes the price down;
+- it's paid in the token. If the token falls 80% over the year, a "40% APY" is really about \\(40\\% \\times (1 - 80\\%) = 8\\%\\), and since every farmer is dumping rewards, the farming itself pushes the price down;
 - when the subsidy stops, the "mercenary capital" leaves at once, and the remaining real yield is often a fraction of the subsidized rate.
 
 **Points and airdrop hopes.** A later variant skips the token and hands out "points," hinting they may convert into tokens someday. That defers the subsidy into the future and pushes the uncertainty onto you.
@@ -99,13 +100,13 @@ DeFi used to have no risk-free rate. Now it has a good approximation: **tokenize
 <tr><th>Product (illustrative)</th><th>Headline yield</th><th>Real source</th><th>Subsidy</th><th>Main risks</th><th>Premium over T-bills</th></tr>
 <tr><td>Tokenized Treasury fund</td><td>≈ 4%</td><td>T-bill interest (minus fees)</td><td>0</td><td>Issuer, legal wrapper, contract</td><td>≈ 0 (even slightly negative)</td></tr>
 <tr><td>USDC in a lending pool</td><td>4%–8%</td><td>Borrower interest</td><td>A little</td><td>Bad debt, utilization runs, depegs</td><td>0–4 points</td></tr>
-<tr><td>Synthetic dollar (basis)</td><td>Double digits in bull markets; can go negative in bears</td><td>Funding + staking</td><td>Varies</td><td>Negative funding, exchanges, broken hedges</td><td>Extremely volatile</td></tr>
+<tr><td>Synthetic dollar (basis)</td><td>Double digits in bull markets; can go negative in bears</td><td>\\(\\text{Funding} + \\text{staking}\\)</td><td>Varies</td><td>Negative funding, exchanges, broken hedges</td><td>Extremely volatile</td></tr>
 <tr><td>New protocol farm</td><td>30%–200%</td><td>A few fees</td><td>Most of it</td><td>Token crash, contract bugs, rug pulls</td><td>High on paper, often negative in practice</td></tr>
 </table>
 
-Last, subtract **expected loss**. The credit formula from Stage 4.6 works here too: expected loss = probability of default × loss given default. Say you estimate a 3% annual chance that a protocol gets exploited, with depositors losing about 60% if it does. Expected loss is then about 1.8% a year, and it has to come off the headline. **A 7% stablecoin yield minus 1.8% expected loss beats the 4.24% T-bill by only about 1 percentage point.** Ask yourself whether that one point is worth the tail risk.
+Last, subtract **expected loss**. The credit formula from Stage 4.6 works here too: \\(\\text{expected loss} = \\text{probability of default} \\times \\text{loss given default}\\). Say you estimate a 3% annual chance that a protocol gets exploited, with depositors losing about 60% if it does. Expected loss is then about \\(3\\% \\times 60\\% = 1.8\\%\\) a year, and it has to come off the headline. **A 7% stablecoin yield minus 1.8% expected loss beats the 4.24% T-bill by only about 1 percentage point.** Ask yourself whether that one point is worth the tail risk.
 
-This scorecard comes back later. STRC in Stage 17.4 is a bitcoin-backed preferred whose rate is reset monthly with the aim of keeping it near $100. Its yield also breaks into "Treasury rate + credit premium + structural premium," and it belongs in the same table as on-chain stablecoin yields and money-fund yields. **Yield products old and new all come back to the same question: who is paying, and what risk are you carrying?**
+This scorecard comes back later. STRC in Stage 17.4 is a bitcoin-backed preferred whose rate is reset monthly with the aim of keeping it near $100. Its yield also breaks into \\(\\text{Treasury rate} + \\text{credit premium} + \\text{structural premium}\\), and it belongs in the same table as on-chain stablecoin yields and money-fund yields. **Yield products old and new all come back to the same question: who is paying, and what risk are you carrying?**
 `,
 
   demo: "defi-yield",
@@ -125,7 +126,7 @@ And one kind of stall deserves extra caution. The sign says $20, and when you as
 
   misconceptions: [
     "**\"Stablecoin yield is just dollar deposit interest, with no risk.\"** Stablecoin yield comes from lending coins to borrowers who post crypto collateral, from market-making, or from basis trades. It carries bad-debt, contract, depeg and exchange risk. Compare it with a T-bill at about 4.24%; the premium is the price of the risk you bear.",
-    "**\"A 100% APY farm doubles my money in a year.\"** Most farming yield is paid in the protocol's own token. If the token falls 80% over the year, a nominal 100% may be only 20%, before impermanent loss and contract risk. Emissions are a marketing budget, not sustainable income.",
+    "**\"A 100% APY farm doubles my money in a year.\"** Most farming yield is paid in the protocol's own token. If the token falls 80% over the year, a nominal 100% may be only \\(100\\% \\times (1 - 80\\%) = 20\\%\\), before impermanent loss and contract risk. Emissions are a marketing budget, not sustainable income.",
     "**\"Delta-neutral means risk-free.\"** Only the price direction is neutral. Funding can turn negative, the exchange holding the short leg can fail, and in extreme markets the two legs may not stay in sync. On October 10, 2025, USDe traded as low as about $0.65 on one exchange.",
     "**\"Staking yield is free money.\"** Part of it is newly issued tokens, which dilutes non-stakers. Being paid in ETH means you carry ETH's full price swings, and liquid-staking receipts add depeg and contract risk. It's the network paying for a security service, not a risk-free rate.",
     "**\"The steadier the yield, the more reliable it is.\"** Real yield moves with borrowing demand, trading volume and funding rates. A product that pays a \"steady 20%\" in every market is the one whose source most needs checking. Anchor's roughly 20% and Stream Finance's yield-bearing stablecoin were both known for being \"stable.\"",
@@ -141,7 +142,7 @@ And one kind of stall deserves extra caution. The sign says $20, and when you as
         "About 10%",
       ],
       answer: 2,
-      explain: "Fees 10% + subsidy 50% × (1 − 80%) = 10% + 10% = **about 20%**. Emissions are priced in the token and shrink in proportion when it falls, the textbook case of something that only looks like yield.",
+      explain: "\\(\\text{Fees}\\ 10\\% + \\text{subsidy}\\ 50\\% \\times (1 - 80\\%) = 10\\% + 10\\% \\approx \\mathbf{20\\%}\\). Emissions are priced in the token and shrink in proportion when it falls, the textbook case of something that only looks like yield.",
     },
     {
       q: "When perpetual-futures longs are crowded and funding is positive, whose money does a \"long spot + short perp\" basis trade mainly earn?",
@@ -163,7 +164,7 @@ And one kind of stall deserves extra caution. The sign says $20, and when you as
         "About +1 point",
       ],
       answer: 3,
-      explain: "Expected loss = 3% × 60% = 1.8%; 7% − 1.8% = 5.2%; 5.2% − 4.24% ≈ **+1 point**. That's the \"expected loss = PD × LGD\" of Stage 4.6, applied to DeFi.",
+      explain: "\\(\\text{Expected loss} = 3\\% \\times 60\\% = 1.8\\%\\); \\(7\\% - 1.8\\% = 5.2\\%\\); \\(5.2\\% - 4.24\\% \\approx \\mathbf{+1}\\) **point**. That's the \\(\\text{expected loss} = \\mathrm{PD} \\times \\mathrm{LGD}\\) of Stage 4.6, applied to DeFi.",
     },
     {
       q: "Why are tokenized Treasury funds the best approximation of a \"risk-free rate\" in DeFi?",
@@ -174,7 +175,7 @@ And one kind of stall deserves extra caution. The sign says $20, and when you as
         "They're issued automatically by an algorithm",
       ],
       answer: 0,
-      explain: "Their yield comes from T-bill interest, and their risks are mainly the issuer and the legal wrapper, far lower than other on-chain yields. Any on-chain yield can then be split into \"tokenized T-bill rate + risk premium\" (Stage 14.2).",
+      explain: "Their yield comes from T-bill interest, and their risks are mainly the issuer and the legal wrapper, far lower than other on-chain yields. Any on-chain yield can then be split into \\(\\text{tokenized T-bill rate} + \\text{risk premium}\\) (Stage 14.2).",
     },
     {
       q: "Which of these **best** fits the warning \"if you can't find the source of the yield, you are the yield\"?",

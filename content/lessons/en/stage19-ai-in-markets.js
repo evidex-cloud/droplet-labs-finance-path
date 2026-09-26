@@ -42,10 +42,10 @@ Machines in markets didn't start with AI. Each wave brought efficiency — and e
 
 <table>
 <tr><th>Era</th><th>What the machines did</th><th>Signature event</th><th>Lesson</th></tr>
-<tr><td>1980s</td><td>Program trading, "portfolio insurance" (sell futures by rule as prices fall)</td><td>Black Monday, October 19, 1987: the Dow fell about 22.6% in one day</td><td>Rule-based selling triggered all at once = a self-reinforcing fall</td></tr>
+<tr><td>1980s</td><td>Program trading, "portfolio insurance" (sell futures by rule as prices fall)</td><td>Black Monday, October 19, 1987: the Dow fell about 22.6% in one day</td><td>Rule-based selling triggered all at once → a self-reinforcing fall</td></tr>
 <tr><td>2000s</td><td>Electronic exchanges, statistical arbitrage, quant long-short</td><td>The August 2007 "quant quake": similar positions at many quant funds unwound together</td><td>When everyone holds similar positions, one fund's deleveraging hurts all</td></tr>
 <tr><td>2010s</td><td>High-frequency trading, market-making algorithms (Stage 8.1)</td><td>The May 6, 2010 Flash Crash, a plunge and rebound within minutes; in 2012 a software fault cost Knight Capital about $440 million in roughly 45 minutes</td><td>Liquidity can vanish instantly under stress; a code bug is a financial risk</td></tr>
-<tr><td>2020s</td><td>Machine learning, alternative data, on-chain bots (MEV, Stage 13.5), LLM research agents</td><td>October 10–11, 2025: about $19 billion of crypto liquidations in a cascade (Stage 7.5)</td><td>24/7 markets + high leverage + automation = faster stampedes</td></tr>
+<tr><td>2020s</td><td>Machine learning, alternative data, on-chain bots (MEV, Stage 13.5), LLM research agents</td><td>October 10–11, 2025: about $19 billion of crypto liquidations in a cascade (Stage 7.5)</td><td>24/7 markets + high leverage + automation → faster stampedes</td></tr>
 </table>
 
 The pattern is clear: **machines cut trading costs and tighten spreads, making markets more efficient in normal times — but because they act on similar rules at the same moment, they amplify declines under stress.** AI doesn't change that pattern. It extends it into new territory: from executing trades to reading, analyzing and judging.
@@ -73,10 +73,13 @@ But AI research has three limits worth keeping in view:
 
 A simple decay model:
 
-$$ current alpha ≈ initial alpha ÷ (1 + k × number of imitators)
-The number of imitators follows an S-curve over time; AI makes that S-curve steeper
+$$
+\\alpha_{\\text{current}} \\approx \\frac{\\alpha_{\\text{initial}}}{1 + k \\times N_{\\text{imitators}}}
+$$
 
-**A worked number:** a strategy starts with 6% annual alpha. With k = 1, if imitators grow from 0 to 5, alpha falls to 6% ÷ 6 = 1%. If that diffusion used to take eight years (publication → industry learns → products launch), and AI now lets anyone replicate a paper's backtest in months, **the half-life of an edge can shrink from years to quarters.**
+The number of imitators \\(N_{\\text{imitators}}\\) follows an S-curve over time; AI makes that S-curve steeper.
+
+**A worked number:** a strategy starts with 6% annual alpha. With \\(k = 1\\), if imitators grow from 0 to 5, alpha falls to \\(\\dfrac{6\\%}{1 + 1 \\times 5} = 1\\%\\). If that diffusion used to take eight years (publication → industry learns → products launch), and AI now lets anyone replicate a paper's backtest in months, **the half-life of an edge can shrink from years to quarters.**
 
 The new-era markets show this clearly. Bitcoin's "four-year cycle," mean reversion in DAT mNAV, the spread between preferred yields and Treasuries — once any of these becomes a widely discussed "pattern," large amounts of money trade it at once and the pattern itself bends (Stage 12.4, Stage 16.2).
 
@@ -151,7 +154,7 @@ Who still catches fish?
       explain: "About 26% lower out of sample and **about 58% lower after publication.** Some of it is data mining; some is investors learning about the anomaly and trading it — alpha decay.",
     },
     {
-      q: "Using \"current alpha ≈ initial alpha ÷ (1 + k × number of imitators),\" with initial alpha 6%, k = 1 and 5 imitators, alpha is about:",
+      q: "Using \"\\(\\alpha_{\\text{current}} \\approx \\dfrac{\\alpha_{\\text{initial}}}{1 + k \\times N_{\\text{imitators}}}\\),\" with initial alpha 6%, \\(k = 1\\) and 5 imitators, alpha is about:",
       options: [
         "1%",
         "6%",
@@ -159,7 +162,7 @@ Who still catches fish?
         "30%",
       ],
       answer: 0,
-      explain: "6% ÷ (1 + 5) = **1%.** AI makes the imitator count grow faster, so decay is faster too.",
+      explain: "\\(\\dfrac{6\\%}{1 + 5} = \\mathbf{1\\%}\\). AI makes the imitator count grow faster, so decay is faster too.",
     },
     {
       q: "What does the Grossman–Stiglitz paradox imply for the AI era?",

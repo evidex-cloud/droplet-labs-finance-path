@@ -1,8 +1,11 @@
 // 交互演示：可转债 = 债券地板 + 看涨期权。拖动股价、波动率、信用收益率与票息，
 // 看可转债价值曲线、平价、转换溢价、Delta，反解“公允票息”，并模拟可转债套利的 Delta 对冲收益。
 // 债券地板用共享引擎 bondPrice；期权部分用布莱克-斯科尔斯（_fin.js 未提供，这里局部实现）。
-import { bondPrice, fmtNum, fmtPct, fmtUsd , enPunct } from "./_fin.js";
+import { bondPrice, fmtNum, fmtPct, fmtUsd , enPunct, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 // 标准正态分布函数（Abramowitz–Stegun 近似）与看涨期权
 const ncdf = (x) => {
@@ -116,9 +119,9 @@ export default function mount(root, lang) {
       : share < 0.8 ? ["warn", T("平衡型：凸性最大，涨时跟得多、跌时跌得少", "Balanced: maximum convexity — more upside than downside")]
       : ["ok", T("股性：几乎一比一跟随股价", "Equity-like: moves almost one-for-one with the stock")];
     const lines = [];
-    lines.push(`${T("转换比例", "Conversion ratio")} = ${FACE} ÷ ${st.K} = <b>${fmtNum(v.ratio, 2)}</b> ${T("股；发行 1.5 亿美元若全部转股，新增", "shares; if all $150M converted, new shares")} ≈ <b>${fmtNum(150 / st.K, 2)}M</b>（${T("原 1 亿股", "vs 100M today")}）`);
-    lines.push(`${T("性格", "Personality")}：<span class="${persona[0]}">${persona[1]}</span>（Delta / ${T("转换比例", "ratio")} = ${fmtNum(share, 2)}）`);
-    lines.push(`${T("让可转债按面值 1,000 发行的“公允票息”", "Fair coupon for issuing at 1,000 par")} ≈ <b>${fmtPct(fc, 2)}</b>${fc === 0 ? T("——0% 票息已足够：期权的价值抵掉了全部利息。", " — 0% is already enough: the option pays for all the interest.") : T("（对照：同信用的普通债要 ", " (versus a straight bond at ") + st.cy + T("%）。", "%).")}`);
+    lines.push(`${tex(String.raw`\text{${T("转换比例", "Conversion ratio")}} = \dfrac{${texv(fmtNum(FACE, 0))}}{${st.K}} = \mathbf{${texv(fmtNum(v.ratio, 2))}}`)} ${T("股；发行 1.5 亿美元若全部转股，新增", "shares; if all $150M converted, new shares")} ${tex(String.raw`= \dfrac{${T(String.raw`1.5\ \text{亿美元}`, String.raw`\$150\text{M}`)}}{${texv(fmtUsd(st.K, 1))}} \approx \mathbf{${texv(fmtNum(150 / st.K, 2))}\text{M}}`)}（${T("原 1 亿股", "vs 100M today")}）`);
+    lines.push(`${T("性格", "Personality")}：<span class="${persona[0]}">${persona[1]}</span>（${tex(String.raw`\Delta / \text{${T("转换比例", "ratio")}} = ${texv(fmtNum(share, 2))}`)}）`);
+    lines.push(`${T("让可转债按面值 1,000 发行的“公允票息”", "Fair coupon for issuing at 1,000 par")} ${tex(String.raw`\approx \mathbf{${texv(fmtPct(fc, 2))}}`)}${fc === 0 ? T("——0% 票息已足够：期权的价值抵掉了全部利息。", " — 0% is already enough: the option pays for all the interest.") : T("（对照：同信用的普通债要 ", " (versus a straight bond at ") + st.cy + T("%）。", "%).")}`);
     if (st.S < st.K * 0.35) lines.push(`<span class="bad">${T("股价远低于转股价：到期（或回售日）很可能要用现金还本——风险在那一天，而不在票息。", "Stock far below conversion price: principal will probably have to be repaid in cash at maturity (or the put date) — that day is the risk, not the coupon.")}</span>`);
     q("#cb-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
 
@@ -130,7 +133,7 @@ export default function mount(root, lang) {
       cells.push(`<div class="cmp-cell${tot > 0 ? " hl" : ""}"><h5>${sgn > 0 ? T("股价上涨", "Stock up") : T("股价下跌", "Stock down")} ${sgn > 0 ? "+" : "−"}${st.move}% → ${fmtUsd(S1, 2)}</h5>
         <div style="font-size:13.5px;line-height:1.7">${T("可转债", "Convertible")}：${bondPnl >= 0 ? "+" : ""}${fmtNum(bondPnl, 1)}<br>${T("空头", "Short")} ${fmtNum(v.delta, 1)} ${T("股", "sh")}：${shortPnl >= 0 ? "+" : ""}${fmtNum(shortPnl, 1)}<br><b>${T("合计", "Net")}：${tot >= 0 ? "+" : ""}${fmtNum(tot, 1)}</b></div></div>`);
     }
-    q("#cb-arb").innerHTML = cells.join("") + `<div class="demo-meta" style="grid-column:1/-1">${T("涨跌两个方向合计都为正 = 做多 Gamma：套利者不押方向，靠波动赚钱（未计借券成本、利息与再对冲频率）。", "Net positive in both directions = long gamma: the arbitrageur takes no view on direction and earns from movement (ignoring borrow cost, carry and hedge frequency).")}</div>`;
+    q("#cb-arb").innerHTML = cells.join("") + `<div class="demo-meta" style="grid-column:1/-1">${T("涨跌两个方向合计都为正，就是做多 Gamma：套利者不押方向，靠波动赚钱（未计借券成本、利息与再对冲频率）。", "Net positive in both directions means long gamma: the arbitrageur takes no view on direction and earns from movement (ignoring borrow cost, carry and hedge frequency).")}</div>`;
   };
 
   root.querySelectorAll("[data-k]").forEach((el) => el.addEventListener("input", () => { st[el.dataset.k] = +el.value; paint(); }));

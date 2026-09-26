@@ -1,7 +1,11 @@
 // 交互演示：DAT 的三台“套利机器”——卖溢价（增发买币）、卖波动率（0% 可转债定价）、卖收益率（优先股加杠杆）。
 // 全部以橙子公司为底：10,000 BTC、比特币 10 万美元、1 亿股、每股比特币净值 10 美元。
-import { issueAndBuy, btcGain, btcDollarGain, bondPrice, bsCall, netReserve, fmtNum, fmtPct, fmtUsd, fmtBig } from "./_fin.js";
+import { issueAndBuy, btcGain, btcDollarGain, bondPrice, bsCall, netReserve, fmtNum, fmtPct, fmtUsd, fmtBig, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// LaTeX 里的数字：千分位写成 {,}；美元大数缩写放进 \text{}
+const tn = (x, d) => fmtNum(x, d).replace(/,/g, "{,}");
+const tu = (x, d = 1) => String.raw`${x < 0 ? "-" : ""}\$${fmtBig(Math.abs(x), d).replace(/([A-Z])$/, "\\text{$1}")}`;
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -78,10 +82,12 @@ export default function mount(root, lang) {
     const ch = lineChart({ fns: [{ f: (x) => issueAndBuy({ btc: BTC, shares: SH, btcPrice: P, px: x * NAVPS, newShares: n }).change * 100, cls: "line5" }], lo: 0.5, hi: 3, xlabel: T("市值口径 mNAV", "Basic mNAV"), markerX: m, markerLabel: fmtNum(m, 2) + "x", forceZero: true, uid: "wdp" });
     q("#wd-chart").innerHTML = chartBlock(ch, [["var(--btc)", T("每股比特币变化（%）", "Change in BTC per share (%)")]]);
     const lines = [];
-    lines.push(`${T("以 ", "Sell ")}${fmtUsd(px, 2)}${T(" 增发 ", " × ")}${fmtBig(n, 1)}${T(" 股，募得 ", " shares, raise ")}$${fmtBig(px * n, 2)} → ${T("买入 ", "buy ")}${fmtNum((px * n) / P, 0)} BTC${T("；新旧每股比特币之比 = (1 + k·m) ÷ (1 + k) = ", "; new/old BTC per share = (1 + k·m) ÷ (1 + k) = ")}<b>${fmtNum(1 + y, 4)}</b>`);
+    const kk = k / 100;
+    lines.push(`${T("增发募资 ", "Issuance raises ")}${tex(String.raw`${fmtBig(n, 1).replace(/([A-Z])$/, "\\text{$1}")}\ \text{${T("股", "shares")}} \times \$${tn(px, 2)} = ${tu(px * n, 2)}`)} → ${T("买入 ", "buy ")}${fmtNum((px * n) / P, 0)} BTC${T("；", "; ")}`
+      + tex(String.raw`\dfrac{\text{${T("新每股比特币", "new BTC/share")}}}{\text{${T("旧每股比特币", "old BTC/share")}}} = \dfrac{1 + k \cdot m}{1 + k} = \dfrac{1 + ${fmtNum(kk, 2)} \times ${fmtNum(m, 2)}}{1 + ${fmtNum(kk, 2)}} = \mathbf{${fmtNum(1 + y, 4)}}`));
     lines.push(transfer >= 0
       ? `<span class="ok">${T("新股东比他们得到的比特币多付了约 ", "New holders paid about ")}$${fmtBig(transfer, 1)}${T("——这笔钱变成了老股东的每股比特币（财富转移，不是凭空创造）。", " more than the bitcoin they received — that money became the old holders' bitcoin per share (a transfer, not creation).")}</span>`
-      : `<span class="bad">${T("新股东买到的比特币比付出的多约 ", "New holders received about ")}$${fmtBig(-transfer, 1)}${T("——老股东被稀释了。mNAV < 1 时增发买币是在“倒着转”。", " more bitcoin than they paid for — old holders are diluted. Below 1x mNAV, issuing to buy bitcoin runs the machine backwards.")}</span>`);
+      : `<span class="bad">${T("新股东买到的比特币比付出的多约 ", "New holders received about ")}$${fmtBig(-transfer, 1)}${T("——老股东被稀释了。mNAV < 1 时增发买币是在“倒着转”。", " more bitcoin than they paid for — old holders are diluted. Below 1x mNAV, issuing to buy bitcoin runs the machine backwards.").replace("mNAV < 1", tex(String.raw`\mathrm{mNAV} < 1`))}</span>`);
     q("#wd-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };
 
@@ -106,7 +112,8 @@ export default function mount(root, lang) {
     const ch = lineChart({ fns: [{ f: (x) => convValue(x, y, Tm, cp).total, cls: "line" }, { f: () => 1000, cls: "line3" }, { f: (x) => convValue(x, y, Tm, cp).floor, cls: "line2" }], lo: 20, hi: 120, xlabel: T("隐含波动率（%）", "Implied volatility (%)"), markerX: vol, markerLabel: vol + "%", uid: "wdc" });
     q("#wd-chart").innerHTML = chartBlock(ch, [["var(--orange)", T("可转债价值（每 1,000 美元面值）", "Convertible value (per $1,000 face)")], ["var(--red)", T("面值 1,000", "Par 1,000")], ["var(--blue)", T("债券地板", "Bond floor")]]);
     const lines = [];
-    lines.push(`${T("每 1,000 美元面值 = 债券地板 ", "Per $1,000 face = bond floor ")}${fmtUsd(v.floor, 0)}${T("（0% 票息、", " (0% coupon, ")}${Tm}${T(" 年、按 ", " years, discounted at ")}${y}%${T(" 折现）+ ", ") + ")}${fmtNum(v.ratio, 1)}${T(" 张行权价 ", " calls struck at ")}${fmtUsd(v.K, 2)}${T(" 的看涨期权 ", " worth ")}${fmtUsd(v.opt, 0)}`);
+    lines.push(tex(String.raw`\text{${T("每 1,000 美元面值", "Per \\$1,000 face")}} = \underbrace{\$${tn(v.floor, 0)}}_{\text{${T("债券地板", "bond floor")}}} + \underbrace{${tn(v.ratio, 1)} \times \$${tn(v.opt / v.ratio, 2)}}_{\text{${T("看涨期权", "call options")}}} = \$${tn(v.total, 0)}`)
+      + `${T("（债券地板：0% 票息、", " (bond floor: 0% coupon, ")}${Tm}${T(" 年、按 ", " years, discounted at ")}${y}%${T(" 折现；期权行权价 ", "; calls struck at ")}${fmtUsd(v.K, 2)}${T("）", ")")}`);
     lines.push(v.total >= 1000
       ? `<span class="ok">${T("在这个波动率下，0% 票息就够了：公司是在把自己股票的波动率卖个好价钱。", "At this volatility a 0% coupon is enough: the company is selling its own stock's volatility at a good price.")}</span>`
       : `<span class="bad">${T("波动率不够高：要按面值卖出，每年约需 ", "Volatility is too low: to sell at par the company would need a coupon of about ")}${fmtPct(needC, 2)}${T(" 的票息。", " a year.")}</span>`);
@@ -133,7 +140,9 @@ export default function mount(root, lang) {
     q("#wd-chart").innerHTML = chartBlock(ch, [["var(--green)", T("对普通股的净增值（百万美元）", "Net gain to common ($M)")]]);
     const lines = [];
     lines.push(`${T("发行 ", "Issue ")}$${fmtBig(Xd, 0)}${T(" 优先股、买入 ", " of preferred, buy ")}${fmtNum(Xd / P, 0)} BTC${T("：股数不变，所以 BTC Yield 立刻 +", ": the share count is unchanged, so BTC Yield jumps +")}${fmtPct(yieldIssue, 2)}${T("——但新增的 ", " — but the new ")}$${fmtBig(Xd, 0)}${T(" 优先索取权排在普通股前面，所以 Strategy 2026 口径的净储备纹丝不动。", " senior claim ranks ahead of the common, so net reserve on Strategy's 2026 definition doesn't move.")}`);
-    lines.push(`${t}${T(" 年后：比特币部分值 ", t === 1 ? " year later: the bitcoin is worth " : " years later: the bitcoin is worth ")}$${fmtBig(Xd * Math.pow(1 + gg, t), 1)}${T("，累计付出股息 ", ", dividends paid total ")}$${fmtBig(Xd * rr * t, 1)} → ${gain >= 0 ? `<span class="ok">${T("比特币跑赢了股息，杠杆为普通股赚钱", "bitcoin beat the dividend; the leverage made money for the common")}</span>` : `<span class="bad">${T("比特币跑输了股息，杠杆在侵蚀普通股", "bitcoin lagged the dividend; the leverage is eroding the common")}</span>`}`);
+    lines.push(`${t}${T(" 年后：比特币部分值 ", t === 1 ? " year later: the bitcoin is worth " : " years later: the bitcoin is worth ")}$${fmtBig(Xd * Math.pow(1 + gg, t), 1)}${T("，累计付出股息 ", ", dividends paid total ")}$${fmtBig(Xd * rr * t, 1)}${T("：", ": ")}`
+      + tex(String.raw`X(1 + g)^{t} - X - X r t = ${tu(Xd * Math.pow(1 + gg, t), 1)} - ${tu(Xd, 0)} - ${tu(Xd * rr * t, 1)} = ${tu(gain, 1)}`)
+      + ` →${gain >= 0 ? `<span class="ok">${T("比特币跑赢了股息，杠杆为普通股赚钱", "bitcoin beat the dividend; the leverage made money for the common")}</span>` : `<span class="bad">${T("比特币跑输了股息，杠杆在侵蚀普通股", "bitcoin lagged the dividend; the leverage is eroding the common")}</span>`}`);
     lines.push(`<span class="warn">${T("简化：股息按单利累计、从现金支付；Strategy 用 BTC Hurdle ARR 表达类似门槛（2026 年 8 月约 10.74%）。不构成投资建议。", "Simplified: dividends accrue as simple interest and are paid from cash; Strategy expresses a similar bar as BTC Hurdle ARR (about 10.74% in August 2026). Not investment advice.")}</span>`);
     q("#wd-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };

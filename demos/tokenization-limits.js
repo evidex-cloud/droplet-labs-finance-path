@@ -2,7 +2,11 @@
 // ① 信任链乘法：五个环节各自的年出事概率 p 与出事时的损失比例 LGD，
 //    整条链不出事的概率 = Π(1−p)，年预期损失 = 1 − Π(1 − p·LGD)；与“代币化带来的额外收益”对比。
 // ② 流动性幻觉：能转让 ≠ 能卖出——白名单缩小了池子，现在卖（ammSwap 的滑点）vs 排队等赎回（时间成本 + 闸门风险，pv 折现）。
-import { ammSwap, pv, fmtPct, fmtUsd, fmtBig, fmtNum } from "./_fin.js";
+import { ammSwap, pv, fmtPct, fmtUsd, fmtBig, fmtNum, tex } from "./_fin.js";
+
+// 把格式化好的数字（$、千分位逗号、%）变成 LaTeX 安全的写法
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+const texBig = (x, d) => "\\$" + fmtBig(x, d).replace(/([KMBT])$/, "\\text{$1}");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -47,7 +51,7 @@ export default function mount(root, lang) {
           <div class="stat"><div class="k">${T("整条链一年不出事的概率", "Chance the whole chain survives a year")}</div><div class="v" id="tl-surv">–</div></div>
           <div class="stat"><div class="k">${T("年预期损失", "Annual expected loss")}</div><div class="v neg" id="tl-el">–</div></div>
           <div class="stat"><div class="k">${T("最弱的一环", "Weakest link")}</div><div class="v acc" id="tl-weak">–</div></div>
-          <div class="stat"><div class="k">${T("额外收益 − 预期损失", "Extra return − expected loss")}</div><div class="v" id="tl-net">–</div></div>
+          <div class="stat"><div class="k">${tex(String.raw`\text{${T("额外收益", "Extra return")}} - \text{${T("预期损失", "expected loss")}}`)}</div><div class="v" id="tl-net">–</div></div>
         </div>
         <div class="stages" id="tl-bars"></div>
         <div class="demo-log" id="tl-log"></div>
@@ -119,7 +123,8 @@ export default function mount(root, lang) {
     const maxC = Math.max(0.001, ...contrib);
     $("#tl-bars").innerHTML = LINKS.map((ln, i) => `<div class="stage-bar"><span class="lab" style="${i === wi && contrib[i] > 0 ? "color:var(--red);font-weight:700" : ""}">${ln.name}</span><div class="track"><div class="fill" style="width:${(contrib[i] / maxC) * 100}%;background:${i === wi ? "var(--red)" : "var(--orange)"}"></div></div><span class="val">${fmtPct(contrib[i], 2)}</span></div>`).join("");
     const lines = [];
-    lines.push(`${T("单看各环，最高的出事概率只有", "Taken one by one, the highest failure chance is only")} ${fmtPct(Math.max(...st.p), 1)}${T("；连乘之后，整条链一年内至少出一次事的概率是", "; multiplied together, the chance of at least one failure in a year is")} <b>${fmtPct(1 - surv, 1)}</b>${T("。", ".")}`);
+    lines.push(`${T("单看各环，最高的出事概率只有", "Taken one by one, the highest failure chance is only")} ${fmtPct(Math.max(...st.p), 1)}${T("；连乘之后，整条链一年内至少出一次事的概率是", "; multiplied together, the chance of at least one failure in a year is")} ${tex(String.raw`1 - \prod_{i=1}^{5} (1 - p_{i}) = 1 - ${st.p.map((p) => `(1 - ${texv(fmtPct(p, 1))})`).join(" ")} = \mathbf{${texv(fmtPct(1 - surv, 1))}}`)}${T("。", ".")}`);
+    lines.push(`${tex(String.raw`\text{${T("年预期损失", "Annual expected loss")}} = 1 - \prod_{i=1}^{5} (1 - p_{i}\,L_{i}) = \mathbf{${texv(fmtPct(el, 2))}}`)}${T("（", " (")}${tex("p_{i}")} ${T("为出事概率，", "is the failure chance, ")}${tex("L_{i}")} ${T("为出事时的损失比例）。", "the share lost if it fails).")}`);
     lines.push(net >= 0
       ? `<span class="ok">${T("代币化带来的额外收益高于预期损失：这条管道“值得”。", "The extra return from tokenization exceeds the expected loss: this pipe is worth it.")}</span>`
       : `<span class="bad">${T("预期损失超过了代币化带来的额外收益：你在用更多的风险换同样的资产。先加固最弱的一环（", "The expected loss exceeds the extra return from tokenization: you are taking more risk for the same asset. Strengthen the weakest link first (")}${LINKS[wi].name}${T("）。", ").")}</span>`);
@@ -139,11 +144,11 @@ export default function mount(root, lang) {
     const wait = pv(liq.size * (1 - liq.gate * liq.gateLoss), liq.r, liq.days / 365, 365);
     $("#tl-now").innerHTML = `
       <div class="demo-meta">${T("有资格接手的深度", "Depth that is allowed to buy")}${T("：", ": ")}$${fmtBig(eff, 1)}</div>
-      <div class="demo-meta">${T("平均成交价（净值 = 1.00）", "Average price (NAV = 1.00)")}${T("：", ": ")}<b>${fmtNum(s.execPrice, 3)}</b></div>
+      <div class="demo-meta">${T("平均成交价（净值为 1.00）", "Average price (NAV is 1.00)")}${T("：", ": ")}<b>${fmtNum(s.execPrice, 3)}</b></div>
       <div class="stat"><div class="k">${T("今天到手", "Cash today")}</div><div class="v">${fmtUsd(now)}</div></div>`;
     $("#tl-wait").innerHTML = `
       <div class="demo-meta">${T("闸门触发时的额外损失（假设）", "Extra loss if a gate is triggered (assumed)")}${T("：", ": ")}${fmtPct(liq.gateLoss, 0)}</div>
-      <div class="demo-meta">${T("按你的机会成本折现到今天", "Discounted to today at your opportunity cost")}</div>
+      <div class="demo-meta">${T("按你的机会成本折现到今天", "Discounted to today at your opportunity cost")}${T("：", ": ")}${tex(String.raw`\dfrac{${texBig(liq.size, 1)} \times (1 - ${texv(fmtPct(liq.gate, 0))} \times ${texv(fmtPct(liq.gateLoss, 0))})}{\left(1 + \frac{${texv(fmtPct(liq.r, 1))}}{365}\right)^{${liq.days}}}`)}</div>
       <div class="stat"><div class="k">${T("折现后的预期价值", "Expected value, discounted")}</div><div class="v">${fmtUsd(wait)}</div></div>`;
     const lines = [];
     lines.push(`${T("代币 24/7 可转让，但你卖出的", "The token is transferable 24/7, yet selling")} $${fmtBig(liq.size, 1)} ${T("相当于有效深度的", "equals")} <b>${fmtPct(liq.size / eff, 0)}</b>${T("，现在卖的折价约", " of effective depth, so selling now costs a discount of about")} <b>${fmtPct(1 - s.execPrice, 1)}</b>${T("。", ".")}`);

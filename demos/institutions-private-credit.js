@@ -1,7 +1,7 @@
 // 交互演示：机构资产负债表搭建器——“负债决定资产”。
 // 选一类机构（它的负债久期、可被挤兑的比例、要跨过的收益线不同），调六类资产的配置，
 // 实时算出：资产久期与久期缺口、利率冲击下的盈余变化、组合收益 vs 收益线、流动性覆盖、风险事件下的资金充足率。
-import { bondRisk, bondPrice, priceChangeApprox, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { bondRisk, bondPrice, priceChangeApprox, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -95,7 +95,7 @@ export default function mount(root, lang) {
 
     const lines = [];
     const gap = durA * A0 - inst.ld * L;
-    lines.push(`${T("美元久期缺口（资产久期 × 资产 − 负债久期 × 负债）：", "Dollar-duration gap (asset duration × assets − liability duration × liabilities): ")}<b>${fmtNum(gap, 0)}</b>${T("。", ". ")}${Math.abs(gap) < 150 ? T("资产与负债对利率的敏感度大致匹配。", "Assets and liabilities are roughly matched in rate sensitivity.") : gap < 0 ? T("资产比负债“短”：利率下降时负债涨得更多，盈余缩水。", "Assets are shorter than liabilities: when rates fall, liabilities rise more and the surplus shrinks.") : T("资产比负债“长”：利率上升时资产跌得更多，盈余缩水。", "Assets are longer than liabilities: when rates rise, assets fall more and the surplus shrinks.")}`);
+    lines.push(`${T("美元久期缺口（", "Dollar-duration gap (")}${tex(String.raw`\text{${T("资产久期", "asset duration")}} \times \text{${T("资产", "assets")}} - \text{${T("负债久期", "liability duration")}} \times \text{${T("负债", "liabilities")}}`)}${T("）：", "): ")}<b>${fmtNum(gap, 0)}</b>${T("。", ". ")}${Math.abs(gap) < 150 ? T("资产与负债对利率的敏感度大致匹配。", "Assets and liabilities are roughly matched in rate sensitivity.") : gap < 0 ? T("资产比负债“短”：利率下降时负债涨得更多，盈余缩水。", "Assets are shorter than liabilities: when rates fall, liabilities rise more and the surplus shrinks.") : T("资产比负债“长”：利率上升时资产跌得更多，盈余缩水。", "Assets are longer than liabilities: when rates rise, assets fall more and the surplus shrinks.")}`);
     lines.push(`${T("利率 ", "A ")}${st.dy > 0 ? "+" : ""}${st.dy}${T(" 基点：资产 105 → ", " bp shift: assets 105 → ")}${fmtNum(A1, 1)}${T("，负债 100 → ", ", liabilities 100 → ")}${fmtNum(L1, 1)}${T("，资金充足率 ", ", funded ratio ")}${fmtPct(fr0, 0)} → <span class="${fr1 < 1 ? "bad" : fr1 < fr0 ? "warn" : "ok"}">${fmtPct(fr1, 1)}</span>${T("。", ".")}`);
     if (liqCov < 1) lines.push(`<span class="bad">${T("流动性错配：压力下可能被取走 ", "Liquidity mismatch: under stress ")}${fmtNum(inst.run * L, 0)}${T("，但能快速变现的资产只有约 ", " could be withdrawn, but only about ")}${fmtNum(liqCov * inst.run * L, 0)}${T("——这就是挤兑的种子（阶段 1.2、阶段 10.3）。", " of assets can be sold quickly — the seed of a run (Stage 1.2, Stage 10.3).")}</span>`);
     if (yld < inst.hurdle) lines.push(`<span class="warn">${T("组合收益低于收益线 ", "Portfolio yield falls short of the ")}${fmtPct(inst.hurdle, 1)}${T("：这正是机构“追逐收益”、加仓私募信贷与另类资产的压力来源。", " hurdle: this is exactly the pressure that pushes institutions to reach for yield in private credit and alternatives.")}</span>`);

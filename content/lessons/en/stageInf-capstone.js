@@ -63,10 +63,14 @@ The lesson rests on **all four ideas**, used in order. Steps 1 and 2 are Idea �
 Turn that into three usable numbers:
 
 $$
-30-year 5% Treasury: at a 5.49% yield → price about 92.8; one point higher → about 80.4 (modified duration about 15.5)
-Orange-F required yield = 30-year 5.49% + credit spread 4.5% ≈ 10.0% → the 10% Orange-F is worth about par
-If the credit spread widens to 6% → required yield about 11.5% → Orange-F about $87
+\\text{30-year 5\\% Treasury: }\\ y = 5.49\\% \\Rightarrow P \\approx 92.8
+y = 6.49\\%\\ (\\text{one point higher}) \\Rightarrow P \\approx 80.4
+\\text{Orange-F required yield} = \\text{30-year}\\ 5.49\\% + \\text{credit spread}\\ 4.5\\% \\approx 10.0\\%
+\\Rightarrow \\text{the 10\\% Orange-F} \\approx \\text{par}
+\\text{credit spread} = 6\\% \\Rightarrow \\text{required yield} \\approx 11.5\\% \\Rightarrow \\text{Orange-F} \\approx \\$87
 $$
+
+The 30-year's modified duration is about 15.5 (Stage 4.4).
 
 **Why this step matters:** this is where the first headline of Stage 0.1 (the 30-year yield breaking above 5%) lands in your analysis. Rates anchor every asset (Stage 2.4). A perpetual preferred is a perpetuity (Stages 2.3 and 18.1), so every move in long rates moves its price; for bitcoin, an asset with no cash flows, high real rates mean a higher opportunity cost of holding it (Stage 2.5). In the report this step produces **the risk-free rate, the credit spread you are using, and the resulting required yield**: three numbers, each with its source and date.
 
@@ -90,7 +94,7 @@ $$
 
 Orange Corp as the example (bitcoin at the standard $100,000 assumption; how to re-mark to about $84,100 follows the table):
 
-<table><tr><th>Metric</th><th>Definition</th><th>Orange Corp</th><th>Review</th></tr><tr><td>Bitcoin NAV</td><td>10,000 × $100,000</td><td>$1.0B</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>Market cap basis</td><td>1.50</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>Diluted market cap (all converts assumed converted, 106M shares)</td><td>1.59</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>Enterprise value basis (Strategy's 2025 definition)</td><td>1.77</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>Price ÷ net BTC per share (Strategy's 2026 definition; net reserve $730M)</td><td>2.05</td><td>Stage 16.2</td></tr><tr><td>BTC per share</td><td>On 100M shares / on 106M assumed diluted</td><td>10,000 sats / about 9,434 sats</td><td>Stage 16.1</td></tr><tr><td>Amplification</td><td>Simple / Strategy's / Strive's ratio</td><td>1.43x / 1.37x / 30%</td><td>Stage 16.4</td></tr><tr><td>BTC Rating</td><td>Converts / Orange-F / Orange-D</td><td>6.7x / 4.0x / 3.3x</td><td>Stage 16.5</td></tr><tr><td>BTC floor price</td><td>Where each layer's rating hits exactly 1.0x</td><td>$15,000 / $25,000 / $30,000</td><td>Stage 16.5</td></tr><tr><td>Months of cover</td><td>$30M ÷ $15M of annual dividends</td><td>24 months</td><td>Stage 16.6</td></tr><tr><td>BTC Breakeven ARR</td><td>$15M ÷ $1.0B</td><td>1.5%</td><td>Stage 16.6</td></tr><tr><td>One turn of the flywheel</td><td>Issue 10M shares at $15, buy bitcoin with all of it</td><td>BTC per share +4.5%</td><td>Stage 16.7</td></tr></table>
+<table><tr><th>Metric</th><th>Definition</th><th>Orange Corp</th><th>Review</th></tr><tr><td>Bitcoin NAV</td><td>\\(10{,}000 \\times \\$100{,}000\\)</td><td>$1.0B</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>Market cap basis</td><td>1.50</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>Diluted market cap (all converts assumed converted, 106M shares)</td><td>1.59</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>Enterprise value basis (Strategy's 2025 definition)</td><td>1.77</td><td>Stage 16.2</td></tr><tr><td>mNAV</td><td>\\(\\dfrac{\\text{price}}{\\text{net BTC per share}}\\) (Strategy's 2026 definition; net reserve $730M)</td><td>2.05</td><td>Stage 16.2</td></tr><tr><td>BTC per share</td><td>On 100M shares / on 106M assumed diluted</td><td>10,000 sats / about 9,434 sats</td><td>Stage 16.1</td></tr><tr><td>Amplification</td><td>Simple / Strategy's / Strive's ratio</td><td>1.43x / 1.37x / 30%</td><td>Stage 16.4</td></tr><tr><td>BTC Rating</td><td>Converts / Orange-F / Orange-D</td><td>6.7x / 4.0x / 3.3x</td><td>Stage 16.5</td></tr><tr><td>BTC floor price</td><td>Where each layer's rating hits exactly 1.0x</td><td>$15,000 / $25,000 / $30,000</td><td>Stage 16.5</td></tr><tr><td>Months of cover</td><td>\\(\\dfrac{\\$30\\text{M}}{\\$15\\text{M of annual dividends}}\\)</td><td>24 months</td><td>Stage 16.6</td></tr><tr><td>BTC Breakeven ARR</td><td>\\(\\dfrac{\\$15\\text{M}}{\\$1.0\\text{B}}\\)</td><td>1.5%</td><td>Stage 16.6</td></tr><tr><td>One turn of the flywheel</td><td>Issue 10M shares at $15, buy bitcoin with all of it</td><td>BTC per share +4.5%</td><td>Stage 16.7</td></tr></table>
 
 **Plugging in step 3:** re-mark bitcoin to about $84,100 (September 25, 2026) and bitcoin NAV becomes about $841 million. The three BTC Ratings fall to about 5.6x / 3.4x / 2.8x, Breakeven ARR rises from 1.5% to about 1.8%, and simple amplification climbs from 1.43x to about 1.55x. **The further bitcoin falls, the higher the leverage.** That is the heart of Stage 16.4, and it is exactly what the stress test magnifies.
 
@@ -172,20 +176,20 @@ Your report is a flight plan too. Macro is the weather, rates are the runway, bi
         "It sets the DAT's share count",
       ],
       answer: 1,
-      explain: "A 30-year at about 5.49% plus a 4.5% credit spread gives a required yield of about 10%, so the 10% Orange-F is worth about par; widen the spread to 6% and it is worth about $87. **Rates anchor every asset** (Stages 2.4 and 18.1).",
+      explain: "\\(\\text{30-year}\\ 5.49\\% + \\text{credit spread}\\ 4.5\\% \\approx 10\\%\\) is the required yield, so the 10% Orange-F is worth about par; widen the spread to 6% and it is worth about $87. **Rates anchor every asset** (Stages 2.4 and 18.1).",
     },
     {
       q: "Orange Corp's bitcoin falls 70% from $100,000. What is the approximate BTC Rating of the Orange-D layer (cumulative claims of $300 million)?",
       options: ["About 1.0x", "About 3.3x", "About 1.67x", "About 0.5x"],
       answer: 0,
-      explain: "Bitcoin NAV = 10,000 × $30,000 = $300M; $300M ÷ $300M = **1.0x**. That is Orange-D's $30,000 floor price: the floor prices of Stage 16.5 become the break points of the stress test.",
+      explain: "\\(\\text{bitcoin NAV} = 10{,}000 \\times \\$30{,}000 = \\$300\\text{M}\\); \\(\\text{BTC Rating} = \\dfrac{\\$300\\text{M}}{\\$300\\text{M}} =\\) **1.0x**. That is Orange-D's $30,000 floor price: the floor prices of Stage 16.5 become the break points of the stress test.",
     },
     {
-      q: "A report says \"mNAV = 1.77\". What, at minimum, must it add so readers can reproduce the figure?",
+      q: "A report says \"\\(\\mathrm{mNAV} = 1.77\\)\". What, at minimum, must it add so readers can reproduce the figure?",
       options: [
         "Bitcoin's all-time high",
         "The CEO's name",
-        "The definition (e.g. enterprise value basis = (market cap + debt + preferred − cash) ÷ bitcoin NAV) and the date of the data",
+        "The definition (e.g. enterprise value basis \\(\\mathrm{mNAV}_{\\text{EV}} = \\dfrac{\\text{market cap} + \\text{debt} + \\text{preferred} - \\text{cash}}{\\text{bitcoin NAV}}\\)) and the date of the data",
         "Nothing",
       ],
       answer: 2,
@@ -195,7 +199,7 @@ Your report is a flight plan too. Macro is the weather, rates are the runway, bi
       q: "Stress setup: markets shut for 24 months, a $150M convertible put in month 24, a $30M reserve that exactly covers 24 months of dividends, and bitcoin down 50% to $50,000. How much bitcoin must be sold to meet the put?",
       options: ["About 300 coins", "About 1,500 coins", "About 6,000 coins", "About 3,000 coins"],
       answer: 3,
-      explain: "The reserve has gone on dividends, so $150M ÷ $50,000 = **3,000 coins**, 30% of the 10,000 held. A stress test produces a timetable, not just a coverage multiple (Stage 18.2).",
+      explain: "The reserve has gone on dividends, so \\(\\dfrac{\\$150\\text{M}}{\\$50{,}000} =\\) **3,000 coins**, 30% of the 10,000 held. A stress test produces a timetable, not just a coverage multiple (Stage 18.2).",
     },
     {
       q: "Which of these is one of the \"most common mistakes\" listed in this lesson?",

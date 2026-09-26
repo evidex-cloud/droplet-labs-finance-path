@@ -42,24 +42,26 @@ This lesson sits on **Idea ④ Risk & leverage**. In Stage 5.4 you first met vol
 To turn daily volatility into annual volatility, use the **square-root-of-time rule**:
 
 $$
-Annualized volatility ≈ daily volatility × √252 (about 252 trading days a year)
-Example: 1% daily → 1% × 15.87 ≈ 15.9% a year
-Bitcoin trades 24/7, so √365 is common: 3% daily → about 57% a year
+\\text{Annualized volatility} \\approx \\text{daily volatility} \\times \\sqrt{252}
 $$
+
+There are about 252 trading days a year. Example: 1% daily → \\(1\\% \\times 15.87 \\approx 15.9\\%\\) a year. Bitcoin trades 24/7, so \\(\\sqrt{365}\\) is common: 3% daily → \\(3\\% \\times \\sqrt{365} \\approx 57\\%\\) a year.
 
 Why a square root? If each day's return is independent of the others, variances add up linearly over time, so the standard deviation grows with the square root of the number of days. The rule relies on two assumptions: **no autocorrelation** (today's move doesn't predict tomorrow's) and **stable volatility**. Reality breaks both regularly: in a crisis, volatility can double or triple and moves cluster together (volatility clustering).
 
-For a sense of scale: a stock with 16% annualized volatility, under a normal-distribution assumption, lands within "average ± 16%" in roughly two years out of three. For an asset with 60% volatility, that band is ± 60%. **Both are called "volatility," but 16% and 60% are completely different experiences to live through.**
+For a sense of scale: a stock with 16% annualized volatility, under a normal-distribution assumption, lands within \\(\\text{average} \\pm 16\\%\\) in roughly two years out of three. For an asset with 60% volatility, that band is \\(\\pm 60\\%\\). **Both are called "volatility," but 16% and 60% are completely different experiences to live through.**
 
 ### ② Maximum drawdown: how deep, and how long to come back
 
-**Maximum drawdown (MDD)** = the largest fall from any historical peak to a subsequent low. It answers: "**If I'd bought at the worst possible moment, how much would I have lost at most?**" (The maxDrawdown function in _fin.js computes exactly this by tracking the running peak point by point.)
+**Maximum drawdown (MDD)** is the largest fall from any historical peak to a subsequent low. It answers: "**If I'd bought at the worst possible moment, how much would I have lost at most?**" (The maxDrawdown function in _fin.js computes exactly this by tracking the running peak point by point.)
 
 <figure><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="210" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Anatomy of a drawdown</text><rect x="150" y="60" width="205" height="125" fill="var(--red-soft)" opacity="0.6"/><line x1="40" y1="60" x2="390" y2="60" stroke="var(--line)" stroke-dasharray="4 3"/><polyline points="40,150 80,120 120,90 150,60 180,100 210,140 240,170 260,180 290,150 320,120 355,60 385,45" fill="none" stroke="var(--orange)" stroke-width="2.6"/><circle cx="150" cy="60" r="4" fill="var(--orange)"/><circle cx="260" cy="180" r="4" fill="var(--red)"/><text x="150" y="50" text-anchor="middle" font-size="11" fill="var(--ink)">Peak 100</text><text x="260" y="200" text-anchor="middle" font-size="11" fill="var(--red)">Trough 50</text><line x1="275" y1="64" x2="275" y2="176" stroke="var(--red)" stroke-width="1.6"/><text x="282" y="110" font-size="11" font-weight="700" fill="var(--red)">Max drawdown</text><text x="282" y="126" font-size="11" font-weight="700" fill="var(--red)">−50%</text><line x1="150" y1="222" x2="355" y2="222" stroke="var(--muted)" stroke-width="1.4"/><line x1="150" y1="216" x2="150" y2="228" stroke="var(--muted)"/><line x1="355" y1="216" x2="355" y2="228" stroke="var(--muted)"/><text x="252" y="242" text-anchor="middle" font-size="11" fill="var(--muted)">Time underwater: below the old peak until it's regained</text><text x="200" y="152" text-anchor="middle" font-size="10" fill="var(--muted)">Decline</text><text x="318" y="170" text-anchor="middle" font-size="10" fill="var(--muted)">Recovery: needs +100%</text><text x="525" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Gain needed to break even</text><text x="440" y="58" text-anchor="end" font-size="11" fill="var(--ink)">Down 20%</text><rect x="448" y="46" width="6" height="16" fill="var(--orange)"/><text x="460" y="58" font-size="11" fill="var(--muted)">+25%</text><text x="440" y="92" text-anchor="end" font-size="11" fill="var(--ink)">Down 50%</text><rect x="448" y="80" width="24" height="16" fill="var(--orange)"/><text x="478" y="92" font-size="11" fill="var(--muted)">+100%</text><text x="440" y="126" text-anchor="end" font-size="11" fill="var(--ink)">Down 75%</text><rect x="448" y="114" width="72" height="16" fill="var(--btc)"/><text x="526" y="126" font-size="11" fill="var(--muted)">+300%</text><text x="440" y="160" text-anchor="end" font-size="11" fill="var(--ink)">Down 80%</text><rect x="448" y="148" width="96" height="16" fill="var(--btc)"/><text x="550" y="160" font-size="11" fill="var(--muted)">+400%</text><text x="440" y="194" text-anchor="end" font-size="11" fill="var(--ink)">Down 90%</text><rect x="448" y="182" width="170" height="16" fill="var(--red)"/><text x="600" y="212" text-anchor="end" font-size="11" fill="var(--red)">+900%</text><text x="525" y="242" text-anchor="middle" font-size="10.5" fill="var(--muted)">Break-even gain = 1/(1 − drawdown) − 1</text></svg><figcaption>Left: a drawdown has a depth and a time underwater, and the gain needed to recover is always larger than the original fall. Right: the deeper the fall, the harder the way back — and it gets harder non-linearly, which is exactly what makes leverage and high-volatility assets dangerous.</figcaption></figure>
 
 $$
-Gain needed to break even = 1 / (1 − drawdown) − 1
-50% drawdown → +100%; 80% → +400%; 90% → +900%
+\\text{Gain needed to break even} = \\frac{1}{1 - \\text{drawdown}} - 1
+50\\%\\ \\text{drawdown}:\\ \\frac{1}{1 - 0.5} - 1 = +100\\%
+80\\%\\ \\text{drawdown}:\\ \\frac{1}{1 - 0.8} - 1 = +400\\%
+90\\%\\ \\text{drawdown}:\\ \\frac{1}{1 - 0.9} - 1 = +900\\%
 $$
 
 Some historical reference points (approximate): US stocks (S&P 500) had a maximum drawdown of about 57% in 2007–2009. The Nasdaq fell about 78% in 2000–2002 and took roughly 15 years to regain its old high. Bitcoin has had several deep drawdowns — more than 90% in 2011, about 85% in 2013–2015, about 84% in 2017–2018, and about 77% in 2021–2022.
@@ -71,35 +73,38 @@ Maximum drawdown's strength is that it's **intuitive and close to lived experien
 The **Sharpe ratio** (William Sharpe, 1966) measures how much excess return you earn for each unit of volatility you bear:
 
 $$
-Sharpe ratio = (portfolio return − risk-free rate) / portfolio volatility
-Example: 10% return, 4% risk-free, 15% volatility → (10% − 4%)/15% = 0.40
-Another: 7% return, 6% volatility → (7% − 4%)/6% = 0.50
+\\text{Sharpe ratio} = \\frac{\\text{portfolio return} - \\text{risk-free rate}}{\\text{portfolio volatility}}
+\\text{Example:}\\ \\frac{10\\% - 4\\%}{15\\%} = 0.40
+\\text{Another:}\\ \\frac{7\\% - 4\\%}{6\\%} = 0.50
 $$
+
+With a 4% risk-free rate: the example fund returns 10% with 15% volatility; the other returns 7% with 6% volatility.
 
 The second fund earns less but has the higher Sharpe — it's **more efficient per unit of risk**. If it can be levered at a reasonable cost (the risk-parity logic of Stage 11.2), it could be scaled up to the same volatility as the first fund and earn more. Over the long run, the US stock market's Sharpe ratio has been roughly 0.3–0.5. Strategies that sustain more than 1 are rare; when you see one, be suspicious first.
 
 Sharpe's blind spots:
 
-- **It penalizes "good" volatility.** A straight-up rally counts as volatility too. The **Sortino ratio** puts only **downside deviation** (the swings below a target return) in the denominator. In the example above, if downside deviation is 9%, Sortino = (10% − 4%)/9% ≈ 0.67.
+- **It penalizes "good" volatility.** A straight-up rally counts as volatility too. The **Sortino ratio** puts only **downside deviation** (the swings below a target return) in the denominator. In the example above, if downside deviation is 9%, \\(\\text{Sortino} = \\dfrac{10\\% - 4\\%}{9\\%} \\approx 0.67\\).
 - **It can't see the tails.** A strategy that sells far out-of-the-money options earns a little every month with tiny volatility and a gorgeous Sharpe — until one day it gives back years of gains at once (the "selling volatility" of Stage 7.3). **A high Sharpe with very few losing months sometimes means the risk is hiding in the tail.**
 - **It depends on the sample period.** A Sharpe measured in a bull market may not survive a bear market.
 
-The **Calmar ratio** = annualized return ÷ maximum drawdown (in absolute value). It puts "the most painful episode" straight in the denominator and is popular for judging strategies such as trend following.
+The **Calmar ratio**: \\(\\text{Calmar} = \\dfrac{\\text{annualized return}}{\\lvert \\text{maximum drawdown} \\rvert}\\) (drawdown in absolute value). It puts "the most painful episode" straight in the denominator and is popular for judging strategies such as trend following.
 
 ### ④ VaR and expected shortfall: how much can a bad day cost?
 
 **Value at Risk (VaR)** answers: "**At a given confidence level, what's the most I could lose over a given period?**" J.P. Morgan popularized it in the 1990s (RiskMetrics, 1994), and it became the standard language of bank risk regulation.
 
+Parametric (normal) method, for a $1 million portfolio with 1% daily volatility (one-day VaR):
+
 $$
-Parametric (normal) method: VaR = z × volatility × portfolio value
-$1 million portfolio, 1% daily volatility:
-95% one-day VaR = 1.645 × 1% × $1M ≈ $16,450
-99% one-day VaR = 2.326 × 1% × $1M ≈ $23,260
+\\mathrm{VaR} = z \\times \\text{volatility} \\times \\text{portfolio value}
+\\mathrm{VaR}_{95\\%} = 1.645 \\times 1\\% \\times \\$1\\text{M} \\approx \\$16{,}450
+\\mathrm{VaR}_{99\\%} = 2.326 \\times 1\\% \\times \\$1\\text{M} \\approx \\$23{,}260
 $$
 
 How to read it: "**On 95% of days, the one-day loss won't exceed about $16,000**" — or equivalently, roughly one trading day in twenty will be worse than that. Besides the parametric method there's **historical simulation** (take the 5th percentile of past returns directly) and **Monte Carlo** simulation.
 
-VaR's biggest problem: **it tells you where the door is, not how deep the drop is behind it.** Losing $17,000 and losing $500,000 both count as "exceeding VaR." Hence **expected shortfall (ES, also called CVaR)**: **the average loss once you're past VaR.** Under a normal distribution, 95% ES ≈ 2.063 × volatility — about $20,630 in the example. In the new trading-book rules (the Fundamental Review of the Trading Book, FRTB) published in 2016, the Basel Committee switched the core market-risk capital measure from VaR to 97.5% ES precisely because VaR is blind to the tail.
+VaR's biggest problem: **it tells you where the door is, not how deep the drop is behind it.** Losing $17,000 and losing $500,000 both count as "exceeding VaR." Hence **expected shortfall (ES, also called CVaR)**: **the average loss once you're past VaR.** Under a normal distribution, \\(\\mathrm{ES}_{95\\%} \\approx 2.063 \\times \\text{volatility}\\) — about \\(2.063 \\times 1\\% \\times \\$1\\text{M} \\approx \\$20{,}630\\) in the example. In the new trading-book rules (the Fundamental Review of the Trading Book, FRTB) published in 2016, the Basel Committee switched the core market-risk capital measure from VaR to 97.5% ES precisely because VaR is blind to the tail.
 
 **Fat tails** are the reality both measures must face. On October 19, 1987, the S&P 500 fell about 20% in a single day — a practically "impossible" event under a normal distribution with the volatility of the time. In 1998, Long-Term Capital Management's models likewise underestimated how correlations would spike in extreme conditions. Real return distributions have far thicker tails than the normal curve, and Bitcoin's especially so. **So treat normal-distribution VaR as a lower bound, and pair it with historical scenarios and stress tests.**
 
@@ -117,7 +122,7 @@ VaR's biggest problem: **it tells you where the door is, not how deep the drop i
 Point the dashboard at new-era assets and a few things stand out:
 
 - **For Bitcoin, drawdowns say more than volatility.** Its annualized volatility is roughly three to four times that of stocks, but its drawdown history (several of 75–90%) is what really decides whether you can hold it. Supporters point out that it has made new highs after every major drawdown and that its volatility has trended down (Stage 12.4). Critics point out that past recoveries don't guarantee future ones and that it has no cash flows to anchor its valuation (Stage 12.3). **Every one of these metrics looks backward**, and both sides need to remember that.
-- **Leverage deepens drawdowns — non-linearly.** For a DAT whose common stock has about 1.4× "amplification" to Bitcoin (Stage 16.4 derives that number for Orange Corp), a 50% fall in Bitcoin knocks roughly 70% off the Bitcoin-backed value of the common. If the mNAV premium shrinks at the same time (Stage 16.2), the actual fall can be deeper still.
+- **Leverage deepens drawdowns — non-linearly.** For a DAT whose common stock has about \\(1.4\\times\\) "amplification" to Bitcoin (Stage 16.4 derives that number for Orange Corp), a 50% fall in Bitcoin knocks roughly 70% off the Bitcoin-backed value of the common. If the mNAV premium shrinks at the same time (Stage 16.2), the actual fall can be deeper still.
 - **For DAT preferreds and convertibles, volatility isn't the core risk measure.** Their risk looks more like credit risk: what matters is how far the asset-coverage multiple (the BTC Rating of Stage 16.5) falls in a big Bitcoin drawdown, and whether dividends keep getting paid (Stage 16.6). Repurpose the drawdown idea — "**if Bitcoin falls another 80% from here, how many times covered is each layer?**" — and you have the starting point for the stress test in Stage 18.2.
 
 **This lesson covers mechanics and analytical frameworks only; it is not investment advice.** One practical habit: for any investment, write down at least **three numbers** — annualized volatility, historical maximum drawdown (and when it happened), and "if a drawdown like that happened again, how many dollars would my position lose?" That third number is where the next lesson, on position sizing (Stage 11.4), begins.
@@ -141,7 +146,7 @@ And a good doctor never looks at just one number, and never concludes from past 
 
   misconceptions: [
     "**\"Low volatility means low risk.\"** — Volatility only measures ordinary swings. Selling far out-of-the-money options, or holding illiquid assets that are rarely repriced, both look calm day to day while the risk hides in the tail or in the valuation. Look at drawdowns, tail measures and stress scenarios too.",
-    "**\"If it fell 50%, a 50% gain gets me back to even.\"** — From 100 down to 50 and then up 50% only gets you to 75. The gain needed = 1/(1 − drawdown) − 1: a 50% fall needs +100%, an 80% fall needs +400%. That's why deep drawdowns and high leverage are so deadly.",
+    "**\"If it fell 50%, a 50% gain gets me back to even.\"** — From 100 down to 50 and then up 50% only gets you to 75. \\(\\text{The gain needed} = \\dfrac{1}{1 - \\text{drawdown}} - 1\\): a 50% fall needs +100%, an 80% fall needs +400%. That's why deep drawdowns and high leverage are so deadly.",
     "**\"95% VaR is $16,000, so the most I can lose is $16,000.\"** — VaR is only a threshold: roughly one day in twenty will be worse, and it doesn't say how much worse. For the average loss past the threshold, look at expected shortfall — and fat tails make normal VaR understate the risk further.",
     "**\"The higher the Sharpe ratio, the safer the strategy.\"** — Sharpe can't see the tails. Strategies that are smooth most of the time and occasionally blow up (such as selling volatility) often have beautiful Sharpe ratios right before the blowup. A Sharpe persistently above 1 should first make you look for hidden tail risk or data problems.",
     "**\"Bitcoin always came back after its crashes, so drawdowns aren't really a risk.\"** — The recoveries are historical fact, but the metrics look backward and guarantee nothing. And if you're forced to sell in the middle of a drawdown (because of leverage, or because you need the cash), you never get to the recovery. Surviving the drawdown matters more than whether it eventually recovers.",
@@ -157,7 +162,7 @@ And a good doctor never looks at just one number, and never concludes from past 
         "12%",
       ],
       answer: 1,
-      explain: "Annualized ≈ daily × √252 ≈ 1% × 15.87 ≈ 15.9%. **Volatility grows with the square root of time**, because the variances of independent daily returns add linearly.",
+      explain: "\\(\\text{Annualized} \\approx \\text{daily} \\times \\sqrt{252} \\approx 1\\% \\times 15.87 \\approx 15.9\\%\\). **Volatility grows with the square root of time**, because the variances of independent daily returns add linearly.",
     },
     {
       q: "An investment has fallen 80%. How much does it need to rise to get back to its old high?",
@@ -168,7 +173,7 @@ And a good doctor never looks at just one number, and never concludes from past 
         "500%",
       ],
       answer: 2,
-      explain: "Break-even gain = 1/(1 − 0.8) − 1 = 5 − 1 = 400%. The remaining 20 has to become 100, a fivefold increase. **The deeper the loss, the harder the recovery — non-linearly.**",
+      explain: "\\(\\text{Break-even gain} = \\dfrac{1}{1 - 0.8} - 1 = 5 - 1 = 400\\%\\). The remaining 20 has to become 100, a fivefold increase. **The deeper the loss, the harder the recovery — non-linearly.**",
     },
     {
       q: "Fund A returns 10% with 15% volatility; Fund B returns 7% with 6% volatility. The risk-free rate is 4%. Which has the higher Sharpe ratio?",
@@ -179,7 +184,7 @@ And a good doctor never looks at just one number, and never concludes from past 
         "B: 0.50 versus 0.40",
       ],
       answer: 3,
-      explain: "A = (10% − 4%)/15% = 0.40; B = (7% − 4%)/6% = 0.50. **B earns more per unit of risk**, and if it can be levered at a reasonable cost, it can beat A at the same volatility.",
+      explain: "\\(A = \\dfrac{10\\% - 4\\%}{15\\%} = 0.40\\); \\(B = \\dfrac{7\\% - 4\\%}{6\\%} = 0.50\\). **B earns more per unit of risk**, and if it can be levered at a reasonable cost, it can beat A at the same volatility.",
     },
     {
       q: "A $1 million portfolio has a 95% one-day VaR of $16,450. Which reading is correct?",
@@ -201,7 +206,7 @@ And a good doctor never looks at just one number, and never concludes from past 
         "Because regulators forbid computing the volatility of preferreds",
       ],
       answer: 1,
-      explain: "For preferreds and converts, the key is \"**if Bitcoin drops another X%, how many times covered is each layer?**\" (the BTC Rating of Stage 16.5) plus dividend coverage (Stage 16.6) — the drawdown idea applied as a stress test.",
+      explain: "For preferreds and converts, the key is \"**if Bitcoin drops another \\(X\\%\\), how many times covered is each layer?**\" (the BTC Rating of Stage 16.5) plus dividend coverage (Stage 16.6) — the drawdown idea applied as a stress test.",
     },
   ],
 

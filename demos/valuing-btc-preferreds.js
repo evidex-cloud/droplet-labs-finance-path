@@ -1,8 +1,11 @@
 // 交互演示：比特币支撑优先股的“五把尺子”计算器——收益率、利差、久期、赎回、信用。
 // 预设：橙子公司 Orange-F / Orange-D（AUTHORING §0.2）与 STRC（2026-08-21/23 的真实数据，来自 Strategy FWP）。
 // 全部计算走 _fin.js：perpetuity / bondRisk / priceChangeApprox / bondYield / btcRiskProb / btcCredit / btcFloorPrice。
-import { perpetuity, bondRisk, priceChangeApprox, bondYield, btcRiskProb, btcCredit, btcFloorPrice, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { perpetuity, bondRisk, priceChangeApprox, bondYield, btcRiskProb, btcCredit, btcFloorPrice, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 , → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -123,11 +126,13 @@ export default function mount(root, lang) {
       ],
       lo: 4, hi: 20, xlabel: T("要求收益率（%）", "Required yield (%)"), markerX: y * 100, markerLabel: T("当前", "now"), uid: "vbp",
     });
-    const legend = [["var(--orange)", T("价格 = 股息 ÷ 收益率", "price = dividend ÷ yield")], ["var(--blue)", T("面值 100 美元", "$100 stated amount")]];
+    const legend = [["var(--orange)", tex(String.raw`\text{${T("价格", "price")}} = \dfrac{\text{${T("股息", "dividend")}}}{\text{${T("收益率", "yield")}}}`)],["var(--blue)", T("面值 100 美元", "$100 stated amount")]];
     if (cap) legend.splice(1, 0, ["var(--red)", T("赎回价（封顶）", "call price (cap)")]);
     q("#vbp-chart").innerHTML = `<div class="demo-label">${T("永续优先股的价格—收益率曲线", "Price–yield curve of a perpetual preferred")}</div>` + chartBlock(res, legend);
 
     const lines = [];
+    lines.push(`${T("当期收益率：", "Current yield: ")}${tex(String.raw`y = \dfrac{D}{P} = \dfrac{${texv(fmtNum(D, 2))}}{${texv(fmtNum(P, 2))}} = ${texv(fmtPct(y, 2))}`)}${st.floater ? "" : T("；冲击后：", "; after the shock: ")}${st.floater ? "" : tex(String.raw`P' = \dfrac{D}{y + \Delta y} = \dfrac{${texv(fmtNum(D, 2))}}{${texv(fmtPct(y + dy, 2))}} = ${texv(fmtUsd(perpetuity(D, y + dy), 2))}`)}${T("。", ".")}`);
+    lines.push(`${tex(String.raw`\text{${T("BTC 地板价", "BTC Floor Price")}} = \dfrac{${texv(fmtUsd(st.btc, 0))}}{${texv(fmtNum(st.rating, 2))}} = ${texv(fmtUsd(floor, 0))}`)}${T("；", "; ")}${tex(String.raw`\text{BTC Credit} = \dfrac{-\ln(1 - ${texv(fmtPct(bRisk, 2))})}{${texv(fmtNum(dur, 1))}} = ${texv(fmtNum(bCredit * 10000, 0))}\ \text{bp}`)}${T("。", ".")}`);
     lines.push(`${T("收益率冲击", "A shock of")} ${st.shock > 0 ? "+" : ""}${st.shock} bp${T("：精确价格", ": exact price")} ${fmtUsd(pShock, 2)}${T("，久期+凸性近似", ", duration-plus-convexity estimate")} ${fmtUsd(pApprox, 2)}${T("。", ".")}`);
     if (st.floater) lines.push(`<span class="warn">${T("浮动模式假设公司每月及时调息把价格拉回面值——这是管理层的选择，不是合约义务；Strategy 2026-06-29 的政策说不会仅因低于面值而加息。", "Variable mode assumes the issuer resets monthly to pull the price back to par. That is a management choice, not a contractual duty; Strategy's 2026-06-29 policy says it will not raise the rate merely because the price is below par.")}</span>`);
     if (st.call && ytc < y) lines.push(`<span class="warn">${T("价格高于赎回价：赎回收益率", "Price is above the call: yield to call")} ${fmtPct(ytc, 2)} ${T("低于当期收益率", "is below current yield")} ${fmtPct(y, 2)}${T("，按最差收益率比较。", "; compare on yield to worst.")}</span>`);

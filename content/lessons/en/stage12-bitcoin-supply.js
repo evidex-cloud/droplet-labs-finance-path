@@ -35,17 +35,17 @@ There is a new-era angle too. Bitcoin's total supply is capped — **but the sha
   mechanics: `
 ### ① The issuance schedule: block rewards, 210,000 blocks and a geometric series
 
-New bitcoin has exactly one source: the first, special transaction in each block (the coinbase transaction), which the miner who found the block writes to itself. Its amount equals **the block subsidy plus all the fees from the transactions in that block**. The subsidy follows three rules:
+New bitcoin has exactly one source: the first, special transaction in each block (the coinbase transaction), which the miner who found the block writes to itself. Its amount is \\(\\textbf{block subsidy} + \\textbf{all the fees in that block}\\). The subsidy follows three rules:
 
 - It started at 50 BTC.
-- It halves every 210,000 blocks. At an average of 10 minutes per block, 210,000 × 10 minutes ≈ 1,458 days, or about four years.
+- It halves every 210,000 blocks. At an average of 10 minutes per block, \\(210{,}000 \\times 10\\ \\text{minutes} \\approx 1{,}458\\ \\text{days}\\), or about four years.
 - It is computed in satoshis and drops to zero once it falls below one satoshi.
 
 The total is a geometric series:
 
 $$
-Total = 210,000 × 50 × (1 + 1/2 + 1/4 + 1/8 + …)
-      = 210,000 × 50 × 2 = 21,000,000 BTC
+\\text{Total} = 210{,}000 \\times 50 \\times \\left(1 + \\frac{1}{2} + \\frac{1}{4} + \\frac{1}{8} + \\cdots\\right)
+\\text{Total} = 210{,}000 \\times 50 \\times 2 = 21{,}000{,}000\\ \\text{BTC}
 $$
 
 (Because of rounding to whole satoshis the true cap is a hair under 21 million — about 20,999,999.98 coins.) The shape of this series implies something people often miss: **issuance is heavily front-loaded**. The first four years produced 50% of all coins, the first eight 75%, the first twelve 87.5% and the first sixteen 93.75%. Around 2035 more than 99% will have been mined, and the last 1% will take another century and more.
@@ -64,9 +64,14 @@ Contrast conventional money. The Fed has no concept of a “total”; it targets
 <tr><td>5th halving (estimated)</td><td>around April 2028</td><td>1,050,000</td><td>1.5625</td><td>about 20.34M</td><td>about 0.4%</td></tr>
 </table>
 
-The last column is bitcoin's **supply inflation rate**: subsidy × roughly 52,560 blocks a year ÷ the existing stock. After the 2024 halving, for example: 3.125 × 52,560 ≈ 164,250 coins ÷ about 19.7 million ≈ **0.83%**.
+The last column is bitcoin's **supply inflation rate**, computed as below (there are roughly 52,560 blocks a year); the second line is the example right after the 2024 halving:
 
-**As of September 26, 2026**, the block height was about 968,619 and about 20.09 million coins had been mined — roughly **95.7%** of the cap (live figures from blockchain.info). By most estimates the 20-millionth bitcoin was mined around March 2026. At the late-September 2026 price of about $84,000, the roughly 450 new coins minted each day (3.125 × 144 blocks) were worth about $38 million, or about $13.8 billion a year — the “new supply” miners must either sell or hold.
+$$
+\\text{supply inflation rate} = \\frac{\\text{subsidy} \\times 52{,}560}{\\text{existing stock}}
+\\text{supply inflation rate} = \\frac{3.125 \\times 52{,}560}{19.7\\ \\text{million}} \\approx \\frac{164{,}250}{19.7\\ \\text{million}} \\approx 0.83\\%
+$$
+
+**As of September 26, 2026**, the block height was about 968,619 and about 20.09 million coins had been mined — roughly **95.7%** of the cap (live figures from blockchain.info). By most estimates the 20-millionth bitcoin was mined around March 2026. At the late-September 2026 price of about $84,000, the roughly 450 new coins minted each day (\\(3.125 \\times 144\\) blocks) were worth about $38 million, or about $13.8 billion a year — the “new supply” miners must either sell or hold.
 
 <figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Bitcoin's cumulative supply: the slope halves every four years, approaching 21M</text><line x1="60" y1="50" x2="600" y2="50" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/><text x="600" y="44" text-anchor="end" font-size="11" fill="var(--red)">Cap: 21M</text><line x1="60" y1="230" x2="600" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="60" y1="50" x2="60" y2="230" stroke="var(--line)" stroke-width="1.5"/><polyline points="60,230 125.8,140 186.6,95 252.4,72.5 318.2,61.3 385.7,55.7 453.2,52.8 520.7,51.4 600,50.7" fill="none" stroke="var(--btc)" stroke-width="3"/><g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="60" y="246">2009</text><text x="125.8" y="246">2012</text><text x="186.6" y="246">2016</text><text x="252.4" y="246">2020</text><text x="318.2" y="246">2024</text><text x="385.7" y="246">2028</text><text x="453.2" y="246">2032</text><text x="520.7" y="246">2036</text></g><g font-size="10" fill="var(--btc)" text-anchor="middle" font-weight="600"><text x="93" y="264">50</text><text x="156" y="264">25</text><text x="219.5" y="264">12.5</text><text x="285.3" y="264">6.25</text><text x="352" y="264">3.125</text><text x="419.5" y="264">1.5625</text></g><text x="22" y="264" font-size="10" fill="var(--muted)">Subsidy</text><g font-size="10" fill="var(--muted)"><text x="54" y="143" text-anchor="end">10.5M</text><text x="54" y="98" text-anchor="end">15.75M</text><text x="54" y="233" text-anchor="end">0</text></g><circle cx="358.7" cy="57.8" r="5" fill="var(--orange)"/><text x="366" y="78" font-size="11" fill="var(--orange-ink)" font-weight="600">Sep 2026: about 20.09M (95.7%)</text><text x="320" y="284" text-anchor="middle" font-size="11" fill="var(--ink)">The slope of each segment is that era's block subsidy; each kink is a halving</text></svg><figcaption>The supply curve is a chain of straight segments: half of all coins in the first four years, then half of the remainder every four years after.</figcaption></figure>
 
@@ -87,7 +92,7 @@ Every halving cuts miners' subsidy income in half overnight for the same hash po
 
 ### ④ Stock-to-flow: the rise and fall of a popular model
 
-The **stock-to-flow ratio** (S2F) is the existing stock divided by annual new production — “how many years, at the current pace, would it take to produce the entire existing stock again.” It measures **how quickly new supply dilutes the old**:
+The **stock-to-flow ratio** (S2F) is the existing stock divided by annual new production, \\(\\mathrm{S2F} = \\dfrac{\\text{existing stock}}{\\text{annual new supply}}\\) — “how many years, at the current pace, would it take to produce the entire existing stock again.” It measures **how quickly new supply dilutes the old**:
 
 <table>
 <tr><th>Asset</th><th>Stock</th><th>New per year</th><th>S2F (years)</th></tr>
@@ -96,7 +101,7 @@ The **stock-to-flow ratio** (S2F) is the existing stock divided by annual new pr
 <tr><td>Bitcoin (after the 2028 halving, est.)</td><td>about 20.34M coins</td><td>about 82,000 coins</td><td>about 248</td></tr>
 </table>
 
-By this yardstick, **bitcoin became “harder” than gold after the 2024 halving**. In 2019 a pseudonymous analyst called PlanB published a model that regressed bitcoin's total market value on its S2F, finding roughly “ln(market value) ≈ 3.3 × ln(S2F) + 14.6,” and predicted that the price would jump to a new plateau after each halving. The model became famous during the 2020–2021 bull market: plugging in the 2020–2024 era's S2F of about 56 gives a price around $55,000, and bitcoin went on to touch about $69,000 in November 2021.
+By this yardstick, **bitcoin became “harder” than gold after the 2024 halving**. In 2019 a pseudonymous analyst called PlanB published a model that regressed bitcoin's total market value on its S2F, finding roughly \\(\\ln(\\text{market value}) \\approx 3.3 \\times \\ln(\\mathrm{S2F}) + 14.6\\), and predicted that the price would jump to a new plateau after each halving. The model became famous during the 2020–2021 bull market: plugging in the 2020–2024 era's S2F of about 56 gives a price around $55,000, and bitcoin went on to touch about $69,000 in November 2021.
 
 Then the model broke. After FTX collapsed in November 2022, bitcoin fell to about $15,500 — roughly three-quarters below the model value — and stayed below it for a long time. Using the same formula, the post-2024 S2F of about 120 implies a price on the order of $800,000. The actual all-time high in October 2025 was about $126,000, and in late September 2026 the price was about $84,000, roughly a tenth of the model value. The critics' arguments are strong:
 
@@ -119,7 +124,7 @@ S2F is still a useful *description*: it tells you accurately how small bitcoin's
 - **An exact circulating supply.** Many early users lost their keys; common estimates put permanently lost coins at 3–4 million. Another million or so are believed to be Satoshi-era coins that have never moved. The “effective supply” is smaller than 20.09 million, which is the bullish side. But if those coins ever move — for example if quantum computers crack old addresses (Stage 12.6) — it turns into the bearish side.
 - **A stable value.** Fixed supply plus fickle demand means big price swings, and something whose price swings wildly is hard to use as a unit of account.
 - **A fair distribution.** Issuance was front-loaded: half of all coins existed by the end of 2012, when very few people were involved and mining was cheap. Supporters reply that anyone could join for free back then — there was no pre-mine and no private sale. Critics answer that early holders still got an enormous head start.
-- **Freedom from a “deflationary spiral.”** Keynesians worry that if money only ever gains value, people hoard rather than spend, and debtors' real burdens keep growing (the flip side of Stage 1.4). Supporters reply that bitcoin divides almost endlessly (1 BTC = 100 million sats) and that the late-nineteenth-century US grew quickly while prices gently fell. The debate is not settled.
+- **Freedom from a “deflationary spiral.”** Keynesians worry that if money only ever gains value, people hoard rather than spend, and debtors' real burdens keep growing (the flip side of Stage 1.4). Supporters reply that bitcoin divides almost endlessly (\\(1\\ \\text{BTC} = 100\\ \\text{million sats}\\)) and that the late-nineteenth-century US grew quickly while prices gently fell. The debate is not settled.
 
 The lesson in one sentence: **Bitcoin locks the quantity in code and leaves every adjustment to the price; its supply inflation is already below gold's and halves again every four years, but scarcity is only half the story of value — the other half is demand, which is where Stage 12.3 picks up.**
 `,
@@ -156,7 +161,7 @@ That is why spring water's price swings so hard: when more people want water, th
         "3.125 BTC; about 164,000 coins",
       ],
       answer: 3,
-      explain: "The subsidy fell from 6.25 to **3.125 BTC**; 3.125 × 52,560 ≈ **164,250 coins a year**, about 0.8% of the stock. The next halving, around April 2028, cuts it to 1.5625.",
+      explain: "The subsidy fell from 6.25 to **3.125 BTC**; \\(3.125 \\times 52{,}560 \\approx 164{,}250\\ \\text{coins a year}\\), about 0.8% of the stock. The next halving, around April 2028, cuts it to 1.5625.",
     },
     {
       q: "Bitcoin's price surges and network hash power jumps with it. What most likely happens next?",

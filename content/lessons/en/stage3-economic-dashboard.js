@@ -47,7 +47,7 @@ As of September 2026 the dashboard reads **hot**. August 2026 payrolls rose by a
 The Bureau of Labor Statistics' monthly **Employment Situation** report actually comes from **two separate surveys**:
 
 - **The establishment survey** asks a large sample of businesses and government agencies about their payrolls. It produces the **monthly change in nonfarm payrolls** (NFP). Farm jobs are excluded because they're too seasonal.
-- **The household survey** asks about 60,000 households about their situation. It produces the **unemployment rate**, the participation rate and more. Unemployment rate = unemployed ÷ labor force (people with jobs + people looking for one). **People not looking for work don't count as unemployed**, so a low unemployment rate can partly reflect people giving up.
+- **The household survey** asks about 60,000 households about their situation. It produces the **unemployment rate**, the participation rate and more. \\(\\text{Unemployment rate} = \\dfrac{\\text{unemployed}}{\\text{labor force}}\\), where \\(\\text{labor force} = \\text{people with jobs} + \\text{people looking for one}\\). **People not looking for work don't count as unemployed**, so a low unemployment rate can partly reflect people giving up.
 
 The two surveys sometimes tell conflicting stories, so read them together. And watch the **revisions**: every report revises the previous two months of payrolls, and there's an annual "benchmark revision" too. A report that looks strong on the headline but sharply revises down the prior two months may, overall, be a weak report.
 
@@ -73,15 +73,15 @@ Stage 1.4 explained what inflation is; here we learn **how to read the inflation
 
 Two traps when reading inflation:
 
-- **Month-over-month vs year-over-year**: traders watch the **monthly** change most closely, especially monthly core CPI. A 0.2% monthly rate annualizes to about 2.4%; 0.4% annualizes to about 4.9%. The numbers look only 0.2 apart; the meaning is worlds apart.
+- **Month-over-month vs year-over-year**: traders watch the **monthly** change most closely, especially monthly core CPI. A 0.2% monthly rate annualizes to about \\((1.002)^{12} - 1 \\approx 2.4\\%\\); 0.4% annualizes to about \\((1.004)^{12} - 1 \\approx 4.9\\%\\). The numbers look only 0.2 apart; the meaning is worlds apart.
 - **Base effects**: the year-over-year rate is the accumulation of the last 12 monthly changes. If prices jumped in the same month last year, this year's annual rate can fall "automatically" even if prices rose a fair amount this month.
 
 ### ③ Activity and spending: PMIs, retail sales and jobless claims
 
 A **PMI (purchasing managers' index)** is a survey. It asks purchasing managers whether new orders, output, employment, delivery times and inventories are "better, the same, or worse" than last month. The math makes **50 the dividing line**:
 
-- PMI above 50: more firms report expansion than contraction;
-- PMI below 50: more firms report contraction;
+- \\(\\mathrm{PMI} > 50\\): more firms report expansion than contraction;
+- \\(\\mathrm{PMI} < 50\\): more firms report contraction;
 - the further from 50, the stronger and broader the change.
 
 In the US the most-watched are the ISM manufacturing and services PMIs, plus S&P Global's PMIs. PMIs are **fast** (out at the start of the month), **not revised**, and sub-indexes such as "new orders" and "prices paid" often lead the hard data. The catch: a PMI measures direction and breadth, not size. A PMI of 52 does not mean 2% growth.
@@ -94,13 +94,13 @@ Finally there are **nowcasts** such as the Atlanta Fed's GDPNow: a model that fe
 
 ### ④ Expectations and surprises: markets react only to what they didn't see coming
 
-<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The second a number drops: prices react only to the surprise (illustrative)</text><line x1="40" y1="110" x2="600" y2="110" stroke="var(--line)" stroke-width="1.5"/><text x="40" y="128" font-size="10" fill="var(--muted)">0</text><text x="596" y="128" text-anchor="end" font-size="10" fill="var(--muted)">payroll gain (thousands) 300</text><rect x="180" y="70" width="140" height="40" fill="var(--surface-2)" stroke="var(--line)"/><text x="250" y="62" text-anchor="middle" font-size="10.5" fill="var(--muted)">typical range of forecasts</text><line x1="250" y1="66" x2="250" y2="116" stroke="var(--blue)" stroke-width="2.5"/><text x="250" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--blue)">consensus 150</text><line x1="453" y1="60" x2="453" y2="116" stroke="var(--orange)" stroke-width="2.5"/><text x="453" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">actual 260</text><line x1="256" y1="92" x2="446" y2="92" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="350" y="86" text-anchor="middle" font-size="11" fill="var(--orange-ink)">surprise = +110</text><rect x="40" y="170" width="170" height="80" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="125" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--ink)">Already priced in</text><text x="125" y="215" text-anchor="middle" font-size="10.5" fill="var(--muted)">the expected 150 is already</text><text x="125" y="232" text-anchor="middle" font-size="10.5" fill="var(--muted)">in bond and stock prices</text><rect x="235" y="170" width="170" height="80" rx="8" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="320" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--orange-ink)">News = the surprise</text><text x="320" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">economy hotter than thought</text><text x="320" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">→ more hikes priced in</text><rect x="430" y="170" width="170" height="80" rx="8" fill="var(--red-soft)" stroke="var(--red)"/><text x="515" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--red)">Prices reset in seconds</text><text x="515" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">2-year yield ↑ the most</text><text x="515" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">10-year ↑; stocks depend</text><line x1="212" y1="210" x2="232" y2="210" stroke="var(--muted)" stroke-width="1.5"/><line x1="407" y1="210" x2="427" y2="210" stroke="var(--muted)" stroke-width="1.5"/><text x="320" y="272" text-anchor="middle" font-size="10.5" fill="var(--muted)">The bigger the surprise relative to normal forecast error, the bigger the price move</text></svg><figcaption>Before the release, the consensus is already in prices; at the release, only "actual minus consensus" is new information.</figcaption></figure>
+<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The second a number drops: prices react only to the surprise (illustrative)</text><line x1="40" y1="110" x2="600" y2="110" stroke="var(--line)" stroke-width="1.5"/><text x="40" y="128" font-size="10" fill="var(--muted)">0</text><text x="596" y="128" text-anchor="end" font-size="10" fill="var(--muted)">payroll gain (thousands) 300</text><rect x="180" y="70" width="140" height="40" fill="var(--surface-2)" stroke="var(--line)"/><text x="250" y="62" text-anchor="middle" font-size="10.5" fill="var(--muted)">typical range of forecasts</text><line x1="250" y1="66" x2="250" y2="116" stroke="var(--blue)" stroke-width="2.5"/><text x="250" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--blue)">consensus 150</text><line x1="453" y1="60" x2="453" y2="116" stroke="var(--orange)" stroke-width="2.5"/><text x="453" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">actual 260</text><line x1="256" y1="92" x2="446" y2="92" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="350" y="86" text-anchor="middle" font-size="11" fill="var(--orange-ink)">surprise = +110</text><rect x="40" y="170" width="170" height="80" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="125" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--ink)">Already priced in</text><text x="125" y="215" text-anchor="middle" font-size="10.5" fill="var(--muted)">the expected 150 is already</text><text x="125" y="232" text-anchor="middle" font-size="10.5" fill="var(--muted)">in bond and stock prices</text><rect x="235" y="170" width="170" height="80" rx="8" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="320" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--orange-ink)">News = the surprise</text><text x="320" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">economy hotter than thought</text><text x="320" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">→ more hikes priced in</text><rect x="430" y="170" width="170" height="80" rx="8" fill="var(--red-soft)" stroke="var(--red)"/><text x="515" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--red)">Prices reset in seconds</text><text x="515" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">2-year yield ↑ the most</text><text x="515" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">10-year ↑; stocks depend</text><line x1="212" y1="210" x2="232" y2="210" stroke="var(--muted)" stroke-width="1.5"/><line x1="407" y1="210" x2="427" y2="210" stroke="var(--muted)" stroke-width="1.5"/><text x="320" y="272" text-anchor="middle" font-size="10.5" fill="var(--muted)">The bigger the surprise relative to normal forecast error, the bigger the price move</text></svg><figcaption>Before the release, the consensus is already in prices; at the release, only \\(\\text{actual} - \\text{consensus}\\) is new information.</figcaption></figure>
 
 Before every major release, Bloomberg, Reuters and others survey dozens of economists and take the median forecast as the **consensus**. When the number comes out:
 
 $$
-Surprise = Actual − Consensus
-Standardized surprise = Surprise ÷ the usual forecast error for this release
+\\text{Surprise} = \\text{Actual} - \\text{Consensus}
+\\text{Standardized surprise} = \\frac{\\text{Surprise}}{\\text{usual forecast error for this release}}
 $$
 
 Why standardize? Because each release has a different "normal" miss. Payrolls off by 100,000 may be an ordinary miss; monthly core CPI off by 0.2 percentage point is a big one. Standardizing lets you compare how unexpected a number really was.
@@ -117,12 +117,13 @@ Rules of thumb:
 A data surprise travels to prices along a fixed chain:
 
 $$
-Data surprise → expected Fed rate path → Treasury yields → the discount rate on every asset
+\\text{Data surprise} \\to \\text{expected Fed rate path}
+\\to \\text{Treasury yields} \\to \\text{the discount rate on every asset}
 $$
 
 - **The 2-year Treasury is the most sensitive**: its yield is essentially the market's forecast of the average policy rate over the next two years. On September 25, 2026 the 2-year yielded about **4.81%**, well above the fed funds range of 3.75%–4.00%. That gap says the market expects more hikes; CNBC reported markets pricing roughly a two-in-three chance of another hike in October.
 - **The 10-year and 30-year** respond to policy expectations too, but also to the term premium, inflation expectations and Treasury supply (Stage 4.3, Stage 4.5). On September 15, 2026 the 10-year yield **closed above 5% for the first time**; by September 24 it was about 5.18%, its highest since 2007. The drivers cited in press coverage included "strong activity data" and a hawkish Fed.
-- **Bond prices**: run it through the standard example. Take a $1,000 bond with a 5% coupon and 10 years to maturity. If a strong jobs report pushes the 10-year yield from 5.00% to 5.10%, the bond's price falls from $1,000 to about $992 — 10 basis points, about −0.8% (the demo computes it).
+- **Bond prices**: run it through the standard example. Take a $1,000 bond with a 5% coupon and 10 years to maturity. If a strong jobs report pushes the 10-year yield from 5.00% to 5.10%, the bond's price falls from $1,000 to about $992 — 10 basis points, \\(\\dfrac{992}{1{,}000} - 1 \\approx -0.8\\%\\) (the demo computes it).
 - **Stocks**: depend on the regime (above). Growth stocks with high valuations and long "equity duration" are the most rate-sensitive (Stage 5.3).
 - **Bitcoin**: it trades 24/7, so when the numbers hit at 8:30 a.m. New York time, it is often **one of the first assets to move**. It's sensitive to real rates and liquidity (Stage 12.4), so hot inflation prints have often weighed on it.
 
@@ -165,7 +166,7 @@ Economic data is the weather, the economists' consensus is the forecast, and Tre
         "The market won't react at all",
       ],
       answer: 1,
-      explain: "**Surprise = actual − consensus = −40,000.** Prices already reflected 300,000, so 260,000 reads as \"weaker than thought\": expected hikes are scaled back and yields tend to fall.",
+      explain: "**\\(\\text{Surprise} = \\text{actual} - \\text{consensus} = -40{,}000\\).** Prices already reflected 300,000, so 260,000 reads as \"weaker than thought\": expected hikes are scaled back and yields tend to fall.",
     },
     {
       q: "Which measure defines the Fed's 2% inflation target?",
@@ -182,7 +183,7 @@ Economic data is the weather, the economists' consensus is the forecast, and Tre
         "It's actually a tiny surprise that markets ignore",
       ],
       answer: 0,
-      explain: "Monthly numbers look small but **annualize very differently**: (1.004)¹² − 1 ≈ 4.9% vs (1.002)¹² − 1 ≈ 2.4%. Relative to normal forecast error, 0.2 percentage point is a large standardized surprise.",
+      explain: "Monthly numbers look small but **annualize very differently**: \\((1.004)^{12} - 1 \\approx 4.9\\%\\) vs \\((1.002)^{12} - 1 \\approx 2.4\\%\\). Relative to normal forecast error, 0.2 percentage point is a large standardized surprise.",
     },
     {
       q: "Which Treasury yield is most sensitive to data surprises, especially shifts in expected Fed policy?",
@@ -199,7 +200,7 @@ Economic data is the weather, the economists' consensus is the forecast, and Tre
         "Markets expect the Fed to keep hiking",
       ],
       answer: 3,
-      explain: "The 2-year yield ≈ the expected average policy rate over two years. Sitting well above today's policy rate, it says the market **expects more hikes** — at the time, roughly a two-in-three chance of another hike in October.",
+      explain: "\\(\\text{2-year yield} \\approx \\text{expected average policy rate over two years}\\). Sitting well above today's policy rate, it says the market **expects more hikes** — at the time, roughly a two-in-three chance of another hike in October.",
     },
   ],
 

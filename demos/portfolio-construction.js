@@ -1,7 +1,7 @@
 // 交互演示：组合构建实验台——五类资产（股票、中期债、长期国债、黄金、比特币），
 // 一键套用 60/40、风险平价、全天候（简化版）等配方，切换“相关性体制”，加杠杆与借款利率，
 // 看组合波动率、夏普比率、各资产风险贡献，以及在 2022 式与 2008 式情景下的损益。
-import { sharpe, fmtPct, clamp } from "./_fin.js";
+import { sharpe, fmtPct, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -32,7 +32,7 @@ export default function mount(root, lang) {
     { k: "s100", label: T("100% 股票", "100% stocks"), w: [100, 0, 0, 0, 0], lev: 1 },
     { k: "6040", label: "60/40", w: [60, 40, 0, 0, 0], lev: 1 },
     { k: "rp", label: T("风险平价（股/债）", "Risk parity (stocks/bonds)"), w: invVol([0, 1]), lev: 1 },
-    { k: "rpl", label: T("风险平价 × 1.4 杠杆", "Risk parity × 1.4 leverage"), w: invVol([0, 1]), lev: 1.4 },
+    { k: "rpl", label: `${T("风险平价", "Risk parity")} ${tex(String.raw`1.4\times`)} ${T("杠杆", "leverage")}`, w: invVol([0, 1]), lev: 1.4 },
     { k: "aw", label: T("全天候（大众简化版）", "All Weather (popular simplified)"), w: [30, 15, 40, 15, 0], lev: 1 },
     { k: "btc", label: T("60/40 + 3% 比特币", "60/40 + 3% Bitcoin"), w: [58.2, 38.8, 0, 0, 3], lev: 1 },
   ];
@@ -69,12 +69,12 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-log" id="pc-log"></div>
       <p class="demo-meta">${T(
-        "教学假设：股票 8%/16%，中期债 5%/7%，长期国债 5.5%/13%，黄金 5%/15%，比特币 σ 60%（收益由你设定）。情景损益为约数：2022 式 = 股 −18%、中期债 −13%、长债 −30%、黄金 0%、比特币 −64%；2008 式 = 股 −37%、中期债 +5%、长债 +25%、黄金 +5%，比特币当时不存在，按假设 −50% 计。不构成投资建议。",
-        "Teaching assumptions: stocks 8%/16%, intermediate bonds 5%/7%, long Treasuries 5.5%/13%, gold 5%/15%, Bitcoin σ 60% (return is your call). Scenario P&L is approximate: 2022-style = stocks −18%, intermediate bonds −13%, long bonds −30%, gold 0%, Bitcoin −64%; 2008-style = stocks −37%, intermediate bonds +5%, long bonds +25%, gold +5%, and Bitcoin (which didn't exist yet) assumed at −50%. Not investment advice."
+        "教学假设：股票 8%/16%，中期债 5%/7%，长期国债 5.5%/13%，黄金 5%/15%，比特币 σ 60%（收益由你设定）。情景损益为约数：2022 式——股 −18%、中期债 −13%、长债 −30%、黄金 0%、比特币 −64%；2008 式——股 −37%、中期债 +5%、长债 +25%、黄金 +5%，比特币当时不存在，按假设 −50% 计。不构成投资建议。",
+        "Teaching assumptions: stocks 8%/16%, intermediate bonds 5%/7%, long Treasuries 5.5%/13%, gold 5%/15%, Bitcoin σ 60% (return is your call). Scenario P&L is approximate: 2022-style — stocks −18%, intermediate bonds −13%, long bonds −30%, gold 0%, Bitcoin −64%; 2008-style — stocks −37%, intermediate bonds +5%, long bonds +25%, gold +5%, and Bitcoin (which didn't exist yet) assumed at −50%. Not investment advice."
       )}</p>
       <p class="demo-tip">${T(
-        "先点“60/40”：股票的深色条（风险贡献）远长于浅色条（资金权重）。再点“风险平价”，两条深色条变得一样长；点“× 1.4 杠杆”，波动率回到约 10.5%，然后把借款利率拉到 6%，看杠杆的好处怎么消失。最后切到“高通胀体制”，看 2022 式情景里哪些配方两条腿一起断——那一栏比波动率更诚实。",
-        "Click “60/40” first: the stocks' dark bar (risk contribution) dwarfs its light bar (dollar weight). Then “Risk parity”: the dark bars even out. Try “× 1.4 leverage”: volatility returns to about 10.5% — now push the borrowing rate to 6% and watch the benefit evaporate. Finally switch to the high-inflation regime and look at the 2022-style column: it shows which recipes break on both legs at once, more honestly than volatility does."
+        `先点“60/40”：股票的深色条（风险贡献）远长于浅色条（资金权重）。再点“风险平价”，两条深色条变得一样长；点“${tex(String.raw`1.4\times`)} 杠杆”，波动率回到约 10.5%，然后把借款利率拉到 6%，看杠杆的好处怎么消失。最后切到“高通胀体制”，看 2022 式情景里哪些配方两条腿一起断——那一栏比波动率更诚实。`,
+        `Click “60/40” first: the stocks' dark bar (risk contribution) dwarfs its light bar (dollar weight). Then “Risk parity”: the dark bars even out. Try “${tex(String.raw`1.4\times`)} leverage”: volatility returns to about 10.5% — now push the borrowing rate to 6% and watch the benefit evaporate. Finally switch to the high-inflation regime and look at the 2022-style column: it shows which recipes break on both legs at once, more honestly than volatility does.`
       )}</p>
     </div>`;
 
@@ -121,7 +121,8 @@ export default function mount(root, lang) {
     if (S.lev > 1) {
       const gain = r.ret - r.ret0;
       lines.push(`${T("杠杆", "Leverage")} ${S.lev.toFixed(2)}× ${T("把收益从", "moves return from")} ${fmtPct(r.ret0, 2)} ${T("变成", "to")} ${fmtPct(r.ret, 2)} (${gain >= 0 ? "+" : ""}${fmtPct(gain, 2)})${T("，", ", ")}${T("波动率从", "volatility from")} ${fmtPct(r.vol0, 2)} ${T("变成", "to")} ${fmtPct(r.vol, 2)}${T("。", ".")}`
-        + (r.ret0 <= S.rb / 100 ? ` <span class="bad">${T("借款利率已高于组合收益：加杠杆只会降低收益。", "The borrowing rate now exceeds the portfolio's return: leverage only lowers it.")}</span>` : ""));
+        + `<div>${tex(String.raw`\text{${T("杠杆后收益", "Levered return")}} = ${S.lev.toFixed(2)} \times ${(r.ret0 * 100).toFixed(2)}\% - ${(S.lev - 1).toFixed(2)} \times ${S.rb.toFixed(2)}\% = ${(r.ret * 100).toFixed(2)}\%`)}</div>`
+        + (r.ret0 <= S.rb / 100 ?` <span class="bad">${T("借款利率已高于组合收益：加杠杆只会降低收益。", "The borrowing rate now exceeds the portfolio's return: leverage only lowers it.")}</span>` : ""));
     }
     if (r.s22 < -0.12) lines.push(`<span class="bad">${T("2022 式情景亏损", "2022-style scenario loss")} ${fmtPct(r.s22, 1)}${T("：", ": ")}${T("股债同跌时，靠“债券保护股票”的配方会两条腿一起断。", "when stocks and bonds fall together, recipes that rely on bonds protecting stocks break on both legs.")}</span>`);
     q("#pc-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

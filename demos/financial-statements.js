@@ -1,6 +1,6 @@
 // 交互演示：迷你三表模型——改一个假设，利润表、现金流量表、资产负债表同时动，且永远平衡；
 // 打开“持有比特币”，看公允价值收益怎样让利润暴涨而现金纹丝不动。
-import { fmtNum, fmtPct } from "./_fin.js";
+import { fmtNum, fmtPct, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -8,6 +8,8 @@ export default function mount(root, lang) {
   const K = en ? 10 : 1; // 内部单位：万元；英文显示为 $ 千（×10）
   const unit = T("万元", "$K");
   const f = (x) => fmtNum(x * K, 0);
+  const ft = (x) => f(x).replace(/,/g, "{,}"); // 公式里的千分位
+  const eqTex = tex(String.raw`\text{${T("资产", "assets")}} = \text{${T("负债", "liabilities")}} + \text{${T("权益", "equity")}}`);
 
   const st = { rev: 1000, gm: 0.6, opex: 350, capex: 100, dwc: 30, div: 40, repay: 20, dat: false, btc0: 1000, chg: 0.1, issue: 0 };
   const DEP = 50, RATE = 0.08, TAX = 0.25;
@@ -51,9 +53,9 @@ export default function mount(root, lang) {
       <div class="demo-grid-3" id="fsd-tables"></div>
       <div class="demo-block"><div class="demo-log" id="fsd-log"></div></div>
       <p class="demo-tip">${T(
-        "试三件事：① 把“营运资本增加”拖到 200——利润不变，现金却大幅流出；② 把资本开支拖到 300——净利润不变，自由现金流变负；③ 打开 DAT 模式、币价 +40%——净利润暴涨，经营现金流一分不多。每一次，“资产 = 负债 + 权益”都保持平衡：这就是三张表之间那四根线。",
-        "Try three things: ① drag “increase in working capital” to 200 — profit does not move but cash pours out; ② push capex to 300 — net income is unchanged while free cash flow turns negative; ③ switch on DAT mode with bitcoin +40% — net income explodes while operating cash flow gains nothing. Every time, “assets = liabilities + equity” stays balanced: those are the four threads between the statements."
-      )}</p>
+        "试三件事：① 把“营运资本增加”拖到 200——利润不变，现金却大幅流出；② 把资本开支拖到 300——净利润不变，自由现金流变负；③ 打开 DAT 模式、币价 +40%——净利润暴涨，经营现金流一分不多。每一次，“",
+        "Try three things: ① drag “increase in working capital” to 200 — profit does not move but cash pours out; ② push capex to 300 — net income is unchanged while free cash flow turns negative; ③ switch on DAT mode with bitcoin +40% — net income explodes while operating cash flow gains nothing. Every time, “"
+      )}${eqTex}${T("”都保持平衡：这就是三张表之间那四根线。", "” stays balanced: those are the four threads between the statements.")}</p>
     </div>`;
 
   const row = (lab, v, strong, color) => `<tr><td style="padding:3px 6px;${strong ? "font-weight:700;" : ""}">${lab}</td><td style="padding:3px 6px;text-align:right;${strong ? "font-weight:700;" : ""}${color ? "color:" + color + ";" : ""}">${f(v)}</td></tr>`;
@@ -106,11 +108,12 @@ export default function mount(root, lang) {
     const setV = (id, v) => { const el = root.querySelector(id); el.textContent = f(v) + " " + unit; el.className = "v " + (v >= 0 ? "pos" : "neg"); };
     setV("#fsd-ni", ni); setV("#fsd-fcf", fcf); setV("#fsd-dc", dCash);
     const ok = Math.abs(A - LE) < 1e-6;
-    root.querySelector("#fsd-bal").innerHTML = `<div class="demo-meta">${T("资产", "Assets")} ${f(A)} ${ok ? "=" : "≠"} ${T("负债 + 权益", "liabilities + equity")} ${f(LE)} <span class="pill ${ok ? "ok" : "bad"}">${ok ? T("平衡 ✓", "balanced ✓") : T("不平！", "unbalanced!")}</span></div>`;
+    root.querySelector("#fsd-bal").innerHTML = `<div class="demo-meta">${tex(String.raw`\text{${T("资产", "Assets")}} = ${ft(A)} ${ok ? "=" : "\\ne"} ${ft(LE)} = \text{${T("负债", "liabilities")}} + \text{${T("权益", "equity")}}`)} <span class="pill ${ok ? "ok" : "bad"}">${ok ? T("平衡 ✓", "balanced ✓") : T("不平！", "unbalanced!")}</span></div>`;
 
     const lines = [];
     const gap = ni - dCash;
-    lines.push(`${T("净利润", "Net income")} <b>${f(ni)}</b> vs ${T("现金净变化", "net change in cash")} <b>${f(dCash)}</b> → ${T("差额", "gap")} ${f(gap)} ${unit}`);
+    const par = (x) => (x < 0 ? `(${ft(x)})` : ft(x));
+    lines.push(tex(String.raw`\text{${T("净利润", "Net income")}} - \text{${T("现金净变化", "net change in cash")}} = ${ft(ni)} - ${par(dCash)} = ${ft(gap)}\ \text{${unit.replace("$", "\\$")}}`));
     if (st.dat && Math.abs(fvGain) > 0) {
       lines.push(`<span class="${fvGain >= 0 ? "warn" : "bad"}">${T("其中比特币公允价值变动贡献了 ", "Of which the bitcoin fair-value change contributes ")}${f(fvGain)}${T("：它进了利润表，没进银行账户。剔除后的经营利润是 ", ": it hit the income statement, not the bank account. Excluding it, operating profit is ")}${f(ni - fvGain)}${T("。", ".")}</span>`);
     }

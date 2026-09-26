@@ -1,6 +1,6 @@
 // 交互演示：政策冲击的传导沙盘（示意模型）——设定加息/降息幅度、期限溢价反应、固定利率房贷占比、央行信誉与信贷压力，
 // 看 2 年期、10 年期、房贷月供、股票估值、美元、产出缺口与通胀在 36 个月里怎么一步步反应，以及五条管道各贡献多少。
-import { npv, gordon, fmtPct, fmtUsd, fmtNum, clamp } from "./_fin.js";
+import { npv, gordon, fmtPct, fmtUsd, fmtNum, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -135,7 +135,7 @@ export default function mount(root, lang) {
       lines.push(`${T("产出缺口在第 " + troughM + " 个月触底，约", "The output gap bottoms in month " + troughM + ", at about")} <b>${pp(trough)}</b>${T("；金融价格在第 0 个月就已经动完了。", "; financial prices had finished moving in month 0.")}`);
       if (cumInf < -0.01) {
         const sr = cumGap / cumInf;
-        lines.push(`<span class="${sr > 1.5 ? "warn" : "ok"}">${T("牺牲率（36 个月累计产出损失 ÷ 累计通胀下降）约", "Sacrifice ratio (36-month cumulative output loss ÷ cumulative disinflation) about")} <b>${fmtNum(sr, 2)}</b>${T("——信誉越高，这个数越小。", " — the more credible the bank, the smaller this gets.")}</span>`);
+        lines.push(`<span class="${sr > 1.5 ? "warn" : "ok"}">${tex(String.raw`\text{${T("牺牲率", "sacrifice ratio")}} = \frac{\text{${T("36 个月累计产出损失", "36-month cumulative output loss")}}}{\text{${T("累计通胀下降", "cumulative disinflation")}}} = \frac{${fmtNum(-cumGap, 2)}}{${fmtNum(-cumInf, 2)}} \approx ${fmtNum(sr, 2)}`)}${T("——信誉越高，这个数越小。", " — the more credible the bank, the smaller this gets.")}</span>`);
       }
     }
     if (Math.abs(st.tp) >= 50) lines.push(`<span class="warn">${T("期限溢价变动了", "The term premium moved")} ${bp(st.tp)}${T("：10 年期的变化里，来自政策本身的只有", ": of the 10-year's move, only")} ${bp(st.shock * 0.45)}${T("。", " came from policy itself.")}</span>`);

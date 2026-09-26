@@ -69,7 +69,7 @@ This is the single most important switch. The figure shows one scenario — four
 
 The rules, precisely:
 
-- **Cumulative.** Unpaid dividends are recorded as arrears and **must be paid in full before any junior security receives anything.** Many terms also make the arrears **compound** (at the dividend rate or even higher), so the longer the skip, the bigger the debt. The F layer's four-quarter arrears = $10M + about $0.38M of compounding ≈ **$10.38M**.
+- **Cumulative.** Unpaid dividends are recorded as arrears and **must be paid in full before any junior security receives anything.** Many terms also make the arrears **compound** (at the dividend rate or even higher), so the longer the skip, the bigger the debt. \\(\\text{F layer's four-quarter arrears} = \\$10\\text{M} + \\text{about}\\ \\$0.38\\text{M of compounding} \\approx \\mathbf{\\$10.38\\text{M}}\\).
 - **Non-cumulative.** A dividend the board never declared is **never owed.** On resumption only the current dividend is due. A bank's Additional Tier 1 capital must be non-cumulative precisely so the bank genuinely keeps that cash in a crisis.
 
 For investors, the difference is less about "will the company eventually pay" than about **bargaining power.** Cumulative arrears are a mountain of debt that grows higher over time and stands in front of every junior security. If the company wants to pay a common dividend, issue a new junior preferred or buy back stock, it has to move that mountain first. Non-cumulative has no mountain — only a "current-period stopper" (no payments to juniors this quarter if this quarter's preferred dividend was skipped).
@@ -82,12 +82,14 @@ So **non-cumulative has to pay more.** Within one company, the non-cumulative la
 
 The call right is **a call option held by the issuer**, and it gives the preferred **negative convexity**:
 
-- When rates rise, the preferred falls like a perpetuity (Stage 6.2's $25 → $21.43).
-- When rates fall, it "should" rise to $30 ($1.50 ÷ 5%), but the issuer would redeem at $25 and issue new paper at 5%. So the market only pays roughly what it's worth held to the call date. If callable in five years, discounting at 5% gives about **$26.10**, far below $30.
+- When rates rise, the preferred falls like a perpetuity (Stage 6.2's \\(\\$25 \\to \\$21.43\\)).
+- When rates fall, it "should" rise to $30 (\\(\\$1.50 \\div 5\\% = \\$30\\)), but the issuer would redeem at $25 and issue new paper at 5%. So the market only pays roughly what it's worth held to the call date. If callable in five years, discounting at 5% gives about **$26.10**, far below $30.
+
+**Negative convexity**: it falls like a perpetual (full loss) but rises like a short bond (capped by the call price). So there are two yields to check — current yield and yield to call — and the worse of the two is the yield to worst:
 
 $$
-Negative convexity: falls like a perpetual (full loss), rises like a short bond (capped by the call price)
-Two yields to check: current yield (dividend ÷ price) and yield to call; the worse of the two = yield to worst
+\\text{current yield} = \\frac{\\text{dividend}}{\\text{price}}
+\\text{yield to worst} = \\min\\left(\\text{current yield},\\ \\text{yield to call}\\right)
 $$
 
 The practical rule: **for a callable preferred trading above its call price, look at yield to call, not current yield** — current yield overstates what you'll actually earn. When Stage 18.1 values DAT preferreds, it computes both.
@@ -109,7 +111,7 @@ There is one more small tooth: **voting rights triggered by prolonged arrears.**
 
 ### ⑤ Conversion, payment in kind and fundamental-change puts
 
-- **Convertible preferred.** Holders can exchange the preferred for common at a set ratio. For example, a $100 stated amount with a $25 conversion price converts into 4 common shares. It is "a preferred plus a call option on the common," so it can pay a lower dividend (investors trade income for upside). It is the same idea as the convertible bond in Stage 6.4, built on a preferred foundation instead of a debt foundation.
+- **Convertible preferred.** Holders can exchange the preferred for common at a set ratio. For example, a $100 stated amount with a $25 conversion price converts into \\(100 \\div 25 = 4\\) common shares. It is "a preferred plus a call option on the common," so it can pay a lower dividend (investors trade income for upside). It is the same idea as the convertible bond in Stage 6.4, built on a preferred foundation instead of a debt foundation.
 - **Payment in kind (PIK).** The terms let the company pay dividends in **additional securities** (more preferred or common shares) instead of cash. For the issuer it is a cash-saving valve; for the holder it means receiving paper that may have to be sold at a discount — and it means **diluting** everyone else.
 - **Fundamental-change put.** If the company is acquired, delisted or goes through a similar major change, holders can require the company to repurchase at the stated amount (plus unpaid dividends). It protects investors from finding themselves holding a claim on a completely different issuer.
 
@@ -121,7 +123,7 @@ Stage 6.2 worked out that a 6% perpetual fixed-rate preferred has a modified dur
 
 <table class="pm">
 <tr><th>Rate type</th><th>How it is set</th><th>Duration</th><th>Who bears rate risk</th></tr>
-<tr><td><b>Fixed</b></td><td>Par × fixed rate, forever</td><td>Very long (≈ 1/y)</td><td>The investor</td></tr>
+<tr><td><b>Fixed</b></td><td>\\(\\text{par} \\times \\text{fixed rate}\\), forever</td><td>Very long (\\(\\approx 1/y\\))</td><td>The investor</td></tr>
 <tr><td><b>Fixed-to-floating</b></td><td>Fixed for, say, 5 years, then reset to a benchmark (e.g. SOFR) + fixed spread</td><td>Roughly to the reset date</td><td>Mostly the issuer after the reset</td></tr>
 <tr><td><b>Variable (issuer-adjusted)</b></td><td>The issuer adjusts the rate periodically (e.g. monthly), aiming to keep the price near par</td><td>Very short (ideally)</td><td>Mostly the issuer — if it is willing and able to adjust</td></tr>
 </table>

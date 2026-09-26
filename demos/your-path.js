@@ -1,7 +1,10 @@
 // 交互演示：新金融路线规划器——选角色、起点、每周小时数，勾掉已掌握的技能，
 // 生成技能缺口条、按周排好的学习时间线（课内阶段 + 姊妹课程），并用 _fin.js 当场解出该角色的“第一道练习题”。
 // 小时数为示意估计；练习题数字用橙子公司（AUTHORING §0.2）与标准债券例子。
-import { coverageByLayer, mnavBasic, mnavDiluted, mnavEV, mnavNetBps, bondPrice, bondRisk, ammSwap, kelly, monthsCovered, fmtPct, fmtNum, fmtUsd, clamp } from "./_fin.js";
+import { coverageByLayer, mnavBasic, mnavDiluted, mnavEV, mnavNetBps, bondPrice, bondRisk, ammSwap, kelly, monthsCovered, fmtPct, fmtNum, fmtUsd, clamp, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位逗号 → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -92,21 +95,24 @@ export default function mount(root, lang) {
   // 第一道练习题：真算
   const exercise = () => {
     const nav = 1e9, layers = [{ name: T("可转债", "Converts"), claim: 150e6 }, { name: "Orange-F", claim: 100e6 }, { name: "Orange-D", claim: 50e6 }];
+    // 金额写成 LaTeX：中文用“亿”，英文用 $…M
+    const amt = (x) => T(String.raw`${+(x / 1e8).toFixed(2)}\ \text{亿}`, String.raw`\$${fmtNum(x / 1e6, 0)}\text{M}`);
     switch (st.role) {
       case "credit": {
         const c = coverageByLayer(nav * 0.2, layers);
         return [T("橙子公司：比特币 −80% 后，可转债、Orange-F、Orange-D 三层的 BTC 评级各是多少？", "Orange Corp: after bitcoin falls 80%, what are the BTC Ratings of the convertible, Orange-F and Orange-D layers?"),
-          c.map((r) => `${r.name} ${fmtNum(r.coverage, 2)}x`).join(" · ") + T("。F 层约 0.8 倍、D 层约 0.67 倍：都跌破 1 倍，已不被比特币完全覆盖。", ". F is about 0.8x and D about 0.67x: both below 1x, no longer fully covered by bitcoin.")];
+          tex(String.raw`\text{${T("BTC 评级", "BTC Rating")}} = \dfrac{\text{${T("BTC 储备", "BTC Reserve")}}}{\text{${T("本层 + 更优先层名义", "this layer + all senior notional")}}}`) + T("：", ": ") +
+          c.map((r) => `${r.name} ${tex(String.raw`\dfrac{${amt(nav * 0.2)}}{${amt(r.cum)}} = ${fmtNum(r.coverage, 2)}\times`)}`).join(" · ") + T("。F 层约 0.8 倍、D 层约 0.67 倍：都跌破 1 倍，已不被比特币完全覆盖。", ". F is about 0.8x and D about 0.67x: both below 1x, no longer fully covered by bitcoin.")];
       }
       case "dat": {
         const a = mnavBasic(1.5e9, 10000, 100000), b = mnavDiluted(15, 106e6, nav), c = mnavEV(1.5e9, 150e6, 150e6, 30e6, 10000, 100000), d = mnavNetBps(15, nav, 150e6, 150e6, 30e6, 100e6);
         return [T("橙子公司（股价 15 美元）的 mNAV，按四种口径分别是多少？", "What is Orange Corp's mNAV (share price $15) on each of the four definitions?"),
-          `${T("市值", "Market cap")} ${fmtNum(a, 2)}x · ${T("稀释", "Diluted")} ${fmtNum(b, 2)}x · ${T("企业价值", "EV")} ${fmtNum(c, 2)}x · ${T("股价 ÷ 每股净比特币", "Price ÷ net BTC per share")} ${fmtNum(d, 2)}x${T("。提 mNAV 必须说口径。", ". Always name the definition.")}`];
+          `${T("市值", "Market cap")} ${fmtNum(a, 2)}x · ${T("稀释", "Diluted")} ${fmtNum(b, 2)}x · ${T("企业价值", "EV")} ${fmtNum(c, 2)}x · ${tex(String.raw`\dfrac{\text{${T("股价", "price")}}}{\text{${T("每股净比特币", "net BTC per share")}}}`)} ${fmtNum(d, 2)}x${T("。提 mNAV 必须说口径。", ". Always name the definition.")}`];
       }
       case "macro": {
         const p0 = bondPrice(100, 0.05, 0.05, 30), p1 = bondPrice(100, 0.05, 0.06, 30), md = bondRisk(100, 0.05, 0.05, 30).modified;
         return [T("30 年期、5% 票息国债，收益率从 5% 升到 6%，价格变多少？修正久期是多少？", "A 30-year 5% Treasury: if its yield rises from 5% to 6%, how much does the price change, and what is its modified duration?"),
-          `${fmtNum(p0, 1)} → ${fmtNum(p1, 1)} ${T("（", "(")}${fmtPct(p1 / p0 - 1, 1)}${T("）", ")")} · ${T("修正久期", "modified duration")} ${fmtNum(md, 1)}`];
+          `${tex(String.raw`P_{5\%} = ${fmtNum(p0, 1)} \to P_{6\%} = ${fmtNum(p1, 1)}\ (${texv(fmtPct(p1 / p0 - 1, 1))})`)} · ${tex(String.raw`\text{${T("修正久期", "modified duration")}} \approx ${fmtNum(md, 1)}`)}`];
       }
       case "defi": {
         const r = ammSwap(1000, 1000000, 10);
@@ -116,17 +122,17 @@ export default function mount(root, lang) {
       case "tokenize": {
         const size = 15.9e9, bills = 7.25e12;
         return [T("代币化国债约 159 亿美元、国库券市场约 7.25 万亿美元：占比多少？若代币化让相当于规模 5% 的闲置抵押品缓冲得以释放，按 4.24% 融资成本每年省多少？", "Tokenized Treasuries of about $15.9B against a bill market of about $7.25T: what share is that? If tokenization frees an idle collateral buffer equal to 5% of that, what does it save per year at a 4.24% funding cost?"),
-          `${T("占比", "Share")} ${fmtPct(size / bills, 2)} · ${T("每年约省", "annual saving about")} ${fmtUsd(size * 0.05 * 0.0424, 0)}`];
+          `${T("占比", "Share")} ${tex(String.raw`\dfrac{${T(String.raw`159\ \text{亿}`, String.raw`\$15.9\text{B}`)}}{${T(String.raw`7.25\ \text{万亿}`, String.raw`\$7.25\text{T}`)}} \approx ${texv(fmtPct(size / bills, 2))}`)} · ${T("每年约省", "annual saving about")} ${tex(String.raw`${T(String.raw`159\ \text{亿}`, String.raw`\$15.9\text{B}`)} \times 5\% \times 4.24\% \approx ${texv(fmtUsd(size * 0.05 * 0.0424, 0))}`)}`];
       }
       case "risk": {
         const k = kelly(0.55, 1);
         return [T("一个胜率 55%、赔率 1:1 的机会，凯利仓位是多少？半凯利呢？年化波动率 60% 的资产，波动率拖累约多少？", "A bet with a 55% win rate at even odds: what is the Kelly fraction, and half-Kelly? For an asset with 60% volatility, roughly how big is the volatility drag?"),
-          `${T("凯利", "Kelly")} ${fmtPct(k, 0)} · ${T("半凯利", "half-Kelly")} ${fmtPct(k / 2, 0)} · ${T("拖累", "drag")} ≈ ${fmtPct(0.6 * 0.6 / 2, 0)}`];
+          `${T("凯利", "Kelly")} ${tex(String.raw`f^{*} = \dfrac{bp - (1 - p)}{b} = \dfrac{1 \times 0.55 - 0.45}{1} = ${texv(fmtPct(k, 0))}`)} · ${T("半凯利", "half-Kelly")} ${tex(String.raw`\dfrac{f^{*}}{2} = ${texv(fmtPct(k / 2, 0))}`)} · ${T("拖累", "drag")} ${tex(String.raw`\approx \dfrac{\sigma^{2}}{2} = \dfrac{0.6^{2}}{2} = ${texv(fmtPct(0.6 * 0.6 / 2, 0))}`)}`];
       }
       default: {
         const m = monthsCovered(30e6, 15e6);
         return [T("持有一家 DAT 的优先股前先问：年度股息 1,500 万、美元储备 3,000 万，能覆盖几个月？这张优先股排在第几层？", "Before owning a DAT preferred, ask: with $15M of annual dividends and a $30M USD reserve, how many months are covered? Which layer is this preferred in?"),
-          `${fmtNum(m, 0)} ${T("个月；Orange-F 排在可转债之后、Orange-D 之前（BTC 评级 4.0x）。本课只讲框架，不构成投资建议。", "months; Orange-F ranks after the converts and ahead of Orange-D (BTC Rating 4.0x). Frameworks only, not investment advice.")}`];
+          `${tex(String.raw`\dfrac{${T(String.raw`3{,}000\ \text{万}`, String.raw`\$30\text{M}`)}}{${T(String.raw`1{,}500\ \text{万}`, String.raw`\$15\text{M}`)}} \times 12 = ${fmtNum(m, 0)}`)} ${T("个月；Orange-F 排在可转债之后、Orange-D 之前（BTC 评级 4.0x）。本课只讲框架，不构成投资建议。", "months; Orange-F ranks after the converts and ahead of Orange-D (BTC Rating 4.0x). Frameworks only, not investment advice.")}`];
       }
     }
   };

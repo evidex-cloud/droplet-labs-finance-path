@@ -12,7 +12,7 @@ export default {
   intuition: `
 Imagine three shops on one street selling the same gold bars. Shop A's sign says "1.2x the gold price," shop B's says "33% premium," shop C's says "0.58x." Can you compare them directly? No. Shop A's "multiple" may already deduct what it owes others, shop B's "premium" is based on market cap, and shop C's 0.58x uses the simplest market-cap definition. **Only once they are on the same scale can you compare them.**
 
-Comparing DATs works exactly like this. Stage 16.2 covered mNAV's four definitions, Stage 16.4 the two formulas for "amplification" (Strategy's BTC Reserve ÷ Net Reserve, and Strive's "(debt + preferred) ÷ bitcoin value"), and Stage 16.1 which share count to use for bitcoin per share. Change the definition and the same company's number can move a long way.
+Comparing DATs works exactly like this. Stage 16.2 covered mNAV's four definitions, Stage 16.4 the two formulas for "amplification" (Strategy's \\(\\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\), and Strive's \\(\\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin value}}\\)), and Stage 16.1 which share count to use for bitcoin per share. Change the definition and the same company's number can move a long way.
 
 With definitions aligned, an analyst compares five things:
 
@@ -42,12 +42,12 @@ The lesson rests on **Idea ② (balance sheets and claims)**, since what we comp
 
 <table class="pm">
 <tr><th>Metric</th><th>Strategy's definition</th><th>Strive's definition</th><th>Third parties (bitcointreasuries etc.)</th></tr>
-<tr><td>Premium</td><td>2026: price ÷ net bitcoin per share (less debt and preferreds, plus USD assets); 2025: enterprise value ÷ bitcoin NAV</td><td>No "mNAV": Common Equity Accretion Premium = market cap ÷ bitcoin value − 1; EV/Treasury Asset Value; multiple to Net Treasury Asset Value</td><td>Basic, diluted, enterprise value</td></tr>
-<tr><td>Amplification</td><td>Amplification = BTC Reserve ÷ Net Reserve (above 1x)</td><td>Amplification Ratio = (debt + preferred) ÷ bitcoin value (a percentage)</td><td>—</td></tr>
+<tr><td>Premium</td><td>2026: \\(\\dfrac{\\text{price}}{\\text{net bitcoin per share}}\\) (less debt and preferreds, plus USD assets); 2025: \\(\\dfrac{\\text{enterprise value}}{\\text{bitcoin NAV}}\\)</td><td>No "mNAV": \\(\\text{Common Equity Accretion Premium} = \\dfrac{\\text{market cap}}{\\text{bitcoin value}} - 1\\); EV/Treasury Asset Value; multiple to Net Treasury Asset Value</td><td>Basic, diluted, enterprise value</td></tr>
+<tr><td>Amplification</td><td>\\(\\text{Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\) (above 1x)</td><td>\\(\\text{Amplification Ratio} = \\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin value}}\\) (a percentage)</td><td>—</td></tr>
 <tr><td>Bitcoin per share</td><td>On "Assumed Diluted Shares" (every convertible counted, in or out of the money)</td><td>On "Assumed Fully Diluted Shares" (excluding traditional warrants)</td><td>Varies</td></tr>
 </table>
 
-**One company, several numbers.** Strive's "Common Equity Accretion Premium" of 33.0% is roughly a basic mNAV of **1.33x**. Its "EV / Treasury Asset Value" is **1.52x**. Its "Multiple to Net Treasury Asset Value" is **2.14x** (net treasury assets of $1.38 billion, or $13.76 a share, against a $29.44 stock price). The Block's own ASST mNAV was **1.21x** (2026-09-26). Four numbers, one company, one day. **To compare two companies, put them on the same definition.** This lesson's demo shows "most junior layer coverage," "Breakeven ARR" and both amplification formulas side by side for exactly that reason.
+**One company, several numbers.** Strive's "Common Equity Accretion Premium" of 33.0% is roughly a basic mNAV of **1.33x**. Its "EV / Treasury Asset Value" is **1.52x**. Its "Multiple to Net Treasury Asset Value" is **2.14x** (net treasury assets of $1.38 billion, or $13.76 a share, against a $29.44 stock price: \\(\\dfrac{29.44}{13.76} \\approx 2.14\\)). The Block's own ASST mNAV was **1.21x** (2026-09-26). Four numbers, one company, one day. **To compare two companies, put them on the same definition.** This lesson's demo shows "most junior layer coverage," "Breakeven ARR" and both amplification formulas side by side for exactly that reason.
 
 ### ② Scale, cost and growth: who holds how much bitcoin, and how they got it
 
@@ -151,7 +151,7 @@ Comparing these ships, you wouldn't just ask "who has the most cargo?" You would
         "It has nothing to do with mNAV",
       ],
       answer: 1,
-      explain: "The definition is \"market cap ÷ bitcoin value − 1,\" so **33% ≈ a basic mNAV of 1.33x.** The same day Strive's EV/TAV was 1.52x and The Block's figure 1.21x. Align definitions first.",
+      explain: "The definition is \\(\\dfrac{\\text{market cap}}{\\text{bitcoin value}} - 1\\), so **\\(\\mathrm{mNAV}_{\\text{basic}} \\approx 1 + 33\\% = 1.33\\times\\).** The same day Strive's EV/TAV was 1.52x and The Block's figure 1.21x. Align definitions first.",
     },
     {
       q: "Why is Strive's Breakeven ARR (about 6.6%) higher than Strategy's (about 2.3%) even though Strive has no debt?",
@@ -162,7 +162,7 @@ Comparing these ships, you wouldn't just ask "who has the most cargo?" You would
         "Because Strive is listed in Japan",
       ],
       answer: 1,
-      explain: "**Breakeven ARR = annual obligations ÷ BTC Reserve:** $145.4M ÷ about $2.22B ≈ 6.6%, versus Strategy's $1.62B ÷ about $71.1B ≈ 2.3%.",
+      explain: "**\\(\\text{Breakeven ARR} = \\dfrac{\\text{annual obligations}}{\\text{BTC Reserve}}\\):** \\(\\dfrac{\\$145.4\\text{M}}{\\text{about } \\$2.22\\text{B}} \\approx 6.6\\%\\), versus Strategy's \\(\\dfrac{\\$1.62\\text{B}}{\\text{about } \\$71.1\\text{B}} \\approx 2.3\\%\\).",
     },
     {
       q: "Which form of financing is most likely to force bitcoin sales in a crash?",

@@ -2,7 +2,7 @@
 // 上半部分：用可复现的随机路径模拟 4 年的每日价格（比特币式高波动 vs 股票式低波动，同样的平均收益），
 // 算出已实现波动率、最大回撤、复利年化，并一次跑 300 条路径，看“波动拖累”与深度回撤的频率；
 // 下半部分：把比特币放进一个传统组合，用 port2Vol 算组合波动，并算出比特币占总风险的比例。
-import { stdev, maxDrawdown, rng, randn, port2Vol, fmtPct, fmtNum } from "./_fin.js";
+import { stdev, maxDrawdown, rng, randn, port2Vol, fmtPct, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 const DAYS = 365 * 4;
@@ -51,7 +51,7 @@ export default function mount(root, lang) {
         <div class="stat"><div class="k">${T("已实现波动（这条路径）", "Realized vol (this path)")}</div><div class="v" id="bvo-rv">–</div></div>
         <div class="stat"><div class="k">${T("最大回撤", "Max drawdown")}</div><div class="v neg" id="bvo-mdd">–</div></div>
         <div class="stat"><div class="k">${T("4 年复利年化", "4-year compounded annual return")}</div><div class="v" id="bvo-cagr">–</div></div>
-        <div class="stat"><div class="k">${T("理论波动拖累 σ²/2", "Theoretical drag σ²/2")}</div><div class="v acc" id="bvo-drag">–</div></div>
+        <div class="stat"><div class="k">${T("理论波动拖累 ", "Theoretical drag ")}${tex(String.raw`\tfrac{\sigma^{2}}{2}`)}</div><div class="v acc" id="bvo-drag">–</div></div>
       </div>
       <div id="bvo-chart"></div>
       <div class="demo-btns">
@@ -73,8 +73,8 @@ export default function mount(root, lang) {
       </div>
       <div id="bvo-bars"></div>
       <p class="demo-tip">${T(
-        "两个资产的平均收益被设成完全一样，只有波动不同。先点几次“换一条路径”：比特币式资产的终点有时远高、有时远低。再点“跑 300 条路径”：它的中位数结局明显不如低波动资产——这就是 σ²/2 的波动拖累；再看“回撤超过 50% 的路径比例”。最后在下半部分只放 5% 的比特币，看它占了多少风险；把相关性拖到 0.8（危机中常见），风险占比还会再跳一截。",
-        "Both assets are given exactly the same average return; only volatility differs. Click “New path” a few times: the bitcoin-like asset sometimes ends far higher and sometimes far lower. Then “Run 300 paths”: its median outcome is clearly worse than the low-vol asset's — that's the σ²/2 volatility drag — and note the share of paths with a drawdown worse than 50%. Finally, in the lower half, hold just 5% bitcoin and see how much of the risk it carries; drag correlation up to 0.8 (common in a crisis) and its risk share jumps again."
+        `两个资产的平均收益被设成完全一样，只有波动不同。先点几次“换一条路径”：比特币式资产的终点有时远高、有时远低。再点“跑 300 条路径”：它的中位数结局明显不如低波动资产——这就是 ${tex(String.raw`\dfrac{\sigma^{2}}{2}`)} 的波动拖累；再看“回撤超过 50% 的路径比例”。最后在下半部分只放 5% 的比特币，看它占了多少风险；把相关性拖到 0.8（危机中常见），风险占比还会再跳一截。`,
+        `Both assets are given exactly the same average return; only volatility differs. Click “New path” a few times: the bitcoin-like asset sometimes ends far higher and sometimes far lower. Then “Run 300 paths”: its median outcome is clearly worse than the low-vol asset's — that's the ${tex(String.raw`\dfrac{\sigma^{2}}{2}`)} volatility drag — and note the share of paths with a drawdown worse than 50%. Finally, in the lower half, hold just 5% bitcoin and see how much of the risk it carries; drag correlation up to 0.8 (common in a crisis) and its risk share jumps again.`
       )}</p>
     </div>`;
 
@@ -97,7 +97,7 @@ export default function mount(root, lang) {
     const pick = (arr) => (x) => arr[Math.max(0, Math.min(DAYS, Math.round(x * 365)))];
     const ch = lineChart({
       fns: [{ f: pick(a.px), cls: "line5" }, { f: pick(b.px), cls: "line2" }, { f: () => 100, cls: "line3" }],
-      lo: 0, hi: 4, samples: 400, xlabel: T("年 · 起点 = 100", "Years · start = 100"), forceZero: true, uid: "bvo",
+      lo: 0, hi: 4, samples: 400, xlabel: T("年 · 起点为 100", "Years · starting at 100"), forceZero: true, uid: "bvo",
     });
     $("bvo-chart").innerHTML = chartBlock(ch, [
       ["var(--btc)", T("比特币式（高波动）", "Bitcoin-like (high vol)")],

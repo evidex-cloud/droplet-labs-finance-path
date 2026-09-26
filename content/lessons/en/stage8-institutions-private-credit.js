@@ -102,7 +102,7 @@ The 2008 crisis was, at heart, a run on the shadow banks. Investment banks funde
 - **What it is**: funds lend directly to companies (mostly mid-sized, but also large buyouts and infrastructure). The loans don't trade on public markets; the terms are negotiated privately.
 - **Why it grew**: after 2008, banks faced higher capital requirements and grew warier of leveraged lending, so mid-sized companies turned to faster, more flexible private lenders — just as pensions and insurers in a low-rate world went hunting for higher yields.
 - **Size**: by common industry estimates, global private credit assets have reached $1.5–2 trillion or more, and are still growing.
-- **Typical terms**: floating rate, say **SOFR + 6%**. With SOFR around 3.9%, the coupon is about **9.9%**. If the expected annual default rate is 3% and loss given default is 50%, expected loss = 3% × 50% = **1.5%** (Stage 4.6's PD × LGD), leaving about **8.4%**.
+- **Typical terms**: floating rate, say **\\(\\mathrm{SOFR} + 6\\%\\)**. With SOFR around 3.9%, the coupon is about **9.9%**. If the expected annual default rate is 3% and loss given default is 50%, \\(\\text{expected loss} = 3\\% \\times 50\\% =\\) **1.5%** (Stage 4.6's \\(\\mathrm{PD} \\times \\mathrm{LGD}\\)), leaving about **8.4%**.
 
 The case for it: it moves risk from banks, which lend out deposits, to investors with **long-term money**, so there's no deposit run; lenders are few and close to their borrowers, so problems are easier to restructure.
 
@@ -188,7 +188,7 @@ And **DAT preferreds and convertibles** are new ingredients designed for particu
       explain: "Liabilities rise about 12.1% (to about $163.1M) while assets rise only about 8.0% (to about $157.1M): **a gap of about $6M.** When assets are shorter than liabilities, falling rates make a pension poorer — which is why pensions buy long bonds and use LDI.",
     },
     {
-      q: "A private credit loan pays SOFR + 6% with SOFR around 3.9%; the expected default rate is 3% a year and loss given default is 50%. What is the yield after expected losses?",
+      q: "A private credit loan pays \\(\\mathrm{SOFR} + 6\\%\\) with SOFR around 3.9%; the expected default rate is 3% a year and loss given default is 50%. What is the yield after expected losses?",
       options: [
         "About 8.4%",
         "About 9.9%",
@@ -196,7 +196,7 @@ And **DAT preferreds and convertibles** are new ingredients designed for particu
         "About 12.9%",
       ],
       answer: 0,
-      explain: "The coupon is about 3.9% + 6% = 9.9%; expected loss = PD × LGD = 3% × 50% = 1.5%; 9.9% − 1.5% ≈ **8.4%**. The excess return that remains is mostly compensation for illiquidity and complexity.",
+      explain: "The coupon is about \\(3.9\\% + 6\\% = 9.9\\%\\); \\(\\text{expected loss} = \\mathrm{PD} \\times \\mathrm{LGD} = 3\\% \\times 50\\% = 1.5\\%\\); \\(9.9\\% - 1.5\\% \\approx\\) **8.4%**. The excess return that remains is mostly compensation for illiquidity and complexity.",
     },
     {
       q: "Why can a highly volatile company like Strategy issue convertible bonds with coupons near zero?",
@@ -207,7 +207,7 @@ And **DAT preferreds and convertibles** are new ingredients designed for particu
         "Because convertibles rank ahead of all other debt",
       ],
       answer: 2,
-      explain: "A convertible = a bond floor + a call option (Stage 6.4). Arbitrage funds buy the convert and short the stock, harvesting **volatility**; the more volatile the underlying, the more the option is worth, so the issuer can raise money at a lower coupon (Stage 17.2).",
+      explain: "\\(\\text{Convertible} = \\text{bond floor} + \\text{call option}\\) (Stage 6.4). Arbitrage funds buy the convert and short the stock, harvesting **volatility**; the more volatile the underlying, the more the option is worth, so the issuer can raise money at a lower coupon (Stage 17.2).",
     },
     {
       q: "Which of these is the concern regulators raise most often about private credit?",

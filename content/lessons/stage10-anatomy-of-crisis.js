@@ -74,15 +74,17 @@ export default {
 
 <figure><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><defs><marker id="aoc-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs><text x="150" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">小镇银行的资产负债表（万元）</text><text x="95" y="44" text-anchor="middle" font-size="11" fill="var(--muted)">资产</text><text x="215" y="44" text-anchor="middle" font-size="11" fill="var(--muted)">负债与资本</text><rect x="40" y="52" width="110" height="20" rx="3" fill="var(--green-soft)" stroke="var(--green)"/><text x="95" y="66" text-anchor="middle" font-size="11" fill="var(--ink)">现金 10</text><rect x="40" y="72" width="110" height="180" rx="3" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="95" y="150" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">10 年期房贷 90</text><text x="95" y="168" text-anchor="middle" font-size="10" fill="var(--muted)">急卖只值约 2/3</text><rect x="160" y="52" width="110" height="180" rx="3" fill="var(--red-soft)" stroke="var(--red)"/><text x="215" y="130" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">活期存款 90</text><text x="215" y="148" text-anchor="middle" font-size="10" fill="var(--muted)">随时可以取走</text><rect x="160" y="232" width="110" height="20" rx="3" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="215" y="246" text-anchor="middle" font-size="11" fill="var(--ink)">资本 10</text><text x="155" y="276" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">1/3 储户同时取款 → 急卖亏 10 → 资本归零</text><text x="480" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">挤兑的自我强化循环</text><rect x="330" y="46" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="395" y="68" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">储户取款</text><text x="395" y="84" text-anchor="middle" font-size="10" fill="var(--muted)">先到先得</text><rect x="500" y="46" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="565" y="68" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">急卖长期资产</text><text x="565" y="84" text-anchor="middle" font-size="10" fill="var(--muted)">折价成交</text><rect x="500" y="176" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="565" y="198" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">亏损吃掉资本</text><text x="565" y="214" text-anchor="middle" font-size="10" fill="var(--muted)">杠杆放大</text><rect x="330" y="176" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="395" y="198" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">怀疑变成事实</text><text x="395" y="214" text-anchor="middle" font-size="10" fill="var(--muted)">更多人去排队</text><line x1="462" y1="71" x2="496" y2="71" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar)"/><line x1="565" y1="98" x2="565" y2="172" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar)"/><line x1="498" y1="201" x2="464" y2="201" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar)"/><line x1="395" y1="174" x2="395" y2="100" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar)"/><text x="480" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--red)">自我实现</text><text x="480" y="256" text-anchor="middle" font-size="10.5" fill="var(--muted)">打断循环的办法：最后贷款人借现金、</text><text x="480" y="272" text-anchor="middle" font-size="10.5" fill="var(--muted)">存款保险让储户不必跑、更厚的资本</text></svg><figcaption>左：一家健康的银行，短负债、长资产、薄资本。右：取款 → 急卖 → 亏损 → 怀疑 → 更多取款，这个循环不需要最初的谣言是真的。</figcaption></figure>
 
-把 intuition 里的算式写成一般形式。设银行资本为 E、现金为 C、储户取款额为 W、急卖时资产只卖出账面价值的比例为 p（上例 p = 2/3）。当 W > C，银行需要卖出账面 (W − C)/p 的资产，确认亏损：
+把 intuition 里的算式写成一般形式。设银行资本为 \\(E\\)、现金为 \\(C\\)、储户取款额为 \\(W\\)、急卖时资产只卖出账面价值的比例为 \\(p\\)（上例 \\(p = \\tfrac{2}{3}\\)）。当 \\(W > C\\)，银行需要卖出账面 \\(\\dfrac{W - C}{p}\\) 的资产，确认亏损：
 
 $$
-急卖亏损 = (W − C) × (1/p − 1)
-资不抵债的临界取款额：W* = C + E × p / (1 − p)
-上例：W* = 10 + 10 × (2/3)/(1/3) = 30（万元），即三分之一的存款
+\\text{急卖亏损} = (W - C) \\times \\left(\\frac{1}{p} - 1\\right)
+W^{*} = C + E \\times \\frac{p}{1 - p}
+W^{*} = 10 + 10 \\times \\frac{2/3}{1/3} = 30\\ \\text{万元}
 $$
 
-这个公式告诉你三个“加固”方向：**多留现金（C↑）、多一点资本（E↑）、持有更容易卖的资产（p↑）**。它也解释了为什么监管在 2008 年后要求银行持有“高质量流动资产”（流动性覆盖率 LCR），并提高资本要求——它们分别在抬高 C、p 和 E。
+第二行的 \\(W^{*}\\) 是资不抵债的临界取款额；第三行代入上例，得到 30 万元，即三分之一的存款。
+
+这个公式告诉你三个“加固”方向：**多留现金（\\(C\\uparrow\\)）、多一点资本（\\(E\\uparrow\\)）、持有更容易卖的资产（\\(p\\uparrow\\)）**。它也解释了为什么监管在 2008 年后要求银行持有“高质量流动资产”（流动性覆盖率 LCR），并提高资本要求——它们分别在抬高 \\(C\\)、\\(p\\) 和 \\(E\\)。
 
 ### ③ 火售与传染：从一家机构到整个系统
 
@@ -101,7 +103,7 @@ $$
 
 **存款保险（Deposit insurance）。**戴蒙德–迪布维格模型里最漂亮的结论是：**如果储户确信无论别人跑不跑，自己的钱都安全，那么坏均衡就消失了**——而且政府多半根本不用掏钱，因为没人去跑。美国在 1930–1933 年间约有 9,000 家银行倒闭，1933 年《银行法》设立了联邦存款保险公司（FDIC），1934 年开始承保；此后传统的零售挤兑在美国几乎绝迹。今天的保额是每位储户在每家银行 25 万美元（2008 年提高，2010 年永久化）。
 
-**资本与流动性监管。**在上面的公式里，更厚的资本（E）和更多的高流动性资产（C 与 p）直接抬高了挤兑的临界点。2008 年后的巴塞尔 III 同时提高了资本比率，并加入流动性覆盖率（LCR）与净稳定资金比率（NSFR）。
+**资本与流动性监管。**在上面的公式里，更厚的资本（\\(E\\)）和更多的高流动性资产（\\(C\\) 与 \\(p\\)）直接抬高了挤兑的临界点。2008 年后的巴塞尔 III 同时提高了资本比率，并加入流动性覆盖率（LCR）与净稳定资金比率（NSFR）。
 
 但每一个灭火器都有代价：
 
@@ -122,7 +124,7 @@ $$
 
 但框架也提醒我们：**挤兑可以换一种形式出现**。DAT 依赖持续发行新证券来付股息、继续买币；如果市场突然不愿再买它的股票或优先股——mNAV 跌破 1、资本市场关门——这就是一场“对新融资的挤兑”。阶段 18.2 的压力测试和阶段 18.3 的 mNAV 压缩，会用同一套“谁能要钱、多快、从哪付”的问题逐层去问。
 
-**一句话收束：危机 = 短钱 + 长资产 + 薄资本 + 看不清，遇上一个让人怀疑的信号。**学会在任何新机构身上找出这四样东西，你就学会了读危机。
+**一句话收束：危机就是短钱、长资产、薄资本、看不清，遇上一个让人怀疑的信号。**学会在任何新机构身上找出这四样东西，你就学会了读危机。
 `,
 
   demo: "anatomy-of-crisis",
@@ -163,7 +165,7 @@ $$
         "45 万元，一半的存款",
       ],
       answer: 2,
-      explain: "临界值 W* = C + E × p/(1 − p) = 10 + 10 × 2 = 30。前 10 万用现金，后 20 万要卖账面 30 万的贷款，亏损 10 万，正好吃光资本。**健康银行被挤兑本身推倒。**",
+      explain: "临界值 \\(W^{*} = C + E \\times \\dfrac{p}{1 - p} = 10 + 10 \\times 2 = 30\\)。前 10 万用现金，后 20 万要卖账面 30 万的贷款，亏损 10 万，正好吃光资本。**健康银行被挤兑本身推倒。**",
     },
     {
       q: "戴蒙德–迪布维格模型里，是什么让“跑”成为每个储户的理性选择？",

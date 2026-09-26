@@ -1,6 +1,10 @@
 // 交互演示：四种“拥有比特币”的方式，一年期情景对比——直接持币、现货 ETF、DAT 普通股（橙子公司，2026 口径 mNAV）、
 // DAT 优先股（Orange-F，10% 累积，按要求收益率定价、按清偿顺序封底）。
-import { netReserve, btcRating, perpetuity, waterfall, fmtPct, fmtUsd, fmtNum } from "./_fin.js";
+import { netReserve, btcRating, perpetuity, waterfall, fmtPct, fmtUsd, fmtNum, tex } from "./_fin.js";
+
+// LaTeX 里的数字：千分位写成 {,}，百分号转义
+const tn = (x, d) => fmtNum(x, d).replace(/,/g, "{,}");
+const tp = (x, d) => fmtPct(x, d).replace("%", "\\%");
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -85,11 +89,13 @@ export default function mount(root, lang) {
       ],
       lo: -90, hi: 200, xlabel: T("比特币一年回报（%）", "Bitcoin 1-year return (%)"), markerX: st.r, markerLabel: st.r + "%", forceZero: true, uid: "dve",
     });
-    q("#dv-chart").innerHTML = chartBlock(ch, [["var(--blue)", T("直接持币 ≈ ETF（%）", "Direct ≈ ETF (%)")], ["var(--btc)", T("DAT 普通股（%）", "DAT common (%)")], ["var(--green)", T("DAT 优先股（%）", "DAT preferred (%)")]]);
+    q("#dv-chart").innerHTML = chartBlock(ch, [["var(--blue)", tex(String.raw`\text{${T("直接持币", "Direct")}} \approx \text{ETF}`) + T("（%）", " (%)")], ["var(--btc)", T("DAT 普通股（%）", "DAT common (%)")], ["var(--green)", T("DAT 优先股（%）", "DAT preferred (%)")]]);
 
     const lines = [];
-    lines.push(`${T("比特币净值 ", "Bitcoin NAV ")}${fmtUsd(o.nav1)}M${T("；普通股净储备 ", "; common's net reserve ")}${fmtUsd(o.nr)}M${o.itm ? T("（可转债已价内，按转股处理）", " (converts now in the money, treated as shares)") : ""}${T("；期末 mNAV ", "; ending mNAV ")}${fmtNum(st.m1, 2)}x → ${T("普通股 ", "common ")}<b>${o.common <= -1 ? T("≈ 归零", "≈ wiped out") : (o.common >= 0 ? "+" : "") + fmtPct(o.common, 1)}</b>`);
-    lines.push(`Orange-F${T("：BTC 评级 ", ": BTC Rating ")}<b>${fmtNum(o.rating, 2)}x</b>${T("；按 ", "; priced at a ")}${fmtNum(st.yReq, 2)}%${T(" 要求收益率的永续价格 ", " required yield as a perpetuity: ")}${fmtUsd(o.perpPx, 2)}${o.recF < 1 ? `<span class="bad">${T("，但按清偿顺序只能回收 ", ", but seniority caps recovery at ")}${fmtPct(o.recF, 0)}${T("——垫子塌了", " — the cushion has collapsed")}</span>` : ""}${T("；加上 10 美元股息。", "; plus the $10 dividend.")}`);
+    lines.push(`${T("比特币净值 ", "Bitcoin NAV ")}${fmtUsd(o.nav1)}M${T("；普通股净储备 ", "; common's net reserve ")}${fmtUsd(o.nr)}M${o.itm ? T("（可转债已价内，按转股处理）", " (converts now in the money, treated as shares)") : ""}${T("；期末 mNAV ", "; ending mNAV ")}${fmtNum(st.m1, 2)}x → ${o.common <= -1
+      ? `${T("普通股 ", "common ")}<b>${T("≈ 归零", "≈ wiped out")}</b>`
+      : tex(String.raw`\text{${T("普通股", "common")}} = \dfrac{\mathrm{mNAV}_{\text{${T("期末", "end")}}} \times \text{${T("净储备", "net reserve")}} \div \text{${T("股数", "shares")}}}{\text{${T("期初股价", "starting price")}}} - 1 = \dfrac{${tn(st.m1, 2)} \times ${tn(o.nr, 1)} \div ${o.itm ? SH + CONV_SH : SH}}{${tn(PX0, 2)}} - 1 = \mathbf{${o.common >= 0 ? "+" : ""}${tp(o.common, 1)}}`)}`);
+    lines.push(`Orange-F${T("：", ": ")}${tex(String.raw`\text{${T("BTC 评级", "BTC Rating")}} = \dfrac{${tn(o.nav1, 0)}}{${CONV} + 100} = \mathbf{${tn(o.rating, 2)}\times}`)}${T("；按 ", "; priced at a ")}${fmtNum(st.yReq, 2)}%${T(" 要求收益率的永续价格 ", " required yield as a perpetuity: ")}${tex(String.raw`\dfrac{\$10}{${tn(st.yReq, 2)}\%} = \$${tn(o.perpPx, 2)}`)}${o.recF < 1 ? `<span class="bad">${T("，但按清偿顺序只能回收 ", ", but seniority caps recovery at ")}${fmtPct(o.recF, 0)}${T("——垫子塌了", " — the cushion has collapsed")}</span>` : ""}${T("；加上 10 美元股息。", "; plus the $10 dividend.")}`);
     if (Math.abs(o.common - o.direct) > 0.001) lines.push(`${T("普通股与比特币的差距 ", "Gap between common and bitcoin: ")}<b>${(o.common - o.direct >= 0 ? "+" : "") + fmtPct(o.common - o.direct, 1)}</b>${T("：来自放大、股息拖累与 mNAV 变化（期初 2.05 → 期末 ", ": from amplification, dividend drag and the change in mNAV (2.05 → ")}${fmtNum(st.m1, 2)}${T("）。", ").")}`);
     lines.push(`<span class="demo-meta">${T("示意模型：ETF 只扣年费；普通股按 Strategy 2026 口径；优先股按永续定价并以清偿回收封顶；不含税。不构成投资或税务建议。", "Illustrative model: the ETF only deducts its fee; common uses Strategy's 2026 definition; the preferred is priced as a perpetuity and capped by recovery in seniority; no taxes. Not investment or tax advice.")}</span>`);
     q("#dv-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

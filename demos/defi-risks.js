@@ -2,11 +2,12 @@
 // 为一个仓位的每一层（合约、预言机、治理/管理员、跨链桥、稳定币锚、可组合层数）选择情形，
 // 各层示意年失败概率相乘得到存活率；乘以出事时的损失率得到预期损失；
 // 与标称收益、3 个月期国库券（4.24%）比较，判断溢价是否足以补偿风险。
-import { fmtPct } from "./_fin.js";
+import { fmtPct, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  const X = (s) => String(s).replace(/%/g, "\\%"); // 格式化好的百分数放进 LaTeX
   const C = T("：", ": ");
   const TBILL = 0.0424;
 
@@ -103,9 +104,10 @@ export default function mount(root, lang) {
 
     const worst = probs.slice().sort((a, b) => b[1] - a[1])[0];
     const lines = [];
-    lines.push(T("一年内出事的概率约 ", "Chance of an incident within a year: about ") + fmtPct(fail, 1) + T("（1 − 各层存活率之积），乘以损失率 ", " (1 − the product of each layer's survival), times the loss rate of ") + fmtPct(st.lgd, 0) + T(" = 预期损失 ", " = expected loss of ") + fmtPct(el, 2) + T("。", "."));
+    lines.push(`${T("一年内出事的概率约 ", "Chance of an incident within a year: about ")}${tex(String.raw`1 - \prod_{i} (1 - p_{i}) = ${X(fmtPct(fail, 1))}`)}${T("（1 减去各层存活率之积）；", " (1 minus the product of each layer's survival); ")}${tex(String.raw`\text{${T("预期损失", "expected loss")}} = ${X(fmtPct(fail, 1))} \times ${X(fmtPct(st.lgd, 0))} = ${X(fmtPct(el, 2))}`)}${T("。", ".")}`);
     lines.push(T("最弱的一环是「", "The weakest link is \"") + worst[0] + T("」，年失败概率 ", "\", with annual failure odds of ") + fmtPct(worst[1], 1) + T("。先改善它，效果最大。", ". Fixing it first has the biggest payoff."));
-    lines.push(T("要求收益 ≥ 国库券 4.24% + 预期损失 ", "Required yield ≥ T-bill 4.24% + expected loss ") + fmtPct(el, 2) + T(" + 风险溢价 = 至少 ", " + a risk premium = at least ") + fmtPct(TBILL + el, 2) + T(" 再加上你想要的溢价。", " plus whatever premium you demand."));
+    const RP = T("风险溢价", "risk premium");
+    lines.push(`${tex(String.raw`\text{${T("要求收益", "Required yield")}} \ge ${X(fmtPct(TBILL, 2))} + ${X(fmtPct(el, 2))} + \text{${RP}} = ${X(fmtPct(TBILL + el, 2))} + \text{${RP}}`)}${T("（依次是国库券、预期损失和你想要的溢价）。", " (the T-bill, expected loss, and whatever premium you demand).")}`);
     q("#dr-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };
 

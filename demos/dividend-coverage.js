@@ -1,6 +1,9 @@
 // 交互演示：股息覆盖与“发行冻结”情景——资本市场关门后，先用美元储备，再卖比特币付股息。
 // 可调：储备、股息率、比特币价格路径（冻结期内线性变到目标价）、冻结年数、经营现金、是否暂停非累积 D 层。
-import { monthsCovered, breakevenArr, btcRating, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { monthsCovered, breakevenArr, btcRating, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -91,11 +94,12 @@ export default function mount(root, lang) {
       ],
       lo: 0, hi: M, samples: Math.min(M, 180), xlabel: T("月", "months"), forceZero: true, uid: "dcc",
     });
-    q("#dc-chart").innerHTML = chartBlock(res, [["var(--btc)", T("持币（期初 = 1）", "Bitcoin held (start = 1)")], ["var(--green)", T("美元储备（期初 = 1）", "USD reserve (start = 1)")]]);
+    q("#dc-chart").innerHTML = chartBlock(res, [["var(--btc)", T("持币（以期初为 1）", "Bitcoin held (indexed to 1 at start)")], ["var(--green)", T("美元储备（以期初为 1）", "USD reserve (indexed to 1 at start)")]]);
 
     const lines = [];
-    lines.push(`${T("年度义务 = F ", "Annual obligations = F ")}${fmtNum(F, 0)} × ${s.rateF.toFixed(2)}% + D ${fmtNum(D, 0)} × ${s.skipD ? "0%" : s.rateD.toFixed(2) + "%"} = <b>${fmtNum(annual, 2)}</b>${T("（可转债 0% 票息）；扣除经营现金后需 ", " (converts pay 0%); net of operating cash, ")}${fmtNum(net, 2)}${T(" / 年。", " a year is needed.")}`);
-    lines.push(`USD Duration = ${fmtNum(s.reserve, 0)} ÷ ${fmtNum(annual, 1)} = <b>${fmtNum(annual > 0 ? s.reserve / annual : Infinity, 2)}${T(" 年", " yrs")}</b>${T("；BTC Duration = ", "; BTC Duration = ")}${fmtNum(reserve0NAV, 0)} ÷ ${fmtNum(annual, 1)} = <b>${fmtNum(annual > 0 ? reserve0NAV / annual : Infinity, 1)}${T(" 年", " yrs")}</b>`);
+    lines.push(`${tex(String.raw`\text{${T("年度义务", "Annual obligations")}} = \underbrace{${texv(fmtNum(F, 0))} \times ${s.rateF.toFixed(2)}\%}_{\text{F}} + \underbrace{${texv(fmtNum(D, 0))} \times ${s.skipD ? "0\\%" : s.rateD.toFixed(2) + "\\%"}}_{\text{D}} = \mathbf{${texv(fmtNum(annual, 2))}}`)}${T("（可转债 0% 票息）；扣除经营现金后需 ", " (converts pay 0%); net of operating cash, ")}${fmtNum(net, 2)}${T(" / 年。", " a year is needed.")}`);
+    lines.push(`${tex(String.raw`\text{${T("覆盖月数", "Months of coverage")}} = \frac{${texv(fmtNum(s.reserve, 0))}}{${texv(fmtNum(net, 2))}} \times 12 = \mathbf{${isFinite(mCov) ? texv(fmtNum(mCov, 1)) : "\\infty"}}`)}${T("；", "; ")}${tex(String.raw`\text{BTC Breakeven ARR} = \frac{${texv(fmtNum(annual, 2))}}{${texv(fmtNum(reserve0NAV, 0))}} = \mathbf{${texv(fmtPct(be, 2))}}`)}`);
+    lines.push(`${tex(String.raw`\text{USD Duration} = \frac{${texv(fmtNum(s.reserve, 0))}}{${texv(fmtNum(annual, 1))}} = \mathbf{${annual > 0 ? texv(fmtNum(s.reserve / annual, 2)) : "\\infty"}}\ \text{${T("年", "yrs")}}`)}${T("；", "; ")}${tex(String.raw`\text{BTC Duration} = \frac{${texv(fmtNum(reserve0NAV, 0))}}{${texv(fmtNum(annual, 1))}} = \mathbf{${annual > 0 ? texv(fmtNum(reserve0NAV / annual, 1)) : "\\infty"}}\ \text{${T("年", "yrs")}}`)}`);
     lines.push(firstSaleMonth
       ? `${T("第 ", "Coin sales begin in month ")}${firstSaleMonth}${T(" 个月开始卖币；冻结期内共卖 ", "; over the freeze it sells ")}<b>${fmtNum(sold, 0)} BTC</b>${T("，每股比特币变化 ", ", changing BTC per share by ")}<b>${fmtPct(bpsChg, 1)}</b>${T("（股数不变）。", " (share count unchanged).")}`
       : `<span class="ok">${T("整个冻结期都由储备与经营现金支付，一枚比特币没卖。", "The whole freeze is funded by the reserve and operating cash; not a coin is sold.")}</span>`);

@@ -54,10 +54,10 @@ export default {
 阶段 9.1 讲过：美联储负债端各项此消彼长。市场上流行一个把这个规律变成指标的粗略公式：
 
 $$
-净流动性 ≈ 美联储总资产 − 财政部一般账户（TGA）− 隔夜逆回购（ON RRP）
+\\text{净流动性} \\approx \\text{美联储总资产} - \\mathrm{TGA} - \\mathrm{ON\\ RRP}
 $$
 
-直觉是：美联储资产负债表上的钱，停在财政部账户里的不会去买资产，停在 ON RRP 里的是货币基金“闲置”的现金；剩下的，大致是银行体系里可以流向市场的准备金。
+其中 \\(\\mathrm{TGA}\\) 是财政部一般账户，\\(\\mathrm{ON\\ RRP}\\) 是隔夜逆回购。直觉是：美联储资产负债表上的钱，停在财政部账户里的不会去买资产，停在 ON RRP 里的是货币基金“闲置”的现金；剩下的，大致是银行体系里可以流向市场的准备金。
 
 <figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">“净流动性”的瀑布（2026 年 9 月下旬，TGA 与 ON RRP 为示意）</text><line x1="40" y1="220" x2="600" y2="220" stroke="var(--line)" stroke-width="1.5"/><rect x="60" y="40" width="90" height="180" rx="4" fill="var(--orange)"/><text x="105" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">美联储总资产</text><text x="105" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">约 6.75 万亿</text><rect x="190" y="40" width="90" height="23" rx="4" fill="var(--red-soft)" stroke="var(--red)"/><text x="235" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">− TGA</text><text x="235" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">约 0.85 万亿（示意）</text><rect x="320" y="63" width="90" height="3" fill="var(--red)"/><text x="365" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">− ON RRP</text><text x="365" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">已接近抽干（示意）</text><rect x="450" y="66" width="90" height="154" rx="4" fill="var(--blue)"/><text x="495" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">= 净流动性</text><text x="495" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">约 5.85 万亿（示意）</text><line x1="150" y1="40" x2="190" y2="40" stroke="var(--line)" stroke-dasharray="3 3"/><line x1="280" y1="63" x2="320" y2="63" stroke="var(--line)" stroke-dasharray="3 3"/><line x1="410" y1="66" x2="450" y2="66" stroke="var(--line)" stroke-dasharray="3 3"/><text x="320" y="272" text-anchor="middle" font-size="10" fill="var(--muted)">QE 与准备金管理购买抬高第一根柱；财政部攒现金抬高 TGA、压低最后一根柱；货币基金从 ON RRP 挪去买国库券则让它回升</text></svg><figcaption>这是一个粗略的记账恒等式，不是经济规律：它告诉你钱停在哪里，不告诉你钱会去买什么。</figcaption></figure>
 
@@ -133,7 +133,7 @@ M2 之外还有**信贷**：银行贷款、公司债、私人信贷。阶段 8.4
 
   quiz: [
     {
-      q: "按“净流动性 ≈ 美联储总资产 − TGA − ON RRP”的粗略公式，下列哪个事件会让净流动性下降？",
+      q: "按“\\(\\text{净流动性} \\approx \\text{美联储总资产} - \\mathrm{TGA} - \\mathrm{ON\\ RRP}\\)”的粗略公式，下列哪个事件会让净流动性下降？",
       options: [
         "美联储开始 QE，买入长期国债",
         "财政部大量发债，把 TGA 从 3,000 亿美元补到 8,000 亿美元，资金主要来自银行存款",

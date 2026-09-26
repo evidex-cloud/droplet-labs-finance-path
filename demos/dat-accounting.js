@@ -1,6 +1,6 @@
 // 交互演示：同一家橙子公司、同样四个季度的比特币价格，用两套会计规则记账——
 // 减值模型（只减不增）vs 公允价值模型（ASU 2023-08）。看账面价值、季度损益、每股收益、递延税与 CAMT 口径的 AFSI。
-import { btcNav, fmtNum, fmtUsd, fmtPct } from "./_fin.js";
+import { btcNav, fmtNum, fmtUsd, fmtPct, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -76,7 +76,7 @@ export default function mount(root, lang) {
     if (st.view !== "imp") fns.push({ f: interp("mv"), cls: "line5" });
     if (st.view !== "fv") fns.push({ f: interp("imp"), cls: "line2" });
     const legend = [];
-    if (st.view !== "imp") legend.push(["var(--btc)", T("公允价值账面 = 市值（百万美元）", "Fair-value carrying value = market value ($M)")]);
+    if (st.view !== "imp") legend.push(["var(--btc)", tex(String.raw`\text{${T("公允价值账面", "Fair-value carrying value")}} = \text{${T("市值", "market value")}}`) + T("（百万美元）", " ($M)")]);
     if (st.view !== "fv") legend.push(["var(--blue)", T("减值模型账面（百万美元）", "Impairment carrying value ($M)")]);
     q("#da-chart").innerHTML = chartBlock(lineChart({ fns, lo: 0, hi: 4, xlabel: T("季度（0 = 买入时）", "Quarter (0 = purchase)"), forceZero: true, uid: "dac" }), legend);
 
@@ -91,7 +91,7 @@ export default function mount(root, lang) {
     lines.push(`${T("每季经营利润只有 ", "Quarterly operating income is only ")}${fmtUsd(OPINC)}M${T("，优先股股息 ", ", preferred dividends ")}${fmtUsd(PREFDIV_Q, 2)}M${T("；公允价值下每股收益在 ", "; under fair value EPS ranges from ")}${fmtUsd(Math.min(...rows.map((r) => r.epsFv)), 2)}${T(" 到 ", " to ")}${fmtUsd(Math.max(...rows.map((r) => r.epsFv)), 2)}${T(" 之间摆动——它报告的基本上只是比特币的涨跌。", " — it mostly reports what bitcoin did.")}`);
     const afsiW = rows.reduce((s, r) => s + r.afsiWith, 0), afsiWo = rows.reduce((s, r) => s + r.afsiWithout, 0);
     lines.push(`${T("全年 AFSI：含未实现 ", "Full-year AFSI: with unrealized ")}${fmtUsd(afsiW)}M${T(" vs 按 2025 年 9 月 30 日临时指引剔除后 ", " vs excluding it per the September 30, 2025 interim guidance ")}${fmtUsd(afsiWo)}M${T("。CAMT 只适用于三年平均 AFSI 超过 10 亿美元的公司——橙子公司太小，这里只演示税基的差别。", ". CAMT applies only above $1B of three-year average AFSI — Orange Corp is too small; this only shows the difference in the base.")}`);
-    lines.push(`<span class="demo-meta">${T("示意模型：减值按季度内最低价判断；递延税按 21% 乘以（市值 − 成本）粗算；不构成投资或税务建议。", "Illustrative model: impairment tested at the intra-quarter low; deferred tax roughly 21% × (market value − cost); not investment or tax advice.")}</span>`);
+    lines.push(`<span class="demo-meta">${T("示意模型：减值按季度内最低价判断；递延税粗算为 ", "Illustrative model: impairment tested at the intra-quarter low; deferred tax roughly ")}${tex(String.raw`21\% \times (\text{${T("市值", "market value")}} - \text{${T("成本", "cost")}})`)}${T("；不构成投资或税务建议。", "; not investment or tax advice.")}</span>`);
     q("#da-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };
 

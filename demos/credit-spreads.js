@@ -1,7 +1,10 @@
 // 交互演示：信用利差实验室。选评级（示意参数）或自己调国债收益率、利差、违约概率与回收率：
 // 算出公司债收益率与价格、预期损失 = PD × LGD、风险溢价、盈亏平衡违约率；一键“危机”看利差走阔的价格冲击；
 // 再用 100 只债券 × 10 年的可复现蒙特卡洛，看“多拿的利差”在平均与坏运气下各剩多少。
-import { bondPrice, bondRisk, rng, fmtPct, fmtNum, fmtUsd, clamp } from "./_fin.js";
+import { bondPrice, bondRisk, rng, fmtPct, fmtNum, fmtUsd, clamp, tex } from "./_fin.js";
+
+// 把格式化好的百分数放进 LaTeX：% → \%
+const pc = (s) => String(s).replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -46,7 +49,7 @@ export default function mount(root, lang) {
         <div class="stages" id="cs-bars"></div>
       </div>
       <div class="demo-block">
-        <div class="demo-label">${T("🎲 100 只同评级债券 × 10 年：多拿的利差，扣掉违约后还剩多少？（200 次可复现模拟）", "🎲 100 bonds of this grade × 10 years: after defaults, how much of the extra spread is left? (200 reproducible runs)")}</div>
+        <div class="demo-label">${T("🎲 100 只同评级债券、持有 10 年：多拿的利差，扣掉违约后还剩多少？（200 次可复现模拟）", "🎲 100 bonds of this grade held for 10 years: after defaults, how much of the extra spread is left? (200 reproducible runs)")}</div>
         <div class="demo-btns"><button class="demo-btn" id="cs-reroll">${T("换一组随机数", "New random seed")}</button></div>
         <div class="stat-row" id="cs-sim"></div>
       </div>
@@ -110,7 +113,7 @@ export default function mount(root, lang) {
     q("#cs-stats").innerHTML = [
       [T("公司债收益率", "Corporate yield"), fmtPct(y, 2), "acc"],
       [T("5% 票息 10 年债价格", "Price of a 5% 10y bond"), fmtUsd(price, 2), price < priceTsy ? "neg" : "pos"],
-      [T("预期损失 PD × LGD", "Expected loss PD × LGD"), fmtPct(el, 2), el > spEff / 10000 ? "neg" : ""],
+      [T("预期损失 ", "Expected loss ") + tex(String.raw`\mathrm{PD} \times \mathrm{LGD}`), fmtPct(el, 2), el > spEff / 10000 ? "neg" : ""],
       [T("风险 + 流动性溢价", "Risk + liquidity premium"), fmtPct(prem, 2), prem < 0 ? "neg" : "pos"],
       [T("盈亏平衡违约率", "Break-even default rate"), isFinite(be) ? fmtPct(be, 2) : "∞", ""],
     ].map(([k, v, c]) => `<div class="stat"><div class="k">${k}</div><div class="v ${c}">${v}</div></div>`).join("");
@@ -135,8 +138,8 @@ export default function mount(root, lang) {
     ].map(([k, v, c]) => `<div class="stat"><div class="k">${k}</div><div class="v ${c}">${v}</div></div>`).join("");
 
     const lines = [];
-    lines.push(`${T("收益率 = 国债", "Yield = Treasury")} ${fmtNum(st.tsy, 2)}% + ${T("利差", "spread")} ${Math.round(spEff)}bp = <b>${fmtPct(y, 2)}</b>${T("；同一只 5% 票息 10 年期债，国债价格", "; the same 5% 10-year bond is worth")} ${fmtUsd(priceTsy, 2)}${T("，这家公司的只值", " as a Treasury but only")} <b>${fmtUsd(price, 2)}</b>${T("。", " from this company.")}`);
-    lines.push(`${T("预期损失 = ", "Expected loss = ")}${fmtNum(st.pd, 2)}% × ${fmtNum(lgd * 100, 0)}% = ${fmtPct(el, 2)}${T("；只要年违约率低于", "; as long as annual defaults stay below")} <b>${isFinite(be) ? fmtPct(be, 2) : "∞"}</b>${T("（利差 ÷ LGD），利差就够赔。", " (spread ÷ LGD), the spread covers the losses.")}`);
+    lines.push(`${tex(String.raw`\text{${T("收益率", "Yield")}} = \text{${T("国债", "Treasury")}}\ ${fmtNum(st.tsy, 2)}\% + \text{${T("利差", "spread")}}\ ${Math.round(spEff)}\ \text{bp} = \mathbf{${pc(fmtPct(y, 2))}}`)}${T("；同一只 5% 票息 10 年期债，国债价格", "; the same 5% 10-year bond is worth")} ${fmtUsd(priceTsy, 2)}${T("，这家公司的只值", " as a Treasury but only")} <b>${fmtUsd(price, 2)}</b>${T("。", " from this company.")}`);
+    lines.push(`${tex(String.raw`\text{${T("预期损失", "Expected loss")}} = \mathrm{PD} \times \mathrm{LGD} = ${fmtNum(st.pd, 2)}\% \times ${fmtNum(lgd * 100, 0)}\% = ${pc(fmtPct(el, 2))}`)}${T("；只要年违约率低于", "; as long as annual defaults stay below")} <b>${isFinite(be) ? fmtPct(be, 2) : "∞"}</b>${T("（", " (")}${tex(String.raw`\dfrac{\text{${T("利差", "spread")}}}{\mathrm{LGD}}`)}${T("），利差就够赔。", "), the spread covers the losses.")}`);
     if (prem < 0) lines.push(`<span class="bad">${T("利差低于预期损失：按这组假设，持有它平均会跑输国债——要么市场认为你的违约概率估高了，要么这只债券被高估了。", "The spread is below the expected loss: on these assumptions, holding it trails Treasuries on average. Either the market thinks your default estimate is too high, or the bond is overpriced.")}</span>`);
     if (st.crisis) lines.push(`<span class="bad">${T("危机：利差从", "Crisis: the spread goes from")} ${st.sp}bp ${T("走阔到", "to")} ${Math.round(spEff)}bp${T("，价格", ", and the price goes")} ${fmtUsd(priceCalm, 2)} → ${fmtUsd(price, 2)}${T("（", " (")}${fmtPct(price / priceCalm - 1, 1)}${T("）——一个违约都还没发生。利差久期约", "), before a single default. Spread duration is about")} ${fmtNum(mod, 1)}${T("。", ".")}</span>`);
     lines.push(`${T("模拟：平均跑赢国债", "Simulation: on average it beats Treasuries by")} ${fmtNum((sim.mean - tsyAnn) * 10000, 0)}bp${T("/年；但在最差 5% 的情形里，年化只有", " a year; but in the worst 5% of runs the annual return is only")} ${fmtPct(sim.p5, 2)}${T("。违约是一阵一阵来的，这就是风险溢价要补偿的东西。", ". Defaults come in waves, and that is what the risk premium pays for.")}`);

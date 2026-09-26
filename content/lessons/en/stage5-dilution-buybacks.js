@@ -16,14 +16,14 @@ The intuition misses half the story. The newcomers are not freeloaders; each of 
 
 Now put it in company terms. A company is worth $100 million in total and has 10 million shares, so each share is worth $10.
 
-- It issues 2 million new shares at **$15**, raising $30 million of cash. The company is now worth $130 million across 12 million shares: **$10.83 per share.** Existing owners' value per share **rose 8.3%**, even though their ownership fell from 100% to 83%.
-- It issues the same 2 million shares but at only **$8**, raising $16 million. The company is worth $116 million: **$9.67 per share** — existing owners' value per share **fell 3.3%.** That is real dilution.
+- It issues 2 million new shares at **$15**, raising $30 million of cash. The company is now worth $130 million across 12 million shares: \\(\\dfrac{\\$130\\text{M}}{12\\text{M}} \\approx\\) **$10.83 per share.** Existing owners' value per share **rose 8.3%**, even though their ownership fell from 100% to 83%.
+- It issues the same 2 million shares but at only **$8**, raising $16 million. The company is worth $116 million: \\(\\dfrac{\\$116\\text{M}}{12\\text{M}} \\approx\\) **$9.67 per share** — existing owners' value per share **fell 3.3%.** That is real dilution.
 
 So judging an issue takes just one comparison: **issue price versus value per share.** Issue above value per share and you are swapping “expensive paper” for real money, which benefits existing owners; issue below and you are selling your own shares on the cheap, which hurts them. **Buybacks** are the mirror image: buy stock back below value per share and the owners who stay behind benefit; buy it back above value per share and you are overpaying with the remaining owners' money.
 
 This lesson rests on **Idea ② — balance sheets & claims.** Issuance and buybacks change how many pieces the “common stock” layer on the right side of the balance sheet is cut into, and how much has been added to (or taken from) the assets on the left. Stage 5.1 taught you to ask “the value of the company, or the value per share?”; this lesson explains why **value per share is the only scoreboard that matters to an owner.**
 
-It is also one of the most important building blocks in the whole course. The core move of the digital asset treasury companies (DATs) in Stages 15–18 is to **issue new shares at a price above the bitcoin value behind each share, then turn all of the proceeds into bitcoin.** Take the standard example, Orange Corp: each share is backed by $10 of bitcoin and trades at $15 (mNAV = 1.5). Issue 10 million shares at $15, buy bitcoin with all of it, and BTC per share rises **4.5%** — that is the “BTC Yield” of Stage 16.3 and the first turn of the Stage 16.7 flywheel. Once the share price falls below the bitcoin value per share (mNAV < 1), the very same move becomes dilutive — and Stage 18.3 covers what to do then.
+It is also one of the most important building blocks in the whole course. The core move of the digital asset treasury companies (DATs) in Stages 15–18 is to **issue new shares at a price above the bitcoin value behind each share, then turn all of the proceeds into bitcoin.** Take the standard example, Orange Corp: each share is backed by $10 of bitcoin and trades at $15 (\\(\\mathrm{mNAV} = \\dfrac{15}{10} = 1.5\\)). Issue 10 million shares at $15, buy bitcoin with all of it, and BTC per share rises **4.5%** — that is the “BTC Yield” of Stage 16.3 and the first turn of the Stage 16.7 flywheel. Once the share price falls below the bitcoin value per share (\\(\\mathrm{mNAV} < 1\\)), the very same move becomes dilutive — and Stage 18.3 covers what to do then.
 
 **In this lesson we break it into five parts:**
 
@@ -39,26 +39,28 @@ It is also one of the most important building blocks in the whole course. The co
 
 “The company got bigger” and “I got richer” are two different statements. A company can grow its total assets tenfold by issuing stock over and over while value per share stands still or falls — management runs a bigger empire and the owners are no better off. Conversely, a company can shrink (buying back stock, paying dividends) while value per share rises steadily.
 
-So owners should watch **per-share** measures: earnings per share (EPS), free cash flow per share, book value per share, intrinsic value per share — and, in the DAT world, BTC per share (Stage 16.1). Percentage ownership on its own does not matter: owning 10% of a $100 million company ($10 million) is worse than owning 5% of a $300 million company ($15 million).
+So owners should watch **per-share** measures: earnings per share (EPS), free cash flow per share, book value per share, intrinsic value per share — and, in the DAT world, BTC per share (Stage 16.1). Percentage ownership on its own does not matter: owning 10% of a $100 million company (\\(\\$100\\text{M} \\times 10\\% = \\$10\\text{M}\\)) is worse than owning 5% of a $300 million company (\\(\\$300\\text{M} \\times 5\\% = \\$15\\text{M}\\)).
 
-**Having your ownership diluted ≠ having your value diluted.** All the arithmetic below exists to pull those two things apart.
+**Having your ownership diluted is not the same as having your value diluted.** All the arithmetic below exists to pull those two things apart.
 
 ### ② Issuance: the one inequality that decides accretive vs dilutive
 
-Let the company's current value be V and its share count S, so value per share is v = V ÷ S. It issues N new shares at price P, and the N × P of cash stays in the company (or is swapped at a fair price for assets of equal value):
+Let the company's current value be \\(V\\) and its share count \\(S\\), so value per share is \\(v = \\dfrac{V}{S}\\). It issues \\(N\\) new shares at price \\(P\\), and the \\(N \\times P\\) of cash stays in the company (or is swapped at a fair price for assets of equal value):
 
 $$
-New value per share = (V + N × P) ÷ (S + N)
-Accretive ⟺ P > V ÷ S (issue price above value per share)
+\\text{New value per share} = \\frac{V + N \\times P}{S + N}
+\\text{Accretive} \\iff P > \\frac{V}{S}
+$$
 
-Rewrite it in a handier form. Let m = P ÷ v (the issue price as a multiple of value per share) and n = N ÷ S (new shares as a fraction of the existing count):
+In words: the issue adds value only when the issue price is above value per share. Rewrite it in a handier form. Let \\(m = \\dfrac{P}{v}\\) (the issue price as a multiple of value per share) and \\(n = \\dfrac{N}{S}\\) (new shares as a fraction of the existing count):
 
 $$
-Change in value per share = (1 + n × m) ÷ (1 + n) − 1
+\\text{Change in value per share} = \\frac{1 + n \\times m}{1 + n} - 1
+$$
 
-The formula tells you three things: **at m = 1 the change is zero** (issuing at value per share neither helps nor hurts); it is positive for m > 1 and negative for m < 1; and the bigger the issue n, the bigger the effect. The opening example: n = 20%, m = 1.5 → (1 + 0.3) ÷ 1.2 − 1 = **+8.3%**; m = 0.8 → 1.16 ÷ 1.2 − 1 = **−3.3%**.
+The formula tells you three things: **at \\(m = 1\\) the change is zero** (issuing at value per share neither helps nor hurts); it is positive for \\(m > 1\\) and negative for \\(m < 1\\); and the bigger the issue \\(n\\), the bigger the effect. The opening example: \\(n = 20\\%\\), \\(m = 1.5 \\Rightarrow \\dfrac{1 + 0.3}{1.2} - 1 =\\) **+8.3%**; \\(m = 0.8 \\Rightarrow \\dfrac{1.16}{1.2} - 1 =\\) **−3.3%**.
 
-What is “value per share” here? For an ordinary company it is **intrinsic value** — the number a DCF from Stage 5.3 produces, which nobody can know precisely, so whether an issue was accretive or dilutive is often only clear in hindsight. For a company that mainly holds bitcoin it is much simpler: **bitcoin NAV per share**, which can be computed every day. That is why a DAT's issuance logic can be written as an explicit formula, and why mNAV (share price ÷ NAV per share, Stage 16.2) becomes a DAT's number-one metric — **mNAV is the m in the formula above.**
+What is “value per share” here? For an ordinary company it is **intrinsic value** — the number a DCF from Stage 5.3 produces, which nobody can know precisely, so whether an issue was accretive or dilutive is often only clear in hindsight. For a company that mainly holds bitcoin it is much simpler: **bitcoin NAV per share**, which can be computed every day. That is why a DAT's issuance logic can be written as an explicit formula, and why mNAV (\\(\\dfrac{\\text{share price}}{\\text{NAV per share}}\\), Stage 16.2) becomes a DAT's number-one metric — **mNAV is the \\(m\\) in the formula above.**
 
 There are real-world costs, too: issuing stock means paying underwriting fees or commissions, and dumping a large block of new shares pushes the price down. The at-the-market (ATM) offerings of Stage 17.1 exist to minimize those costs — selling small amounts into the market day by day instead of one big discounted deal.
 
@@ -67,12 +69,13 @@ There are real-world costs, too: issuing stock means paying underwriting fees or
 A buyback uses company money to purchase its own shares and retire them. Buying back N shares at price P:
 
 $$
-New value per share = (V − N × P) ÷ (S − N)
-Accretive ⟺ P < V ÷ S (buyback price below value per share)
+\\text{New value per share} = \\frac{V - N \\times P}{S - N}
+\\text{Accretive} \\iff P < \\frac{V}{S}
+$$
 
-Same company ($100 million of value, 10 million shares, $10 per share): buy back 1 million shares at **$8**, spending $8 million, and $92 million ÷ 9 million shares = **$10.22 (+2.2%)**; buy back 1 million shares at **$15**, spending $15 million, and $85 million ÷ 9 million shares = **$9.44 (−5.6%).**
+In words: a buyback adds value only when the buyback price is below value per share. Same company ($100 million of value, 10 million shares, $10 per share): buy back 1 million shares at **$8**, spending $8 million, and \\(\\dfrac{\\$92\\text{M}}{9\\text{M shares}} =\\) **$10.22 (+2.2%)**; buy back 1 million shares at **$15**, spending $15 million, and \\(\\dfrac{\\$85\\text{M}}{9\\text{M shares}} =\\) **$9.44 (−5.6%).**
 
-<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Issuing / buying back 10% of shares: change in value per share vs price multiple m</text><line x1="90" y1="125" x2="600" y2="125" stroke="var(--ink)" stroke-width="1"/><line x1="90" y1="35" x2="90" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="256.7" y1="35" x2="256.7" y2="230" stroke="var(--line)" stroke-dasharray="4 4"/><text x="256.7" y="246" text-anchor="middle" font-size="10" fill="var(--ink)" font-weight="600">m = 1</text><text x="90" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="423.3" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">1.5</text><text x="590" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="345" y="266" text-anchor="middle" font-size="11" fill="var(--muted)">Price multiple m = price ÷ value per share (for a DAT, this is mNAV)</text><text x="84" y="39" text-anchor="end" font-size="10" fill="var(--muted)">+10%</text><text x="84" y="129" text-anchor="end" font-size="10" fill="var(--muted)">0</text><text x="84" y="229" text-anchor="end" font-size="10" fill="var(--muted)">−11%</text><rect x="256.7" y="35" width="343.3" height="90" fill="var(--green-soft)" opacity=".5"/><rect x="90" y="35" width="166.7" height="90" fill="var(--green-soft)" opacity=".5"/><polyline points="90,165.9 590,43.2" fill="none" stroke="var(--orange)" stroke-width="3"/><polyline points="90,75 590,225" fill="none" stroke="var(--blue)" stroke-width="3"/><circle cx="423.3" cy="84.1" r="5" fill="var(--btc)"/><text x="430" y="78" font-size="11" fill="var(--btc)" font-weight="600">Orange Corp issues at mNAV 1.5 → +4.5%</text><circle cx="256.7" cy="125" r="4" fill="var(--ink)"/><text x="512" y="60" font-size="11" fill="var(--orange-ink)" font-weight="600">Issue</text><text x="512" y="210" font-size="11" fill="var(--blue)" font-weight="600">Buyback</text><text x="100" y="60" font-size="10" fill="var(--green)">below value: buybacks accrete</text><text x="400" y="118" font-size="10" fill="var(--green)">above value: issuance accretes</text></svg><figcaption>The two lines cross zero at m = 1: above value per share, issuing adds value and buying back destroys it; below, the reverse. One ruler — all that matters is which side of value the price is on.</figcaption></figure>
+<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Issuing / buying back 10% of shares: change in value per share vs price multiple m</text><line x1="90" y1="125" x2="600" y2="125" stroke="var(--ink)" stroke-width="1"/><line x1="90" y1="35" x2="90" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="256.7" y1="35" x2="256.7" y2="230" stroke="var(--line)" stroke-dasharray="4 4"/><text x="256.7" y="246" text-anchor="middle" font-size="10" fill="var(--ink)" font-weight="600">m = 1</text><text x="90" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="423.3" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">1.5</text><text x="590" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="345" y="266" text-anchor="middle" font-size="11" fill="var(--muted)">Price multiple m = price ÷ value per share (for a DAT, this is mNAV)</text><text x="84" y="39" text-anchor="end" font-size="10" fill="var(--muted)">+10%</text><text x="84" y="129" text-anchor="end" font-size="10" fill="var(--muted)">0</text><text x="84" y="229" text-anchor="end" font-size="10" fill="var(--muted)">−11%</text><rect x="256.7" y="35" width="343.3" height="90" fill="var(--green-soft)" opacity=".5"/><rect x="90" y="35" width="166.7" height="90" fill="var(--green-soft)" opacity=".5"/><polyline points="90,165.9 590,43.2" fill="none" stroke="var(--orange)" stroke-width="3"/><polyline points="90,75 590,225" fill="none" stroke="var(--blue)" stroke-width="3"/><circle cx="423.3" cy="84.1" r="5" fill="var(--btc)"/><text x="430" y="78" font-size="11" fill="var(--btc)" font-weight="600">Orange Corp issues at mNAV 1.5 → +4.5%</text><circle cx="256.7" cy="125" r="4" fill="var(--ink)"/><text x="512" y="60" font-size="11" fill="var(--orange-ink)" font-weight="600">Issue</text><text x="512" y="210" font-size="11" fill="var(--blue)" font-weight="600">Buyback</text><text x="100" y="60" font-size="10" fill="var(--green)">below value: buybacks accrete</text><text x="400" y="118" font-size="10" fill="var(--green)">above value: issuance accretes</text></svg><figcaption>The two lines cross zero at \\(m = 1\\): above value per share, issuing adds value and buying back destroys it; below, the reverse. One ruler — all that matters is which side of value the price is on.</figcaption></figure>
 
 Buybacks are big business in the United States. After the SEC adopted Rule 10b-18 in 1982, giving open-market repurchases a “safe harbor,” buybacks gradually overtook dividends as the main way companies return cash to shareholders; S&P 500 companies have been buying back on the order of a trillion dollars a year in recent years, and since 2023 the U.S. has levied a 1% excise tax on repurchases. Three common misunderstandings:
 
@@ -85,14 +88,14 @@ Buybacks are big business in the United States. After the SEC adopted Rule 10b-1
 Not every new share arrives through an announced offering. Three ways shares slip in quietly:
 
 - **Stock-based compensation (SBC):** restricted stock and options for employees. Many tech companies add 1–3% to their share count every year this way. It is an expense on the income statement but costs no cash, so it is often added back in “adjusted earnings” — **it is a real cost, just paid in shares.**
-- **Options and warrants** are counted in diluted shares with the “treasury stock method.” Example: 1 million options with a $10 strike, stock at $15. Exercise brings in $10 million, which could buy back about 667,000 shares at market, so the net increase is about **333,000 shares.** The higher the share price, the more the dilution.
+- **Options and warrants** are counted in diluted shares with the “treasury stock method.” Example: 1 million options with a $10 strike, stock at $15. Exercise brings in \\(1\\text{M} \\times \\$10 = \\$10\\text{M}\\), which could buy back about \\(\\dfrac{\\$10\\text{M}}{\\$15} \\approx 667{,}000\\) shares at market, so the net increase is about \\(1{,}000{,}000 - 667{,}000 =\\) **333,000 shares.** The higher the share price, the more the dilution.
 - **Convertible bonds:** when the share price is above the conversion price, holders will choose to convert, and the share count rises (Stage 6.4). Analysts usually add the potential shares to the denominator with the “if-converted” method.
 
 This is where Stage 5.1's “basic versus fully diluted share count” comes from. A rigorous per-share metric has to say exactly which potential shares are in its denominator. In Stage 16.1 you will see that the DAT industry does not agree on whether BTC per share should use basic or assumed fully diluted shares — and the difference can be meaningful.
 
 ### ⑤ The foundation of the DAT flywheel: Orange Corp issues at 1.5x mNAV
 
-Now carry the formula from part ② over to Orange Corp (formally introduced in Stage 15.1). It holds **10,000 BTC**; at $100,000 per bitcoin that is $1 billion of BTC NAV. It has 100 million common shares, so **BTC per share is 0.0001 BTC = 10,000 sats** and NAV per share is $10. The shares trade at $15, so **m = mNAV = 1.5.**
+Now carry the formula from part ② over to Orange Corp (formally introduced in Stage 15.1). It holds **10,000 BTC**; at $100,000 per bitcoin that is $1 billion of BTC NAV. It has 100 million common shares, so **BTC per share is \\(\\dfrac{10{,}000}{100\\text{M}} = 0.0001\\ \\text{BTC} = 10{,}000\\) sats** and NAV per share is $10. The shares trade at $15, so **\\(m = \\mathrm{mNAV} = \\dfrac{15}{10} = 1.5\\).**
 
 <table>
 <tr><th>Action</th><th>Raised / spent</th><th>Bitcoin</th><th>Shares</th><th>BTC per share</th><th>Change</th></tr>
@@ -102,7 +105,7 @@ Now carry the formula from part ② over to Orange Corp (formally introduced in 
 <tr><td>At mNAV 0.8, the reverse: sell 800 BTC to buy back 10M shares</td><td>−$80M</td><td>9,200</td><td>90M</td><td>about 10,222 sats</td><td><b>+2.2%</b></td></tr>
 </table>
 
-That table is the entire mathematics of the Stage 16.7 flywheel: **when mNAV > 1, issuing shares to buy bitcoin raises BTC per share; when mNAV < 1, issuing to buy bitcoin dilutes, and buying back shares is what raises BTC per share.** The +4.5% has its own name in Stage 16.3: **BTC Yield.** It can be repeated because, as long as the market keeps granting an mNAV above 1, each round of issuance converts “premium” into real bitcoin.
+That table is the entire mathematics of the Stage 16.7 flywheel: **when \\(\\mathrm{mNAV} > 1\\), issuing shares to buy bitcoin raises BTC per share; when \\(\\mathrm{mNAV} < 1\\), issuing to buy bitcoin dilutes, and buying back shares is what raises BTC per share.** The +4.5% has its own name in Stage 16.3: **BTC Yield.** It can be repeated because, as long as the market keeps granting an mNAV above 1, each round of issuance converts “premium” into real bitcoin.
 
 But notice three conditions, which are exactly where critics aim their fire. First, the premium has to persist, and it depends on the market's expectations of future growth (the “multiple on NAV” from Stage 5.3) — it is reflexive (Stage 10.4). Second, continual issuance puts supply pressure on the share price. Third, once mNAV falls below 1, the toolkit has to switch to buybacks, preferred stock or pausing issuance altogether (Stage 18.3). Supporters answer that as long as shares are issued at a premium, every issue **really does** increase the bitcoin behind each existing share — and without any margin-call liquidation risk. **This lesson explains mechanisms only; it is not investment advice about any security.**
 `,
@@ -120,11 +123,11 @@ Orange Corp's vault holds bitcoin. As long as outsiders are willing to buy in at
 `,
 
   misconceptions: [
-    "**“Issuing shares always dilutes existing owners.”** — Percentage ownership always shrinks, but whether value per share falls depends on the issue price versus value per share. Issue above value per share and existing owners own more value per share — exactly the logic of a DAT issuing when mNAV > 1.",
+    "**“Issuing shares always dilutes existing owners.”** — Percentage ownership always shrinks, but whether value per share falls depends on the issue price versus value per share. Issue above value per share and existing owners own more value per share — exactly the logic of a DAT issuing when \\(\\mathrm{mNAV} > 1\\).",
     "**“Buybacks are always good because they raise EPS.”** — Buybacks raise EPS mechanically, but if the price paid is above intrinsic value, the company is overpaying with the remaining owners' money and value per share falls. Judge a buyback by its price, not its EPS effect.",
     "**“Stock compensation costs no cash, so it isn't a cost.”** — Pay in shares raises the share count and dilutes value per share; it is a real cost. Adding it back in “adjusted earnings” overstates per-share earning power.",
     "**“As long as total assets are growing, shareholders are getting richer.”** — A company can keep growing by issuing stock cheaply while value per share stands still or falls. The owner's scoreboard is per-share metrics, not company totals.",
-    "**“A DAT issuing stock to buy bitcoin always raises BTC per share.”** — Only when mNAV > 1. Below 1, issuing to buy bitcoin lowers BTC per share, and buying back stock (even selling bitcoin to do it) is the accretive move (Stage 18.3).",
+    "**“A DAT issuing stock to buy bitcoin always raises BTC per share.”** — Only when \\(\\mathrm{mNAV} > 1\\). Below 1, issuing to buy bitcoin lowers BTC per share, and buying back stock (even selling bitcoin to do it) is the accretive move (Stage 18.3).",
   ],
 
   quiz: [
@@ -137,10 +140,10 @@ Orange Corp's vault holds bitcoin. As long as outsiders are willing to buy in at
         "$12.50",
       ],
       answer: 1,
-      explain: "($100M + $30M) ÷ 12M ≈ **$10.83**, up 8.3% from $10. The $15 issue price is above the $10 value per share, so the issue is accretive even though ownership percentages were diluted.",
+      explain: "\\(\\dfrac{\\$100\\text{M} + \\$30\\text{M}}{12\\text{M}} \\approx\\) **$10.83**, up 8.3% from $10. The $15 issue price is above the $10 value per share, so the issue is accretive even though ownership percentages were diluted.",
     },
     {
-      q: "Using “change in value per share = (1 + n × m) ÷ (1 + n) − 1,” what happens if a company issues 10% more shares at exactly its value per share (m = 1)?",
+      q: "Using \\(\\text{change in value per share} = \\dfrac{1 + n \\times m}{1 + n} - 1\\), what happens if a company issues 10% more shares at exactly its value per share (\\(m = 1\\))?",
       options: [
         "+10%",
         "−9.1%",
@@ -148,7 +151,7 @@ Orange Corp's vault holds bitcoin. As long as outsiders are willing to buy in at
         "It depends on the company's profits",
       ],
       answer: 2,
-      explain: "(1 + 0.1) ÷ 1.1 − 1 = **0**. Issued at value per share, the newcomers bring exactly as much as they take — m = 1 is the dividing line between accretion and dilution.",
+      explain: "\\(\\dfrac{1 + 0.1}{1.1} - 1 =\\) **0**. Issued at value per share, the newcomers bring exactly as much as they take — \\(m = 1\\) is the dividing line between accretion and dilution.",
     },
     {
       q: "Intrinsic value is $10 per share, and the company buys back 10% of its shares at $15. What happens to value per share for the owners who remain?",
@@ -159,10 +162,10 @@ Orange Corp's vault holds bitcoin. As long as outsiders are willing to buy in at
         "Nothing — buybacks don't affect value",
       ],
       answer: 0,
-      explain: "(100 − 15) ÷ 9 ≈ $9.44, **−5.6%.** Buying back above value per share means overpaying with the remaining owners' money. EPS may rise, but value per share falls.",
+      explain: "\\(\\dfrac{100 - 15}{9} \\approx \\$9.44\\), **−5.6%.** Buying back above value per share means overpaying with the remaining owners' money. EPS may rise, but value per share falls.",
     },
     {
-      q: "Orange Corp holds 10,000 BTC and has 100 million shares; its price implies mNAV = 1.5. If it issues 10 million shares at mNAV 1.5 and buys bitcoin with all the proceeds, BTC per share changes by about:",
+      q: "Orange Corp holds 10,000 BTC and has 100 million shares; its price implies \\(\\mathrm{mNAV} = 1.5\\). If it issues 10 million shares at mNAV 1.5 and buys bitcoin with all the proceeds, BTC per share changes by about:",
       options: [
         "−9.1%, because the share count rose 10%",
         "+15%",
@@ -170,7 +173,7 @@ Orange Corp's vault holds bitcoin. As long as outsiders are willing to buy in at
         "+4.5%",
       ],
       answer: 3,
-      explain: "$150M buys 1,500 BTC → 11,500 BTC ÷ 110M shares versus 10,000 ÷ 100M: **+4.5%.** That is BTC Yield (Stage 16.3) and the first turn of the flywheel (Stage 16.7).",
+      explain: "$150M buys 1,500 BTC → \\(\\dfrac{11{,}500\\ \\text{BTC}}{110\\text{M shares}}\\) versus \\(\\dfrac{10{,}000}{100\\text{M}}\\): **+4.5%.** That is BTC Yield (Stage 16.3) and the first turn of the flywheel (Stage 16.7).",
     },
     {
       q: "There are 1 million options with a $10 strike and the stock trades at $15. Under the treasury stock method, roughly how many diluted shares do they add?",
@@ -181,7 +184,7 @@ Orange Corp's vault holds bitcoin. As long as outsiders are willing to buy in at
         "Zero, because the options haven't been exercised",
       ],
       answer: 1,
-      explain: "Exercise brings in $10M, enough to buy back about 667,000 shares at $15, so the net addition is 1,000,000 − 667,000 ≈ **333,000 shares.** The higher the share price, the more dilution options cause.",
+      explain: "Exercise brings in $10M, enough to buy back about \\(\\dfrac{\\$10\\text{M}}{\\$15} \\approx 667{,}000\\) shares at $15, so the net addition is \\(1{,}000{,}000 - 667{,}000 \\approx\\) **333,000 shares.** The higher the share price, the more dilution options cause.",
     },
   ],
 

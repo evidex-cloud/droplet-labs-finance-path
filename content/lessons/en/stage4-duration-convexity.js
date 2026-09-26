@@ -7,7 +7,7 @@ export default {
   prereqs: ["price-yield"],
 
   oneLiner:
-    "Stage 4.2 said longer bonds sit on longer seesaws. This lesson turns “how long” into a number: **duration**. Macaulay duration is the **average time it takes to get your money back**, weighting each cash flow by its present value. Modified duration tells you **roughly what percentage the price moves for each 1-point move in yield**: about 7.8 for the standard 10-year bond, about **15.5** for the 30-year Treasury, and about **1 ÷ yield** for a perpetual. **DV01** converts it to dollars: what one basis point is worth. **Convexity** explains why the straight-line estimate always comes out too gloomy. With these few numbers you can estimate in a second how hard a rate shock hits a bond, a bank, or even a bitcoin treasury company's preferred stock.",
+    "Stage 4.2 said longer bonds sit on longer seesaws. This lesson turns “how long” into a number: **duration**. Macaulay duration is the **average time it takes to get your money back**, weighting each cash flow by its present value. Modified duration tells you **roughly what percentage the price moves for each 1-point move in yield**: about 7.8 for the standard 10-year bond, about **15.5** for the 30-year Treasury, and about \\(\\dfrac{1}{\\text{yield}}\\) for a perpetual. **DV01** converts it to dollars: what one basis point is worth. **Convexity** explains why the straight-line estimate always comes out too gloomy. With these few numbers you can estimate in a second how hard a rate shock hits a bond, a bank, or even a bitcoin treasury company's preferred stock.",
 
   intuition: `
 In Stage 4.2 we saw that the same 1-point rise in yield knocks about 1.9% off a 2-year bond, about 7.4% off a 10-year and about 13.8% off a 30-year. Can we capture how sensitive a bond is to rates with **a single number**, without looking anything up or redoing the math? Yes. That number is **duration**.
@@ -22,7 +22,7 @@ What does it have to do with sensitivity? A change in rates does its damage over
 
 - The standard 10-year bond: modified duration about **7.8** → yield +1%, price about −7.8%
 - The 30-year Treasury (at about a 5% yield): modified duration about **15.5** → yield +1%, price about −15.5%
-- A perpetual security: modified duration about **1 ÷ yield** → about 10 for a perpetual preferred yielding 10%, about 20 at a 5% yield
+- A perpetual security: modified duration about \\(\\dfrac{1}{\\text{yield}}\\) → about 10 for a perpetual preferred yielding 10%, about 20 at a 5% yield
 
 Notice that the 30-year's actual drop (13.8%) is smaller than 15.5%. The gap is **convexity**. Price and yield aren't related by a straight line but by a curve that bows toward you: when yields rise, the price falls less than the straight line predicts; when they fall, it rises more. **Convexity works in the bondholder's favor.**
 
@@ -43,13 +43,14 @@ This lesson rests on **Idea ① The price of time** and **Idea ④ Risk & levera
 
 Draw each of the standard bond's cash flows as a bar whose height is its value today (discounted at 5%), and set the bars on a beam. Where does the beam balance?
 
-<figure><svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Macaulay duration = the balance point of present values (standard bond, 5% yield)</text><line x1="40" y1="170" x2="600" y2="170" stroke="var(--ink)" stroke-width="3"/><g fill="var(--blue)"><rect x="73" y="165.7" width="8" height="4.3"/><rect x="100" y="165.8" width="8" height="4.2"/><rect x="127" y="165.9" width="8" height="4.1"/><rect x="154" y="166" width="8" height="4"/><rect x="181" y="166.1" width="8" height="3.9"/><rect x="208" y="166.2" width="8" height="3.8"/><rect x="235" y="166.3" width="8" height="3.7"/><rect x="262" y="166.4" width="8" height="3.6"/><rect x="289" y="166.5" width="8" height="3.5"/><rect x="316" y="166.6" width="8" height="3.4"/><rect x="343" y="166.6" width="8" height="3.4"/><rect x="370" y="166.7" width="8" height="3.3"/><rect x="397" y="166.8" width="8" height="3.2"/><rect x="424" y="166.9" width="8" height="3.1"/><rect x="451" y="167" width="8" height="3"/><rect x="478" y="167" width="8" height="3"/><rect x="505" y="167.1" width="8" height="2.9"/><rect x="532" y="167.2" width="8" height="2.8"/><rect x="559" y="167.2" width="8" height="2.8"/></g><rect x="584" y="60" width="12" height="110" fill="var(--orange)"/><polygon points="481.5,172 468,198 495,198" fill="var(--red)"/><g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="50" y="214">0</text><text x="158" y="214">2</text><text x="266" y="214">4</text><text x="374" y="214">6</text><text x="482" y="214">8</text><text x="590" y="214">10 yrs</text></g><text x="160" y="150" text-anchor="middle" font-size="11" fill="var(--blue)">$25 coupons, each worth about $24 → $15 today</text><text x="578" y="56" text-anchor="end" font-size="11" fill="var(--orange-ink)">Final $1,025, worth about $625 today</text><text x="481" y="232" text-anchor="middle" font-size="11" font-weight="700" fill="var(--red)">Fulcrum: Macaulay duration ≈ 7.99 years</text><text x="300" y="104" text-anchor="middle" font-size="11" fill="var(--ink)">The heavy principal pulls the balance point right;</text><text x="300" y="120" text-anchor="middle" font-size="11" fill="var(--ink)">twenty small coupons pull it back left by about 2 years</text></svg><figcaption>Bar height = present value of each cash flow (coupons drawn to the same scale, which is why they're so short). The balance point is the “average time to get paid back”: 7.99 years. A zero-coupon bond has one bar, so its duration equals its maturity.</figcaption></figure>
+<figure><svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Macaulay duration = the balance point of present values (standard bond, 5% yield)</text><line x1="40" y1="170" x2="600" y2="170" stroke="var(--ink)" stroke-width="3"/><g fill="var(--blue)"><rect x="73" y="165.7" width="8" height="4.3"/><rect x="100" y="165.8" width="8" height="4.2"/><rect x="127" y="165.9" width="8" height="4.1"/><rect x="154" y="166" width="8" height="4"/><rect x="181" y="166.1" width="8" height="3.9"/><rect x="208" y="166.2" width="8" height="3.8"/><rect x="235" y="166.3" width="8" height="3.7"/><rect x="262" y="166.4" width="8" height="3.6"/><rect x="289" y="166.5" width="8" height="3.5"/><rect x="316" y="166.6" width="8" height="3.4"/><rect x="343" y="166.6" width="8" height="3.4"/><rect x="370" y="166.7" width="8" height="3.3"/><rect x="397" y="166.8" width="8" height="3.2"/><rect x="424" y="166.9" width="8" height="3.1"/><rect x="451" y="167" width="8" height="3"/><rect x="478" y="167" width="8" height="3"/><rect x="505" y="167.1" width="8" height="2.9"/><rect x="532" y="167.2" width="8" height="2.8"/><rect x="559" y="167.2" width="8" height="2.8"/></g><rect x="584" y="60" width="12" height="110" fill="var(--orange)"/><polygon points="481.5,172 468,198 495,198" fill="var(--red)"/><g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="50" y="214">0</text><text x="158" y="214">2</text><text x="266" y="214">4</text><text x="374" y="214">6</text><text x="482" y="214">8</text><text x="590" y="214">10 yrs</text></g><text x="160" y="150" text-anchor="middle" font-size="11" fill="var(--blue)">$25 coupons, each worth about $24 → $15 today</text><text x="578" y="56" text-anchor="end" font-size="11" fill="var(--orange-ink)">Final $1,025, worth about $625 today</text><text x="481" y="232" text-anchor="middle" font-size="11" font-weight="700" fill="var(--red)">Fulcrum: Macaulay duration ≈ 7.99 years</text><text x="300" y="104" text-anchor="middle" font-size="11" fill="var(--ink)">The heavy principal pulls the balance point right;</text><text x="300" y="120" text-anchor="middle" font-size="11" fill="var(--ink)">twenty small coupons pull it back left by about 2 years</text></svg><figcaption>Bar height is the present value of each cash flow (coupons drawn to the same scale, which is why they're so short). The balance point is the “average time to get paid back”: 7.99 years. A zero-coupon bond has one bar, so its duration equals its maturity.</figcaption></figure>
 
-The formula is “time × weight,” summed, where each weight is that cash flow's present value as a share of the price:
+The formula is \\(\\text{time} \\times \\text{weight}\\), summed, where each weight is that cash flow's present value as a share of the price:
 
 $$
-Macaulay duration = Σ tₖ × [CFₖ ÷ (1 + y/2)^k] ÷ price
-Standard bond (at 5%): ≈ 7.99 years;  30-year 5% bond (at 5%): ≈ 15.84 years
+\\text{Macaulay duration} = \\frac{1}{\\text{price}} \\sum_{k=1}^{n} t_{k} \\times \\frac{\\mathrm{CF}_{k}}{\\left(1 + \\frac{y}{2}\\right)^{k}}
+\\text{Standard bond (at 5\\%):} \\approx 7.99\\ \\text{years}
+\\text{30-year 5\\% bond (at 5\\%):} \\approx 15.84\\ \\text{years}
 $$
 
 Two immediate consequences:
@@ -59,11 +60,11 @@ Two immediate consequences:
 
 ### ② Modified duration: how many percent the price moves per point of yield
 
-Macaulay duration is measured in years. What we really want is a percentage sensitivity. Mathematically, the derivative of price with respect to yield, divided by price, is exactly Macaulay duration divided by (1 + y/2). That number is **modified duration**:
+Macaulay duration is measured in years. What we really want is a percentage sensitivity. Mathematically, the derivative of price with respect to yield, divided by price, is exactly Macaulay duration divided by \\(\\left(1 + \\dfrac{y}{2}\\right)\\). That number is **modified duration**:
 
 $$
-Modified duration = Macaulay duration ÷ (1 + y/2)
-% price change ≈ − modified duration × change in yield
+\\text{Modified duration} = \\frac{\\text{Macaulay duration}}{1 + \\frac{y}{2}}
+\\%\\ \\text{price change} \\approx -\\,\\text{modified duration} \\times \\text{change in yield}
 $$
 
 Check it with the standard numbers:
@@ -79,15 +80,15 @@ Practice on 2026's market. The 30-year Treasury yield rose from 4.64% on Februar
 Traders don't like to talk in percentages; they talk in dollars. **DV01 (the dollar value of 01) is how many dollars the price moves when the yield changes by one basis point (0.01 percentage points):**
 
 $$
-DV01 = modified duration × price × 0.0001
+\\mathrm{DV01} = \\text{modified duration} \\times \\text{price} \\times 0.0001
 $$
 
-- Standard 10-year bond (price $1,000): 7.79 × 1,000 × 0.0001 ≈ **$0.78 per basis point**
-- 30-year (price $1,000): ≈ **$1.55 per basis point**. Hold **$1 million** face value and it's about **$1,545 per basis point**. A 10-basis-point rise in yield costs you about $15,000 in a day.
+- Standard 10-year bond (price $1,000): \\(7.79 \\times 1{,}000 \\times 0.0001 \\approx \\$0.78\\) per basis point
+- 30-year (price $1,000): \\(\\approx \\$1.55\\) per basis point. Hold **$1 million** face value and it's about **$1,545 per basis point**. A 10-basis-point rise in yield costs you about $15,000 in a day.
 
 DV01's great virtue is that **it adds up**. A bank, a pension fund or a bond fund can sum the DV01 of every holding and know “for each basis point the whole curve moves, I make or lose this much.” Hedging uses it too: to hedge a 30-year Treasury with 10-year Treasury futures, you size the futures so the two DV01s match (the swaps and hedging programs in Stage 7.4 are balanced the same way).
 
-A bank-style example (**hypothetical** numbers): a bank holds $50 billion of bonds with an average modified duration of about 6. Yields rise 3 points. Rough loss: $50 billion × 6 × 3% = **$9 billion**. If its shareholders' equity is only $10 billion, that nearly wipes it out on paper. **That's the arithmetic of Silicon Valley Bank in Stage 10.3.**
+A bank-style example (**hypothetical** numbers): a bank holds $50 billion of bonds with an average modified duration of about 6. Yields rise 3 points. Rough loss: \\(\\$50\\ \\text{billion} \\times 6 \\times 3\\% = \\$9\\ \\text{billion}\\). If its shareholders' equity is only $10 billion, that nearly wipes it out on paper. **That's the arithmetic of Silicon Valley Bank in Stage 10.3.**
 
 ### ④ What makes duration longer: maturity, coupon and yield
 
@@ -110,9 +111,10 @@ Plot the 30-year Treasury's true price curve alongside the straight line that du
 Add the second-order convexity term and the estimate gets much closer (priceChangeApprox in _fin.js):
 
 $$
-% price change ≈ − modified duration × Δy + ½ × convexity × Δy²
-30-year 5% bond: modified duration 15.45, convexity about 352
+\\%\\ \\text{price change} \\approx -\\,\\text{modified duration} \\times \\Delta y + \\frac{1}{2} \\times \\text{convexity} \\times (\\Delta y)^{2}
 $$
+
+For the 30-year 5% bond: modified duration 15.45, convexity about 352.
 
 <table><tr><th>Yield change</th><th>Duration only</th><th>Duration + convexity</th><th>Exact</th></tr><tr><td>+1 point</td><td>−15.45%</td><td>−13.69%</td><td>−13.84%</td></tr><tr><td>−1 point</td><td>+15.45%</td><td>+17.21%</td><td>+17.38%</td></tr><tr><td>+2 points</td><td>−30.91%</td><td>−23.87%</td><td>−24.94%</td></tr><tr><td>−2 points</td><td>+30.91%</td><td>+37.95%</td><td>+39.38%</td></tr></table>
 
@@ -124,11 +126,12 @@ What convexity means:
 
 ### ⑥ Perpetuals, preferreds and the duration of a stock: the longest seesaws
 
-A **perpetual security** never matures, so its price = annual cash flow ÷ yield (Stage 2.3). Differentiate and the modified duration comes out as:
+A **perpetual security** never matures, so its \\(\\text{price} = \\dfrac{\\text{annual cash flow}}{\\text{yield}}\\) (Stage 2.3). Differentiate and the modified duration comes out as:
 
 $$
-Modified duration of a perpetual ≈ 1 ÷ y
-y = 10% → about 10;  y = 5% → about 20
+\\text{Modified duration of a perpetual} \\approx \\frac{1}{y}
+y = 10\\% \\;\\to\\; \\approx 10
+y = 5\\% \\;\\to\\; \\approx 20
 $$
 
 Some direct applications:
@@ -137,7 +140,7 @@ Some direct applications:
 - **The lower a perpetual's yield, the longer its duration.** Squeeze a perpetual preferred's yield from 10% down to 7% and its duration stretches from about 10 to about 14. The lower the yield, the more it behaves like a 30-year Treasury.
 - **Floating rates are an engineering tool for shortening duration.** Strategy's STRC resets its dividend rate monthly to try to hold its price near $100, precisely so the price doesn't swing with long-term rates. It trades “price risk” for “income risk” (Stage 17.4). Comparing it with a fixed-dividend perpetual preferred is really comparing two durations. Stage 18.1 lays out the full framework for valuing preferreds.
 
-**Stocks have duration too.** Take the Gordon growth model from Stage 2.3: price = next year's dividend ÷ (r − g). Differentiate and a stock's “duration” works out to about 1 ÷ (r − g). If r − g = 4%, that's about 25, longer than a 30-year Treasury. That's why **growth stocks, whose value lies mostly in distant cash flows, fall hardest when rates rise** (Stage 5.3).
+**Stocks have duration too.** Take the Gordon growth model from Stage 2.3: \\(\\text{price} = \\dfrac{\\text{next year's dividend}}{r - g}\\). Differentiate and a stock's “duration” works out to about \\(\\dfrac{1}{r - g}\\). If \\(r - g = 4\\%\\), that's about 25, longer than a 30-year Treasury. That's why **growth stocks, whose value lies mostly in distant cash flows, fall hardest when rates rise** (Stage 5.3).
 
 **Bitcoin has no cash flows**, so strictly speaking there's no duration to calculate. But like other assets whose value is mostly about the distant future, it has often come under pressure when real rates rise quickly (Stage 12.4 discusses its relationship with liquidity and real rates). The duration mindset still helps: **ask how much of an asset's value comes from the far future. The more it does, the more sensitive it is to rates.**
 `,
@@ -147,7 +150,7 @@ Some direct applications:
   analogy: `
 Think of duration as **how far from the fulcrum someone sits on a seesaw**.
 
-Same person, same push (the same change in rates). Sitting two meters from the fulcrum, a push barely lifts the other end. Sitting fifteen meters out, the same push sends the other end flying. The 2-year bond sits at 1.9 meters, the 30-year Treasury at 15.5 meters, and the perpetual preferred at “1 ÷ yield” meters. The lower the yield, the further out it sits.
+Same person, same push (the same change in rates). Sitting two meters from the fulcrum, a push barely lifts the other end. Sitting fifteen meters out, the same push sends the other end flying. The 2-year bond sits at 1.9 meters, the 30-year Treasury at 15.5 meters, and the perpetual preferred at \\(\\dfrac{1}{\\text{yield}}\\) meters. The lower the yield, the further out it sits.
 
 DV01 swaps the seesaw for a scale: you hold $1 million of 30-year Treasuries, and the scale reads “$1,545 per basis point.”
 
@@ -158,8 +161,8 @@ And convexity? This seesaw isn't a straight plank but **one that curves up sligh
     "**“Duration is just the bond's time to maturity.”** Only for zero-coupon bonds. A coupon bond's Macaulay duration is shorter than its maturity: about 7.99 years for the standard 10-year bond, about 15.84 years for a 30-year 5% bond. The higher the coupon, the sooner money comes back and the shorter the duration.",
     "**“A modified duration of 15.5 means a 1% rise in yield will cut the price by exactly 15.5%.”** That's a first-order approximation. The 30-year actually falls about 13.8%, because convexity bends the price curve in the holder's favor. The bigger the rate move, the bigger the gap, and you need the convexity term.",
     "**“Higher convexity means more danger.”** The opposite. Positive convexity helps the holder: smaller losses when rates jump, bigger gains when they drop. The dangerous kind is **negative convexity** (callable bonds, mortgage-backed securities): capped upside, uncapped downside.",
-    "**“A perpetual preferred has no maturity, so interest rates don't affect it.”** Having no maturity is exactly what makes it so sensitive. Its modified duration is about 1 ÷ yield, around 10 at a 10% yield and longer as yields fall, and there's no maturity date to pull it back to par (Stage 18.1).",
-    "**“Whichever maturity's yield rises most, that bond falls most.”** Price loss ≈ duration × change in yield, and duration usually matters more than the size of the yield move. From February 27 to September 24, 2026, the 2-year yield rose 1.49 points, yet a 5%-coupon 2-year bond fell only about 2.8%. The 30-year yield rose just 0.83 points, and a 5%-coupon 30-year bond fell about 12%.",
+    "**“A perpetual preferred has no maturity, so interest rates don't affect it.”** Having no maturity is exactly what makes it so sensitive. Its modified duration is about \\(\\dfrac{1}{\\text{yield}}\\), around 10 at a 10% yield and longer as yields fall, and there's no maturity date to pull it back to par (Stage 18.1).",
+    "**“Whichever maturity's yield rises most, that bond falls most.”** \\(\\text{Price loss} \\approx \\text{duration} \\times \\text{change in yield}\\), and duration usually matters more than the size of the yield move. From February 27 to September 24, 2026, the 2-year yield rose 1.49 points, yet a 5%-coupon 2-year bond fell only about 2.8%. The 30-year yield rose just 0.83 points, and a 5%-coupon 30-year bond fell about 12%.",
   ],
 
   quiz: [
@@ -172,7 +175,7 @@ And convexity? This seesaw isn't a straight plank but **one that curves up sligh
         "About +3.1%",
       ],
       answer: 0,
-      explain: "**% price change ≈ −modified duration × Δy = −15.5 × 0.2% ≈ −3.1%.** For small moves convexity barely matters, so the duration estimate is already accurate.",
+      explain: "**\\(\\%\\ \\text{price change} \\approx -\\text{modified duration} \\times \\Delta y = -15.5 \\times 0.2\\% \\approx -3.1\\%\\).** For small moves convexity barely matters, so the duration estimate is already accurate.",
     },
     {
       q: "Which bond has the longest modified duration (all at a 5% yield)?",
@@ -194,7 +197,7 @@ And convexity? This seesaw isn't a straight plank but **one that curves up sligh
         "About −$154,500",
       ],
       answer: 2,
-      explain: "**Loss ≈ DV01 × basis points = 1,545 × 12 ≈ $18,540.** Yields up, prices down, so it's a loss. DV01s add up, which makes them the everyday language of interest-rate risk at banks and funds.",
+      explain: "**\\(\\text{Loss} \\approx \\mathrm{DV01} \\times \\text{basis points} = 1{,}545 \\times 12 \\approx \\$18{,}540\\).** Yields up, prices down, so it's a loss. DV01s add up, which makes them the everyday language of interest-rate risk at banks and funds.",
     },
     {
       q: "Why does a callable bond show negative convexity?",
@@ -216,7 +219,7 @@ And convexity? This seesaw isn't a straight plank but **one that curves up sligh
         "About 12.5",
       ],
       answer: 3,
-      explain: "**For a perpetual, modified duration ≈ 1 ÷ y = 1 ÷ 8% = 12.5.** It never matures, but distant cash flows are heavily discounted, so its duration is finite; the lower the yield, the longer the duration.",
+      explain: "**For a perpetual, \\(\\text{modified duration} \\approx \\dfrac{1}{y} = \\dfrac{1}{8\\%} = 12.5\\).** It never matures, but distant cash flows are heavily discounted, so its duration is finite; the lower the yield, the longer the duration.",
     },
   ],
 

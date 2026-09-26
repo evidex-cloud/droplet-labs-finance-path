@@ -1,8 +1,12 @@
 // 交互演示：mNAV 压缩实验室——橙子公司在不同 mNAV 下做五种动作（增发买币、卖币回购普通股、发优先股买币、
 // 折价回购优先股、卖币补储备），看每股比特币、各层 BTC 评级、净储备口径 mNAV、放大倍数、股息与覆盖月数怎么变，
 // 并用一条曲线显示“同一动作在各个 mNAV 下的每股比特币变化”。计算全部走 _fin.js。
-import { issueAndBuy, coverageByLayer, netReserve, mnavNetBps, amplificationStrategy, monthsCovered, breakevenArr, fmtPct, fmtNum, fmtBig } from "./_fin.js";
+import { issueAndBuy, coverageByLayer, netReserve, mnavNetBps, amplificationStrategy, monthsCovered, breakevenArr, fmtPct, fmtNum, fmtBig, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 , → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+const texBig = (x) => String.raw`\$${fmtBig(x).replace(/([TBMK])$/, "\\text{$1}")}`;
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -26,7 +30,7 @@ export default function mount(root, lang) {
       <div class="demo-head">${T("🔄 mNAV 压缩实验室：飞轮倒转时，每个动作让谁得、让谁失", "🔄 mNAV compression lab: when the flywheel reverses, who gains and who loses from each move")}</div>
       <div class="demo-grid">
         <div class="demo-block">
-          <label class="demo-label">${T("mNAV（市值口径；股价 = mNAV × 10 美元）", "mNAV (basic; share price = mNAV × $10)")}${T("：", ": ")}<b id="mnc-mnav-v"></b></label>
+          <label class="demo-label">${T(`mNAV（市值口径；${tex(String.raw`\text{股价} = \mathrm{mNAV} \times 10\ \text{美元}`)}）`, `mNAV (basic; ${tex(String.raw`\text{share price} = \mathrm{mNAV} \times \$10`)})`)}${T("：", ": ")}<b id="mnc-mnav-v"></b></label>
           <input class="demo-slider" id="mnc-mnav" type="range" min="0.4" max="2.5" step="0.05" value="0.8" />
           <label class="demo-label">${T("动作规模（百万美元）", "Size of the move ($ millions)")}${T("：", ": ")}<b id="mnc-amt-v"></b></label>
           <input class="demo-slider" id="mnc-amt" type="range" min="10" max="300" step="5" value="80" />
@@ -135,6 +139,7 @@ export default function mount(root, lang) {
     const L = [];
     L.push(`<span class="${d >= 0 ? "ok" : "bad"}">${T("普通股：每股比特币", "Common: bitcoin per share")} ${d >= 0 ? "+" : ""}${fmtPct(d, 2)}</span>`);
     L.push(`<span class="${fAfter >= fBefore - 1e-9 ? "ok" : "bad"}">${T("Orange-F 持有人：BTC 评级", "Orange-F holders: BTC Rating")} ${fmtNum(fBefore, 2)}x → ${fmtNum(fAfter, 2)}x</span>`);
+    L.push(`${tex(String.raw`\dfrac{\mathrm{BPS}_{\text{${T("后", "after")}}}}{\mathrm{BPS}_{\text{${T("前", "before")}}}} - 1 = \dfrac{${texv(fmtNum(m1.sats, 0))}}{${texv(fmtNum(m0.sats, 0))}} - 1 = ${d >= 0 ? "+" : ""}${texv(fmtPct(d, 2))}`)}${T("（单位：每股聪数）；", " (sats per share); ")}${tex(String.raw`\text{${T("Orange-F 的 BTC 评级", "Orange-F's BTC Rating")}} = \dfrac{${texBig(b1.btc * BTCP)}}{${texBig(b1.conv)} + ${texBig(b1.F)}} = ${texv(fmtNum(fAfter, 2))}\times`)}${T("。", ".")}`);
     if (st.act === "buyback" && st.mnav < 1) L.push(`${T("折价时卖币回购：普通股把折价“吃”进来，代价是每一层的安全垫变薄——这就是 mNAV 压缩时的核心利益冲突。", "Buying back at a discount: the common captures the discount, and every layer's cushion thins as the price. That is the central conflict of interest when mNAV compresses.")}`);
     if (st.act === "issue" && st.mnav < 1) L.push(`<span class="warn">${T("mNAV < 1 时增发买币是稀释：飞轮在倒转。覆盖倒是变厚了——优先股持有人喜欢这个动作。", "Issuing below 1x dilutes; the flywheel is running backwards. Coverage does thicken, so preferred holders like this move.")}</span>`);
     if (st.act === "pref") L.push(`<span class="warn">${T("每股比特币上升（BTC Yield 为正），但普通股之上多了一层每年 10% 的索取权；只有比特币长期涨幅高于资金成本才真正增值（阶段 16.3）。", "Bitcoin per share rises (positive BTC Yield), but a new 10%-a-year claim now sits above the common. It only truly adds value if bitcoin outgrows that cost over time.")}</span>`);

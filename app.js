@@ -4,10 +4,11 @@
 
 import { COURSE } from "./content/manifest.js?v=3"; // 改了 manifest 要随 app.js?v 一起 bump，破缓存
 import { GLOSSARY } from "./content/glossary.js?v=3"; // 知识小卡片术语表；改它要 bump 这里的 ?v 与 app.js?v
+import { tex, blockLines, mathifyRaw, protectMath } from "./math.js?v=4"; // 公式排版（KaTeX）；demos/_fin.js 用同一个 URL，保证只加载一次
 
 const app = document.getElementById("app");
 const PKEY = "finance-path-v1";
-const V = "3"; // 内容版本：改了 lessons/ 或 demos/ 后 +1，破除浏览器对动态 import 的缓存
+const V = "5"; // 内容版本：改了 lessons/ 或 demos/ 后 +1，破除浏览器对动态 import 的缓存
 
 const LOGO_H = "assets/logo-horizontal-dark-t.png";
 const LOGO_S = "assets/logo-stacked-dark-t.png";
@@ -55,23 +56,20 @@ const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } 
 
 /* ---------------- 极简 Markdown ---------------- */
 function inline(s) {
-  return esc(s).replace(/&quot;/g, '"')
+  const m = protectMath(s); // 行内公式 \( … \) 先抠出来，最后再排版放回
+  return m.restore(esc(m.text).replace(/&quot;/g, '"')
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    .replace(/(^|[^*\w])\*([^\s*](?:[^*\n]*?[^\s*])?)\*(?![*\w])/g, "$1<em>$2</em>") // *斜体*（书名、强调）
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>'));
 }
 function md(text) {
   if (!text) return "";
   return text.trim().split(/\n\s*\n/).map((block) => {
     const b = block.trim();
-    if (b.startsWith("<svg") || b.startsWith("<figure") || b.startsWith("<table")) return b; // 原样透传内联图示（SVG / figure / 表格）
+    if (b.startsWith("<svg") || b.startsWith("<figure") || b.startsWith("<table")) return mathifyRaw(b); // 原样透传（SVG / figure / 表格）；表格与图注里的 \( … \) 照样排版
     if (b.startsWith("### ")) return `<h3 class="subhead">${inline(b.slice(4))}</h3>`;
-    if (b.startsWith("$$")) {
-      const lines = b.split("\n").map((l) => l.replace(/^\$\$\s?/, "").replace(/\s?\$\$$/, ""));
-      while (lines.length && !lines[0].trim()) lines.shift();
-      while (lines.length && !lines[lines.length - 1].trim()) lines.pop();
-      return `<div class="formula">${lines.map(esc).join("<br>")}</div>`;
-    }
+    if (b.startsWith("$$")) return `<div class="formula">${blockLines(b).map((l) => tex(l, true)).join("")}</div>`; // 每行一条独立公式（KaTeX）
     if (b.startsWith("- ")) return `<ul>${b.split("\n").map((l) => `<li>${inline(l.replace(/^-\s+/, ""))}</li>`).join("")}</ul>`;
     if (b.startsWith("> ")) return `<blockquote>${inline(b.replace(/^>\s?/gm, ""))}</blockquote>`;
     return `<p>${inline(b)}</p>`;
@@ -92,7 +90,7 @@ const XREF = (() => {
   }
   return { exact, stageFirst };
 })();
-const SKIP_SEL = "svg,figure,code,a,button,table,h1,.subhead,.breadcrumb,.lsn-tag,.lsn-meta,.lsn-nav,.gloss,.xref,#demo-mount,.section-h";
+const SKIP_SEL = "svg,figure,code,a,button,table,h1,.katex,.formula,.subhead,.breadcrumb,.lsn-tag,.lsn-meta,.lsn-nav,.gloss,.xref,#demo-mount,.section-h";
 function notSkipped(node, root) {
   const p = node.parentElement;
   if (!p) return false;

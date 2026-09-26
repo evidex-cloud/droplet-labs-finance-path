@@ -1,7 +1,7 @@
 // 交互演示：期权损益图搭建器——选一个经典组合或自己加腿，
 // 用布莱克-斯科尔斯按当前波动率与剩余期限给每条腿定价，画出“到期损益”与“今天的理论盈亏”两条线，
 // 自动找盈亏平衡点、最大盈亏，并拆出内在价值与时间价值。
-import { fmtNum, fmtPct, clamp } from "./_fin.js";
+import { fmtNum, fmtPct, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 // 标准正态累积分布（Abramowitz–Stegun 近似）与布莱克-斯科尔斯（_fin.js 里没有期权公式，这里是本演示专用）
@@ -61,7 +61,7 @@ export default function mount(root, lang) {
         <button class="demo-btn" data-add="stock,1">+ ${T("买 1 股", "Buy 1 share")}</button>
       </div>
       <div class="stat-row">
-        <div class="stat"><div class="k">${T("净权利金（付出为负）", "Net premium (paid = negative)")}</div><div class="v acc" id="ob-prem">–</div></div>
+        <div class="stat"><div class="k">${T("净权利金（付出为负）", "Net premium (negative if paid)")}</div><div class="v acc" id="ob-prem">–</div></div>
         <div class="stat"><div class="k">${T("到期最大收益*", "Max gain at expiry*")}</div><div class="v pos" id="ob-max">–</div></div>
         <div class="stat"><div class="k">${T("到期最大亏损*", "Max loss at expiry*")}</div><div class="v neg" id="ob-min">–</div></div>
         <div class="stat"><div class="k">${T("盈亏平衡点", "Breakeven(s)")}</div><div class="v" id="ob-be">–</div></div>
@@ -152,7 +152,8 @@ export default function mount(root, lang) {
       const p = premOf(l[0], l[2], Ty);
       const intr = Math.max(0, l[0] === "call" ? S0 - l[2] : l[2] - S0);
       const m = intr > 0 ? T("价内", "ITM") : Math.abs(S0 - l[2]) < 2.5 ? T("平价", "ATM") : T("价外", "OTM");
-      return `${legName(l[0], l[1])} K=${l[2]}${T("（" + m + "）：价格", " (" + m + "): price")} <b>${fmtNum(p, 2)}</b> = ${T("内在价值", "intrinsic")} ${fmtNum(intr, 2)} + ${T("时间价值", "time value")} <b>${fmtNum(p - intr, 2)}</b>`;
+      const n2 = (x) => fmtNum(x, 2).replace(/,/g, "{,}");
+      return `${legName(l[0], l[1])} ${tex(String.raw`K = ${l[2]}`)}${T("（" + m + "）：", " (" + m + "): ")}${tex(String.raw`\text{${T("价格", "price")}}\ \mathbf{${n2(p)}} = \text{${T("内在价值", "intrinsic")}}\ ${n2(intr)} + \text{${T("时间价值", "time value")}}\ \mathbf{${n2(p - intr)}}`)}`;
     });
     if (slopeHi < -0.5) lines.push(`<span class="bad">${T("警告：价格越涨你亏得越多，而且没有上限——这是裸卖看涨的风险。", "Warning: the higher the price, the more you lose, with no limit — the risk of a naked short call.")}</span>`);
     if (slopeLo > 0.5 && mn < 0) lines.push(`<span class="warn">${T("标的跌向 0 时亏损最大——卖看跌就是替别人承担暴跌风险。", "Your worst case is the underlying going to zero — selling puts means insuring someone else against a crash.")}</span>`);

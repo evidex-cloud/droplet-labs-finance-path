@@ -1,7 +1,10 @@
 // 交互演示：股息跳过模拟器——点选哪些季度公司暂停优先股股息，
 // 对比 Orange-F（累积、可复利）与 Orange-D（非累积）：拿到多少、欠多少、永久失去多少、
 // 股息阻断如何把 D 层一起“卡住”，以及按折现率计算的现值损失。
-import { npv, fmtNum, fmtPct , enPunct } from "./_fin.js";
+import { npv, fmtNum, fmtPct , enPunct, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -17,7 +20,7 @@ export default function mount(root, lang) {
     <div class="demo">
       <div class="demo-head">${T("⏸️ 股息跳过模拟器：累积 vs 非累积", "⏸️ Dividend-skip simulator: cumulative vs non-cumulative")}</div>
       <div class="demo-block">
-        <label class="demo-label">${T("点选公司暂停优先股股息的季度（高亮 = 暂停）", "Click the quarters in which the company suspends preferred dividends (highlighted = suspended)")}</label>
+        <label class="demo-label">${T("点选公司暂停优先股股息的季度（高亮的季度表示暂停）", "Click the quarters in which the company suspends preferred dividends (highlighted quarters are suspended)")}</label>
         <div class="demo-btns" id="pt-qs"></div>
         <div class="demo-btns" id="pt-presets">
           <button class="demo-btn" data-p="none">${T("全部照付", "Pay every quarter")}</button>
@@ -56,6 +59,8 @@ export default function mount(root, lang) {
     </div>`;
 
   const q = (s) => root.querySelector(s);
+  // 现值回收比：收到现金的现值 ÷ 承诺现值
+  const pvRatio = (pv, promised) => tex(String.raw`\dfrac{\text{${T("收到现金的现值", "PV of cash received")}}}{\text{${T("承诺现值", "promised PV")}}} = \dfrac{${texv(fmtNum(pv, 2))}}{${texv(fmtNum(promised, 2))}} = ${texv(fmtPct(pv / promised, 1))}`);
 
   const simulate = () => {
     let arrears = 0, lostD = 0, blockedQ = 0, arrearsQ = 0;
@@ -132,20 +137,20 @@ export default function mount(root, lang) {
           <div class="stat"><div class="k">${T("12 季收到现金", "Cash in 12 qtrs")}</div><div class="v">${fmtNum(fCash, 2)}</div></div>
           <div class="stat"><div class="k">${T("期末仍欠", "Still owed")}</div><div class="v ${s.arrears > 0 ? "neg" : "pos"}">${fmtNum(s.arrears, 2)}</div></div>
         </div>
-        <div class="demo-meta">${T("收到现金的现值", "PV of cash received")} ${fmtNum(fPV, 2)} / ${T("承诺现值", "promised PV")} ${fmtNum(fPromised, 2)}（${fmtPct(fPV / fPromised, 1)}）${s.arrears > 0 ? `；${T("若期末补清，再加欠款现值", "plus PV of arrears if cleared at the end")} ${fmtNum(fClaimPV, 2)}` : ""}</div>
+        <div class="demo-meta">${pvRatio(fPV, fPromised)}${s.arrears > 0 ? `；${T("若期末补清，再加欠款现值", "plus PV of arrears if cleared at the end")} ${fmtNum(fClaimPV, 2)}` : ""}</div>
       </div>
       <div class="cmp-cell cold"><h5>Orange-D · ${T("非累积", "non-cumulative")}</h5>
         <div class="stat-row" style="margin-top:0">
           <div class="stat"><div class="k">${T("12 季收到现金", "Cash in 12 qtrs")}</div><div class="v">${fmtNum(dCash, 2)}</div></div>
           <div class="stat"><div class="k">${T("永久失去", "Lost for good")}</div><div class="v ${s.lostD > 0 ? "neg" : "pos"}">${fmtNum(s.lostD, 2)}</div></div>
         </div>
-        <div class="demo-meta">${T("收到现金的现值", "PV of cash received")} ${fmtNum(dPV, 2)} / ${T("承诺现值", "promised PV")} ${fmtNum(dPromised, 2)}（${fmtPct(dPV / dPromised, 1)}）${s.blockedQ ? `；${T("其中", "of which")} ${s.blockedQ} ${T("季是被 F 层拖欠阻断的", "quarters were blocked by F's arrears")}` : ""}</div>
+        <div class="demo-meta">${pvRatio(dPV, dPromised)}${s.blockedQ ? `；${T("其中", "of which")} ${s.blockedQ} ${T("季是被 F 层拖欠阻断的", "quarters were blocked by F's arrears")}` : ""}</div>
       </div>`;
 
     const lines = [];
     if (!skip.size) lines.push(`<span class="ok">${T("全部照付：两层都拿到承诺的每一笔，条款差别此刻看不见——它们只在坏日子里显形。", "Everything paid: both layers receive every promised payment. The difference in terms is invisible now — it only shows on bad days.")}</span>`);
     else {
-      lines.push(`${T("暂停了", "Suspended")} ${skip.size} ${T("个季度。F 层每季应付 2.5、D 层 1.25（百万美元）。", "quarters. F is owed 2.5 and D 1.25 per quarter ($M).")}`);
+      lines.push(`${T("暂停了", "Suspended")} ${skip.size} ${T("个季度。F 层每季应付 ", "quarters. F is owed ")}${tex(String.raw`100 \times 10\% \div 4 = 2.5`)}${T("、D 层 ", " and D ")}${tex(String.raw`50 \times 10\% \div 4 = 1.25`)}${T("（百万美元）。", " per quarter ($M).")}`);
       if (s.blockedQ) lines.push(`<span class="bad">${T("股息阻断在起作用：公司恢复付 F 层当期股息后，只要 F 层还有拖欠，D 层与普通股就一分钱都不能拿，也不能回购。", "The dividend stopper is biting: after F's current dividend resumes, as long as F has arrears, the D layer and the common can't be paid a cent or bought back.")}</span>`);
       if (s.arrearsQ >= 6) lines.push(`<span class="warn">${T("F 层拖欠已持续", "F has been in arrears for")} ${s.arrearsQ} ${T("个季度——按常见条款设计，此时优先股持有人可选举董事（直到欠款补清）。", "quarters — under a common design, preferred holders can now elect directors until the arrears are cleared.")}</span>`);
       if (compound && s.arrears > 0) {

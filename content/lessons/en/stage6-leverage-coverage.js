@@ -21,15 +21,15 @@ Companies are the same, just with more rulers. This lesson sits on **Idea ② (b
 
 Take Maple Manufacturing from Stage 6.1: EBITDA (earnings before interest, taxes, depreciation and amortization) of $20M a year, $70M of debt, $4.5M of interest a year.
 
-- **Debt / EBITDA = 3.5x**: using all its operating profit, it would take about three and a half years to pay off the debt.
-- **Interest coverage = EBIT / interest = $15M / $4.5M ≈ 3.3x**: profit is more than three times the interest bill, so operating profit would have to fall about 70% before interest couldn't be paid.
+- **\\(\\text{debt} / \\mathrm{EBITDA} = 3.5\\times\\)**: using all its operating profit, it would take about three and a half years to pay off the debt.
+- **\\(\\text{interest coverage} = \\mathrm{EBIT} / \\text{interest} = \\$15\\text{M} / \\$4.5\\text{M} \\approx 3.3\\times\\)**: profit is more than three times the interest bill, so operating profit would have to fall about 70% before interest couldn't be paid.
 - **Asset coverage**: $100M of assets against $70M of cumulative claims down through the subordinated notes gives about 1.43x — a 30% fall in asset value and the subordinated notes start losing.
 
 These are the rulers for a **normal company**. They share one premise: the company has steady operating cash flow, and its assets are worth something because of that cash flow.
 
 Now swap in Orange Corp from Stage 6.1. It has almost no operating profit, so EBITDA is close to zero. Its convertible pays a 0% coupon. It owes $15M a year in preferred dividends. Measure it with interest coverage and the numerator is zero — the company looks like it "can't pay anything." Yet its asset is $1 billion of bitcoin that can be partly sold at any moment, and only $300 million of claims sit on top of it.
 
-**The cash-flow rulers break down completely here.** Only two still work. One is **asset coverage**: how many times the BTC NAV covers the cumulative claims (6.7x / 4.0x / 3.3x). The other is **liquidity coverage**: how many months of dividends the cash reserve can pay ($30M ÷ $15M × 12 = **24 months**). The first asks "will the building stand?"; the second asks "how long can it last without selling bitcoin or raising money?"
+**The cash-flow rulers break down completely here.** Only two still work. One is **asset coverage**: how many times the BTC NAV covers the cumulative claims (6.7x / 4.0x / 3.3x). The other is **liquidity coverage**: how many months of dividends the cash reserve can pay (\\(\\dfrac{\\$30\\text{M}}{\\$15\\text{M}} \\times 12 = \\mathbf{24}\\ \\textbf{months}\\)). The first asks "will the building stand?"; the second asks "how long can it last without selling bitcoin or raising money?"
 
 Stage 16.5's BTC Rating and Stage 16.6's months of dividend coverage are, at heart, this lesson's rulers renamed and bolted onto bitcoin. And the DeFi "health factor" of Stage 13.4 is LTV written into a smart contract — cross the line and liquidation happens automatically. **One set of rulers, three worlds.**
 
@@ -49,16 +49,16 @@ Leverage measures "how much of other people's money is in use." The three common
 
 <table class="pm">
 <tr><th>Ratio</th><th>Formula</th><th>Maple Manufacturing</th><th>What it asks</th></tr>
-<tr><td><b>Debt / equity</b></td><td>Total debt ÷ shareholders' equity</td><td>$70M ÷ $20M = 3.5x</td><td>How many dollars of borrowing per dollar of own money?</td></tr>
-<tr><td><b>Debt / EBITDA</b></td><td>Total (or net) debt ÷ annual EBITDA</td><td>$70M ÷ $20M = 3.5x</td><td>How many years of operating profit to repay the debt?</td></tr>
-<tr><td><b>Loan-to-value (LTV)</b></td><td>Debt ÷ asset value</td><td>$70M ÷ $100M = 70%</td><td>How far can assets fall before the debt is no longer covered?</td></tr>
+<tr><td><b>Debt / equity</b></td><td>\\(\\dfrac{\\text{total debt}}{\\text{shareholders' equity}}\\)</td><td>\\(\\$70\\text{M} \\div \\$20\\text{M} = 3.5\\times\\)</td><td>How many dollars of borrowing per dollar of own money?</td></tr>
+<tr><td><b>Debt / EBITDA</b></td><td>\\(\\dfrac{\\text{total (or net) debt}}{\\text{annual EBITDA}}\\)</td><td>\\(\\$70\\text{M} \\div \\$20\\text{M} = 3.5\\times\\)</td><td>How many years of operating profit to repay the debt?</td></tr>
+<tr><td><b>Loan-to-value (LTV)</b></td><td>\\(\\dfrac{\\text{debt}}{\\text{asset value}}\\)</td><td>\\(\\$70\\text{M} \\div \\$100\\text{M} = 70\\%\\)</td><td>How far can assets fall before the debt is no longer covered?</td></tr>
 </table>
 
 A few points to watch.
 
 - **Debt / equity** is very sensitive to whether equity is measured at book or market value. When the share price soars, market-value leverage looks lower — even though not a dollar of debt has been repaid.
 - **Debt / EBITDA** is the workhorse of credit analysis. A rough rule of thumb: investment-grade companies mostly sit below 3x, while high-yield (junk) companies often run at 4–6x or more — but industries differ enormously (utilities naturally run high, software companies low).
-- **LTV** is the language of mortgages and secured lending: 80% for a home loan, 50% for a stock margin loan, liquidation thresholds of roughly 60–80% in DeFi lending (Stage 13.4). **LTV and asset coverage are reciprocals**: an LTV of 70% ⇔ coverage of 1.43x.
+- **LTV** is the language of mortgages and secured lending: 80% for a home loan, 50% for a stock margin loan, liquidation thresholds of roughly 60–80% in DeFi lending (Stage 13.4). **LTV and asset coverage are reciprocals**: \\(\\mathrm{LTV} = 70\\% \\Leftrightarrow \\text{coverage} = 1 / 70\\% \\approx 1.43\\times\\).
 
 Also distinguish **gross debt** from **net debt** (debt minus cash). A company sitting on a lot of cash can have net leverage far below its gross leverage.
 
@@ -67,18 +67,21 @@ Also distinguish **gross debt** from **net debt** (debt minus cash). A company s
 Leverage asks "how much was borrowed"; coverage asks "can it be paid." The most basic ruler is the **interest coverage ratio**:
 
 $$
-Interest coverage = EBIT ÷ interest expense = $15M ÷ $4.5M ≈ 3.3x
-(EBITDA ÷ interest is also common: $20M ÷ $4.5M ≈ 4.4x)
+\\text{interest coverage} = \\frac{\\mathrm{EBIT}}{\\text{interest expense}} = \\frac{\\$15\\text{M}}{\\$4.5\\text{M}} \\approx 3.3\\times
+\\frac{\\mathrm{EBITDA}}{\\text{interest}} = \\frac{\\$20\\text{M}}{\\$4.5\\text{M}} \\approx 4.4\\times
 $$
+
+The second line, using EBITDA, is also common.
 
 But interest isn't the only money a company must pay. **Fixed-charge coverage** adds rent, preferred dividends and similar items. Preferred dividends need one technical adjustment: they are paid out of **after-tax** profit, so they must be converted to a "pre-tax equivalent" before being added to interest:
 
 $$
-Pre-tax equivalent of preferred dividends = dividends ÷ (1 − tax rate) = $0.8M ÷ (1 − 21%) ≈ $1.01M
-Fixed-charge coverage = EBIT ÷ (interest + pre-tax preferred dividends) = $15M ÷ ($4.5M + $1.01M) ≈ 2.7x
+\\text{pre-tax equivalent of preferred dividends} = \\frac{\\text{dividends}}{1 - \\text{tax rate}} = \\frac{\\$0.8\\text{M}}{1 - 21\\%} \\approx \\$1.01\\text{M}
+\\text{fixed-charge coverage} = \\frac{\\mathrm{EBIT}}{\\text{interest} + \\text{pre-tax preferred dividends}}
+\\text{fixed-charge coverage} = \\frac{\\$15\\text{M}}{\\$4.5\\text{M} + \\$1.01\\text{M}} \\approx 2.7\\times
 $$
 
-How to read it: **coverage of N means profit can fall by (1 − 1/N) before the payments can't be met.** 3.3x → profit can fall 70%; 2.7x → 63%. Counting the preferred dividend thins the cushion noticeably — a quantified version of Stage 6.2's point that preferred stock is a fixed cost.
+How to read it: **coverage of \\(N\\) means profit can fall by \\(1 - 1/N\\) before the payments can't be met.** 3.3x → profit can fall \\(1 - 1/3.3 \\approx 70\\%\\); 2.7x → \\(1 - 1/2.7 \\approx 63\\%\\). Counting the preferred dividend thins the cushion noticeably — a quantified version of Stage 6.2's point that preferred stock is a fixed cost.
 
 The strength of cash-flow coverage is that it **measures the ability to keep going**: the company pays its bills out of what it earns without selling assets or borrowing more. Its weakness is **dependence on stable profits**: a cyclical company can show 8x coverage in a good year and less than 1x in a bad one.
 
@@ -87,15 +90,15 @@ The strength of cash-flow coverage is that it **measures the ability to keep goi
 Cash-flow coverage asks "can the interest be paid?" **Asset coverage** asks "if every asset were sold, would it repay the principal?" It must be computed **cumulatively, floor by floor** (the core reading from Stage 6.1):
 
 $$
-Asset coverage of floor k = asset value ÷ (sum of claims from floor 1 through floor k)
+\\text{asset coverage of floor}\\ k = \\frac{\\text{asset value}}{\\sum_{i=1}^{k} \\text{claims of floor}\\ i}
 $$
 
 For Maple Manufacturing ($100M of assets): secured loan 3.33x → senior bonds 1.82x → subordinated notes 1.43x → preferred 1.25x.
 
-Asset coverage has a very intuitive translation: **coverage of N ⇔ assets can fall by (1 − 1/N) and this floor is still paid in full.**
+Asset coverage has a very intuitive translation: **coverage of \\(N\\) \\(\\Leftrightarrow\\) assets can fall by \\(1 - 1/N\\) and this floor is still paid in full.**
 
 <table class="pm">
-<tr><th>Coverage</th><th>Maximum asset decline absorbed</th><th>Equivalent LTV</th></tr>
+<tr><th>Coverage \\(N\\)</th><th>Maximum asset decline absorbed \\(1 - 1/N\\)</th><th>Equivalent LTV \\(1/N\\)</th></tr>
 <tr><td>1.25x</td><td>20%</td><td>80% (typical mortgage)</td></tr>
 <tr><td>2x</td><td>50%</td><td>50% (typical margin loan)</td></tr>
 <tr><td>3.3x</td><td>70%</td><td>30%</td></tr>
@@ -120,12 +123,15 @@ Why do cash-flow ratios break down for a DAT?
 A DAT's coverage toolkit therefore becomes a set of three:
 
 $$
-Asset coverage (the BTC Rating idea) = BTC NAV ÷ cumulative claims at that layer and above: 6.7x / 4.0x / 3.3x
-Reserve coverage = USD reserve ÷ annual dividends and interest × 12 = $30M ÷ $15M × 12 = 24 months
-Amplification = BTC NAV ÷ (BTC NAV − cumulative claims) = 10 ÷ 7 ≈ 1.43x
+\\text{asset coverage (the BTC Rating idea)} = \\frac{\\text{BTC NAV}}{\\text{cumulative claims at that layer and above}}
+\\text{reserve coverage} = \\frac{\\text{USD reserve}}{\\text{annual dividends and interest}} \\times 12
+\\text{reserve coverage} = \\frac{\\$30\\text{M}}{\\$15\\text{M}} \\times 12 = 24\\ \\text{months}
+\\text{amplification} = \\frac{\\text{BTC NAV}}{\\text{BTC NAV} - \\text{cumulative claims}} = \\frac{10}{7} \\approx 1.43\\times
 $$
 
-And one fact specific to bitcoin: **its price can fall 70–80% within a year** (Stage 11.3, Stage 12.4). So a DAT's asset coverage must always be read **together with a stress test**. The F layer's 4x becomes 1.2x after a 70% fall in bitcoin; the D layer's 3.3x becomes exactly 1.0x. **Asset coverage is not a number; it is a line that slides with the bitcoin price** — Stage 16.5's demo lets you drag a bitcoin slider and watch it collapse.
+For Orange Corp's three layers, asset coverage works out to 6.7x / 4.0x / 3.3x.
+
+And one fact specific to bitcoin: **its price can fall 70–80% within a year** (Stage 11.3, Stage 12.4). So a DAT's asset coverage must always be read **together with a stress test**. The F layer's 4x becomes \\(4 \\times 30\\% = 1.2\\times\\) after a 70% fall in bitcoin; the D layer's 3.3x becomes exactly \\(3.3 \\times 30\\% \\approx 1.0\\times\\). **Asset coverage is not a number; it is a line that slides with the bitcoin price** — Stage 16.5's demo lets you drag a bitcoin slider and watch it collapse.
 
 ### ⑤ Covenants, margin calls and tripwires: what happens when a line is crossed
 
@@ -166,24 +172,24 @@ One kind of wader is the most endangered: the one tied by a rope to a boulder on
     {
       q: "Maple Manufacturing has EBIT of $15M, interest of $4.5M, preferred dividends of $0.8M and a 21% tax rate. Roughly what is its fixed-charge coverage?",
       options: [
-        "About 2.7x: $15M ÷ ($4.5M + $0.8M ÷ 0.79)",
-        "About 3.3x: $15M ÷ $4.5M",
-        "About 2.8x: $15M ÷ ($4.5M + $0.8M)",
-        "About 18.8x: $15M ÷ $0.8M",
+        "About 2.7x: \\(\\$15\\text{M} \\div (\\$4.5\\text{M} + \\$0.8\\text{M} \\div 0.79)\\)",
+        "About 3.3x: \\(\\$15\\text{M} \\div \\$4.5\\text{M}\\)",
+        "About 2.8x: \\(\\$15\\text{M} \\div (\\$4.5\\text{M} + \\$0.8\\text{M})\\)",
+        "About 18.8x: \\(\\$15\\text{M} \\div \\$0.8\\text{M}\\)",
       ],
       answer: 0,
-      explain: "Preferred dividends come out of after-tax profit, so convert them to a **pre-tax equivalent**: 0.8 ÷ 0.79 ≈ $1.01M. Add to interest: 15 ÷ 5.51 ≈ **2.7x**.",
+      explain: "Preferred dividends come out of after-tax profit, so convert them to a **pre-tax equivalent**: \\(0.8 \\div 0.79 \\approx \\$1.01\\text{M}\\). Add to interest: \\(15 \\div 5.51 \\approx \\mathbf{2.7\\times}\\).",
     },
     {
       q: "A layer has asset coverage of 4x. By how much can the assets fall with this layer still paid in full?",
       options: [
         "25%",
         "40%",
-        "75%: 1 − 1/4",
+        "75%: \\(1 - 1/4\\)",
         "400%",
       ],
       answer: 2,
-      explain: "Coverage of N ⇔ assets can fall **1 − 1/N**. 4x → 75%, equivalent to an LTV of 25%. That is Orange Corp's F layer.",
+      explain: "Coverage of \\(N\\) \\(\\Leftrightarrow\\) assets can fall **\\(1 - 1/N\\)**. 4x → \\(1 - 1/4 = 75\\%\\), equivalent to an LTV of \\(1/4 = 25\\%\\). That is Orange Corp's F layer.",
     },
     {
       q: "Why is interest coverage nearly meaningless for a DAT like Orange Corp?",
@@ -205,7 +211,7 @@ One kind of wader is the most endangered: the one tied by a rope to a boulder on
         "24 months",
       ],
       answer: 3,
-      explain: "Reserve coverage = $30M ÷ $15M × 12 = **24 months**. It's one of Stage 16.6's core metrics: how long the company can last without raising money or selling bitcoin.",
+      explain: "\\(\\text{reserve coverage} = \\$30\\text{M} \\div \\$15\\text{M} \\times 12 = \\mathbf{24}\\ \\textbf{months}\\). It's one of Stage 16.6's core metrics: how long the company can last without raising money or selling bitcoin.",
     },
     {
       q: "Of maintenance covenants, incurrence covenants and margin calls, which is most likely to force a borrower to sell assets at the very bottom?",

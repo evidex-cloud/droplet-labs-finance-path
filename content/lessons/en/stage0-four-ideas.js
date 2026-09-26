@@ -47,11 +47,13 @@ So for any financial headline, you can start with one question: **“Which of th
   mechanics: `
 ### ① Idea ①, the price of time: every valuation is a discount
 
-**The core sentence: the value of any asset = the sum of its future cash flows, discounted at some interest rate.**
+**The core sentence: the value of any asset equals the sum of its future cash flows, discounted at some interest rate.**
 
 Why discount? Because money today can be invested, spent immediately, and isn't exposed to inflation or to someone failing to pay. So a dollar in the future is worth less than a dollar now, and how much less depends on the interest rate. Stage 2.1 explains the reasons; Stage 2.3 gives the formula:
 
-$$ Present value = CF₁/(1+r) + CF₂/(1+r)² + … + CFₙ/(1+r)ⁿ
+$$
+\\text{Present value} = \\frac{\\mathrm{CF}_{1}}{1+r} + \\frac{\\mathrm{CF}_{2}}{(1+r)^{2}} + \\cdots + \\frac{\\mathrm{CF}_{n}}{(1+r)^{n}}
+$$
 
 Feel it with the course's standard example. A bond with a **$1,000 face value, a 5% coupon and 10 years to maturity** pays $50 a year and returns $1,000 at the end:
 
@@ -61,7 +63,7 @@ Feel it with the course's standard example. A bond with a **$1,000 face value, a
 
 **Rates and prices sit on a seesaw** (Stage 4.2). The longer the maturity, the longer the seesaw and the bigger the swing at the far end. A 30-year Treasury with a 5% coupon falls from 100 to about **86.2** when its yield goes from 5% to 6% — a drop of roughly 14%. Its “modified duration” is about 15.5, meaning each percentage-point move in yield shifts the price about 15.5% the other way (Stage 4.4).
 
-Things that are **perpetual** are more extreme still — a preferred stock with no maturity date, say. If it pays $10 a year and investors want a 10% return, it's worth $100 (10 ÷ 10%). If the required return rises to 12%, it's worth only about **$83.30**. **Same dividend; the price drops about 17% purely because the price of time changed.**
+Things that are **perpetual** are more extreme still — a preferred stock with no maturity date, say. If it pays $10 a year and investors want a 10% return, it's worth $100 (\\(\\dfrac{\\$10}{10\\%} = \\$100\\)). If the required return rises to 12%, it's worth only about **$83.30**. **Same dividend; the price drops about 17% purely because the price of time changed.**
 
 That's why Lin's first headline matters so much. The 30-year Treasury yield is the world's anchor for the long-term price of time. In late September 2026 it was about 5.5%, the highest since 2004. When it moves, stock valuation multiples (Stage 5.3), mortgage rates, assets like bitcoin that have no cash flows and are priced on future expectations, and those roughly-10% preferreds (Stage 18.1) all have to be recalculated.
 
@@ -73,7 +75,9 @@ That's why Lin's first headline matters so much. The 30-year Treasury yield is t
 
 A balance sheet is a two-column table. On the left, **assets** (what you own). On the right, **liabilities and equity** (whose money paid for those assets). The two sides always match:
 
-$$ Assets = Liabilities + Shareholders' equity
+$$
+\\text{Assets} = \\text{Liabilities} + \\text{Shareholders' equity}
+$$
 
 The key insight: **your asset is somebody else's liability.** Your deposit is the bank's liability; your Treasury is the US Treasury's liability; the dollar bills in your wallet are the Fed's liability; your USDC is a liability of its issuer, Circle. Very few things are nobody's liability — gold, and bitcoin. That's why bitcoin is called an asset “with no counterparty” (Stage 1.1, Stage 12.1).
 
@@ -112,7 +116,7 @@ A few runs you'll meet again and again in the course:
 Four small propositions, each with a number:
 
 - **Risk has a price.** Lend for 10 years to the US government and you get about 5%; lend to a lower-rated company and you might need 8% or 9%. The difference is the **risk premium** (Stage 2.4, Stage 4.6). Stocks have out-earned bonds over the long run for the same reason: they're riskier.
-- **Leverage cuts both ways.** Put in $100,000 of your own and borrow $900,000 to buy a $1 million asset: that's 10x leverage. A 10% rise doubles your money; a 10% fall wipes it out. Orange Corp's common stock is levered too. Its bitcoin exposure is $1 billion, but the part that belongs to common shareholders is $1 billion minus $300 million of senior claims — $700 million — so its amplification is about 10 ÷ 7 ≈ **1.43x** (Stage 16.4).
+- **Leverage cuts both ways.** Put in $100,000 of your own and borrow $900,000 to buy a $1 million asset: that's 10x leverage. A 10% rise doubles your money; a 10% fall wipes it out. Orange Corp's common stock is levered too. Its bitcoin exposure is $1 billion, but the part that belongs to common shareholders is $1 billion minus $300 million of senior claims — $700 million — so its amplification is about **\\(\\dfrac{10}{7} \\approx 1.43\\times\\)** (Stage 16.4).
 - **Volatility can be bought and sold.** An option's price depends heavily on how much the underlying swings. The more a company's stock swings, the more valuable the option embedded in its convertible bonds — and the lower the interest rate it can borrow at. That's the key to understanding how Strategy could issue zero-coupon converts (Stage 7.3).
 - **Markets reinforce themselves.** George Soros called this **reflexivity** in The Alchemy of Finance (1987): rising prices → easier funding → more buying → higher prices, and the same in reverse. A digital asset treasury company's “flywheel” is a reflexive loop: when the stock trades above the value of its bitcoin, issuing shares to buy more bitcoin raises bitcoin per share; when the stock falls below that value, the flywheel stalls or even spins backward (Stage 10.4, Stage 16.7).
 
@@ -122,7 +126,7 @@ As of September 2026, bitcoin was around $84,000 — about a third below its Oct
 
 The four ideas aren't four drawers; they're a web. A typical chain of transmission looks like this:
 
-$$ Rates rise (①) → asset prices fall, balance sheets shrink (②) → if liabilities are short-term, trust wobbles and a run starts (③) → the higher the leverage, the sooner it breaks (④)
+**Rates rise (①) → asset prices fall, balance sheets shrink (②) → if liabilities are short-term, trust wobbles and a run starts (③) → the higher the leverage, the sooner it breaks (④)**
 
 Almost every crisis walks that chain. And each of the course's six tiers pushes a different set of ideas to center stage:
 
@@ -180,7 +184,7 @@ A good building inspector checks these four systems first thing. Reading a finan
       q: "Orange Corp holds $1 billion of bitcoin, with $300 million of claims (convertible notes plus two layers of preferred) ranking ahead of the common. After bitcoin falls about 54%, what is the junior preferred layer's asset coverage, roughly?",
       options: ["About 1.5x", "Still 3.3x", "About 0.5x", "About 6.7x"],
       answer: 0,
-      explain: "BTC NAV shrinks to about $460 million; divided by $300 million of cumulative claims, that's **about 1.5x**. Ideas ② and ④ working together: the balance sheet tells you whose head the risk lands on, the price swing tells you how big it is (Stage 16.5).",
+      explain: "BTC NAV shrinks to about $460 million; divided by $300 million of cumulative claims, that's **\\(\\dfrac{460}{300} \\approx 1.5\\times\\)**. Ideas ② and ④ working together: the balance sheet tells you whose head the risk lands on, the price swing tells you how big it is (Stage 16.5).",
     },
     {
       q: "Which set of ideas does Silicon Valley Bank's March 2023 failure illustrate best?",

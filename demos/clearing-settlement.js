@@ -2,7 +2,10 @@
 // ① 交割窗口里的风险：选 T+3/T+2/T+1/T+0，调交易金额与波动率，
 //    用解析公式和 2,000 次蒙特卡洛模拟“卖方在交割前违约”时的重置成本；
 // ② 轧差的魔法：5 家券商一天随机交易 N 笔，比较逐笔（毛额）、清算所轧差（净额）与链上原子结算需要预备的现金。
-import { rng, randn, mean, fmtPct, fmtUsd, fmtBig, fmtNum } from "./_fin.js";
+import { rng, randn, mean, fmtPct, fmtUsd, fmtBig, fmtNum, tex } from "./_fin.js";
+
+// 把 fmtUsd / fmtPct 的输出转成 LaTeX：$ → \$，千位逗号 → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -106,7 +109,7 @@ export default function mount(root, lang) {
       lines.push(`<span class="warn">${T("代价在②里：每笔都要预先全额注资，没有轧差。", "The cost is in ②: every trade must be prefunded in full, with no netting.")}</span>`);
     } else {
       const cut = 1 - cost99(1, 1, 1) / cost99(1, 1, 2);
-      lines.push(`${T("公式：金额 × 2.33 × 波动率 ÷ √252 × √", "Formula: value × 2.33 × vol ÷ √252 × √")}${d}${T(" = ", " = ")}<b>${fmtUsd(an, 0)}</b>${T("（占交易额 ", " (")}${fmtPct(an / risk.value, 2)}${T("）。模拟只计算价格上涨的情形，所以结果略有不同。", " of the trade). The simulation only counts moves where the price rises, so it differs slightly.")}`);
+      lines.push(`${T("公式：", "Formula: ")}${tex(String.raw`\text{${T("金额", "value")}} \times 2.33 \times \dfrac{\text{${T("波动率", "vol")}}}{\sqrt{252}} \times \sqrt{${d}} = ${texv(fmtUsd(risk.value, 0))} \times 2.33 \times \dfrac{${texv(fmtPct(risk.vol, 0))}}{\sqrt{252}} \times \sqrt{${d}} \approx \mathbf{${texv(fmtUsd(an, 0))}}`)}${T("（占交易额 ", " (")}${fmtPct(an / risk.value, 2)}${T("）。模拟只计算价格上涨的情形，所以结果略有不同。", " of the trade). The simulation only counts moves where the price rises, so it differs slightly.")}`);
       lines.push(`${T("从 T+2 缩到 T+1，这项风险下降 ", "Going from T+2 to T+1 cuts this risk by ")}<b>${fmtPct(cut, 0)}</b>${T("——窗口减半，风险只降约三成，因为价格波动按时间的平方根增长。", " — halving the window only cuts the risk by about a third, because price moves grow with the square root of time.")}`);
       if (risk.vol >= 0.5) lines.push(`<span class="warn">${T("这是比特币级别的波动：同样一天的窗口，风险是 20% 波动率股票的 ", "This is bitcoin-level volatility: the same one-day window carries ")}${fmtNum(risk.vol / 0.2, 1)}${T(" 倍——这就是为什么加密衍生品的保证金要求高得多（阶段 7.5）。", "x the risk of a 20%-vol stock — which is why crypto derivatives demand far more margin (Stage 7.5).")}</span>`);
     }

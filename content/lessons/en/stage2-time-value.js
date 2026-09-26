@@ -18,7 +18,7 @@ Almost everyone picks A. No surprise there. The interesting question is the next
 
 > A: Take $100 right now. B: Take $X a year from now. How big does X have to be before you switch to B?
 
-Some people say $103. Some say $110. A few say "you could offer me $200 and I still wouldn't wait." **Whatever X you name is the price you put on one year of waiting.** If you say $106, your personal interest rate is 6%: in your eyes, $100 today and $106 next year are worth exactly the same.
+Some people say $103. Some say $110. A few say "you could offer me $200 and I still wouldn't wait." **Whatever X you name is the price you put on one year of waiting.** If you say $106, your personal interest rate is 6%: in your eyes, \\(\\$100\\ \\text{today} = \\$106\\ \\text{next year}\\) — they are worth exactly the same.
 
 That is the **time value of money**. Money has a face value, but it also has a *when*. The same $100 is worth more the sooner it arrives and less the later it arrives. **An interest rate is the exchange rate between present dollars and future dollars** — just as there is an exchange rate between dollars and euros, there is one between "this year's dollars" and "next year's dollars."
 
@@ -50,11 +50,11 @@ This lesson is the first bead on the string of **Idea ① — the price of time*
 Write the opening question as an equation. If "$100 today" and "$106 in one year" feel equally good to you, then:
 
 $$
-$100 today = $100 × (1 + r) in one year
-100 × (1 + r) = 106 → r = 6%
+\\$100\\ \\text{today} = \\$100 \\times (1 + r)\\ \\text{in one year}
+100 \\times (1 + r) = 106 \\Rightarrow r = 6\\%
 $$
 
-That r goes by many names: interest rate, rate of return, **discount rate**, cost of capital, required return. The names differ because people stand in different places — a saver calls it "interest," a borrower calls it "cost," someone valuing an asset calls it the "discount rate" — **but it is one thing: the price of a year of time.**
+That \\(r\\) goes by many names: interest rate, rate of return, **discount rate**, cost of capital, required return. The names differ because people stand in different places — a saver calls it "interest," a borrower calls it "cost," someone valuing an asset calls it the "discount rate" — **but it is one thing: the price of a year of time.**
 
 Why call it a *price*? Because, like any price, it comes from supply meeting demand:
 
@@ -74,8 +74,8 @@ Take "how much do I need to wait a year?" apart and you find four bricks:
 Strictly speaking, these layers multiply rather than add. Suppose your pure time preference is 2%, expected inflation is 3%, and the borrower has a 1% chance of stiffing you:
 
 $$
-1 + r = (1 + 2%) × (1 + 3%) ÷ (1 − 1%)
-r ≈ 6.12%
+1 + r = \\frac{(1 + 2\\%) \\times (1 + 3\\%)}{1 - 1\\%}
+r \\approx 6.12\\%
 $$
 
 Adding gives 6%; multiplying gives 6.12%. When rates are low the difference is tiny, so "add up the pieces" is a fine rule of thumb. When rates are high — say, in a country with 40% inflation — you must multiply. Stage 2.5 covers the **Fisher equation** that strips inflation out properly, and Stage 2.4 splits the risk layer further into credit, term, equity and liquidity premia.
@@ -96,18 +96,18 @@ Once you have a time exchange rate, you can move money back and forth along the 
 - **Backward (present value):** what is future money worth today?
 
 $$
-Future value FV = PV × (1 + r)^n
-Present value PV = FV ÷ (1 + r)^n
+\\text{Future value } \\mathrm{FV} = \\mathrm{PV} \\times (1 + r)^{n}
+\\text{Present value } \\mathrm{PV} = \\frac{\\mathrm{FV}}{(1 + r)^{n}}
 $$
 
-Here n is the number of years. At 5%:
+Here \\(n\\) is the number of years. At 5%:
 
-- $100 today becomes $105 after one year, $110.25 after two, and **$162.89** after ten (each year multiplies the previous balance by 1.05 — which is exactly the compounding of Stage 2.2).
+- $100 today becomes $105 after one year, $110.25 after two, and **$162.89** after ten (each year multiplies the previous balance by \\(1.05\\) — which is exactly the compounding of Stage 2.2).
 - Going the other way, $1,000 received ten years from now is worth only **$613.91** today at 5%. $1,000 thirty years out is worth just **$231.38** today.
 
 <figure><svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The same money, two directions on the timeline (rate 5%)</text><line x1="50" y1="130" x2="600" y2="130" stroke="var(--line)" stroke-width="2"/><g font-size="11" fill="var(--muted)" text-anchor="middle"><text x="60" y="150">Today</text><text x="115" y="150">1</text><text x="170" y="150">2</text><text x="280" y="150">4</text><text x="390" y="150">6</text><text x="500" y="150">8</text><text x="580" y="150">10 yrs</text></g><g fill="var(--orange)"><circle cx="60" cy="130" r="5"/><circle cx="115" cy="130" r="4"/><circle cx="170" cy="130" r="4"/><circle cx="280" cy="130" r="4"/><circle cx="390" cy="130" r="4"/><circle cx="500" cy="130" r="4"/><circle cx="580" cy="130" r="5"/></g><rect x="62" y="98" width="30" height="24" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="77" y="92" text-anchor="middle" font-size="11" fill="var(--ink)">100</text><rect x="100" y="96" width="30" height="26" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="115" y="90" text-anchor="middle" font-size="10" fill="var(--muted)">105</text><rect x="155" y="94" width="30" height="28" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="170" y="88" text-anchor="middle" font-size="10" fill="var(--muted)">110.25</text><rect x="265" y="88" width="30" height="34" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="280" y="82" text-anchor="middle" font-size="10" fill="var(--muted)">121.55</text><rect x="375" y="81" width="30" height="41" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="390" y="75" text-anchor="middle" font-size="10" fill="var(--muted)">134.01</text><rect x="485" y="72" width="30" height="50" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="500" y="66" text-anchor="middle" font-size="10" fill="var(--muted)">147.75</text><rect x="565" y="62" width="30" height="60" rx="3" fill="var(--orange)"/><text x="580" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">162.89</text><path d="M 95 44 Q 330 20 560 44" fill="none" stroke="var(--orange)" stroke-width="2" marker-end="url(#tvA)"/><text x="330" y="44" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">Compounding: move forward, × 1.05 per year</text><rect x="565" y="160" width="30" height="60" rx="3" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="580" y="236" text-anchor="middle" font-size="11" fill="var(--ink)">1,000</text><rect x="45" y="183" width="30" height="37" rx="3" fill="var(--blue)"/><text x="60" y="236" text-anchor="middle" font-size="11" font-weight="700" fill="var(--blue)">613.91</text><path d="M 555 195 Q 320 225 85 200" fill="none" stroke="var(--blue)" stroke-width="2" marker-end="url(#tvB)"/><text x="320" y="205" text-anchor="middle" font-size="11" fill="var(--blue)" font-weight="600">Discounting: move back, ÷ 1.05 per year</text><defs><marker id="tvA" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--orange)"/></marker><marker id="tvB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--blue)"/></marker></defs></svg><figcaption>Top: $100 today rolled forward at 5% a year becomes $162.89 in ten years. Bottom: $1,000 due in ten years, discounted back at 5%, is worth $613.91 today. Both directions use the same time exchange rate.</figcaption></figure>
 
-That picture hides the single most important sentence in this course: **money can only be added or compared once it has been converted to the same point in time.** "$100 today plus $1,000 in ten years equals $1,100" is wrong in exactly the way "100 dollars plus 1,000 yen equals 1,100" is wrong.
+That picture hides the single most important sentence in this course: **money can only be added or compared once it has been converted to the same point in time.** "\\(\\$100\\ \\text{today} + \\$1{,}000\\ \\text{in ten years} = \\$1{,}100\\)" is wrong in exactly the way "\\(100\\ \\text{dollars} + 1{,}000\\ \\text{yen} = 1{,}100\\)" is wrong.
 
 Here is a warm-up with the course's standard bond: a $1,000 face-value bond with a 5% coupon and 10 years to maturity (the star of Stage 4.1). The $1,000 principal repaid in year ten is worth $613.91 today at 5%. The remaining roughly $386 of value comes from the $50 coupons paid every year. **Discount every payment back to today, add them up, and you get exactly $1,000** — that is the present-value formula of Stage 2.3, and it is the entire secret behind Stage 4.2's "bond prices fall when rates rise."
 
@@ -122,7 +122,7 @@ Everyone carries a discount rate around in their head, and it is often unstable.
 See how extreme that near-term "price" really is. Demanding 10% for one week, compounded over a year, is:
 
 $$
-1.10^52 ≈ 142 times → roughly 14,000% a year
+1.10^{52} \\approx 142\\times \\Rightarrow \\text{roughly } 14{,}000\\%\\ \\text{a year}
 $$
 
 Nobody would admit to requiring a 14,000% annual return. But in the grip of an impulse purchase, that is precisely how we behave.
@@ -153,7 +153,7 @@ The one-sentence takeaway: **an interest rate is not a bank fee; it is the marke
   analogy: `
 Think of "money now" and "money next year" as **two different currencies**: this-year dollars and next-year dollars.
 
-You walk up to a currency-exchange booth. The board says: **1 this-year dollar = 1.05 next-year dollars.** That 1.05 is a 5% interest rate.
+You walk up to a currency-exchange booth. The board says: **\\(1\\ \\text{this-year dollar} = 1.05\\ \\text{next-year dollars}\\).** That 1.05 is a 5% interest rate.
 
 - When you **save**, you sell this-year dollars to the booth and receive more next-year dollars.
 - When you **borrow**, you buy this-year dollars and pay with next-year dollars (the money you will owe later).
@@ -177,13 +177,13 @@ The crucial part: **the posted rate changes.** When the board moves from 1.05 to
       q: "You feel that \"$100 today\" and \"$108 in one year\" are equally good. What is your personal annual discount rate?",
       options: ["0.8%", "8%", "18%", "108%"],
       answer: 1,
-      explain: "**100 × (1 + r) = 108 → r = 8%.** You require 8% as compensation for waiting a year — that is the price you put on a year of time.",
+      explain: "**\\(100 \\times (1 + r) = 108 \\Rightarrow r = 8\\%\\).** You require 8% as compensation for waiting a year — that is the price you put on a year of time.",
     },
     {
       q: "At a 5% interest rate, what is $1,000 received ten years from now worth today?",
       options: ["$1,628.89", "$950", "$500", "$613.91"],
       answer: 3,
-      explain: "**Present value = 1,000 ÷ 1.05^10 ≈ $613.91.** Moving money backward means dividing by the time exchange rate each year. $1,628.89 is the future value of $1,000 today rolled forward ten years — the wrong direction.",
+      explain: "**\\(\\text{Present value} = \\dfrac{1{,}000}{1.05^{10}} \\approx \\$613.91\\).** Moving money backward means dividing by the time exchange rate each year. $1,628.89 is the future value of $1,000 today rolled forward ten years — the wrong direction.",
     },
     {
       q: "Which of these is NOT a reason money today is worth more than money in the future?",

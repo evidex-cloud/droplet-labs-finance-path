@@ -2,7 +2,7 @@
 // 四个区块链式相连，改动任意一笔旧交易，看哈希怎么向后“传染”、哪些区块失效；
 // 按“挖矿”真的逐个试 nonce，直到哈希开头有足够多个 0；
 // 再用中本聪白皮书第 11 节的公式，算出拥有 q 份算力的攻击者从落后 z 个区块追上诚实链的概率。
-import { fmtPct, fmtNum } from "./_fin.js";
+import { fmtPct, fmtNum, tex } from "./_fin.js";
 
 // 演示用的 64 位（16 位十六进制）指纹：两路不同种子的 FNV-1a。不是 SHA-256，但同样“改一个字全变”。
 function toyHash(str) {
@@ -159,7 +159,7 @@ export default function mount(root, lang) {
     const rows = compute();
     const bad = rows.filter((r) => !r.ok).length;
     $("bh-tries").textContent = fmtNum(st.tries, 0);
-    $("bh-exp").textContent = "≈ " + fmtNum(Math.pow(16, st.diff), 0);
+    $("bh-exp").innerHTML = tex(String.raw`16^{${st.diff}} = ${fmtNum(Math.pow(16, st.diff), 0).replace(/,/g, "{,}")}`);
     $("bh-bad").textContent = bad;
     $("bh-bad").className = "v " + (bad ? "neg" : "pos");
   }

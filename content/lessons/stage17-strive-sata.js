@@ -18,11 +18,11 @@ export default {
 两家普通股的放大倍数一模一样：比特币涨 10%，普通股的比特币净值都涨约 14.3%（阶段 16.4）。区别在于**风险落在哪里**：
 
 - 甲公司有**债**：可转债有到期日和回售日，到期不还就是违约，债权人可以把公司送上法庭；它还让所有优先股前面多了一层排队的人。
-- 乙公司**没有债**：没有到期日、没有回售日、没有保证金。最坏的情况是**暂停优先股股息**——而那不构成违约，只是欠着（累积）。代价是：优先股**独自**承担全部 3 亿美元的杠杆，全部优先股的覆盖倍数都是 10 ÷ 3 ≈ **3.3 倍**——不存在甲公司那种 4 倍覆盖的“更靠前的座位”。
+- 乙公司**没有债**：没有到期日、没有回售日、没有保证金。最坏的情况是**暂停优先股股息**——而那不构成违约，只是欠着（累积）。代价是：优先股**独自**承担全部 3 亿美元的杠杆，全部优先股的覆盖倍数都是 \\(\\dfrac{10}{3} \\approx \\mathbf{3.3\\times}\\)——不存在甲公司那种 4 倍覆盖的“更靠前的座位”。
 
 这就是 Strive 的选择。它在 SATA 的发行公告里写：公司将“完全通过永续优先股权益来为比特币放大融资”；在 2026 年第一季度业绩里写：“Strive 零债务、零保证金要求、零被质押的比特币”。
 
-但这句话要读完整：**对普通股和公司整体，没有债意味着没有“到期日危机”；对 SATA 持有人，没有债意味着前面没人挡着，但身后也没人垫着——SATA 本身就是全部杠杆。** 2026 年 9 月，SATA 的名义约 11.2 亿美元，而 Strive 的比特币约值 22.2 亿美元：优先股约是比特币价值的 **50%**（Strive 自己的“放大比率”50.4%）。按同一个公式，Strategy 的（债务 + 优先股）约为比特币价值的 30%。
+但这句话要读完整：**对普通股和公司整体，没有债意味着没有“到期日危机”；对 SATA 持有人，没有债意味着前面没人挡着，但身后也没人垫着——SATA 本身就是全部杠杆。** 2026 年 9 月，SATA 的名义约 11.2 亿美元，而 Strive 的比特币约值 22.2 亿美元：优先股约是比特币价值的 **50%**（Strive 自己的“放大比率”50.4%）。按同一个公式，Strategy 的 \\((\\text{债务} + \\text{优先股}) \\div \\text{比特币价值} \\approx 30\\%\\)。
 
 这一节落在**观念②（资产负债表与索取权）**——同样的杠杆，可以写成截然不同的索取权组合；也落在**观念④（风险与杠杆）**——去掉债务，风险并没有消失，而是从“违约与再融资”换成了“股息暂停与覆盖变薄”。**本课只讲机制与分析框架，不构成投资建议。**
 
@@ -53,17 +53,17 @@ SATA 的全称是 Variable Rate Series A Perpetual Preferred Stock。以下据 S
 
 <table class="pm">
 <tr><th>条款</th><th>SATA</th><th>来源 / 日期</th></tr>
-<tr><td>IPO</td><td>2,000,000 股（扩大发行）× 80 美元，毛额约 1.6 亿美元；2025-11-05 定价，2025-11-10 在纳斯达克上市交割</td><td>GlobeNewswire 2025-11-05</td></tr>
+<tr><td>IPO</td><td>\\(2{,}000{,}000\\ \\text{股} \\times 80\\ \\text{美元} \\approx 1.6\\ \\text{亿美元}\\)（扩大发行，毛额）；2025-11-05 定价，2025-11-10 在纳斯达克上市交割</td><td>GlobeNewswire 2025-11-05</td></tr>
 <tr><td>名义金额</td><td>100 美元</td><td>同上</td></tr>
 <tr><td>股息率</td><td>可变，按月设定；IPO 时 12.00%，<b>2026-04-15 起 13.00%</b>（截至 2026-09-25 未变）</td><td>Strive 新闻稿</td></tr>
 <tr><td>累积？</td><td><b>是</b></td><td>发行公告</td></tr>
 <tr><td>付息频率</td><td>上市时每月（15 日）；<b>2026-06-15 起每日</b>：利率仍按月设定，当月股息按营业日等额每天支付</td><td>公司仪表盘</td></tr>
 <tr><td>排序</td><td>高于 A 类与 B 类普通股；不以比特币担保；公司没有债务，排在它前面的只有一般负债</td><td>仪表盘、10-Q</td></tr>
-<tr><td>漏付股息</td><td>按“股息率 + 25 个基点”复利，每月再加 25 个基点，上限 20%；漏付 12 期、24 期后持有人可选董事</td><td>发行公告</td></tr>
+<tr><td>漏付股息</td><td>按 \\(\\text{股息率} + 25\\ \\text{个基点}\\) 复利，每月再加 25 个基点，上限 20%；漏付 12 期、24 期后持有人可选董事</td><td>发行公告</td></tr>
 <tr><td>公司赎回</td><td>可按 <b>110 美元</b>或以上赎回；清理式赎回（剩余少于发行量 25%）；税务事件赎回</td><td>发行公告</td></tr>
 <tr><td>持有人回售</td><td>发生根本性变更时按 100 美元 + 应计股息</td><td>发行公告</td></tr>
 <tr><td>规模</td><td>11,184,160 股，名义约 <b>11.18 亿美元</b>（2026-09-18）</td><td>公司仪表盘</td></tr>
-<tr><td>年度股息义务</td><td><b>1.4539 亿美元</b>（核对：11.18 亿 × 13% ≈ 1.454 亿）</td><td>公司仪表盘</td></tr>
+<tr><td>年度股息义务</td><td><b>1.4539 亿美元</b>（核对：\\(11.18\\ \\text{亿} \\times 13\\% \\approx 1.454\\ \\text{亿}\\)）</td><td>公司仪表盘</td></tr>
 <tr><td>税务处理</td><td>分配按资本返还处理，按月提交 Form 8937</td><td>公司仪表盘（阶段 17.7）</td></tr>
 </table>
 
@@ -90,7 +90,14 @@ SATA 的全称是 Variable Rate Series A Perpetual Preferred Stock。以下据 S
 
 最后一条很有意思：**Strive 把一部分股息储备放在 Strategy 的 STRC 里**——它持有 505,000 股 STRC（2026 年 3 月以约 5,000 万美元买入）。一家 DAT 的股息储备，是另一家 DAT 的优先股：这是 DAT 生态互相交织的一个具体例子，也意味着 Strive 的储备带有 Strategy 的信用风险。
 
-用阶段 16.6 的尺子（据仪表盘推算）：现金 2.296 亿美元 + STRC 市值 4,975 万美元 ≈ 2.79 亿美元，除以每年 1.454 亿美元，约 **23 个月**，高于 18 个月目标。
+用阶段 16.6 的尺子（据仪表盘推算），储备除以每年 1.454 亿美元的股息：
+
+$$
+\\text{现金 } 2.296\\ \\text{亿美元} + \\text{STRC 市值 } 4{,}975\\ \\text{万美元} \\approx 2.79\\ \\text{亿美元}
+\\frac{2.79}{1.454} \\times 12 \\approx \\mathbf{23}\\ \\text{个月}
+$$
+
+约 23 个月，高于 18 个月目标。
 
 ### ④ Semler 交易：买下一家 DAT，然后把它的债清零
 
@@ -108,7 +115,7 @@ Semler Scientific（纳斯达克：SMLR）本身是一家持有比特币的医�
 
 ### ⑤ Strive 对 Strategy：两种结构、同一个问题
 
-<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">同一根柱子 = 今天的比特币价值：索取权从上往下排</text><text x="170" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strive（2026-09-18）</text><text x="470" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strategy（2026-09-20，推算）</text><rect x="110" y="56" width="120" height="111" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="170" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">SATA</text><text x="170" y="120" text-anchor="middle" font-size="10" fill="var(--muted)">11.2 亿 · 50.4%</text><rect x="110" y="167" width="120" height="109" fill="var(--surface-2)" stroke="var(--line)"/><text x="170" y="220" text-anchor="middle" font-size="11" fill="var(--muted)">普通股 49.6%</text><rect x="410" y="56" width="120" height="21" fill="var(--surface-2)" stroke="var(--ink)"/><text x="400" y="70" text-anchor="end" font-size="10" fill="var(--ink)">债务 9.5%</text><rect x="410" y="77" width="120" height="4" fill="var(--orange)"/><text x="400" y="84" text-anchor="end" font-size="10" fill="var(--orange-ink)">STRF 1.8%</text><rect x="410" y="81" width="120" height="29" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="400" y="100" text-anchor="end" font-size="10" fill="var(--blue)">STRC 13.1%</text><rect x="410" y="110" width="120" height="11" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="400" y="120" text-anchor="end" font-size="10" fill="var(--btc)">次级优先 5.2%</text><rect x="410" y="121" width="120" height="155" fill="var(--surface-2)" stroke="var(--line)"/><text x="470" y="200" text-anchor="middle" font-size="11" fill="var(--muted)">普通股 70.4%</text><line x1="90" y1="166" x2="560" y2="166" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="320" y="160" text-anchor="middle" font-size="10" fill="var(--red)">比特币 −50%：线以上的索取权仍有覆盖</text><text x="170" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">无债务 · 无回售日 · SATA 覆盖约 2.0 倍</text><text x="470" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">67.5 亿债务 · 回售日 2027–2029</text></svg><figcaption>按同一个公式（债务 + 优先股）÷ 比特币价值：Strive 约 50%，Strategy 约 30%（以约 84,000 美元计，不计现金）。比特币跌 50% 时，SATA 刚好落到覆盖约 1 倍的边缘；Strategy 所有优先股仍在线以上，但它有债务和回售日。</figcaption></figure>
+<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">同一根柱子 = 今天的比特币价值：索取权从上往下排</text><text x="170" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strive（2026-09-18）</text><text x="470" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strategy（2026-09-20，推算）</text><rect x="110" y="56" width="120" height="111" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="170" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">SATA</text><text x="170" y="120" text-anchor="middle" font-size="10" fill="var(--muted)">11.2 亿 · 50.4%</text><rect x="110" y="167" width="120" height="109" fill="var(--surface-2)" stroke="var(--line)"/><text x="170" y="220" text-anchor="middle" font-size="11" fill="var(--muted)">普通股 49.6%</text><rect x="410" y="56" width="120" height="21" fill="var(--surface-2)" stroke="var(--ink)"/><text x="400" y="70" text-anchor="end" font-size="10" fill="var(--ink)">债务 9.5%</text><rect x="410" y="77" width="120" height="4" fill="var(--orange)"/><text x="400" y="84" text-anchor="end" font-size="10" fill="var(--orange-ink)">STRF 1.8%</text><rect x="410" y="81" width="120" height="29" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="400" y="100" text-anchor="end" font-size="10" fill="var(--blue)">STRC 13.1%</text><rect x="410" y="110" width="120" height="11" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="400" y="120" text-anchor="end" font-size="10" fill="var(--btc)">次级优先 5.2%</text><rect x="410" y="121" width="120" height="155" fill="var(--surface-2)" stroke="var(--line)"/><text x="470" y="200" text-anchor="middle" font-size="11" fill="var(--muted)">普通股 70.4%</text><line x1="90" y1="166" x2="560" y2="166" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="320" y="160" text-anchor="middle" font-size="10" fill="var(--red)">比特币 −50%：线以上的索取权仍有覆盖</text><text x="170" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">无债务 · 无回售日 · SATA 覆盖约 2.0 倍</text><text x="470" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">67.5 亿债务 · 回售日 2027–2029</text></svg><figcaption>按同一个公式 \\((\\text{债务} + \\text{优先股}) \\div \\text{比特币价值}\\)：Strive 约 50%，Strategy 约 30%（以约 84,000 美元计，不计现金）。比特币跌 50% 时，SATA 刚好落到覆盖约 1 倍的边缘；Strategy 所有优先股仍在线以上，但它有债务和回售日。</figcaption></figure>
 
 把两家放在一张表里（均为不同日期的快照，数字以公司最新披露为准）：
 
@@ -117,17 +124,17 @@ Semler Scientific（纳斯达克：SMLR）本身是一家持有比特币的医�
 <tr><td>比特币</td><td>26,355 BTC（2026-09-18）</td><td>846,000 BTC（2026-09-20）</td></tr>
 <tr><td>债务</td><td><b>0</b></td><td>约 67.5 亿美元（可转债 67.1 亿 + 其他）</td></tr>
 <tr><td>优先股</td><td>SATA 一只，约 11.2 亿美元</td><td>五只，约 143 亿美元（推算）</td></tr>
-<tr><td>（债务 + 优先股）÷ 比特币价值</td><td>50.4%（Strive 公布的“放大比率”）</td><td>约 30%（推算，BTC 约 84,000 美元）</td></tr>
+<tr><td>\\((\\text{债务} + \\text{优先股}) \\div \\text{比特币价值}\\)</td><td>50.4%（Strive 公布的“放大比率”）</td><td>约 30%（推算，BTC 约 84,000 美元）</td></tr>
 <tr><td>最劣后优先层的 BTC 覆盖（不计现金）</td><td>SATA 约 2.0 倍（推算）</td><td>次级优先股合并约 3.4 倍（推算）</td></tr>
 <tr><td>对应的比特币“地板价”（不计现金）</td><td>约 42,400 美元（推算）</td><td>次级优先股约 24,900 美元；STRC 约 20,500 美元（推算）</td></tr>
 <tr><td>到期 / 回售压力</td><td>无</td><td>约 59 亿美元可转债可在 2028 年底前回售（阶段 17.2）</td></tr>
 <tr><td>股息储备</td><td>目标 18 个月（12 现金 + 6 STRC）；推算约 23 个月</td><td>政策下限 12 个月；推算约 37 个月（美元储备 50.4 亿）</td></tr>
-<tr><td>怎么叫“溢价”</td><td>不用“mNAV”：普通股增值溢价 33.0%、EV/财库资产 1.52 倍、对净财库资产 2.14 倍</td><td>mNAV（2026 口径：股价 ÷ 每股净比特币），2026-08-21 约 1.01 倍</td></tr>
+<tr><td>怎么叫“溢价”</td><td>不用“mNAV”：普通股增值溢价 33.0%、EV/财库资产 1.52 倍、对净财库资产 2.14 倍</td><td>\\(\\mathrm{mNAV} = \\text{股价} \\div \\text{每股净比特币}\\)（2026 口径），2026-08-21 约 1.01 倍</td></tr>
 </table>
 
 几点解读：
 
-- **“放大”的定义不同**：Strive 的“Amplification Ratio”=（债务 + 优先股名义）÷ 比特币价值 = 50.4%；Strategy 的“Amplification”= BTC 储备 ÷ 净储备（2026-08-23 为 1.30 倍）。**同一个英文词，两个公式**（阶段 16.4）。按简单口径（比特币价值 ÷（比特币价值 − 优先股）），Strive 普通股对比特币的弹性约 2.0 倍，Strategy 约 1.3–1.4 倍——**Strive 的普通股更“放大”**。
+- **“放大”的定义不同**：Strive 的“Amplification Ratio” \\(= (\\text{债务} + \\text{优先股名义}) \\div \\text{比特币价值} = 50.4\\%\\)；Strategy 的“Amplification” \\(= \\text{BTC 储备} \\div \\text{净储备}\\)（2026-08-23 为 1.30 倍）。**同一个英文词，两个公式**（阶段 16.4）。按简单口径 \\(\\dfrac{\\text{比特币价值}}{\\text{比特币价值} - \\text{优先股}}\\)，Strive 普通股对比特币的弹性约 2.0 倍，Strategy 约 1.3–1.4 倍——**Strive 的普通股更“放大”**。
 - **SATA 与 STRC 的覆盖**：SATA 是 Strive 的全部杠杆，覆盖约 2.0 倍（加上约 2.8 亿美元现金与 STRC 后更高，地板价约 31,800 美元）；STRC 排在债务与 STRF 之后，按 Strategy 口径 5.7 倍。**没有债，并不自动意味着优先股更安全**——决定覆盖的是“前面所有索取权之和”相对于比特币的大小。
 - **BTC Yield 的注意事项**：Strive 公布 2026 年初至今 BTC Yield +54.5%（第一季度 11.1%、第二季度 23.9%）。按阶段 16.3 的提醒，用优先股融资买币会抬高“每股比特币”，但新的优先股索取权排在普通股前面——**BTC Yield 不扣除这些索取权**。
 - **溢价**：DWF Ventures 在 2026 年 9 月统计，20 家最大的 DAT 中只有 4 家的 mNAV 高于 1，Strive 是其中之一；The Block 给 ASST 算的 mNAV 约 1.21 倍（2026-09-26）。各家口径不同，引用时一定注明是谁的口径。
@@ -153,8 +160,8 @@ Semler Scientific（纳斯达克：SMLR）本身是一家持有比特币的医�
 
   misconceptions: [
     "**“Strive 没有债务，所以 SATA 比 STRC 更安全。”** —— 没有债务意味着 SATA 前面几乎没人，但 SATA 本身就是全部杠杆：约为比特币价值的 50%，覆盖约 2.0 倍；STRC 排在债务与 STRF 之后，按 Strategy 口径覆盖 5.7 倍（不抵减美元资产约 3.6 倍）。覆盖由“前面所有索取权之和”决定，不由有没有债决定。",
-    "**“Strive 的 Amplification Ratio 50.4% 和 Strategy 的 Amplification 1.30 倍可以直接比较。”** —— 两个公式不同：Strive 是（债务 + 优先股）÷ 比特币价值，Strategy 是 BTC 储备 ÷ 净储备。要比较，必须先换成同一个公式。",
-    "**“SATA 每天付息，所以它像一个高息储蓄账户。”** —— 每日付息只是把每月的股息按营业日平均拆开，年总额仍是名义 × 13%。它是永续、累积的优先股，股息由董事会宣派，信用取决于比特币与公司的持续融资能力。",
+    "**“Strive 的 Amplification Ratio 50.4% 和 Strategy 的 Amplification 1.30 倍可以直接比较。”** —— 两个公式不同：Strive 是 \\((\\text{债务} + \\text{优先股}) \\div \\text{比特币价值}\\)，Strategy 是 \\(\\text{BTC 储备} \\div \\text{净储备}\\)。要比较，必须先换成同一个公式。",
+    "**“SATA 每天付息，所以它像一个高息储蓄账户。”** —— 每日付息只是把每月的股息按营业日平均拆开，年总额仍是 \\(\\text{名义} \\times 13\\%\\)。它是永续、累积的优先股，股息由董事会宣派，信用取决于比特币与公司的持续融资能力。",
     "**“Semler 的可转债被换成 SATA，等于债务消失、没有代价。”** —— 债务确实被“权益化”了，普通股摆脱了到期与保证金风险；但 SATA 的规模随之增大，普通股头上的优先索取权与每年的股息义务都增加了。",
     "**“Strive 的 BTC Yield 高达 54.5%，说明它的比特币增长最快。”** —— BTC Yield 衡量的是“每股比特币”的变化，用优先股融资买币会直接抬高它，却不扣除新增的、排在普通股前面的优先股索取权（阶段 16.3）。",
   ],
@@ -180,7 +187,7 @@ Semler Scientific（纳斯达克：SMLR）本身是一家持有比特币的医�
         "无穷大，因为没有债务",
       ],
       answer: 1,
-      explain: "22.2 ÷ 11.18 ≈ **2.0 倍**，地板价约 84,080 ÷ 2.0 ≈ 42,400 美元，即比特币约 −50%。加上约 2.8 亿美元现金与 STRC 后，地板价约 31,800 美元。",
+      explain: "\\(\\dfrac{22.2}{11.18} \\approx \\mathbf{2.0\\times}\\)，地板价约 \\(\\dfrac{84{,}080}{2.0} \\approx 42{,}400\\) 美元，即比特币约 −50%。加上约 2.8 亿美元现金与 STRC 后，地板价约 31,800 美元。",
     },
     {
       q: "SATA 的股息率怎么演变？",

@@ -49,11 +49,11 @@ Companies raise money with just two kinds of contract; everything else is a vari
 Read the balance sheet vertically and you get one identity:
 
 $$
-Asset value = sum of all fixed claims + common equity (the residual)
-Common equity = max(0, asset value − sum of all fixed claims)
+\\text{asset value} = \\text{sum of all fixed claims} + \\text{common equity (the residual)}
+\\text{common equity} = \\max\\left(0,\\ \\text{asset value} - \\text{sum of all fixed claims}\\right)
 $$
 
-The max(0, …) in the second line is the single most important symbol in this lesson. **Shareholders have limited liability**: they can lose everything they put in, but they never owe more. That "floor at zero, no ceiling" shape turns out to be an option, as piece ⑤ will show.
+The \\(\\max(0, \\ldots)\\) in the second line is the single most important symbol in this lesson. **Shareholders have limited liability**: they can lose everything they put in, but they never owe more. That "floor at zero, no ceiling" shape turns out to be an option, as piece ⑤ will show.
 
 Note that "fixed" describes the **contractual amount**, not the **market price**. A bond with a $1,000 face value says $1,000 on the contract forever, but what it trades for depends on whether investors think it **will actually be paid in full** — and that is exactly what the credit spread of Stage 4.6 prices.
 
@@ -78,7 +78,7 @@ The picture hides a reading that people routinely miss: **to judge how safe a fl
 
 ### ③ The waterfall: money flows from the top floor down
 
-Turn "fill each floor in order" into an algorithm and you get the **waterfall**. The waterfall function in the course's shared engine does exactly one thing: starting from the top floor with a given asset value, each floor takes min(what's left, its claim), the remainder flows down, and whatever survives the last floor goes to the common.
+Turn "fill each floor in order" into an algorithm and you get the **waterfall**. The waterfall function in the course's shared engine does exactly one thing: starting from the top floor with a given asset value, each floor takes \\(\\min(\\text{what's left},\\ \\text{its claim})\\), the remainder flows down, and whatever survives the last floor goes to the common.
 
 Run three scenarios for Maple Manufacturing (figures in $M):
 
@@ -110,16 +110,16 @@ One more wrinkle: the floors are not the whole story; **maturity** matters too. 
 
 ### ⑤ Risk and return rise floor by floor: common stock is a call option
 
-The lower the floor, the more of the bad days it absorbs, so investors demand more. That is not a moral judgment; it is pricing. The formula from Stage 4.6 — expected loss = probability of default × loss given default — holds on every floor. Lower floors simply lose more when default happens (they recover less), so their spreads must be wider.
+The lower the floor, the more of the bad days it absorbs, so investors demand more. That is not a moral judgment; it is pricing. The formula from Stage 4.6 — \\(\\text{expected loss} = \\text{probability of default} \\times \\text{loss given default}\\) — holds on every floor. Lower floors simply lose more when default happens (they recover less), so their spreads must be wider.
 
 A deeper way to see it comes from Robert Merton (1974): **common stock is a call option on the company's assets with a strike price equal to all of its debt.**
 
 $$
-Common equity value (at maturity) = max(0, asset value − total debt)
-which is exactly a call option's payoff: max(0, underlying price − strike)
+\\text{common equity value (at maturity)} = \\max(0,\\ \\text{asset value} - \\text{total debt})
+\\text{call option payoff} = \\max(0,\\ \\text{underlying price} - \\text{strike})
 $$
 
-This lens explains a lot.
+The two lines have exactly the same shape: the equity's payoff is a call option's payoff. This lens explains a lot.
 
 - **The more volatile the assets, the more the equity is worth (option value rises with volatility), and the worse off the creditors.** That is why bond contracts carry covenants that stop shareholders from "betting the company."
 - **The closer a company gets to insolvency, the more its stock behaves like a lottery ticket**: cheap, but with enormous sensitivity. Its bonds, meanwhile, start to behave like equity, rising and falling with the value of the assets.
@@ -131,14 +131,14 @@ The option lens will get sharper after you study options in Stage 7.2, and it is
 
 Now put the same ruler against the course's toy company. **Orange Corp** holds 10,000 BTC. At a bitcoin price of $100,000, its BTC NAV is $1 billion, and it also holds $30 million in cash. Here is its floor plan:
 
-<figure><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Orange Corp's capital stack: a foundation made of bitcoin</text><rect x="60" y="44" width="230" height="46" rx="4" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="175" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Convertible notes $150M</text><text x="175" y="80" text-anchor="middle" font-size="10" fill="var(--muted)">0% coupon · conversion price $25</text><rect x="60" y="94" width="230" height="40" rx="4" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="175" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-F senior preferred $100M</text><text x="175" y="126" text-anchor="middle" font-size="10" fill="var(--muted)">10% · cumulative</text><rect x="60" y="138" width="230" height="34" rx="4" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="175" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-D junior preferred $50M</text><text x="175" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">10% · non-cumulative</text><rect x="60" y="178" width="230" height="56" rx="4" fill="var(--green-soft)" stroke="var(--green)"/><text x="175" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Common: 100M shares</text><text x="175" y="219" text-anchor="middle" font-size="10" fill="var(--muted)">residual claim (net value about $730M)</text><rect x="40" y="246" width="270" height="44" rx="4" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="175" y="266" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Foundation: 10,000 BTC ≈ $1B</text><text x="175" y="282" text-anchor="middle" font-size="10" fill="var(--muted)">+ cash / USD reserve $30M</text><text x="330" y="62" font-size="11" font-weight="600" fill="var(--ink)">cumulative $150M</text><text x="330" y="78" font-size="11" fill="var(--btc)" font-weight="700">coverage ≈ 6.7x</text><text x="330" y="110" font-size="11" font-weight="600" fill="var(--ink)">cumulative $250M</text><text x="330" y="126" font-size="11" fill="var(--btc)" font-weight="700">coverage = 4.0x</text><text x="330" y="152" font-size="11" font-weight="600" fill="var(--ink)">cumulative $300M</text><text x="330" y="167" font-size="11" fill="var(--btc)" font-weight="700">coverage ≈ 3.3x</text><line x1="450" y1="60" x2="450" y2="280" stroke="var(--line)"/><text x="462" y="70" font-size="11" fill="var(--muted)">How far can BTC fall</text><text x="462" y="86" font-size="11" fill="var(--muted)">before this floor is hit?</text><text x="462" y="112" font-size="11" fill="var(--ink)">Converts: ~$12,000</text><text x="462" y="130" font-size="11" fill="var(--ink)">F layer: ~$22,000</text><text x="462" y="148" font-size="11" fill="var(--ink)">D layer: ~$27,000</text><text x="462" y="176" font-size="10" fill="var(--muted)">(counting the $30M cash,</text><text x="462" y="190" font-size="10" fill="var(--muted)">ignoring bankruptcy costs)</text><text x="320" y="316" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">Same building, new foundation: floors work identically, but the ground moves far more</text></svg><figcaption>Every floor of Orange Corp is a fixed claim; only the common in the basement absorbs bitcoin's full swings. Coverage = BTC NAV ÷ cumulative claims at that floor and above.</figcaption></figure>
+<figure><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Orange Corp's capital stack: a foundation made of bitcoin</text><rect x="60" y="44" width="230" height="46" rx="4" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="175" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Convertible notes $150M</text><text x="175" y="80" text-anchor="middle" font-size="10" fill="var(--muted)">0% coupon · conversion price $25</text><rect x="60" y="94" width="230" height="40" rx="4" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="175" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-F senior preferred $100M</text><text x="175" y="126" text-anchor="middle" font-size="10" fill="var(--muted)">10% · cumulative</text><rect x="60" y="138" width="230" height="34" rx="4" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="175" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-D junior preferred $50M</text><text x="175" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">10% · non-cumulative</text><rect x="60" y="178" width="230" height="56" rx="4" fill="var(--green-soft)" stroke="var(--green)"/><text x="175" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Common: 100M shares</text><text x="175" y="219" text-anchor="middle" font-size="10" fill="var(--muted)">residual claim (net value about $730M)</text><rect x="40" y="246" width="270" height="44" rx="4" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="175" y="266" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Foundation: 10,000 BTC ≈ $1B</text><text x="175" y="282" text-anchor="middle" font-size="10" fill="var(--muted)">+ cash / USD reserve $30M</text><text x="330" y="62" font-size="11" font-weight="600" fill="var(--ink)">cumulative $150M</text><text x="330" y="78" font-size="11" fill="var(--btc)" font-weight="700">coverage ≈ 6.7x</text><text x="330" y="110" font-size="11" font-weight="600" fill="var(--ink)">cumulative $250M</text><text x="330" y="126" font-size="11" fill="var(--btc)" font-weight="700">coverage = 4.0x</text><text x="330" y="152" font-size="11" font-weight="600" fill="var(--ink)">cumulative $300M</text><text x="330" y="167" font-size="11" fill="var(--btc)" font-weight="700">coverage ≈ 3.3x</text><line x1="450" y1="60" x2="450" y2="280" stroke="var(--line)"/><text x="462" y="70" font-size="11" fill="var(--muted)">How far can BTC fall</text><text x="462" y="86" font-size="11" fill="var(--muted)">before this floor is hit?</text><text x="462" y="112" font-size="11" fill="var(--ink)">Converts: ~$12,000</text><text x="462" y="130" font-size="11" fill="var(--ink)">F layer: ~$22,000</text><text x="462" y="148" font-size="11" fill="var(--ink)">D layer: ~$27,000</text><text x="462" y="176" font-size="10" fill="var(--muted)">(counting the $30M cash,</text><text x="462" y="190" font-size="10" fill="var(--muted)">ignoring bankruptcy costs)</text><text x="320" y="316" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">Same building, new foundation: floors work identically, but the ground moves far more</text></svg><figcaption>Every floor of Orange Corp is a fixed claim; only the common in the basement absorbs bitcoin's full swings. \\(\\text{coverage} = \\dfrac{\\text{BTC NAV}}{\\text{cumulative claims at that floor and above}}\\).</figcaption></figure>
 
 A few numbers you will use again and again:
 
 - **Cumulative claims**: converts $150M → plus the F layer, $250M → plus the D layer, $300M.
-- **Asset coverage (the seed of the BTC Rating)**: $1B ÷ $150M ≈ **6.7x**; $1B ÷ $250M = **4.0x**; $1B ÷ $300M ≈ **3.3x**.
-- **Impairment prices**: bitcoin has to fall to about $27,000 (assets = $270M of BTC + $30M cash = $300M) before the D layer loses principal, and to about $12,000 before the converts do. That is the intuitive meaning of a coverage ratio: **3.3x coverage ≈ bitcoin can fall about 70% and this floor is still paid in full** (a little more once you count the cash).
-- **Amplification**: the common absorbs the swings of $1B of bitcoin, but its own net value is only $1B − $0.3B = $0.7B. So a 10% rise in bitcoin lifts the common's net value by about 14% — 10 / 7 ≈ **1.43x**. Stage 16.4 is devoted to this.
+- **Asset coverage (the seed of the BTC Rating)**: \\(\\dfrac{\\$1\\text{B}}{\\$150\\text{M}} \\approx \\mathbf{6.7\\times}\\); \\(\\dfrac{\\$1\\text{B}}{\\$250\\text{M}} = \\mathbf{4.0\\times}\\); \\(\\dfrac{\\$1\\text{B}}{\\$300\\text{M}} \\approx \\mathbf{3.3\\times}\\).
+- **Impairment prices**: bitcoin has to fall to about $27,000 (\\(\\text{assets} = \\$270\\text{M of BTC} + \\$30\\text{M cash} = \\$300\\text{M}\\)) before the D layer loses principal, and to about $12,000 before the converts do. That is the intuitive meaning of a coverage ratio: **3.3x coverage roughly means bitcoin can fall about 70% and this floor is still paid in full** (\\(1 - \\tfrac{1}{3.3} \\approx 70\\%\\); a little more once you count the cash).
+- **Amplification**: the common absorbs the swings of $1B of bitcoin, but its own net value is only \\(\\$1\\text{B} - \\$0.3\\text{B} = \\$0.7\\text{B}\\). So a 10% rise in bitcoin lifts the common's net value by about 14% — \\(10 \\div 7 \\approx \\mathbf{1.43\\times}\\). Stage 16.4 is devoted to this.
 
 Compared with Maple Manufacturing, Orange Corp's building has two distinctive features. **There is no secured debt**: nobody holds a lien on the bitcoin, so there is no "fall below a line and get force-liquidated" margin call. And **the middle floors are mostly preferred stock rather than debt**: skipping a preferred dividend is not a default. Those two features are exactly the "leverage without margin calls" of Stage 15.3, and they are the starting point for Stage 17.6, where real companies are placed into this building and stress-tested with a bitcoin slider. Orange Corp is an illustrative toy; for any real company, the floors and terms are whatever its latest filings say.
 `,
@@ -175,7 +175,7 @@ A DAT's paddies have one twist. The reservoir isn't fed by rain; it is **a bitco
         "75%: everything is split pro rata across all creditors",
       ],
       answer: 1,
-      explain: "**Fill floor by floor**: the secured loan takes 30, the senior bonds take 25, and only 5 reaches the subordinated notes: 5 / 15 ≈ 33%. Preferred and common get zero. A waterfall fills each floor in turn; it doesn't split pro rata.",
+      explain: "**Fill floor by floor**: the secured loan takes 30, the senior bonds take 25, and only 5 reaches the subordinated notes: \\(5 \\div 15 \\approx 33\\%\\). Preferred and common get zero. A waterfall fills each floor in turn; it doesn't split pro rata.",
     },
     {
       q: "Why is common stock like a call option on the company's assets?",
@@ -183,7 +183,7 @@ A DAT's paddies have one twist. The reservoir isn't fed by rain; it is **a bitco
         "Because shareholders can swap their shares for bonds at any time",
         "Because share prices move every day",
         "Because the company can buy back its shares whenever it wants",
-        "Because at maturity equity = max(0, assets − debt), the same payoff shape as a call",
+        "Because at maturity \\(\\text{equity} = \\max(0,\\ \\text{assets} - \\text{debt})\\), the same payoff shape as a call",
       ],
       answer: 3,
       explain: "**Merton's model**: limited liability gives equity a floor at zero and no ceiling, with total debt as the strike. So the more volatile the assets, the more that option is worth — at the creditors' expense.",
@@ -191,13 +191,13 @@ A DAT's paddies have one twist. The reservoir isn't fed by rain; it is **a bitco
     {
       q: "Orange Corp has a BTC NAV of $1B, converts of $150M, Orange-F of $100M and Orange-D of $50M. What is the asset coverage of the Orange-F layer?",
       options: [
-        "4.0x: $1B ÷ ($150M + $100M)",
-        "10x: $1B ÷ $100M",
-        "6.7x: $1B ÷ $150M",
-        "3.3x: $1B ÷ $300M",
+        "4.0x: \\(\\$1\\text{B} \\div (\\$150\\text{M} + \\$100\\text{M})\\)",
+        "10x: \\(\\$1\\text{B} \\div \\$100\\text{M}\\)",
+        "6.7x: \\(\\$1\\text{B} \\div \\$150\\text{M}\\)",
+        "3.3x: \\(\\$1\\text{B} \\div \\$300\\text{M}\\)",
       ],
       answer: 0,
-      explain: "Coverage uses **the cumulative claims at that floor and above**. The F layer has $150M of converts sitting on top of it, so the denominator is $250M: 1 / 0.25 = 4.0x. Using only its own $100M would badly overstate its safety.",
+      explain: "Coverage uses **the cumulative claims at that floor and above**. The F layer has $150M of converts sitting on top of it, so the denominator is $250M: \\(1 \\div 0.25 = 4.0\\times\\). Using only its own $100M would badly overstate its safety.",
     },
     {
       q: "A parent company issues \"senior unsecured\" bonds, but almost all its assets sit in a subsidiary that has its own debt. What risk do the parent's bondholders face?",

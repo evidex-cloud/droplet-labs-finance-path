@@ -188,7 +188,7 @@ But not all snowballs are alike. Some have a rock at the center (real, verifiabl
         "+1.8%",
       ],
       answer: 2,
-      explain: "The issue price is $8, raising $80 million for 800 BTC: 10,800 / 110 million shares = 0.0000982, about 1.8% below the original 0.0001. **Below an mNAV of 1, issuing to buy bitcoin is dilutive** — the flywheel runs backward.",
+      explain: "The issue price is $8, raising $80 million for 800 BTC: \\(\\dfrac{10{,}800}{110\\ \\text{million shares}} = 0.0000982\\), about 1.8% below the original 0.0001. **Below an mNAV of 1, issuing to buy bitcoin is dilutive** — the flywheel runs backward.",
     },
     {
       q: "What does the term “Minsky moment” describe?",

@@ -2,7 +2,10 @@
 // ① 存款搬家：D 美元从 A 银行存款换成稳定币。看 A 银行、发行人与整个银行体系的 T 形账户怎么变，
 //    结论取决于稳定币储备里放多少银行存款、国库券的卖方是谁；并与“存款代币”方案对比。
 // ② 选哪种链上美元：存款代币 / 稳定币 / 代币化货币基金 / 零售 CBDC 的收益与属性。
-import { fv, fmtPct, fmtUsd, fmtNum } from "./_fin.js";
+import { fv, fmtPct, fmtUsd, fmtNum, tex } from "./_fin.js";
+
+// 把格式化好的数字（$、千分位逗号、%）变成 LaTeX 安全的写法
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -120,7 +123,9 @@ export default function mount(root, lang) {
     $("#cv-hold").textContent = "$0";
     const lines = [];
     lines.push(`${T("A 银行失去", "Bank A loses")} ${b(D)} ${T("存款和同等准备金；", "of deposits and the same amount of reserves; ")}${short > 0 ? `<span class="bad">${T("准备金跌破缓冲，需要卖出证券", "reserves fall below the buffer, so it must sell securities of")} ${b(sellSec)}${cutLoans > 0 ? T("，还要收缩贷款 ", " and shrink loans by ") + b(cutLoans) : ""}${T("。", ".")}</span>` : `<span class="ok">${T("准备金仍在缓冲之上。", "reserves stay above the buffer.")}</span>`}`);
-    lines.push(`${T("如果改用存款代币：存款留在 A 银行，银行每年付给持有人约", "With a deposit token instead, the money stays at Bank A and the bank pays holders about")} <b>$${fmtNum(D * m.rd, 2)}${T(" 十亿", "B")}</b>${T("；而稳定币方案下，发行人每年拿走约", " a year; with the stablecoin, the issuer keeps about")} <b>$${fmtNum(inc, 2)}${T(" 十亿", "B")}</b>${T("，持有人拿 0。这就是银行和稳定币争夺的那块“利差”。", " and holders get zero. That spread is what banks and stablecoins are fighting over.")}`);
+    const dd = (x) => (Math.abs(x - Math.round(x)) < 1e-9 ? 0 : 2);
+    const tb = (x, d) => "\\$" + texv(fmtNum(x, d)) + T("\\ \\text{十亿}", "\\text{B}");
+    lines.push(`${T("如果改用存款代币：存款留在 A 银行，银行每年付给持有人约", "With a deposit token instead, the money stays at Bank A and the bank pays holders about")} ${tex(String.raw`${tb(D, 0)} \times ${texv(fmtPct(m.rd, 2))} = \mathbf{${tb(D * m.rd, 2)}}`)}${T("；而稳定币方案下，发行人每年拿走约", " a year; with the stablecoin, the issuer keeps about")} ${tex(String.raw`${tb(bills, dd(bills))} \times ${texv(fmtPct(m.y))} + ${tb(depBack, dd(depBack))} \times ${texv(fmtPct(m.rd, 2))} = \mathbf{${tb(inc, 2)}}`)}${T("，持有人拿 0。这就是银行和稳定币争夺的那块“利差”。", " and holders get zero. That spread is what banks and stablecoins are fighting over.")}`);
     lines.push(m.seller === "bank"
       ? `<span class="ok">${T("国库券卖方是银行客户：钱只是在银行之间搬家，体系总存款变化 ", "The seller is a bank customer: money just moves between banks, and the system-wide change is ")}${b(sys)}${T("。受伤的是 A 银行，不是整个体系。", ". Bank A is hurt, not the system.")}</span>`
       : `<span class="warn">${T("钱流向了美联储的账户，体系总存款减少 ", "The money flows into an account at the Fed, so system-wide deposits fall by ")}${b(-sys)}${T("：这是“稳定币增加国债需求，但以银行存款为代价”最直接的版本。", ". This is the most direct version of \"stablecoins add Treasury demand at the expense of bank deposits.\"")}</span>`);

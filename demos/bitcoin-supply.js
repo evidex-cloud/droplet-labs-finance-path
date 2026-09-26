@@ -2,8 +2,10 @@
 // 按真实规则（每 210,000 个区块补贴减半）逐区块算出任意年份的累计供给、区块补贴、年新增率与存量-流量比；
 // 可设“永久丢失的币”看有效供给；与黄金、与一个可调的法币货币增长率对比 30 年后的“被稀释程度”；
 // 最后用一个币价算出每天新币的美元价值（矿工需要卖出或持有的新供给）。
-import { fmtPct, fmtNum, fmtUsd, fmtBig, fv } from "./_fin.js";
+import { fmtPct, fmtNum, fmtUsd, fmtBig, fv, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 const HALVING = 210000;
 const BLOCKS_PER_YEAR = 52560;
@@ -162,7 +164,7 @@ export default function mount(root, lang) {
     const dailyNew = sub * 144;
     const lines = [];
     lines.push(`${T("扣掉丢失的币，有效流通供给约", "Net of lost coins, effective circulating supply is about")} <b>${fmtBig(eff, 2)}</b>${T("，有效年新增率约", ", and effective supply inflation about")} <b>${fmtPct(flow / eff, 2)}</b>${T("。", ".")}`);
-    lines.push(`${T("每天新币约", "New coins per day: about")} ${fmtNum(dailyNew, dailyNew < 10 ? 2 : 0)} BTC × ${fmtUsd(st.price)} ≈ <b>${fmtUsd(dailyNew * st.price)}</b>${T("；一年约", "; per year about")} <b>${en ? fmtUsd(flow * st.price / 1e9, 1) + "B" : fmtNum(flow * st.price / 1e8, 0) + " 亿美元"}</b>${T("——这是矿工要卖出或持有的新供给。", " — the new supply miners must sell or hold.")}`);
+    lines.push(`${T("每天新币约", "New coins per day: about")} ` + tex(String.raw`${texv(fmtNum(dailyNew, dailyNew < 10 ? 2 : 0))}\ \text{BTC} \times ${texv(fmtUsd(st.price))} \approx \mathbf{${texv(fmtUsd(dailyNew * st.price))}}`) + `${T("；一年约", "; per year about")} <b>${en ? fmtUsd(flow * st.price / 1e9, 1) + "B" : fmtNum(flow * st.price / 1e8, 0) + " 亿美元"}</b>${T("——这是矿工要卖出或持有的新供给。", " — the new supply miners must sell or hold.")}`);
     if (isFinite(s2f) && s2f > 60) lines.push(`<span class="ok">${T("存量-流量比已超过黄金（约 60）：按“新供给稀释存量的速度”这个口径，比特币此时比黄金更“硬”。但记住，这只说明稀缺，不说明价格。", "Stock-to-flow exceeds gold's (about 60): by the “how fast new supply dilutes the stock” yardstick, bitcoin is now harder than gold. Remember, that speaks to scarcity, not price.")}</span>`);
     else if (isFinite(s2f)) lines.push(`<span class="warn">${T("存量-流量比仍低于黄金：这时比特币的新供给相对存量还很大。", "Stock-to-flow is still below gold's: new supply is still large relative to the stock.")}</span>`);
     if (sub < 0.5) lines.push(`<span class="bad">${T("补贴已不足 0.5 BTC：矿工收入越来越要靠手续费，安全预算问题开始变得尖锐（阶段 12.6）。", "The subsidy is below 0.5 BTC: miners depend more and more on fees, and the security-budget question sharpens (Stage 12.6).")}</span>`);

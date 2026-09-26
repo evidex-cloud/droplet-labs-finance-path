@@ -131,7 +131,7 @@ export default function mount(root, lang) {
       lo: 0, hi: N, samples: N, xlabel: T("月份 → 指数（起点 = 100）", "Months → index (start = 100)"), uid: "gl",
       markerX: st.shock > 0 ? (st.when === "early" ? 1 : 25) : null, markerLabel: T("利率冲击", "rate shock"),
     });
-    $("#gl-chart").innerHTML = chartBlock(res, [["var(--blue)", T("流动性水位（净流动性 × 信贷）", "Liquidity tide (net liquidity × credit)")], ["var(--btc)", T("高贝塔风险资产（示意）", "High-beta risk asset (illustrative)")]]);
+    $("#gl-chart").innerHTML = chartBlock(res, [["var(--blue)", T("流动性水位（净流动性与信贷）", "Liquidity tide (net liquidity and credit)")], ["var(--btc)", T("高贝塔风险资产（示意）", "High-beta risk asset (illustrative)")]]);
 
     const dl = sim.L[N] / 100 - 1, da = sim.A[N] / 100 - 1;
     const e1 = $("#gl-dl"); e1.textContent = fmtPct(dl, 1); e1.className = "v " + (dl >= 0 ? "pos" : "neg");

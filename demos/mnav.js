@@ -1,7 +1,10 @@
 // 交互演示：mNAV 计算器——同一家公司，按口径切换（市值 / 稀释市值 / EV（Strategy 2025）/ 股价 ÷ 每股净比特币（Strategy 2026）/ Strive 增值溢价）。
 // 默认 = 橙子公司。另画出四种 mNAV 随股价变化的曲线，并给出“以当前股价增发 10% 买币”对毛/净每股比特币的影响。
-import { mnavBasic, mnavDiluted, mnavEV, mnavNetBps, netReserve, amplificationStrategy, issueAndBuy, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { mnavBasic, mnavDiluted, mnavEV, mnavNetBps, netReserve, amplificationStrategy, issueAndBuy, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -24,7 +27,7 @@ export default function mount(root, lang) {
     ["basic", T("市值口径", "Market cap")],
     ["diluted", T("稀释市值（全转）", "Diluted (all convert)")],
     ["ev", T("EV（Strategy 2025）", "EV (Strategy 2025)")],
-    ["net", T("股价 ÷ 每股净币（Strategy 2026）", "Price ÷ Net BPS (Strategy 2026)")],
+    ["net", tex(String.raw`\text{${T("股价", "Price")}} \div \text{${T("每股净币", "Net BPS")}}`) + T("（Strategy 2026）", " (Strategy 2026)")],
     ["strive", T("Strive 增值溢价", "Strive accretion premium")],
   ];
 
@@ -104,10 +107,10 @@ export default function mount(root, lang) {
     const netAfter = (c.netRes + n * s.px) / (c.fully + n);
     const netChg = c.netRes > 0 ? netAfter / netBps - 1 : NaN;
     const lines = [];
-    lines.push(`${T("可转债 ", "Convertible ")}${c.itm ? T("价内", "in the money") : T("价外", "out of the money")}${T("（可转 ", " (")}${fmtNum(c.convSh, 2)}M${T(" 股）；净储备 = ", " shares); Net Reserve = ")}${fmtNum(c.nav, 0)} − ${fmtNum(c.otm, 0)} − ${fmtNum(s.pref, 0)} + ${fmtNum(s.cash, 0)} = <b>${fmtNum(c.netRes, 0)}</b>${T("；完全稀释股数 ", "; fully diluted shares ")}${fmtNum(c.fully, 1)}M`);
-    lines.push(`${T("EV 口径 − 1 = ", "EV mNAV − 1 = ")}${fmtNum(c.ev - 1, 3)}${T("；2026 口径 − 1 = ", "; 2026 mNAV − 1 = ")}${fmtNum(c.net - 1, 3)}${T("；Strategy 放大倍数 = ", "; Strategy amplification = ")}${fmtNum(c.amp, 2)}x${T("。可转债价外时，(EV − 1) × 放大倍数 = ", ". With the convert out of the money, (EV − 1) × amplification = ")}${fmtNum((c.ev - 1) * c.amp, 3)}`);
-    lines.push(`${T("以 ", "Issue 10% more shares at ")}${fmtUsd(s.px, 2)}${T(" 增发 10% 股票全部买币：毛口径每股比特币 ", " and buy bitcoin: gross BTC per share ")}<b>${fmtPct(gross.change, 2)}</b>${T("；每股净比特币 ", "; Net BTC per share ")}<b class="${netChg >= 0 ? "ok" : "bad"}">${fmtPct(netChg, 2)}</b>${T("。分界线：2026 口径 mNAV = 1（阶段 16.7）。", ". The dividing line: 2026 mNAV = 1 (Stage 16.7).")}`);
-    if (def === "strive") lines.push(`${T("Strive 的增值溢价 = 市值 ÷ 比特币价值 − 1，低于 0 时显示 0%：", "Strive's accretion premium = market cap ÷ bitcoin value − 1, shown as 0% when negative: ")}${fmtNum(c.basic, 3)} − 1 ⇒ <b>${fmtPct(striveP, 1)}</b>`);
+    lines.push(`${T("可转债 ", "Convertible ")}${c.itm ? T("价内", "in the money") : T("价外", "out of the money")}${T("（可转 ", " (")}${fmtNum(c.convSh, 2)}M${T(" 股）；", " shares); ")}${tex(String.raw`\text{${T("净储备", "Net Reserve")}} = ${texv(fmtNum(c.nav, 0))} - ${texv(fmtNum(c.otm, 0))} - ${texv(fmtNum(s.pref, 0))} + ${texv(fmtNum(s.cash, 0))} = \mathbf{${texv(fmtNum(c.netRes, 0))}}`)}${T("；完全稀释股数 ", "; fully diluted shares ")}${fmtNum(c.fully, 1)}M`);
+    lines.push(`${tex(String.raw`\mathrm{mNAV}_{\text{EV}} - 1 = ${texv(fmtNum(c.ev - 1, 3))}`)}${T("；", "; ")}${tex(String.raw`\mathrm{mNAV}_{2026} - 1 = ${texv(fmtNum(c.net - 1, 3))}`)}${T("；", "; ")}${tex(String.raw`\text{${T("Strategy 放大倍数", "Strategy amplification")}} = ${texv(fmtNum(c.amp, 2))}\times`)}${T("。可转债价外时，", ". With the convert out of the money, ")}${tex(String.raw`(\mathrm{mNAV}_{\text{EV}} - 1) \times \text{${T("放大倍数", "amplification")}} = ${texv(fmtNum((c.ev - 1) * c.amp, 3))}`)}`);
+    lines.push(`${T("以 ", "Issue 10% more shares at ")}${fmtUsd(s.px, 2)}${T(" 增发 10% 股票全部买币：毛口径每股比特币 ", " and buy bitcoin: gross BTC per share ")}<b>${fmtPct(gross.change, 2)}</b>${T("；每股净比特币 ", "; Net BTC per share ")}<b class="${netChg >= 0 ? "ok" : "bad"}">${fmtPct(netChg, 2)}</b>${T("。分界线：", ". The dividing line: ")}${tex(String.raw`\mathrm{mNAV}_{2026} = 1`)}${T("（阶段 16.7）。", " (Stage 16.7).")}`);
+    if (def === "strive") lines.push(`${T("Strive 的增值溢价（低于 0 时显示 0%）：", "Strive's accretion premium (shown as 0% when negative): ")}${tex(String.raw`\max\left(0,\ \frac{\text{${T("市值", "market cap")}}}{\text{${T("比特币价值", "bitcoin value")}}} - 1\right) = \max(0,\ ${texv(fmtNum(c.basic, 3))} - 1) = \mathbf{${texv(fmtPct(striveP, 1))}}`)}`);
     q("#mn-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
 
     const safe = (v) => (isFinite(v) && v < 12 ? v : NaN);

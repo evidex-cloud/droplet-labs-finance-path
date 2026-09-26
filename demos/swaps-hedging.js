@@ -1,7 +1,7 @@
 // 交互演示：两个沙盘——
 // ① 互换对冲：一笔 SOFR + 利差的浮动贷款，选对冲比率，拖动未来 SOFR 与互换利率，看利息成本、互换市值与 DV01；
 // ② 国债基差交易：自有资本、回购抵押折扣（=杠杆）、年化净价差，再施加“基差扩大 / 折扣上调”冲击，看何时被迫平仓。
-import { bondPrice, bondRisk, fmtUsd, fmtPct, fmtNum, fmtBig, clamp } from "./_fin.js";
+import { bondPrice, bondRisk, fmtUsd, fmtPct, fmtNum, fmtBig, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -108,7 +108,7 @@ export default function mount(root, lang) {
       lines.push(mtm >= 0
         ? `<span class="ok">${T("互换利率上升，支付固定的一方获利：互换市值为正，对手方要向你交保证金。", "Swap rates rose, so the fixed payer gains: the swap has positive value and the counterparty posts margin to you.")}</span>`
         : `<span class="bad">${T("互换利率下降，互换市值为负：你每天要交变动保证金，合计约", "Swap rates fell, so the swap is under water: you post variation margin daily, about")} ${fmtUsd(-mtm, 0)}${T("——贷款成本虽然下降了，但那要几年后才体现在利息里。", " in total — even though your loan got cheaper, that only shows up in interest over the coming years.")}</span>`);
-      lines.push(`${T("每 1 个基点的利率变动，互换市值变化约", "Every 1bp move in rates changes the swap's value by about")} <b>${fmtUsd(dv01, 0)}</b>${T("（DV01 = 修正久期 × 市值 × 0.0001，修正久期", " (DV01 = modified duration × value × 0.0001; modified duration")} ${fmtNum(risk.modified, 2)}${T("）。", ").")}`);
+      lines.push(`${T("每 1 个基点的利率变动，互换市值变化约", "Every 1bp move in rates changes the swap's value by about")} <b>${fmtUsd(dv01, 0)}</b>${T("（", " (")}${tex(String.raw`\mathrm{DV01} = \text{${T("修正久期", "modified duration")}} \times \text{${T("市值", "value")}} \times 0.0001`)}${T("，修正久期", "; modified duration")} ${fmtNum(risk.modified, 2)}${T("）。", ").")}`);
     }
     $("sh-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   }
@@ -140,7 +140,8 @@ export default function mount(root, lang) {
       bar(T("追加抵押品", "Extra collateral"), extraMargin, "var(--orange)");
 
     const lines = [];
-    lines.push(`${T("平静时：", "In calm times: ")}${fmtPct(bt.carry, 2)} × ${fmtNum(lev, 0)}${T(" 倍杠杆 = ", "x leverage = ")}<b>${fmtPct(roe, 1)}</b>${T(" 年化资本回报，每年约 ", " annual return on capital, about ")}${fmtUsd(bt.carry * pos, 0)}${T("。", " a year.")}`);
+    const tp = (x, d) => fmtPct(x, d).replace("%", String.raw`\%`);
+    lines.push(`${T("平静时：", "In calm times: ")}${tex(String.raw`${tp(bt.carry, 2)} \times ${fmtNum(lev, 0).replace(/,/g, "{,}")}\ \text{${T("倍杠杆", "(leverage)")}} = \mathbf{${tp(roe, 1)}}`)}${T(" 年化资本回报，每年约 ", " annual return on capital, about ")}${fmtUsd(bt.carry * pos, 0)}${T("。", " a year.")}`);
     lines.push(`${T("基差扩大 ", "Basis widening of ")}${fmtPct(bt.widen, 2)}${T(" → 账面亏损 ", " → mark-to-market loss of ")}${fmtUsd(loss, 0)}${T("，占资本 ", ", or ")}<b>${fmtPct(loss / bt.equity, 0)}</b>${T("。", " of capital.")}`);
     if (extraMargin > 0) lines.push(`${T("折扣从 ", "Haircut from ")}${fmtPct(bt.haircut, 1)}${T(" 升到 ", " to ")}${fmtPct(bt.newHaircut, 1)}${T(" → 要立刻多拿出 ", " → must post another ")}<b>${fmtUsd(extraMargin, 0)}</b>${T(" 抵押品（这一项与盈亏无关，纯粹是融资条件变了）。", " of collateral at once (nothing to do with P&L — purely a change in financing terms).")}`);
     if (left < 0) {

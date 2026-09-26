@@ -1,7 +1,7 @@
 // 交互演示：复利计算器 + 72 法则检验。
 // 预设四种场景（储蓄、信用卡债务、基金费用、橙子公司每股比特币），可调利率、年限、结息频率、费用和波动率；
 // 曲线同时画出单利、复利、扣费后、含波动拖累的路径。所有计算走 _fin.js（fv / rule72）。
-import { fv, rule72, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { fv, rule72, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -118,7 +118,7 @@ export default function mount(root, lang) {
       lines.push(`<span class="bad">${T("费用与波动拖累合计吃掉了终值的", "Fees and volatility drag together ate")} ${fmtPct(lost, 0)}${T("。几何年回报约", " of the final value. The geometric annual return is about")} ${fmtPct(gGeo, 2)}${T("，而不是", ", not")} ${fmtPct(ear, 2)}${T("。", ".")}</span>`);
     }
     if (preset === "card") lines.push(`<span class="bad">${T(`这是欠款：复利站在放贷人那边。不还款，${fmtUsd(P)} 会在 ${n} 年后变成 ${fmtUsd(F)}。`, `This is debt: compounding works for the lender. Left unpaid, ${fmtUsd(P)} grows to ${fmtUsd(F)} in ${n} years.`)}</span>`);
-    if (unit === "sats") lines.push(`<span class="warn">${T("每股比特币的“复利”要求每年都能以溢价（mNAV > 1）增发买币；溢价一消失，增长率就不是这个数了（阶段 16.7、18.3）。", "BTC-per-share “compounding” requires issuing at a premium (mNAV > 1) every single year; once the premium goes, this growth rate no longer applies (Stages 16.7, 18.3).")}</span>`);
+    if (unit === "sats") lines.push(`<span class="warn">${T(`每股比特币的“复利”要求每年都能以溢价（${tex(String.raw`\mathrm{mNAV} > 1`)}）增发买币；溢价一消失，增长率就不是这个数了（阶段 16.7、18.3）。`, `BTC-per-share “compounding” requires issuing at a premium (${tex(String.raw`\mathrm{mNAV} > 1`)}) every single year; once the premium goes, this growth rate no longer applies (Stages 16.7, 18.3).`)}</span>`);
     $("#cp-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };
 

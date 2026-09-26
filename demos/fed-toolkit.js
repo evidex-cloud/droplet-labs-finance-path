@@ -1,6 +1,6 @@
 // 交互演示：美联储 T 型账户——从 2026 年 9 月的资产负债表出发，点 QE / QT / 准备金管理购买 / 财政部收支 / 取现 / 紧急贷款，
 // 看资产与负债两边怎么同时变、准备金离“充足底线”还有多远、从市场拿走了多少久期，以及地板系统下美联储自己的利息收支。
-import { bondRisk, fmtNum, fmtPct, clamp } from "./_fin.js";
+import { bondRisk, fmtNum, fmtPct, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -45,11 +45,11 @@ export default function mount(root, lang) {
         <div class="stat"><div class="k">${T("总资产", "Total assets")}</div><div class="v acc" id="ft-a">–</div></div>
         <div class="stat"><div class="k">${T("银行准备金 / GDP", "Bank reserves / GDP")}</div><div class="v" id="ft-rg">–</div></div>
         <div class="stat"><div class="k">${T("从市场拿走的久期（10 年期等价）", "Duration removed from market (10-yr equivalents)")}</div><div class="v" id="ft-d">–</div></div>
-        <div class="stat"><div class="k">${T("示意回购利率 − IORB", "Illustrative repo rate − IORB")}</div><div class="v" id="ft-rp">–</div></div>
+        <div class="stat"><div class="k">${T("示意", "Illustrative ")}${tex(String.raw`\text{${T("回购利率", "repo rate")}} - \mathrm{IORB}`)}</div><div class="v" id="ft-rp">–</div></div>
       </div>
       <div class="demo-grid" style="margin-top:14px">
         <div class="demo-block">
-          <label class="demo-label">${T("目标区间下沿（IORB 设为下沿 +0.15%，ON RRP = 下沿）", "Bottom of target range (IORB set at bottom +0.15%, ON RRP at the bottom)")}${T("：", ": ")}<b id="ft-lv"></b></label>
+          <label class="demo-label">${T("目标区间下沿（", "Bottom of target range (")}${tex(String.raw`\mathrm{IORB} = \text{${T("下沿", "bottom")}} + 0.15\%`)}${T("，", ", ")}${tex(String.raw`\mathrm{ON\ RRP} = \text{${T("下沿", "bottom")}}`)}${T("）", ")")}${T("：", ": ")}<b id="ft-lv"></b></label>
           <input class="demo-slider" type="range" id="ft-l" min="0" max="6" step="0.25" value="3.75"/>
           <label class="demo-label">${T("美联储持仓的平均收益率（示意）", "Average yield on the Fed's securities (illustrative)")}${T("：", ": ")}<b id="ft-yv"></b></label>
           <input class="demo-slider" type="range" id="ft-y" min="1" max="5" step="0.1" value="2.5"/>
@@ -143,7 +143,8 @@ export default function mount(root, lang) {
     const net = income - expense;
     $("#ft-lv").textContent = fmtPct(lower, 2) + T("（IORB ", " (IORB ") + fmtPct(iorb, 2) + T("）", ")");
     $("#ft-yv").textContent = fmtPct(pYield, 1);
-    $("#ft-pl").innerHTML = `${T("一年利息收入约", "Annual interest income about")} <b>${bn(income)}</b>${T("，", ", ")}${T("付给准备金与逆回购约", "paid on reserves and ON RRP about")} <b>${bn(expense)}</b> → ${T("净额", "net")} <b style="color:${net < 0 ? "var(--red)" : "var(--green)"}">${net < 0 ? "−" : "+"}${bn(Math.abs(net))}</b>${net < 0 ? T("（亏损记为“递延资产”，以后用盈利抵补）", " (losses booked as a “deferred asset,” offset by future earnings)") : ""}`;
+    const U = (b) => (b < 0 ? "-" : "") + T(fmtNum(Math.abs(b) * 10, 0).replace(/,/g, "{,}") + String.raw`\ \text{亿美元}`, String.raw`\$` + fmtNum(Math.abs(b), 0).replace(/,/g, "{,}") + String.raw`\text{B}`);
+    $("#ft-pl").innerHTML = `${T("一年利息收入约", "Annual interest income about")} <b>${bn(income)}</b>${T("，", ", ")}${T("付给准备金与逆回购约", "paid on reserves and ON RRP about")} <b>${bn(expense)}</b>${T("：", ": ")}<span style="color:${net < 0 ? "var(--red)" : "var(--green)"}">${tex(String.raw`\text{${T("净额", "net")}} = ${U(income)} - ${U(expense)} = ${net < 0 ? "" : "+"}${U(net)}`)}</span>${net < 0 ? T("（亏损记为“递延资产”，以后用盈利抵补）", " (losses booked as a “deferred asset,” offset by future earnings)") : ""}`;
     $("#ft-thv").textContent = tr(thr);
     $("#ft-thm").innerHTML = s.res >= thr
       ? `<span class="pill ok">${T("准备金充足", "Reserves ample")}</span> ${T("高出底线", "Above the floor by")} ${tr(s.res - thr)}`
@@ -151,7 +152,7 @@ export default function mount(root, lang) {
     const lines = log.slice();
     if (Math.abs(A - L) > 0.5) lines.unshift(`<span class="bad">${T("账不平！", "The books don't balance!")}</span>`);
     if (s.rrp <= 0.5 && s.res < thr) lines.unshift(`<span class="bad">${T("ON RRP 缓冲已抽干，准备金跌破底线：这就是美联储 2025 年 12 月 1 日停止 QT 的原因。", "The ON RRP cushion is gone and reserves are below the floor: exactly why the Fed ended QT on December 1, 2025.")}</span>`);
-    $("#ft-log").innerHTML = lines.length ? lines.map((l) => `<div>${l}</div>`).join("") : `<div>${T("起点：2026 年 9 月 23 日这一周的资产负债表（约数）。点上面的按钮，每一步资产 = 负债 + 资本都成立。", "Starting point: the balance sheet in the week of September 23, 2026 (rounded). Click a button above; assets = liabilities + capital at every step.")}</div>`;
+    $("#ft-log").innerHTML = lines.length ? lines.map((l) => `<div>${l}</div>`).join("") : `<div>${T("起点：2026 年 9 月 23 日这一周的资产负债表（约数）。点上面的按钮，每一步 ", "Starting point: the balance sheet in the week of September 23, 2026 (rounded). Click a button above; ")}${tex(String.raw`\text{${T("资产", "assets")}} = \text{${T("负债", "liabilities")}} + \text{${T("资本", "capital")}}`)}${T(" 都成立。", " holds at every step.")}</div>`;
   };
 
   root.querySelectorAll("[data-a]").forEach((b) => b.addEventListener("click", () => {

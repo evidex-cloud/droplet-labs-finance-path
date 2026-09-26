@@ -24,7 +24,7 @@ So valuing bitcoin really means estimating two things: **how large that consensu
 - **Idea ① The price of time.** Even without cash flows, bitcoin can't escape interest rates. The cost of holding it is the risk-free return you give up (Stage 2.4). In September 2026 the 30-year Treasury yielded about 5.5% and the 10-year real yield was above 2%, so **holding a zero-yield asset cost far more than it did in the zero-rate world of 2021**.
 - **Idea ④ Risk & leverage.** Bitcoin's value isn't a number; it is **a probability distribution**. It might rise to many times today's price, or shrink badly, or go to zero. A serious valuation writes that distribution down instead of quoting a single price target.
 
-Why does this matter for the rest of the course? Because the treasury companies of Stages 15–18 are all built on the assumption that bitcoin appreciates over the long run. The mNAV of Stage 16.2 is simply “company value ÷ value of the bitcoin it holds.” If you can't say what bitcoin itself is worth, every judgment about those companies inherits that uncertainty.
+Why does this matter for the rest of the course? Because the treasury companies of Stages 15–18 are all built on the assumption that bitcoin appreciates over the long run. The mNAV of Stage 16.2 is simply \\(\\mathrm{mNAV} = \\dfrac{\\text{company value}}{\\text{value of the bitcoin it holds}}\\). If you can't say what bitcoin itself is worth, every judgment about those companies inherits that uncertainty.
 
 **We'll take this lesson in five parts:**
 
@@ -42,8 +42,8 @@ Discounted cash flow analysis (Stage 5.3) needs three inputs: cash flows, a grow
 
 An asset without cash flows can only be valued in *relative* terms: what can it replace, and how much share can it take from whom? An old distinction in economics helps:
 
-- **Income assets** (bonds, stocks, property): value = present value of the cash flows.
-- **Monetary assets** (gold, fiat currency, bitcoin): value = the total wealth people choose to hold in “something that stores and moves value.”
+- **Income assets** (bonds, stocks, property): \\(\\text{value} = \\text{present value of the cash flows}\\).
+- **Monetary assets** (gold, fiat currency, bitcoin): value is the total wealth people choose to hold in “something that stores and moves value.”
 
 Monetary assets share one crucial feature: **network effects and self-reinforcement**. The more people accept it, the more useful it is; the more useful it is, the more people accept it. That lets its value be self-consistent across a very wide range — it can be huge or tiny. Gold has sat firmly at the “huge” end for millennia. Plenty of historical monies — cowrie shells, all sorts of abandoned paper currencies — slid to the “tiny” end. The entire difficulty of valuing bitcoin is judging which end it will settle at, and the odds along the way.
 
@@ -54,9 +54,11 @@ The most popular framework asks: **how much of gold's “store of value” role 
 First, size gold's pie. The World Gold Council estimates that about 216,000 tonnes of gold have ever been mined; one tonne is about 32,150.7 troy ounces. At the September 25, 2026 price of about $4,321 an ounce:
 
 $$
-Value of all gold ≈ 216,000 × 32,150.7 × $4,321 ≈ $30 trillion
-Bitcoin market value ≈ $1.69 trillion (Sep 25–26, 2026) → about 5.6% of gold
+\\text{Value of all gold} \\approx 216{,}000 \\times 32{,}150.7 \\times \\$4{,}321 \\approx \\$30\\ \\text{trillion}
+\\frac{\\text{bitcoin market value}}{\\text{value of all gold}} \\approx \\frac{\\$1.69\\ \\text{trillion}}{\\$30\\ \\text{trillion}} \\approx 5.6\\%
 $$
+
+(Bitcoin's market value is taken at about $1.69 trillion on Sep 25–26, 2026 — about 5.6% of gold.)
 
 <figure><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Market value compared (late September 2026, approximate)</text><text x="20" y="58" font-size="12" font-weight="600" fill="var(--ink)">Gold</text><rect x="80" y="42" width="234" height="26" fill="var(--orange-soft)" stroke="var(--orange-line)"/><rect x="314" y="42" width="114" height="26" fill="var(--orange)" opacity=".75"/><rect x="428" y="42" width="88" height="26" fill="var(--orange)"/><rect x="516" y="42" width="84" height="26" fill="var(--surface-2)" stroke="var(--line)"/><text x="197" y="59" text-anchor="middle" font-size="10" fill="var(--ink)">Jewelry ~45%</text><text x="371" y="59" text-anchor="middle" font-size="10" fill="var(--surface)">Bars, coins, ETFs ~22%</text><text x="472" y="59" text-anchor="middle" font-size="10" fill="var(--surface)">Central banks ~17%</text><text x="558" y="59" text-anchor="middle" font-size="10" fill="var(--muted)">Other</text><text x="600" y="86" text-anchor="end" font-size="11" fill="var(--muted)">about $30 trillion</text><text x="20" y="118" font-size="12" font-weight="600" fill="var(--ink)">Bitcoin</text><rect x="80" y="102" width="29" height="26" fill="var(--btc)"/><text x="116" y="119" font-size="11" fill="var(--btc)" font-weight="600">about $1.69 trillion (about 5.6% of gold)</text><line x1="80" y1="150" x2="600" y2="150" stroke="var(--line)"/><g font-size="11" fill="var(--ink)"><text x="20" y="176">If bitcoin reached this share of gold's value … (using about 20.09M coins)</text><text x="40" y="198">10% → about $150,000 per coin</text><text x="40" y="218">25% → about $370,000 per coin</text><text x="330" y="198">40% (≈ the investment + central-bank part) → ~$600,000</text><text x="330" y="218">100% → about $1.5 million per coin</text></g><text x="320" y="252" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">The share method gives “if … then …,” not a forecast: everything hangs on the share assumption</text></svg><figcaption>Gold's breakdown by use is a rough World Gold Council estimate. Bitcoin needs only a small slice of gold's value for its implied price to change dramatically — which is why this method is both seductive and dangerous.</figcaption></figure>
 
@@ -69,15 +71,15 @@ The share method's real value is **order of magnitude**. It tells you that if th
 
 ### ③ Network value: Metcalfe's law and on-chain metrics
 
-**Metcalfe's law** says a network's value grows with the square of its users (V ∝ n²), because n users can form about n²/2 connections. Telephone networks and social media are often analyzed this way. Applied to bitcoin: double the users and value roughly quadruples.
+**Metcalfe's law** says a network's value grows with the square of its users (\\(V \\propto n^{2}\\)), because \\(n\\) users can form about \\(\\dfrac{n^{2}}{2}\\) connections. Telephone networks and social media are often analyzed this way. Applied to bitcoin: double the users and value roughly quadruples (\\((2n)^{2} = 4n^{2}\\)).
 
 Several researchers have regressed bitcoin's market value on active addresses and found a good fit. The criticisms are just as strong:
 
 - **Users can't be observed directly.** One person may control hundreds of addresses; one exchange address may stand for millions of customers; and ETF shareholders never appear on-chain at all.
-- **n² probably overstates network effects.** Some researchers (for example Odlyzko and Tilly, 2005) argue that n·log(n) is closer to reality: new connections are worth less and less, and your link to the millionth user is worth almost nothing.
+- **\\(n^{2}\\) probably overstates network effects.** Some researchers (for example Odlyzko and Tilly, 2005) argue that \\(n \\log n\\) is closer to reality: new connections are worth less and less, and your link to the millionth user is worth almost nothing.
 - **Causality may run backwards.** Rising prices attract users and create more addresses, not only the other way round.
 
-A more practical on-chain tool is **realized cap**: value every coin at the price at which it *last moved on-chain* and add them up. That approximates the average cost basis of all holders. Divide market cap by realized cap to get **MVRV**. Historically, readings well above about 3 have tended to come near cycle tops (holders sit on fat paper profits, so selling pressure is high), and readings near or below 1 near bottoms (the average holder is under water and sellers are exhausted). MVRV can't tell you what bitcoin *should* be worth, but it does describe **holders' psychology and cost structure** — the behavioral traps of Stage 11.5 in numerical form.
+A more practical on-chain tool is **realized cap**: value every coin at the price at which it *last moved on-chain* and add them up. That approximates the average cost basis of all holders. Divide market cap by realized cap to get **MVRV**: \\(\\mathrm{MVRV} = \\dfrac{\\text{market cap}}{\\text{realized cap}}\\). Historically, readings well above about 3 have tended to come near cycle tops (holders sit on fat paper profits, so selling pressure is high), and readings near or below 1 near bottoms (the average holder is under water and sellers are exhausted). MVRV can't tell you what bitcoin *should* be worth, but it does describe **holders' psychology and cost structure** — the behavioral traps of Stage 11.5 in numerical form.
 
 ### ④ Adoption curves and weighted scenarios: putting numbers on uncertainty
 
@@ -95,9 +97,15 @@ The more honest approach is to write the valuation as **weighted scenarios** and
 </table>
 
 $$
-Expected price = 0.25 × $10k + 0.50 × $250k + 0.25 × $1,000k = $377,500
-Discounted 10 years at a 15% required return: $377,500 ÷ 1.15^10 ≈ $93,000
-Discounted at 10%: $377,500 ÷ 1.10^10 ≈ $146,000
+\\text{Expected price} = 0.25 \\times \\$10\\text{k} + 0.50 \\times \\$250\\text{k} + 0.25 \\times \\$1{,}000\\text{k}
+\\text{Expected price} = \\$377{,}500
+$$
+
+Then bring it back to today: the first line below discounts 10 years at a 15% required return, the second at 10%.
+
+$$
+\\mathrm{PV}_{15\\%} = \\frac{\\$377{,}500}{1.15^{10}} \\approx \\$93{,}000
+\\mathrm{PV}_{10\\%} = \\frac{\\$377{,}500}{1.10^{10}} \\approx \\$146{,}000
 $$
 
 Notice three things:
@@ -117,7 +125,7 @@ Now put the strongest arguments side by side.
 - **Monetary premiums have precedent.** Gold has no cash flow yet has held its value for millennia, and money is a social consensus to begin with. Bitcoin beats gold on verifiability, portability, divisibility and supply transparency (Stage 1.5, Stage 12.2).
 - **Long-run pressure on fiat is real.** US federal debt passed $40 trillion in August 2026 and annual interest costs run at about $1 trillion or more (Stage 9.4). Demand for assets that can't be printed has structural roots.
 - **The institutional plumbing now exists.** ETFs, regulated custody and fair-value accounting let large pools of capital hold it compliantly for the first time.
-- **Option value.** Even if the chance of becoming a global reserve asset is small, the payoff if it happens is enormous; a small probability times a huge payoff can still produce a positive expected value.
+- **Option value.** Even if the chance of becoming a global reserve asset is small, the payoff if it happens is enormous; \\(\\text{small probability} \\times \\text{huge payoff}\\) can still produce a positive expected value.
 
 **The strongest bear case**
 
@@ -151,7 +159,7 @@ What the language is “worth” is not a number but a map of possibilities with
     "**“Bitcoin has no cash flows, so its intrinsic value is zero.”** — By DCF, yes — but the same goes for gold and for non-interest-bearing cash. Monetary assets are valued by demand to hold them (the monetary premium), not by DCF. The accurate statement is that bitcoin's value **lacks the anchor cash flows provide**, so its range is extremely wide and volatile. That is a real risk, not proof it equals zero.",
     "**“If bitcoin just captures 10% of gold's value, it's guaranteed to reach $150,000.”** — The share method is an “if … then …” conversion; the share itself is the assumption that needs defending. And more than 40% of gold's pie is jewelry, so the monetary demand up for grabs is smaller than gold's total value — which itself swings a lot.",
     "**“The cost of mining is bitcoin's price floor.”** — Difficulty adjustment makes network-wide costs follow the price; cost is the price's shadow. When the price falls below most miners' costs, it isn't propped up — miners unplug and sell coins until difficulty falls and costs come down.",
-    "**“Metcalfe's law proves bitcoin's value.”** — Users can't be observed directly (addresses aren't users, ETF holders aren't on-chain), the n² form is disputed, and price and addresses may cause each other. It is a suggestive description, not a valuation formula.",
+    "**“Metcalfe's law proves bitcoin's value.”** — Users can't be observed directly (addresses aren't users, ETF holders aren't on-chain), the \\(n^{2}\\) form is disputed, and price and addresses may cause each other. It is a suggestive description, not a valuation formula.",
     "**“Bitcoin has nothing to do with interest rates because it pays no interest.”** — The opposite. Paying no interest means the cost of holding it *is* the risk-free rate, and because most of its value comes from distant possibilities it is especially sensitive to the discount rate. Bitcoin suffered deep drawdowns during the rate rises of both 2022 and 2026.",
   ],
 
@@ -176,7 +184,7 @@ What the language is “worth” is not a number but a map of possibilities with
         "About $370,000",
       ],
       answer: 3,
-      explain: "$30 trillion × 25% ÷ 20.09 million ≈ **$370,000**. That's just arithmetic; the 25% share is the assumption that actually needs defending.",
+      explain: "\\(\\dfrac{\\$30\\ \\text{trillion} \\times 25\\%}{20.09\\ \\text{million}} \\approx \\$370{,}000\\). That's just arithmetic; the 25% share is the assumption that actually needs defending.",
     },
     {
       q: "A weighted-scenario valuation gives an expected price of $377,500 in 10 years. If the required return drops from 15% to 10%, what happens to today's present value?",
@@ -187,7 +195,7 @@ What the language is “worth” is not a number but a map of possibilities with
         "It rises from about $93,000 to $377,500",
       ],
       answer: 0,
-      explain: "$377,500 ÷ 1.15^10 ≈ $93,000; ÷ 1.10^10 ≈ $146,000. **Assets whose value lies mostly in the distant future are the most rate-sensitive** — Idea ① applied to bitcoin.",
+      explain: "\\(\\dfrac{\\$377{,}500}{1.15^{10}} \\approx \\$93{,}000\\); \\(\\dfrac{\\$377{,}500}{1.10^{10}} \\approx \\$146{,}000\\). **Assets whose value lies mostly in the distant future are the most rate-sensitive** — Idea ① applied to bitcoin.",
     },
     {
       q: "Which statement about realized cap and MVRV is correct?",
@@ -216,7 +224,7 @@ What the language is “worth” is not a number but a map of possibilities with
   further: [
     { label: "World Gold Council: How much gold has been mined? (above-ground stocks and their uses)", url: "https://www.gold.org/goldhub/data/how-much-gold" },
     { label: "Fortune: Price of Bitcoin, Sep 25, 2026 (price and market-cap snapshot)", url: "https://fortune.com/article/price-of-bitcoin-09-25-2026/" },
-    { label: "Odlyzko & Tilly: A refutation of Metcalfe's Law (2005, the classic critique of n² network value)", url: "https://www-users.cse.umn.edu/~odlyzko/doc/metcalfe.pdf" },
+    { label: "Odlyzko & Tilly: A refutation of Metcalfe's Law (2005, the classic critique of \\(n^{2}\\) network value)", url: "https://www-users.cse.umn.edu/~odlyzko/doc/metcalfe.pdf" },
     { label: "ECB Blog: Bitcoin's last stand (2022, a representative critics' case)", url: "https://www.ecb.europa.eu/press/blog/date/2022/html/ecb.blog221130~5301eecd19.en.html" },
     { label: "Austrian Path (sister course): subjective value and the origin of money — why something with no cash flow can be valuable", url: "https://evidex-cloud.github.io/droplet-labs-austrian-path/" },
   ],

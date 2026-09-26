@@ -1,7 +1,7 @@
 // 交互演示：利率冲击实验室——两种模式。
 // ① 银行（硅谷银行式）：加息 → 债券按市值缩水（bondPrice）→ 储户挤兑 → 卖债把浮亏变实亏；可切换 BTFP（按面值借款）。
 // ② 养老金 LDI：收益率跳升 → 杠杆对冲追缴现金 → 卖国债 → 市场冲击推高收益率 → 下一轮；可切换英格兰银行托底。
-import { bondPrice, bondRisk, pv, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { bondPrice, bondRisk, pv, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -49,7 +49,7 @@ export default function mount(root, lang) {
       <div id="rsc-ldi">
         <div class="demo-grid">
           ${sl("shock", T("初始冲击：30 年期收益率跳升", "Initial shock: 30-yr yield jump"), 25, 200, 5, " bp")}
-          ${sl("lev", T("LDI 杠杆（国债敞口 ÷ 抵押品）", "LDI leverage (gilt exposure ÷ collateral)"), 1, 7, 0.5, "x")}
+          ${sl("lev", T(`LDI 杠杆（${tex(String.raw`\text{国债敞口} \div \text{抵押品}`)}）`, `LDI leverage (${tex(String.raw`\text{gilt exposure} \div \text{collateral}`)})`), 1, 7, 0.5, "x")}
           ${sl("buf", T("养老金手边可调的现金", "Pension's ready cash"), 0, 30, 1, "")}
           ${sl("k", T("市场冲击：每卖 1 单位推高收益率", "Market impact per unit sold"), 0.2, 2.5, 0.1, " bp")}
           <div><div class="demo-label">${T("英格兰银行托底购买", "Bank of England backstop buying")}</div>
@@ -64,7 +64,7 @@ export default function mount(root, lang) {
         <div class="demo-label">${T("每一轮的收益率上升（bp）", "Yield rise in each round (bp)")}</div>
         <div class="stages" id="rsc-rounds"></div>
         <div class="demo-log" id="rsc-llog"></div>
-        <div class="demo-meta">${T("示意模型：养老金负债 100（相当于 20 年期零息债），资产 = 成长资产 70 + LDI 抵押品 20 + 现金缓冲；国债敞口按 20 年期零息债定价，初始收益率 3.7%。", "Stylized model: pension liabilities of 100 (like a 20-year zero), assets = growth assets 70 + LDI collateral 20 + a cash buffer; gilt exposure priced as a 20-year zero, starting yield 3.7%.")}</div>
+        <div class="demo-meta">${T(`示意模型：养老金负债 100（相当于 20 年期零息债），${tex(String.raw`\text{资产} = \text{成长资产}\ 70 + \text{LDI 抵押品}\ 20 + \text{现金缓冲}`)}；国债敞口按 20 年期零息债定价，初始收益率 3.7%。`, `Stylized model: pension liabilities of 100 (like a 20-year zero), ${tex(String.raw`\text{assets} = \text{growth assets}\ 70 + \text{LDI collateral}\ 20 + \text{cash buffer}`)}; gilt exposure priced as a 20-year zero, starting yield 3.7%.`)}</div>
       </div>
       <p class="demo-tip">${T(
         "银行模式：默认参数下浮亏已超过资本，但报表上的资本仍是 8——然后把“挤兑比例”往上拉，看卖债如何把浮亏变成实亏；再打开 BTFP，同样的挤兑不再产生亏损。LDI 模式：看“资金充足率”其实在上升，危机却照样发生；把市场冲击调高、或把杠杆拉到 6 倍，螺旋会吃掉大半甚至全部对冲；打开英格兰银行托底，它很快就停了。",

@@ -18,11 +18,11 @@ Imagine two companies that both want to "amplify bitcoin." Each holds $1 billion
 The two common stocks are amplified exactly the same: if bitcoin rises 10%, the bitcoin value behind each common stock rises about 14.3% (Stage 16.4). The difference is **where the risk lands**:
 
 - Company A has **debt**. The convertibles have maturity and put dates; failing to pay is a default, and creditors can take the company to court. The debt also puts one more group of claimants in the queue ahead of every preferred.
-- Company B has **no debt**: no maturity date, no put date, no margin. The worst case is **suspending the preferred dividend**, which is not a default, only an arrear (it's cumulative). The price: the preferred carries **all** $300 million of leverage **alone**, so every dollar of it has the same coverage of $1B ÷ $0.3B ≈ **3.3x**. There is no 4x "front seat" like Company A's senior preferred.
+- Company B has **no debt**: no maturity date, no put date, no margin. The worst case is **suspending the preferred dividend**, which is not a default, only an arrear (it's cumulative). The price: the preferred carries **all** $300 million of leverage **alone**, so every dollar of it has the same coverage of \\(\\dfrac{\\$1\\text{B}}{\\$0.3\\text{B}} \\approx \\mathbf{3.3\\times}\\). There is no 4x "front seat" like Company A's senior preferred.
 
 That is Strive's choice. Its SATA closing release said the company would "finance its Bitcoin amplification exclusively through perpetual preferred equity," and its Q1 2026 release said "Strive stands debt-free, with zero margin requirements, and zero encumbered Bitcoin."
 
-Read that sentence all the way through, though. **For the common and for the company as a whole, no debt means no "maturity crisis." For SATA holders, no debt means nobody stands in front of them, but also that SATA itself is the entire leverage.** In September 2026 SATA's notional was about $1.12 billion against about $2.22 billion of bitcoin: the preferred equals about **50%** of the bitcoin's value (Strive's own "Amplification Ratio" of 50.4%). On the same formula, Strategy's debt plus preferred is about 30% of its bitcoin.
+Read that sentence all the way through, though. **For the common and for the company as a whole, no debt means no "maturity crisis." For SATA holders, no debt means nobody stands in front of them, but also that SATA itself is the entire leverage.** In September 2026 SATA's notional was about $1.12 billion against about $2.22 billion of bitcoin: the preferred equals about **50%** of the bitcoin's value (Strive's own "Amplification Ratio" of 50.4%). On the same formula, Strategy's \\((\\text{debt} + \\text{preferred}) \\div \\text{bitcoin value} \\approx 30\\%\\).
 
 This lesson sits on **Idea ② (balance sheets and claims)**: the same leverage can be written as very different bundles of claims. It also sits on **Idea ④ (risk and leverage)**: removing debt doesn't make the risk disappear; it swaps "default and refinancing" risk for "dividend suspension and thinner coverage." **This lesson explains mechanisms and analytical frameworks only; it is not investment advice.**
 
@@ -53,17 +53,17 @@ SATA's full name is Variable Rate Series A Perpetual Preferred Stock. Compiled f
 
 <table class="pm">
 <tr><th>Term</th><th>SATA</th><th>Source / date</th></tr>
-<tr><td>IPO</td><td>2,000,000 shares (upsized) × $80, about $160M gross; priced 2025-11-05, listed on Nasdaq and closed 2025-11-10</td><td>GlobeNewswire 2025-11-05</td></tr>
+<tr><td>IPO</td><td>\\(2{,}000{,}000\\ \\text{shares} \\times \\$80 \\approx \\$160\\text{M}\\) (upsized, gross); priced 2025-11-05, listed on Nasdaq and closed 2025-11-10</td><td>GlobeNewswire 2025-11-05</td></tr>
 <tr><td>Stated amount</td><td>$100</td><td>Same</td></tr>
 <tr><td>Dividend rate</td><td>Variable, set monthly; 12.00% at IPO, <b>13.00% since 2026-04-15</b> (unchanged as of 2026-09-25)</td><td>Strive releases</td></tr>
 <tr><td>Cumulative?</td><td><b>Yes</b></td><td>Offering announcement</td></tr>
 <tr><td>Payment frequency</td><td>Monthly (on the 15th) at launch; <b>daily since 2026-06-15</b>: the rate is still set monthly, and that month's dividend is paid in equal amounts on each business day</td><td>Company dashboard</td></tr>
 <tr><td>Ranking</td><td>Senior to Class A and Class B common; not secured by bitcoin; with no company debt, only ordinary liabilities rank ahead</td><td>Dashboard, 10-Q</td></tr>
-<tr><td>Missed dividends</td><td>Compound at the rate + 25 bp, stepping up 25 bp a month, capped at 20%; holders may elect directors after 12 and 24 missed payments</td><td>Offering announcement</td></tr>
+<tr><td>Missed dividends</td><td>Compound at \\(\\text{the rate} + 25\\ \\text{bp}\\), stepping up 25 bp a month, capped at 20%; holders may elect directors after 12 and 24 missed payments</td><td>Offering announcement</td></tr>
 <tr><td>Issuer call</td><td>Optional redemption at <b>$110</b> or more; clean-up call (fewer than 25% of issued shares remain); tax-event call</td><td>Offering announcement</td></tr>
 <tr><td>Holder put</td><td>On a fundamental change, at $100 plus accrued dividends</td><td>Offering announcement</td></tr>
 <tr><td>Size</td><td>11,184,160 shares, about <b>$1.118B</b> notional (2026-09-18)</td><td>Company dashboard</td></tr>
-<tr><td>Annual dividend obligation</td><td><b>$145.39M</b> (check: $1.118B × 13% ≈ $145.4M)</td><td>Company dashboard</td></tr>
+<tr><td>Annual dividend obligation</td><td><b>$145.39M</b> (check: \\(\\$1.118\\text{B} \\times 13\\% \\approx \\$145.4\\text{M}\\))</td><td>Company dashboard</td></tr>
 <tr><td>Tax treatment</td><td>Distributions treated as return of capital; Form 8937 filed monthly</td><td>Company dashboard (Stage 17.7)</td></tr>
 </table>
 
@@ -90,7 +90,14 @@ Compare it with STRC (Stage 17.4): both are "cumulative + variable rate + target
 
 That last item is striking: **Strive keeps part of its dividend reserve in Strategy's STRC.** It holds 505,000 STRC shares (about $50 million bought in March 2026). One DAT's dividend reserve is another DAT's preferred: a concrete example of how the DAT ecosystem is intertwined, and it means Strive's reserve carries Strategy's credit risk.
 
-Using the ruler of Stage 16.6 (derived from the dashboard): $229.6 million of cash + $49.75 million of STRC ≈ $279 million, divided by $145.4 million a year, is about **23 months**, above the 18-month target.
+Using the ruler of Stage 16.6 (derived from the dashboard), divide the reserve by $145.4 million a year of dividends:
+
+$$
+\\$229.6\\text{M}\\ \\text{cash} + \\$49.75\\text{M}\\ \\text{of STRC} \\approx \\$279\\text{M}
+\\frac{\\$279\\text{M}}{\\$145.4\\text{M}} \\times 12 \\approx \\mathbf{23}\\ \\text{months}
+$$
+
+About 23 months, above the 18-month target.
 
 ### ④ The Semler deal: buy a DAT, then zero out its debt
 
@@ -108,7 +115,7 @@ Semler Scientific (Nasdaq: SMLR) was itself a medical-device company holding bit
 
 ### ⑤ Strive versus Strategy: two structures, one question
 
-<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Each column = today's bitcoin value; claims stacked from the top</text><text x="170" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strive (2026-09-18)</text><text x="470" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strategy (2026-09-20, derived)</text><rect x="110" y="56" width="120" height="111" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="170" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">SATA</text><text x="170" y="120" text-anchor="middle" font-size="10" fill="var(--muted)">$1.12B · 50.4%</text><rect x="110" y="167" width="120" height="109" fill="var(--surface-2)" stroke="var(--line)"/><text x="170" y="220" text-anchor="middle" font-size="11" fill="var(--muted)">common 49.6%</text><rect x="410" y="56" width="120" height="21" fill="var(--surface-2)" stroke="var(--ink)"/><text x="400" y="70" text-anchor="end" font-size="10" fill="var(--ink)">debt 9.5%</text><rect x="410" y="77" width="120" height="4" fill="var(--orange)"/><text x="400" y="84" text-anchor="end" font-size="10" fill="var(--orange-ink)">STRF 1.8%</text><rect x="410" y="81" width="120" height="29" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="400" y="100" text-anchor="end" font-size="10" fill="var(--blue)">STRC 13.1%</text><rect x="410" y="110" width="120" height="11" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="400" y="120" text-anchor="end" font-size="10" fill="var(--btc)">junior prefs 5.2%</text><rect x="410" y="121" width="120" height="155" fill="var(--surface-2)" stroke="var(--line)"/><text x="470" y="200" text-anchor="middle" font-size="11" fill="var(--muted)">common 70.4%</text><line x1="90" y1="166" x2="560" y2="166" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="320" y="160" text-anchor="middle" font-size="10" fill="var(--red)">bitcoin −50%: claims above the line still covered</text><text x="170" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">no debt · no put dates · SATA ~2.0x</text><text x="470" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">$6.75B debt · puts in 2027–2029</text></svg><figcaption>On one formula, (debt + preferred) ÷ bitcoin value: Strive about 50%, Strategy about 30% (at roughly $84,000, ignoring cash). If bitcoin halves, SATA sits right at the edge of about 1x coverage; all of Strategy's preferreds remain above the line, but Strategy has debt and put dates.</figcaption></figure>
+<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Each column = today's bitcoin value; claims stacked from the top</text><text x="170" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strive (2026-09-18)</text><text x="470" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Strategy (2026-09-20, derived)</text><rect x="110" y="56" width="120" height="111" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="170" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">SATA</text><text x="170" y="120" text-anchor="middle" font-size="10" fill="var(--muted)">$1.12B · 50.4%</text><rect x="110" y="167" width="120" height="109" fill="var(--surface-2)" stroke="var(--line)"/><text x="170" y="220" text-anchor="middle" font-size="11" fill="var(--muted)">common 49.6%</text><rect x="410" y="56" width="120" height="21" fill="var(--surface-2)" stroke="var(--ink)"/><text x="400" y="70" text-anchor="end" font-size="10" fill="var(--ink)">debt 9.5%</text><rect x="410" y="77" width="120" height="4" fill="var(--orange)"/><text x="400" y="84" text-anchor="end" font-size="10" fill="var(--orange-ink)">STRF 1.8%</text><rect x="410" y="81" width="120" height="29" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="400" y="100" text-anchor="end" font-size="10" fill="var(--blue)">STRC 13.1%</text><rect x="410" y="110" width="120" height="11" fill="var(--btc-soft)" stroke="var(--btc)"/><text x="400" y="120" text-anchor="end" font-size="10" fill="var(--btc)">junior prefs 5.2%</text><rect x="410" y="121" width="120" height="155" fill="var(--surface-2)" stroke="var(--line)"/><text x="470" y="200" text-anchor="middle" font-size="11" fill="var(--muted)">common 70.4%</text><line x1="90" y1="166" x2="560" y2="166" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="320" y="160" text-anchor="middle" font-size="10" fill="var(--red)">bitcoin −50%: claims above the line still covered</text><text x="170" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">no debt · no put dates · SATA ~2.0x</text><text x="470" y="294" text-anchor="middle" font-size="10" fill="var(--muted)">$6.75B debt · puts in 2027–2029</text></svg><figcaption>On one formula, \\((\\text{debt} + \\text{preferred}) \\div \\text{bitcoin value}\\): Strive about 50%, Strategy about 30% (at roughly $84,000, ignoring cash). If bitcoin halves, SATA sits right at the edge of about 1x coverage; all of Strategy's preferreds remain above the line, but Strategy has debt and put dates.</figcaption></figure>
 
 The two side by side (snapshots on different dates; use the companies' latest disclosures):
 
@@ -117,17 +124,17 @@ The two side by side (snapshots on different dates; use the companies' latest di
 <tr><td>Bitcoin</td><td>26,355 BTC (2026-09-18)</td><td>846,000 BTC (2026-09-20)</td></tr>
 <tr><td>Debt</td><td><b>0</b></td><td>about $6.75B ($6.71B converts + other)</td></tr>
 <tr><td>Preferred</td><td>One series, SATA, about $1.12B</td><td>Five series, about $14.3B (derived)</td></tr>
-<tr><td>(Debt + preferred) ÷ bitcoin value</td><td>50.4% (Strive's published "Amplification Ratio")</td><td>about 30% (derived, BTC at about $84,000)</td></tr>
+<tr><td>\\((\\text{Debt} + \\text{preferred}) \\div \\text{bitcoin value}\\)</td><td>50.4% (Strive's published "Amplification Ratio")</td><td>about 30% (derived, BTC at about $84,000)</td></tr>
 <tr><td>Coverage of the most junior preferred (ex cash)</td><td>SATA about 2.0x (derived)</td><td>Junior preferreds combined about 3.4x (derived)</td></tr>
 <tr><td>Matching bitcoin "floor price" (ex cash)</td><td>about $42,400 (derived)</td><td>Juniors about $24,900; STRC about $20,500 (derived)</td></tr>
 <tr><td>Maturity / put pressure</td><td>None</td><td>About $5.9B of converts puttable by end-2028 (Stage 17.2)</td></tr>
 <tr><td>Dividend reserve</td><td>Target 18 months (12 cash + 6 STRC); about 23 months derived</td><td>Policy minimum 12 months; about 37 months derived ($5.04B USD Reserve)</td></tr>
-<tr><td>What it calls the "premium"</td><td>Doesn't use "mNAV": Common Equity Accretion Premium 33.0%, EV/Treasury Asset Value 1.52x, Multiple to Net Treasury Asset Value 2.14x</td><td>mNAV (2026 definition: share price ÷ net bitcoin per share), about 1.01x on 2026-08-21</td></tr>
+<tr><td>What it calls the "premium"</td><td>Doesn't use "mNAV": Common Equity Accretion Premium 33.0%, EV/Treasury Asset Value 1.52x, Multiple to Net Treasury Asset Value 2.14x</td><td>\\(\\mathrm{mNAV} = \\text{share price} \\div \\text{net bitcoin per share}\\) (2026 definition), about 1.01x on 2026-08-21</td></tr>
 </table>
 
 How to read it:
 
-- **"Amplification" means different things.** Strive's "Amplification Ratio" = (debt + preferred notional) ÷ bitcoin value = 50.4%. Strategy's "Amplification" = BTC Reserve ÷ Net Reserve (1.30x on August 23, 2026). **One English word, two formulas** (Stage 16.4). On a simple measure (bitcoin value ÷ (bitcoin value − preferred)), Strive's common has about 2.0x sensitivity to bitcoin and Strategy's about 1.3–1.4x: **Strive's common is the more amplified.**
+- **"Amplification" means different things.** Strive's "Amplification Ratio" \\(= (\\text{debt} + \\text{preferred notional}) \\div \\text{bitcoin value} = 50.4\\%\\). Strategy's "Amplification" \\(= \\text{BTC Reserve} \\div \\text{Net Reserve}\\) (1.30x on August 23, 2026). **One English word, two formulas** (Stage 16.4). On a simple measure, \\(\\dfrac{\\text{bitcoin value}}{\\text{bitcoin value} - \\text{preferred}}\\), Strive's common has about 2.0x sensitivity to bitcoin and Strategy's about 1.3–1.4x: **Strive's common is the more amplified.**
 - **SATA versus STRC coverage.** SATA is all of Strive's leverage, with coverage of about 2.0x (higher once the roughly $280 million of cash and STRC is added, for a floor price near $31,800). STRC sits behind debt and STRF at 5.7x on Strategy's method. **No debt doesn't automatically make the preferred safer.** What sets coverage is the total of all claims ahead of and including you, relative to the bitcoin.
 - **A caution on BTC Yield.** Strive reports a 2026 year-to-date BTC Yield of +54.5% (11.1% in Q1, 23.9% in Q2). As Stage 16.3 warned, buying bitcoin with preferred money lifts "bitcoin per share," but the new preferred claim ranks ahead of the common, and **BTC Yield does not deduct it**.
 - **The premium.** DWF Ventures counted only 4 of the 20 largest DATs trading above 1x mNAV in September 2026, and Strive was one of them; The Block's own mNAV for ASST was about 1.21x (September 26, 2026). Every source uses its own definition, so always say whose.
@@ -153,8 +160,8 @@ So "no bank loan" answers the question "can anyone force me to sell the house?" 
 
   misconceptions: [
     "**\"Strive has no debt, so SATA is safer than STRC.\"** — No debt means almost nobody stands ahead of SATA, but SATA is itself the entire leverage: about 50% of the bitcoin's value, for roughly 2.0x coverage. STRC sits behind debt and STRF with 5.7x on Strategy's method (about 3.6x without netting USD assets). Coverage is set by the total of all claims ahead of and including you, not by whether any of them is debt.",
-    "**\"Strive's 50.4% Amplification Ratio can be compared directly with Strategy's 1.30x Amplification.\"** — They are different formulas: Strive's is (debt + preferred) ÷ bitcoin value; Strategy's is BTC Reserve ÷ Net Reserve. To compare them, first convert to the same formula.",
-    "**\"SATA pays daily, so it's like a high-yield savings account.\"** — Daily payment just spreads each month's dividend evenly across business days; the annual total is still notional × 13%. It is a perpetual, cumulative preferred whose dividends are declared by the board, and its credit depends on bitcoin and on the company's continued fundraising.",
+    "**\"Strive's 50.4% Amplification Ratio can be compared directly with Strategy's 1.30x Amplification.\"** — They are different formulas: Strive's is \\((\\text{debt} + \\text{preferred}) \\div \\text{bitcoin value}\\); Strategy's is \\(\\text{BTC Reserve} \\div \\text{Net Reserve}\\). To compare them, first convert to the same formula.",
+    "**\"SATA pays daily, so it's like a high-yield savings account.\"** — Daily payment just spreads each month's dividend evenly across business days; the annual total is still \\(\\text{notional} \\times 13\\%\\). It is a perpetual, cumulative preferred whose dividends are declared by the board, and its credit depends on bitcoin and on the company's continued fundraising.",
     "**\"Swapping Semler's convertibles into SATA made the debt disappear at no cost.\"** — The debt was indeed equitized, freeing the common from maturity and margin risk. But SATA grew, so the preferred claim sitting ahead of the common and the annual dividend bill both went up.",
     "**\"Strive's 54.5% BTC Yield shows its bitcoin is growing fastest.\"** — BTC Yield measures the change in \"bitcoin per share.\" Buying bitcoin with preferred money lifts it directly, without deducting the new preferred claim that ranks ahead of the common (Stage 16.3).",
   ],
@@ -180,7 +187,7 @@ So "no bank loan" answers the question "can anyone force me to sell the house?" 
         "Infinite, because there is no debt",
       ],
       answer: 1,
-      explain: "$2.22B ÷ $1.118B ≈ **2.0x**, a floor price of about $84,080 ÷ 2.0 ≈ $42,400, or bitcoin down about 50%. Adding the roughly $280 million of cash and STRC moves the floor to about $31,800.",
+      explain: "\\(\\dfrac{\\$2.22\\text{B}}{\\$1.118\\text{B}} \\approx \\mathbf{2.0\\times}\\), a floor price of about \\(\\dfrac{\\$84{,}080}{2.0} \\approx \\$42{,}400\\), or bitcoin down about 50%. Adding the roughly $280 million of cash and STRC moves the floor to about $31,800.",
     },
     {
       q: "How has SATA's dividend rate evolved?",

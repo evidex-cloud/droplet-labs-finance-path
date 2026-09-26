@@ -1,6 +1,6 @@
 // 交互演示：风险回报阶梯的蒙特卡洛沙盘——现金、债券、股票、比特币（参数均为示意），
 // 拖动持有年限与股权风险溢价，看中位数回报、亏损概率、最大回撤与“股票跑赢债券”的概率怎么变。
-import { rng, randn, maxDrawdown, sharpe, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { rng, randn, maxDrawdown, sharpe, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -33,7 +33,7 @@ export default function mount(root, lang) {
           <label class="demo-label">${lab}${T("：", ": ")}<b id="erp-v-${k}">${fmt(st[k])}</b></label>
           <input class="demo-slider" type="range" min="${lo}" max="${hi}" step="${step}" value="${st[k]}" data-k="${k}" />`).join("")}
           <div class="demo-btns"><button class="demo-btn" id="erp-seed">${T("🎲 换一组随机路径", "🎲 Draw new random paths")}</button></div>
-          <div class="demo-meta">${T("参数为示意：债券 = 无风险 + 2%、波动 9%；股票波动 17%；按月模拟、正态分布（真实尾部更胖）。", "Illustrative parameters: bonds = risk-free + 2%, 9% vol; stocks 17% vol; monthly steps, normal shocks (real tails are fatter).")}</div>
+          <div class="demo-meta">${T("参数为示意：", "Illustrative parameters: ")}${tex(String.raw`\text{${T("债券回报", "bond return")}} = \text{${T("无风险利率", "risk-free rate")}} + 2\%`)}${T("、波动 9%；股票波动 17%；按月模拟、正态分布（真实尾部更胖）。", ", 9% vol; stocks 17% vol; monthly steps, normal shocks (real tails are fatter).")}</div>
         </div>
         <div class="demo-block">
           <div id="erp-bars"></div>
@@ -44,14 +44,14 @@ export default function mount(root, lang) {
         </div>
       </div>
       <div class="demo-block">
-        <div class="demo-label">${T("每类资产的一条样本路径（1 元起步，纵轴为对数：log₁₀ 财富）", "One sample path per asset ($1 start; vertical axis is log₁₀ of wealth)")}</div>
+        <div class="demo-label">${T("每类资产的一条样本路径（1 元起步，纵轴为对数：", "One sample path per asset ($1 start; vertical axis is ")}${tex(String.raw`\log_{10}(\text{${T("财富", "wealth")}})`)}${T("）", ")")}</div>
         <div id="erp-chart"></div>
       </div>
       <div class="demo-block"><div class="demo-log" id="erp-log"></div></div>
       <p class="demo-tip">${T(
-        "把持有年限从 1 年拖到 30 年，盯住“股票跑赢债券的概率”：它会上升，但到不了 100%。再把比特币波动率拖到 90%：算术回报不变，中位数回报却大幅下降——这就是波动拖累（几何 ≈ 算术 − 波动²/2）。",
-        "Drag the holding period from 1 year to 30 and watch “P(stocks beat bonds)”: it rises, but never reaches 100%. Then push bitcoin's volatility to 90%: the arithmetic return is unchanged, yet the median return collapses — volatility drag (geometric ≈ arithmetic − vol²/2)."
-      )}</p>
+        "把持有年限从 1 年拖到 30 年，盯住“股票跑赢债券的概率”：它会上升，但到不了 100%。再把比特币波动率拖到 90%：算术回报不变，中位数回报却大幅下降——这就是波动拖累（",
+        "Drag the holding period from 1 year to 30 and watch “P(stocks beat bonds)”: it rises, but never reaches 100%. Then push bitcoin's volatility to 90%: the arithmetic return is unchanged, yet the median return collapses — volatility drag ("
+      )}${tex(String.raw`\text{${T("几何", "geometric")}} \approx \text{${T("算术", "arithmetic")}} - \dfrac{\sigma^{2}}{2}`)}${T("）。", ").")}</p>
     </div>`;
 
   const simulate = () => {
@@ -89,7 +89,7 @@ export default function mount(root, lang) {
     root.querySelector("#erp-bars").innerHTML = rows.map((r) => `
       <div class="bar2"><span class="lab">${r.a.name}</span><div class="track"><div class="fill" style="width:${clamp((Math.max(0, r.medAnn) / maxAnn) * 100, 0, 100)}%;background:${r.a.color}"></div></div><span class="val">${fmtPct(r.medAnn, 1)}</span></div>
       <div class="demo-meta" style="margin:-4px 0 6px 98px">${T("亏损概率", "P(loss)")} ${fmtPct(r.pLoss, 0)} · ${T("典型最大回撤", "typical max drawdown")} ${fmtPct(r.mdd, 0)} · ${T("最差 5% 终值", "worst-5% ending")} ${fmtNum(r.worst, 2)}× · ${T("夏普", "Sharpe")} ${r.sh == null ? "–" : fmtNum(r.sh, 2)}</div>`).join("") +
-      `<div class="demo-meta">${T("条形 = 中位数年化（几何）回报", "Bars = median annualized (geometric) return")}</div>`;
+      `<div class="demo-meta">${T("条形为中位数年化（几何）回报", "Bars show the median annualized (geometric) return")}</div>`;
 
     const [cash, bond, stock] = res;
     let beatB = 0, beatC = 0;
@@ -105,8 +105,9 @@ export default function mount(root, lang) {
 
     const s = rows[2], b = rows[3];
     const log = [];
-    log.push(`${T("股票：算术预期 ", "Stocks: arithmetic expectation ")}${fmtPct(A[2].mu, 1)}${T("，中位数年化 ", ", median annualized ")}<b>${fmtPct(s.medAnn, 1)}</b>${T("（波动拖累约 ", " (volatility drag ≈ ")}${fmtPct(A[2].vol ** 2 / 2, 1)}${T("）", ")")}`);
-    log.push(`${T("比特币（假设）：算术 ", "Bitcoin (assumed): arithmetic ")}${fmtPct(A[3].mu, 0)}${T("，波动 ", ", vol ")}${fmtPct(A[3].vol, 0)} → ${T("中位数年化 ", "median annualized ")}<b class="${b.medAnn < A[3].mu / 2 ? "warn" : ""}">${fmtPct(b.medAnn, 1)}</b>${T("，拖累约 ", ", drag ≈ ")}${fmtPct(A[3].vol ** 2 / 2, 1)}${T("；典型最大回撤 ", "; typical max drawdown ")}<span class="bad">${fmtPct(b.mdd, 0)}</span>`);
+    const drag = (v) => tex(String.raw`\text{${T("波动拖累", "volatility drag")}} \approx \frac{${fmtNum(v, 2)}^{2}}{2} \approx ${fmtPct(v ** 2 / 2, 1).replace("%", "\\%")}`);
+    log.push(`${T("股票：算术预期 ", "Stocks: arithmetic expectation ")}${fmtPct(A[2].mu, 1)}${T("，中位数年化 ", ", median annualized ")}<b>${fmtPct(s.medAnn, 1)}</b>${T("（", " (")}${drag(A[2].vol)}${T("）", ")")}`);
+    log.push(`${T("比特币（假设）：算术 ", "Bitcoin (assumed): arithmetic ")}${fmtPct(A[3].mu, 0)}${T("，波动 ", ", vol ")}${fmtPct(A[3].vol, 0)} → ${T("中位数年化 ", "median annualized ")}<b class="${b.medAnn < A[3].mu / 2 ? "warn" : ""}">${fmtPct(b.medAnn, 1)}</b>${T("，", ", ")}${drag(A[3].vol)}${T("；典型最大回撤 ", "; typical max drawdown ")}<span class="bad">${fmtPct(b.mdd, 0)}</span>`);
     if (Y <= 3) log.push(`<span class="warn">${T("持有期很短：股票亏损的概率接近 ", "Short horizon: the chance stocks lose money is about ")}${fmtPct(s.pLoss, 0)}${T("。风险溢价需要时间来兑现。", ". The risk premium needs time to show up.")}</span>`);
     else if (beatB / N < 1) log.push(`<span class="ok">${Y}${T(" 年里股票跑赢债券的概率 ", " years: stocks beat bonds with probability ")}${fmtPct(beatB / N, 0)}${T("——高，但仍有约 ", " — high, but roughly ")}${fmtPct(1 - beatB / N, 0)}${T(" 的路径输了。这就是“通常”。", " of paths still lose. That is the “usually.”")}</span>`);
     if (st.erp < 0.02) log.push(`<span class="bad">${T("股权风险溢价被压到很薄：承担股票的全部波动，却几乎拿不到补偿。", "The equity risk premium is razor thin: you bear all of stocks' volatility for almost no compensation.")}</span>`);

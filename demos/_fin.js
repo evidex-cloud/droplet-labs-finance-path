@@ -1,6 +1,8 @@
 // demos/_fin.js —— 共享金融计算引擎（折现、债券、久期、资本结构、DAT 指标）。
 // 所有演示用同一套公式，保证全课数字前后一致。纯函数、无 DOM。以 _ 开头 = 不是课程演示。
 // 约定：利率一律用小数（5% = 0.05）；金额单位由调用方决定（美元、百万美元均可）。
+// 公式排版：tex(latex, display) 返回 KaTeX HTML；LaTeX 请写在 String.raw 模板里（反斜杠只写一个，${} 照常插值），见 AUTHORING.md §2.1。
+export { tex } from "../math.js?v=4";
 
 /* ---------- 格式化 ---------- */
 export const fmtPct = (x, d = 2) => (isFinite(x) ? (x * 100).toFixed(d) + "%" : "–");

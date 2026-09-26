@@ -10,20 +10,20 @@ export default {
     "Take Strategy's real floors, **debt > STRF > STRC > STRE/STRK/STRD > common**, and liquidate them layer by layer as bitcoin falls 30%, 50%, 70% and 85% (using `waterfall`, `btcRating` and `btcFloorPrice` from `_fin.js`), with Orange Corp alongside. The answer is clear: **when bitcoin falls 70%, the common absorbs almost the entire loss**, and the junior preferreds sit right at 1x coverage; only further down does the loss climb the stack one floor at a time. But the real world isn't a one-shot liquidation. **Losses show up first as mNAV compression, bitcoin sold to pay dividends, dividend suspensions and prices below par.**",
 
   intuition: `
-Stage 6.1 drew a "floor plan": asset value pours in from the top, filling the most senior floor first, then the next, and whatever is left belongs to the common. Stage 6.6 covered the "absolute priority" rule in bankruptcy. Stage 16.5 turned it into one number: **BTC Rating = bitcoin value ÷ (the claims of this floor plus every floor above it)**.
+Stage 6.1 drew a "floor plan": asset value pours in from the top, filling the most senior floor first, then the next, and whatever is left belongs to the common. Stage 6.6 covered the "absolute priority" rule in bankruptcy. Stage 16.5 turned it into one number: **\\(\\text{BTC Rating} = \\dfrac{\\text{bitcoin value}}{\\text{the claims of this floor} + \\text{every floor above it}}\\)**.
 
 This lesson does something very concrete: **take Strategy's real capital structure, let bitcoin fall, and see which floor the waterline reaches.**
 
 Warm up with Orange Corp. It holds $1 billion of bitcoin, beneath $150 million of convertibles, $100 million of Orange-F and $50 million of Orange-D:
 
-- Bitcoin down 30% → $700 million of bitcoin; the $300 million of claims are fully covered, and the common is left with $400 million (down from $700 million, **−43%**).
-- Down 50% → $500 million; fully covered; the common has $200 million left (−71%).
-- Down 70% → $300 million, **exactly** enough to cover all three layers; the common is wiped out, and the D layer's coverage is precisely 1.0x.
+- Bitcoin down 30% → $700 million of bitcoin; the $300 million of claims are fully covered, and the common is left with \\(\\$700\\text{M} - \\$300\\text{M} = \\$400\\text{M}\\) (down from $700 million, **−43%**).
+- Down 50% → $500 million; fully covered; the common has \\(\\$500\\text{M} - \\$300\\text{M} = \\$200\\text{M}\\) left (−71%).
+- Down 70% → $300 million, **exactly** enough to cover all three layers; the common is wiped out, and the D layer's coverage is precisely \\(\\dfrac{300}{300} = 1.0\\times\\).
 - Down 85% → $150 million, enough only for the convertibles; the F and D layers get nothing (ignoring cash).
 
 The pattern: **losses climb the floor plan from the bottom up.** The common is the first shock absorber and takes all of the early losses. Only once the common is drained does the most junior preferred start to lose, then the next floor up, and debt last of all. So the answer to "who absorbs the loss when bitcoin falls 70%?" is: **the common absorbs nearly all of it, and the junior preferreds stand at the cliff edge.**
 
-Strategy's real numbers (September 2026 snapshot) look strikingly similar. With bitcoin around $84,000, a 70% drop takes it to about $25,200, at which point 846,000 BTC are worth about $21.3 billion, against about $21.1 billion of debt plus all preferreds: **coverage on the junior preferreds of about 1.01x.**
+Strategy's real numbers (September 2026 snapshot) look strikingly similar. With bitcoin around $84,000, a 70% drop takes it to about $25,200, at which point 846,000 BTC are worth about \\(846{,}000 \\times \\$25{,}200 \\approx \\$21.3\\text{B}\\), against about $21.1 billion of debt plus all preferreds: **coverage on the junior preferreds of about \\(\\dfrac{21.3}{21.1} \\approx 1.01\\times\\).**
 
 But that is only the static answer to "what if we liquidated today, all at once?" A real DAT doesn't get liquidated because bitcoin fell. Its convertibles carry no margin calls, its preferreds have no maturity, and **no term forces a sale because the price dropped** (compare Stage 7.5 and Stage 13.4). In the real world, losses arrive in a different order: mNAV compresses first (the common falls first), issuing stock stops being accretive, the company draws on its USD Reserve and sells bitcoin to pay dividends, preferred prices slip below par, and at worst dividends are suspended. That is when the difference between **cumulative and non-cumulative** really bites (Stage 6.3).
 
@@ -46,31 +46,34 @@ This lesson sits on **Idea ② (balance sheets and claims)**: the order of senio
 
 <table class="pm">
 <tr><th>Floor (most senior to most junior)</th><th>Notional / claim</th><th>Date and source</th></tr>
-<tr><td>Bitcoin</td><td>846,000 BTC × about $84,000 ≈ $71.06B</td><td>Holdings: 8-K 2026-09-21; price: 2026-09-25 close about $84,100</td></tr>
-<tr><td>Debt ($6.71B converts + about $0.04B other)</td><td>about $6.754B</td><td>10-Q (2026-06-30), unchanged through 2026-09-20</td></tr>
+<tr><td>Bitcoin</td><td>\\(846{,}000\\ \\text{BTC} \\times \\text{about } \\$84{,}000 \\approx \\$71.06\\text{B}\\)</td><td>Holdings: 8-K 2026-09-21; price: 2026-09-25 close about $84,100</td></tr>
+<tr><td>Debt (\\(\\$6.71\\text{B converts} + \\text{about } \\$0.04\\text{B other}\\))</td><td>about $6.754B</td><td>10-Q (2026-06-30), unchanged through 2026-09-20</td></tr>
 <tr><td>STRF</td><td>$1.284B</td><td>FWP 2026-08-24</td></tr>
 <tr><td>STRC</td><td>about $9.32B</td><td>Derived: Aug 23 notional less September buybacks</td></tr>
-<tr><td>STRE + STRK + STRD (junior; internal order unverified)</td><td>about $3.70B (about 0.9 + 1.4 + 1.4)</td><td>STRE 2025-11-28; STRK/STRD 2026-08-07, approximate</td></tr>
-<tr><td>USD assets (USD Reserve $5.04B + USD Cash $1.05B)</td><td>about $6.09B</td><td>8-K 2026-09-21</td></tr>
+<tr><td>\\(\\text{STRE} + \\text{STRK} + \\text{STRD}\\) (junior; internal order unverified)</td><td>about $3.70B (about \\(0.9 + 1.4 + 1.4\\))</td><td>STRE 2025-11-28; STRK/STRD 2026-08-07, approximate</td></tr>
+<tr><td>USD assets (\\(\\text{USD Reserve } \\$5.04\\text{B} + \\text{USD Cash } \\$1.05\\text{B}\\))</td><td>about $6.09B</td><td>8-K 2026-09-21</td></tr>
 </table>
 
 **The formulas** (all from the shared engine, _fin.js):
 
 $$
-BTC Rating (floor k) = bitcoin value ÷ (cumulative claims of floors 1 through k)
-BTC floor price (floor k) = current price ÷ BTC Rating = cumulative claims ÷ number of bitcoin
-waterfall: distributable value fills floor 1 first, then each floor below; the remainder goes to the common
+\\text{BTC Rating (floor } k\\text{)} = \\frac{\\text{bitcoin value}}{\\text{cumulative claims of floors 1 through } k}
+\\text{BTC floor price (floor } k\\text{)} = \\frac{\\text{current price}}{\\text{BTC Rating}} = \\frac{\\text{cumulative claims}}{\\text{number of bitcoin}}
+\\text{recovery of floor } k = \\min\\!\\left(C_{k},\\ \\max\\!\\left(0,\\ V - \\sum_{j<k} C_{j}\\right)\\right)
+\\text{common residual} = \\max\\!\\left(0,\\ V - \\sum_{j} C_{j}\\right)
 $$
+
+Here \\(V\\) is the distributable value and \\(C_{j}\\) is the claim of floor \\(j\\). That is the waterfall: distributable value fills floor 1 first, then each floor below; the remainder goes to the common.
 
 Three easily missed details:
 
 - **USD assets in or out.** Strategy's own BTC Rating nets its USD assets against debt, and the $6.09 billion of USD assets almost equals all of its debt. The main table below **excludes** USD assets (the more conservative view), and the results with them included are given separately.
-- **Liquidation preference ≠ notional.** For STRF, STRC, STRE and STRD the liquidation preference is the greater of the trading price and $100. In a stress scenario the trading price is below 100, so $100 applies; but any **cumulative dividend arrears** are added on top, raising that floor's claim (Stage 6.3).
+- **Liquidation preference is not notional.** For STRF, STRC, STRE and STRD the liquidation preference is the greater of the trading price and $100. In a stress scenario the trading price is below 100, so $100 applies; but any **cumulative dividend arrears** are added on top, raising that floor's claim (Stage 6.3).
 - **The order among the junior preferreds.** Primary documents confirm only that STRE, STRK and STRD rank behind STRF and STRC and ahead of the common; their order relative to each other is unverified. The main table treats the three as one floor (equal ranking, shared pro rata); the demo lets you switch to the STRE → STRK → STRD order implied by a company deck.
 
 ### ② Four scenarios: bitcoin −30%, −50%, −70%, −85%
 
-**Strategy (USD assets excluded; $ billions; coverage = BTC Rating)**
+**Strategy (USD assets excluded; $ billions; coverage is the BTC Rating)**
 
 <table class="pm">
 <tr><th>Scenario</th><th>BTC price</th><th>Bitcoin value</th><th>Debt coverage</th><th>STRF coverage</th><th>STRC coverage</th><th>Junior coverage</th><th>Liquidation recovery</th><th>Common residual</th></tr>
@@ -98,7 +101,7 @@ The two tables tell the same story:
 
 - **The common is the shock absorber.** Bitcoin down 30% takes the common's residual down about 43%: the amplification of Stage 16.4 (about 1.4x). Down 70%, the common is almost gone.
 - **Coverage thins non-linearly.** Stage 16.5 said "4x coverage becomes 1.2x after a 70% drop," and that is exactly what happens to Orange-F; STRC goes from 4.1x to 1.2x.
-- **The two structures have a strikingly similar shape.** Strategy's juniors and Orange-D both hit 1x at around −70%, because in both cases (debt + preferred) ÷ bitcoin is about 30%.
+- **The two structures have a strikingly similar shape.** Strategy's juniors and Orange-D both hit 1x at around −70%, because in both cases \\((\\text{debt} + \\text{preferred}) \\div \\text{bitcoin}\\) is about 30%.
 
 ### ③ Floor prices: how far bitcoin must fall before each floor starts to lose
 
@@ -117,12 +120,10 @@ For comparison: bitcoin's high was about $126,000 on October 6, 2025, and its lo
 
 Strategy has no debt with mark-to-market margin calls, no bitcoin pledged, and no preferred with a maturity date, so a fall in bitcoin does **not** force a sale. Losses travel down a different chain:
 
-$$
-bitcoin falls → the common falls further (amplification) → mNAV compresses
-→ common ATM stops being accretive (Stage 17.1) → preferreds trade below par; issuing costs more
-→ dividends paid from the USD Reserve (about 37 months, derived) → bitcoin sold for dividends / buybacks
-→ worst case: some dividends suspended (preferred holders bear it) → convertible put dates arrive (cash must be paid)
-$$
+- bitcoin falls → the common falls further (amplification) → mNAV compresses
+- → common ATM stops being accretive (Stage 17.1) → preferreds trade below par; issuing costs more
+- → dividends paid from the USD Reserve (about 37 months, derived) → bitcoin sold for dividends / buybacks
+- → worst case: some dividends suspended (preferred holders bear it) → convertible put dates arrive (cash must be paid)
 
 In 2026 the company actually walked the first links of this chain:
 
@@ -139,7 +140,7 @@ Suppose the worst step: the company decides to suspend some preferred dividends.
 
 <table class="pm">
 <tr><th>Series</th><th>Cumulative?</th><th>What happens when payments stop</th><th>Extra "teeth"</th></tr>
-<tr><td>STRF</td><td>Yes</td><td>Arrears accrue and compound at the rate + 1 point, stepping up each period, capped at 18%</td><td>Board seats after missed payments; no distributions to or buybacks of juniors while arrears remain</td></tr>
+<tr><td>STRF</td><td>Yes</td><td>Arrears accrue and compound at \\(\\text{the rate} + 1\\ \\text{point}\\), stepping up each period, capped at 18%</td><td>Board seats after missed payments; no distributions to or buybacks of juniors while arrears remain</td></tr>
 <tr><td>STRC</td><td>Yes</td><td>Arrears compound at the applicable rate; no rate cuts while in arrears</td><td>No distributions to juniors while arrears remain</td></tr>
 <tr><td>STRE</td><td>Yes</td><td>Same penalty structure as STRF (capped at 18%)</td><td>—</td></tr>
 <tr><td>STRK</td><td>Yes</td><td>Arrears accrue (penalty details unverified); dividends can also be paid in MSTR stock</td><td>Board seats after missed payments</td></tr>
@@ -205,7 +206,7 @@ So ask "who loses first?" twice: **if the reservoir is emptied all at once**, go
         "About $42,000",
       ],
       answer: 0,
-      explain: "Floor price = cumulative claims ÷ bitcoin held = ($6.754B + $1.284B + $9.32B) ÷ 846,000 ≈ **$20,500**. With the $6.09B of USD assets included it's about $13,300, in line with the roughly $13,400 the company published in August.",
+      explain: "\\(\\text{Floor price} = \\dfrac{\\text{cumulative claims}}{\\text{bitcoin held}} = \\dfrac{\\$6.754\\text{B} + \\$1.284\\text{B} + \\$9.32\\text{B}}{846{,}000} \\approx \\mathbf{\\$20{,}500}\\). With the $6.09B of USD assets included it's about $13,300, in line with the roughly $13,400 the company published in August.",
     },
     {
       q: "Bitcoin falls 30%. Roughly how much does the common's residual value fall, for Strategy or Orange Corp, and why?",
@@ -216,7 +217,7 @@ So ask "who loses first?" twice: **if the reservoir is emptied all at once**, go
         "100%",
       ],
       answer: 1,
-      explain: "The common is the **residual claim**: bitcoin goes from $71.06B to $49.74B, fixed claims of about $21.06B come off the top, and the residual drops from about $50.0B to $28.7B, about −43%. That is the amplification of Stage 16.4.",
+      explain: "The common is the **residual claim**: bitcoin goes from \\(\\$71.06\\text{B} \\to \\$49.74\\text{B}\\), fixed claims of about $21.06B come off the top, and the residual drops from about \\(\\$71.06\\text{B} - \\$21.06\\text{B} = \\$50.0\\text{B}\\) to \\(\\$49.74\\text{B} - \\$21.06\\text{B} \\approx \\$28.7\\text{B}\\), about \\(\\dfrac{28.7}{50.0} - 1 \\approx -43\\%\\). That is the amplification of Stage 16.4.",
     },
     {
       q: "If Strategy decided to suspend some preferred dividends, which series would the logic of dividend stoppers suggest stopping first?",

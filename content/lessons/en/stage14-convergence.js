@@ -41,7 +41,7 @@ By the end of this lesson you will hold a complete map of the new plumbing. Befo
 <table>
 <tr><th></th><th>Deposit token</th><th>Stablecoin (GENIUS Act)</th><th>Tokenized money fund</th><th>Retail CBDC</th></tr>
 <tr><td>Whose liability / what it is</td><td>A commercial bank's liability (it is a deposit)</td><td>The issuer's liability</td><td>A security: fund shares</td><td>The central bank's liability</td></tr>
-<tr><td>Assets behind it</td><td>The bank's loans, securities, reserves (fractional)</td><td>1:1 cash, T-bills of 93 days or less, overnight repo, government money funds</td><td>A portfolio of T-bills and repo</td><td>Central bank assets</td></tr>
+<tr><td>Assets behind it</td><td>The bank's loans, securities, reserves (fractional)</td><td>1:1 cash, T-bills of \\(\\le 93\\) days, overnight repo, government money funds</td><td>A portfolio of T-bills and repo</td><td>Central bank assets</td></tr>
 <tr><td>Can it pay interest?</td><td>Yes</td><td>No</td><td>T-bill yield minus fees</td><td>Depends on design</td></tr>
 <tr><td>Who can hold it</td><td>Usually only that bank's clients</td><td>Almost anyone (can be frozen)</td><td>Mostly qualified institutions</td><td>The public</td></tr>
 <tr><td>Protection if things go wrong</td><td>Bank supervision, capital rules, deposit-insurance rules</td><td>Segregated reserves; holders rank first in insolvency</td><td>Fund assets belong to holders</td><td>The state's credit</td></tr>

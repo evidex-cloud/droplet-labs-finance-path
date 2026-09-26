@@ -2,11 +2,12 @@
 // ① 货币乐高：在同一笔链上交易里“存入 ETH → 借出 USDC → 在 AMM 换回 ETH”，任一步不满足规则，整笔交易回滚；
 //    同时对比同一件事在传统金融里要等多久才结算。
 // ② 闪电贷套利：两个价格不同的 AMM 池，在一笔交易内借入、低买高卖、归还；赚不到钱就整笔作废。
-import { ammSwap, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { ammSwap, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  const X = (s) => String(s).replace(/%/g, "\\%"); // 格式化好的百分数放进 LaTeX
   const C = T("：", ": ");
   const P = 3000; // 示意 ETH 价格（美元），仅用于演示
   const MAX_LTV = 0.8, LIQ_TH = 0.83;
@@ -102,7 +103,7 @@ export default function mount(root, lang) {
     steps.push(line(true, T("第 1 步 存入 ", "Step 1 · deposit ") + lego.eth + T(" ETH 作为抵押，价值 ", " ETH as collateral, worth ") + fmtUsd(coll)));
     // 第 2 步：借出
     const s2 = lego.ltv <= MAX_LTV;
-    steps.push(line(s2, T("第 2 步 借出 ", "Step 2 · borrow ") + fmtUsd(borrow) + " USDC" + T("（LTV ", " (LTV ") + fmtPct(lego.ltv, 0) + (s2 ? T(" ≤ 上限 80%）", " ≤ 80% cap)") : T(" > 上限 80%：合约拒绝）", " > 80% cap: the contract refuses)"))));
+    steps.push(line(s2, T("第 2 步 借出 ", "Step 2 · borrow ") + fmtUsd(borrow) + " USDC" + T("（", " (") + tex(String.raw`\mathrm{LTV} = ${X(fmtPct(lego.ltv, 0))} ${s2 ? "\\le" : ">"} 80\%`) + (s2 ? T(" 上限）", " cap)") : T(" 上限：合约拒绝）", " cap: the contract refuses)"))));
     ok = ok && s2;
     // 第 3 步：在 AMM 用 USDC 买 ETH（池子：depth ETH / depth·P USDC）
     let out = 0, slip = 0, s3 = false;
@@ -111,7 +112,7 @@ export default function mount(root, lang) {
       out = r.out;
       slip = 1 - out / (borrow / P);
       s3 = slip <= lego.tol;
-      steps.push(line(s3, T("第 3 步 在 AMM 把 USDC 换成 ", "Step 3 · swap USDC on the AMM for ") + fmtNum(out, 3) + T(" ETH，滑点+手续费 ", " ETH; slippage + fee ") + fmtPct(slip, 2) + (s3 ? T(" ≤ 容忍度", " ≤ tolerance") : T(" > 容忍度 ", " > tolerance ") + fmtPct(lego.tol, 1))));
+      steps.push(line(s3, T("第 3 步 在 AMM 把 USDC 换成 ", "Step 3 · swap USDC on the AMM for ") + fmtNum(out, 3) + T(" ETH，", " ETH; ") + tex(String.raw`\text{${T("滑点", "slippage")}} + \text{${T("手续费", "fee")}} = ${X(fmtPct(slip, 2))} ${s3 ? "\\le" : ">"} \text{${T("容忍度", "tolerance")}}\ ${X(fmtPct(lego.tol, 1))}`)));
       ok = ok && s3;
     } else {
       steps.push(`<div class="warn">— ${T("第 3 步 未执行（前一步已失败）", "Step 3 · not executed (an earlier step failed)")}</div>`);

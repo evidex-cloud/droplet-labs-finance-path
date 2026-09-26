@@ -2,8 +2,11 @@
 // ① 停泊资金：稳定币（持有人收益 0，利息归发行人）vs 代币化国债基金（国债收益 − 费用，按日复利 fv）；
 // ② 生息抵押品：保证金放稳定币 vs 放代币化国债（折扣 haircut、容量、利率冲击对净值的影响 bondRisk/priceChangeApprox）；
 // ③ 周末挤兑：份额 24/7 可卖、国库券周一才能卖——超出即时赎回额度的部分只能卖进二级池子（ammSwap），看折价多深。
-import { fv, bondRisk, priceChangeApprox, ammSwap, fmtUsd, fmtPct, fmtBig, fmtNum } from "./_fin.js";
+import { fv, bondRisk, priceChangeApprox, ammSwap, fmtUsd, fmtPct, fmtBig, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字（$、千分位逗号、%）变成 LaTeX 安全的写法
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -87,14 +90,14 @@ export default function mount(root, lang) {
           <div class="stat"><div class="k">${T("想离场的金额", "Wanting out")}</div><div class="v" id="tt-want">–</div></div>
           <div class="stat"><div class="k">${T("按净值即时兑付", "Paid at NAV instantly")}</div><div class="v pos" id="tt-paid">–</div></div>
           <div class="stat"><div class="k">${T("只能卖进池子", "Forced into the pool")}</div><div class="v neg" id="tt-pool">–</div></div>
-          <div class="stat"><div class="k">${T("池子里的平均成交价（净值 = 1.00）", "Average pool price (NAV = 1.00)")}</div><div class="v acc" id="tt-px">–</div></div>
+          <div class="stat"><div class="k">${T("池子里的平均成交价（净值为 1.00）", "Average pool price (NAV is 1.00)")}</div><div class="v acc" id="tt-px">–</div></div>
         </div>
         <div class="demo-log" id="tt-log3"></div>
       </div>
 
       <p class="demo-tip">${T(
-        "①里把收益率拖到 0 看看：代币化国债的全部吸引力都来自“时间的价格”。②里注意差额恰好约等于“保证金 × 净收益率”——抵押品不再是死钱。③里把即时赎回额度调小、离场比例调大：资产一分没少，代币却可能在周末打折，这就是流动性错配。",
-        "In ①, drag the yield to 0: all of a tokenized Treasury's appeal comes from the price of time. In ②, notice the gap is roughly margin × net yield, so collateral stops being dead money. In ③, shrink the instant-redemption capacity and raise the exit share: not a dollar of assets is lost, yet the token can trade at a discount over the weekend. That is the liquidity mismatch."
+        "①里把收益率拖到 0 看看：代币化国债的全部吸引力都来自“时间的价格”。②里注意差额恰好约等于 " + tex(String.raw`\text{保证金} \times \text{净收益率}`) + "——抵押品不再是死钱。③里把即时赎回额度调小、离场比例调大：资产一分没少，代币却可能在周末打折，这就是流动性错配。",
+        "In ①, drag the yield to 0: all of a tokenized Treasury's appeal comes from the price of time. In ②, notice the gap is roughly " + tex(String.raw`\text{margin} \times \text{net yield}`) + ", so collateral stops being dead money. In ③, shrink the instant-redemption capacity and raise the exit share: not a dollar of assets is lost, yet the token can trade at a discount over the weekend. That is the liquidity mismatch."
       )}</p>
     </div>`;
 
@@ -151,13 +154,13 @@ export default function mount(root, lang) {
       <div class="demo-meta">${T("生息部分", "Earning part")}${T("：", ": ")}${fitsA ? fmtUsd(c.cap - c.margin) : "–"}</div>
       <div class="stat"><div class="k">${T("每年利息", "Interest per year")}</div><div class="v">${fitsA ? fmtUsd(incA) : T("资金不够", "Not enough capital")}</div></div>`;
     $("#tt-b").innerHTML = `
-      <div class="demo-meta">${T("需放入代币", "Tokens to post")}${T("：", ": ")}<b>${fmtUsd(tokensNeeded)}</b>${T("（保证金 ÷ (1 − 折扣)）", " (margin ÷ (1 − haircut))")}</div>
+      <div class="demo-meta">${tex(String.raw`\text{${T("需放入代币", "Tokens to post")}} = \dfrac{\text{${T("保证金", "margin")}}}{1 - \text{${T("折扣", "haircut")}}} = \dfrac{${texv(fmtUsd(c.margin))}}{1 - ${texv(fmtPct(c.hc, 1))}} = \mathbf{${texv(fmtUsd(tokensNeeded))}}`)}</div>
       <div class="demo-meta">${T("最大可支持保证金", "Maximum margin supported")}${T("：", ": ")}${fmtUsd(capacity)}</div>
       <div class="stat"><div class="k">${T("每年利息（保证金本身也生息）", "Interest per year (margin keeps earning)")}</div><div class="v pos">${fitsB ? fmtUsd(incB) : T("资金不够", "Not enough capital")}</div></div>`;
     const lines = [];
-    if (fitsA && fitsB) lines.push(`${T("差额", "Difference")} = <b>${fmtUsd(incB - incA)}</b> ${T("/年 ≈ 保证金", "/yr ≈ margin")} ${fmtUsd(c.margin)} × ${T("净收益率", "net yield")} ${fmtPct(net)}${T("。", ".")}`);
+    if (fitsA && fitsB) lines.push(`${tex(String.raw`\text{${T("差额", "Difference")}} = \mathbf{${texv(fmtUsd(incB - incA))}}\ \text{${T("/年", "/yr")}} = \text{${T("保证金", "margin")}} \times \text{${T("净收益率", "net yield")}} = ${texv(fmtUsd(c.margin))} \times ${texv(fmtPct(net))}`)}${T("。", ".")}`);
     else lines.push(`<span class="bad">${T("资金不足以覆盖所需的保证金（或折扣后的代币）。折扣越大，同样的资金能支持的保证金越少。", "Capital cannot cover the margin (or the haircut-adjusted tokens). The bigger the haircut, the less margin the same capital can support.")}</span>`);
-    lines.push(`${T("利率冲击", "Rate shock")} +${c.shock} bp ${T("→ 3 个月期国库券价格变化约", "→ 3-month bill price change of about")} <b>${fmtPct(dP, 3)}</b>${T("（修正久期", " (modified duration ")}${fmtNum(risk.modified, 3)}${T("）。", ").")}`);
+    lines.push(`${T("利率冲击", "Rate shock")} +${c.shock} bp ${T("→ 3 个月期国库券价格变化约", "→ 3-month bill price change of about")} ${tex(String.raw`\dfrac{\Delta P}{P} \approx -D_{\text{mod}}\,\Delta y + \tfrac{1}{2}\,C\,(\Delta y)^{2} \approx \mathbf{${texv(fmtPct(dP, 3))}}`)}${T("（修正久期 ", " (modified duration ")}${tex(String.raw`D_{\text{mod}} = ${fmtNum(risk.modified, 3)}`)}${T("）。", ").")}`);
     lines.push(Math.abs(dP) < c.hc
       ? `<span class="ok">${T("价格变动小于折扣：交易所留的缓冲足以吸收这次利率冲击。", "The price move is smaller than the haircut: the exchange's cushion absorbs this rate shock.")}</span>`
       : `<span class="warn">${T("价格变动超过了折扣：接受方会要求补充抵押品。现实中折扣还要覆盖赎回时间和合约风险。", "The price move exceeds the haircut, so the exchange would ask for more collateral. Real haircuts also cover redemption time and contract risk.")}</span>`);
@@ -184,7 +187,7 @@ export default function mount(root, lang) {
     if (rest <= 0) lines.push(`<span class="ok">${T("即时赎回额度够用：所有人按净值离场，周一基金再从容卖出国库券补回额度。", "The instant-redemption capacity is enough: everyone leaves at NAV, and on Monday the fund sells T-bills to refill it.")}</span>`);
     else {
       lines.push(`${T("超出额度的", "The")} ${"$" + fmtBig(rest)} ${T("只能在周末卖进池子，平均每 1 美元净值只换到", "beyond capacity must be sold into the pool over the weekend, fetching on average")} <b>${fmtNum(px, 3)}</b>${T(" 美元，折价损失约", " per $1 of NAV, a discount loss of about")} <b>${"$" + fmtBig(loss)}</b>${T("。", ".")}`);
-      lines.push(`<span class="demo-meta">${T("池子按恒定乘积 x·y=k 计算（阶段 13.3），会夸大折价；专为稳定资产设计的池子曲线更平，但额度一旦耗尽，结论相同。", "The pool uses constant-product x·y=k pricing (Stage 13.3), which exaggerates the discount; pools designed for stable assets have flatter curves, but once their depth is used up the conclusion is the same.")}</span>`);
+      lines.push(`<span class="demo-meta">${T("池子按恒定乘积 " + tex(String.raw`x \cdot y = k`) + " 计算（阶段 13.3），会夸大折价；专为稳定资产设计的池子曲线更平，但额度一旦耗尽，结论相同。", "The pool uses constant-product " + tex(String.raw`x \cdot y = k`) + " pricing (Stage 13.3), which exaggerates the discount; pools designed for stable assets have flatter curves, but once their depth is used up the conclusion is the same.")}</span>`);
       lines.push(`<span class="${px < 0.97 ? "bad" : "warn"}">${T("基金的资产一分没少——周一卖出国库券后，净值仍是 1.00。损失全部落在“等不及周一”的人身上，买便宜货的套利者赚走了这部分。", "The fund lost nothing. After Monday's T-bill sales NAV is still 1.00. The whole loss falls on those who could not wait for Monday, and the arbitrageurs who bought cheap collect it.")}</span>`);
     }
     $("#tt-log3").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

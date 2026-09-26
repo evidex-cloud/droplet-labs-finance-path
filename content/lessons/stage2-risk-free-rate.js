@@ -7,7 +7,7 @@ export default {
   prereqs: ["present-value"],
 
   oneLiner:
-    "阶段 2.3 说任何资产 = 未来现金流按某个利率折现。这一节回答“某个利率”从哪来：**必要回报 = 无风险利率 + 风险溢价**。无风险利率就是国债收益率，它是全世界资产定价的地板；每多承担一种风险（期限、信用、股权、流动性），就在地板上加一层砖。所以**国债收益率一动，所有资产的折现率跟着动**。但“无风险”只是“不会违约”，它仍然藏着通胀和价格波动的风险。",
+    "阶段 2.3 说任何资产的价值，就是未来现金流按某个利率折现。这一节回答“某个利率”从哪来：**\\(\\text{必要回报} = \\text{无风险利率} + \\text{风险溢价}\\)**。无风险利率就是国债收益率，它是全世界资产定价的地板；每多承担一种风险（期限、信用、股权、流动性），就在地板上加一层砖。所以**国债收益率一动，所有资产的折现率跟着动**。但“无风险”只是“不会违约”，它仍然藏着通胀和价格波动的风险。",
 
   intuition: `
 想象你有 1 万美元，面前有一排选择：
@@ -25,7 +25,7 @@ export default {
 
 把这两件事合起来，就得到了给任何资产选折现率的办法：
 
-> **必要回报 = 无风险利率 + 你承担的各种风险的补偿（风险溢价）**
+> **\\(\\text{必要回报} = \\text{无风险利率} + \\text{风险溢价}\\)**（风险溢价就是你承担的各种风险的补偿）
 
 假设短期国债给 4%（这里是示意数字）：10 年期国债因为锁得更久，要多一点补偿，比如 4.5%；大公司债多一层信用风险，比如 5.5%；股票要承受大起大落，投资者要求 9% 左右；朋友的创业公司可能血本无归、还卖不掉，你大概要 20% 以上才愿意投。
 
@@ -62,7 +62,8 @@ export default {
 ### ② 一层层叠出必要回报：期限、信用、股权与流动性溢价
 
 $$
-必要回报 = 无风险利率 + 期限溢价 + 信用溢价 + 股权风险溢价 + 流动性溢价 + …
+\\text{必要回报} = \\text{无风险利率} + \\text{风险溢价}
+\\text{风险溢价} = \\text{期限溢价} + \\text{信用溢价} + \\text{股权风险溢价} + \\text{流动性溢价} + \\cdots
 $$
 
 每一层都在补偿一种具体的风险：
@@ -72,21 +73,21 @@ $$
 - **股权风险溢价（ERP）**：股东排在所有债权人之后，拿的是剩余索取权（阶段 5.1），收益不固定、波动大。学界和业界对美国 ERP 的常见估计在 4%–6% 之间（阶段 5.4）。
 - **流动性溢价**：卖不掉、或者卖出要打大折扣的资产（私募股权、创业公司、冷门债券），投资者要额外补偿。
 
-<figure><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">必要回报的阶梯：每一种资产都站在无风险利率这块地板上（示意数字）</text><g font-size="10"><rect x="70" y="32" width="12" height="10" fill="var(--blue)"/><text x="86" y="41" fill="var(--muted)">无风险利率</text><rect x="160" y="32" width="12" height="10" fill="var(--green)"/><text x="176" y="41" fill="var(--muted)">期限溢价</text><rect x="240" y="32" width="12" height="10" fill="var(--orange)"/><text x="256" y="41" fill="var(--muted)">信用溢价</text><rect x="320" y="32" width="12" height="10" fill="var(--red)"/><text x="336" y="41" fill="var(--muted)">股权风险溢价</text><rect x="425" y="32" width="12" height="10" fill="var(--muted)"/><text x="441" y="41" fill="var(--muted)">流动性 / 额外风险</text></g><line x1="50" y1="215" x2="620" y2="215" stroke="var(--line)" stroke-width="1.5"/><line x1="50" y1="183" x2="620" y2="183" stroke="var(--blue)" stroke-width="1" stroke-dasharray="4 3"/><text x="618" y="178" text-anchor="end" font-size="10" fill="var(--blue)">地板：无风险利率 4%</text><rect x="70" y="183" width="60" height="32" fill="var(--blue)"/><text x="100" y="176" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">4%</text><rect x="165" y="183" width="60" height="32" fill="var(--blue)"/><rect x="165" y="179" width="60" height="4" fill="var(--green)"/><text x="195" y="172" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">4.5%</text><rect x="260" y="183" width="60" height="32" fill="var(--blue)"/><rect x="260" y="179" width="60" height="4" fill="var(--green)"/><rect x="260" y="169.4" width="60" height="9.6" fill="var(--orange)"/><text x="290" y="162" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">5.7%</text><rect x="355" y="183" width="60" height="32" fill="var(--blue)"/><rect x="355" y="179" width="60" height="4" fill="var(--green)"/><rect x="355" y="151" width="60" height="28" fill="var(--orange)"/><text x="385" y="144" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">8%</text><rect x="450" y="183" width="60" height="32" fill="var(--blue)"/><rect x="450" y="143" width="60" height="40" fill="var(--red)"/><text x="480" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">9%</text><rect x="545" y="183" width="60" height="32" fill="var(--blue)"/><rect x="545" y="119" width="60" height="64" fill="var(--red)"/><rect x="545" y="55" width="60" height="64" fill="var(--muted)" opacity=".7"/><text x="575" y="50" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">20%</text><g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="100" y="230">3 个月国库券</text><text x="195" y="230">10 年期国债</text><text x="290" y="230">投资级公司债</text><text x="385" y="230">高收益债</text><text x="480" y="230">股票</text><text x="575" y="230">创业公司</text></g><text x="320" y="256" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">地板上移 1 个百分点，整排柱子一起上移——所有资产的折现率同时变化</text></svg><figcaption>各资产的必要回报 = 同一块无风险地板 + 各自的风险砖。数字仅为示意，实际水平随市场变化。</figcaption></figure>
+<figure><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">必要回报的阶梯：每一种资产都站在无风险利率这块地板上（示意数字）</text><g font-size="10"><rect x="70" y="32" width="12" height="10" fill="var(--blue)"/><text x="86" y="41" fill="var(--muted)">无风险利率</text><rect x="160" y="32" width="12" height="10" fill="var(--green)"/><text x="176" y="41" fill="var(--muted)">期限溢价</text><rect x="240" y="32" width="12" height="10" fill="var(--orange)"/><text x="256" y="41" fill="var(--muted)">信用溢价</text><rect x="320" y="32" width="12" height="10" fill="var(--red)"/><text x="336" y="41" fill="var(--muted)">股权风险溢价</text><rect x="425" y="32" width="12" height="10" fill="var(--muted)"/><text x="441" y="41" fill="var(--muted)">流动性 / 额外风险</text></g><line x1="50" y1="215" x2="620" y2="215" stroke="var(--line)" stroke-width="1.5"/><line x1="50" y1="183" x2="620" y2="183" stroke="var(--blue)" stroke-width="1" stroke-dasharray="4 3"/><text x="618" y="178" text-anchor="end" font-size="10" fill="var(--blue)">地板：无风险利率 4%</text><rect x="70" y="183" width="60" height="32" fill="var(--blue)"/><text x="100" y="176" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">4%</text><rect x="165" y="183" width="60" height="32" fill="var(--blue)"/><rect x="165" y="179" width="60" height="4" fill="var(--green)"/><text x="195" y="172" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">4.5%</text><rect x="260" y="183" width="60" height="32" fill="var(--blue)"/><rect x="260" y="179" width="60" height="4" fill="var(--green)"/><rect x="260" y="169.4" width="60" height="9.6" fill="var(--orange)"/><text x="290" y="162" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">5.7%</text><rect x="355" y="183" width="60" height="32" fill="var(--blue)"/><rect x="355" y="179" width="60" height="4" fill="var(--green)"/><rect x="355" y="151" width="60" height="28" fill="var(--orange)"/><text x="385" y="144" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">8%</text><rect x="450" y="183" width="60" height="32" fill="var(--blue)"/><rect x="450" y="143" width="60" height="40" fill="var(--red)"/><text x="480" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">9%</text><rect x="545" y="183" width="60" height="32" fill="var(--blue)"/><rect x="545" y="119" width="60" height="64" fill="var(--red)"/><rect x="545" y="55" width="60" height="64" fill="var(--muted)" opacity=".7"/><text x="575" y="50" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">20%</text><g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="100" y="230">3 个月国库券</text><text x="195" y="230">10 年期国债</text><text x="290" y="230">投资级公司债</text><text x="385" y="230">高收益债</text><text x="480" y="230">股票</text><text x="575" y="230">创业公司</text></g><text x="320" y="256" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">地板上移 1 个百分点，整排柱子一起上移——所有资产的折现率同时变化</text></svg><figcaption>各资产的必要回报，都是同一块无风险地板加上各自的风险砖。数字仅为示意，实际水平随市场变化。</figcaption></figure>
 
-把阶梯变成价格：假设每项资产每年都付你 10 美元、永续（阶段 2.3 的永续年金），价值 = 10 ÷ 必要回报：
+把阶梯变成价格：假设每项资产每年都付你 10 美元、永续（阶段 2.3 的永续年金），\\(\\text{价值} = \\dfrac{10}{\\text{必要回报}}\\)：
 
-<table class="pm"><tr><th>必要回报</th><th>4.5%</th><th>5.7%</th><th>8%</th><th>9%</th><th>20%</th></tr><tr><td>价值（10 ÷ r）</td><td>222.2</td><td>175.4</td><td>125.0</td><td>111.1</td><td>50.0</td></tr><tr><td>无风险利率 +1% 后</td><td>181.8</td><td>149.3</td><td>111.1</td><td>100.0</td><td>47.6</td></tr><tr><td>变化</td><td>−18.2%</td><td>−14.9%</td><td>−11.1%</td><td>−10.0%</td><td>−4.8%</td></tr></table>
+<table class="pm"><tr><th>必要回报</th><th>4.5%</th><th>5.7%</th><th>8%</th><th>9%</th><th>20%</th></tr><tr><td>价值（\\(\\dfrac{10}{r}\\)）</td><td>222.2</td><td>175.4</td><td>125.0</td><td>111.1</td><td>50.0</td></tr><tr><td>无风险利率 +1% 后</td><td>181.8</td><td>149.3</td><td>111.1</td><td>100.0</td><td>47.6</td></tr><tr><td>变化</td><td>−18.2%</td><td>−14.9%</td><td>−11.1%</td><td>−10.0%</td><td>−4.8%</td></tr></table>
 
-同样的 10 美元，风险越高，今天越不值钱——这就是“风险的价格”。表格还揭示了一个细节：**必要回报本来就低的资产，对无风险利率的变动最敏感**（按百分比算）。现实里还要叠加阶段 2.3 的增长效应：高增长股票的 r − g 很小，同样对利率极其敏感。
+同样的 10 美元，风险越高，今天越不值钱——这就是“风险的价格”。表格还揭示了一个细节：**必要回报本来就低的资产，对无风险利率的变动最敏感**（按百分比算）。现实里还要叠加阶段 2.3 的增长效应：高增长股票的 \\(r - g\\) 很小，同样对利率极其敏感。
 
-学院派把“风险溢价”写得更精确：威廉·夏普 1964 年的**资本资产定价模型（CAPM）**说，一只股票的必要回报 = 无风险利率 + β × 市场风险溢价，其中 β 衡量它与整体市场一起波动的程度。只有**分散不掉的风险**才有溢价——阶段 11.1 讲分散化时会回到这一点。
+学院派把“风险溢价”写得更精确：威廉·夏普 1964 年的**资本资产定价模型（CAPM）**说，一只股票的必要回报为 \\(\\text{无风险利率} + \\beta \\times \\text{市场风险溢价}\\)，其中 \\(\\beta\\) 衡量它与整体市场一起波动的程度。只有**分散不掉的风险**才有溢价——阶段 11.1 讲分散化时会回到这一点。
 
 ### ③ 为什么国债是全球定价之锚
 
 国债收益率之所以是“锚”，不只是因为它无风险，还因为全世界的报价都**直接写成“国债 + 利差”**：
 
-- **公司债**：报价常写成“比同期限国债高 120 个基点”（1 个基点 = 0.01%）。国债收益率上升而利差不变，公司的借钱成本就同步上升。
+- **公司债**：报价常写成“比同期限国债高 120 个基点”（\\(1\\ \\text{个基点} = 0.01\\%\\)）。国债收益率上升而利差不变，公司的借钱成本就同步上升。
 - **房贷**：美国 30 年固定房贷利率大致跟着 10 年期国债走，再加一段利差。
 - **股票**：分析师用无风险利率 + 股权风险溢价作折现率（阶段 5.3）；一种常见的粗略比较是拿股票的盈利收益率（市盈率的倒数）对照 10 年期国债收益率。
 - **外国资产**：其他国家的利率、汇率、新兴市场的美元债，都受美国国债收益率牵引（阶段 3.4）。
@@ -113,9 +114,9 @@ $$
 - **稳定币**：主流美元稳定币的储备主要是短期国债和国债回购。持有人一般拿不到利息，**无风险利率的收益归发行方**——这是稳定币发行商商业模式的核心；2025 年通过的美国 GENIUS 法案也不允许支付型稳定币发行方直接向持有人付息（阶段 13.2）。结果是：稳定币发行商成了短期国债的重要买家，把链上的美元需求接回了国债市场。
 - **代币化国债基金**：把国库券基金份额放到区块链上，让链上资金也能直接拿到无风险利率（阶段 14.2）。它成了 DeFi 收益的新基准：**一个 DeFi 协议给的收益如果不比链上国债高出足够多，就不值得承担它的合约风险**（阶段 13.5）。
 - **比特币**：不付息，所以它的“门槛回报”就是无风险利率——持有比特币的机会成本是放弃的国债利息。无风险利率越高，持有不生息资产越“贵”；这也是为什么利率周期会影响比特币（阶段 12.4）。
-- **DAT 优先股**：一家数字资产财库公司发行股息率约 10% 的优先股（橙子公司的 Orange-F 就是 10%），投资者会怎么判断它？答案就是本节的阶梯：**10% − 国债收益率 = 市场要求的风险溢价**。这笔溢价要补偿信用风险（背后资产是高波动的比特币）、次级地位（优先股排在债务之后）、永续期限和流动性。国债收益率上升，同样的 10% 就显得不那么诱人，优先股价格承压——阶段 18.1 会把这套框架做完整，阶段 20.1 会把“30 年期国债 → 比特币 → DAT 优先股”连成一条线。本课只讲机制与分析框架，不构成投资建议。
+- **DAT 优先股**：一家数字资产财库公司发行股息率约 10% 的优先股（橙子公司的 Orange-F 就是 10%），投资者会怎么判断它？答案就是本节的阶梯：**\\(10\\% - \\text{国债收益率} = \\text{市场要求的风险溢价}\\)**。这笔溢价要补偿信用风险（背后资产是高波动的比特币）、次级地位（优先股排在债务之后）、永续期限和流动性。国债收益率上升，同样的 10% 就显得不那么诱人，优先股价格承压——阶段 18.1 会把这套框架做完整，阶段 20.1 会把“30 年期国债 → 比特币 → DAT 优先股”连成一条线。本课只讲机制与分析框架，不构成投资建议。
 
-一句话：**国债收益率是时间的纯价格，风险溢价是风险的价格；任何资产的折现率 = 两者之和**。看懂地板在哪、砖有几层，你就能读懂几乎任何一个“收益率”。
+一句话：**国债收益率是时间的纯价格，风险溢价是风险的价格；任何资产的折现率就是两者之和**。看懂地板在哪、砖有几层，你就能读懂几乎任何一个“收益率”。
 `,
 
   demo: "risk-free-rate",
@@ -156,7 +157,7 @@ $$
       q: "无风险利率 4%，某股票的股权风险溢价 5%。按叠加法，它的必要回报约是多少？如果无风险利率升到 5% 呢？",
       options: ["5%；5%", "9%；9%", "9%；10%", "20%；25%"],
       answer: 2,
-      explain: "**必要回报 = 无风险利率 + 风险溢价**：4% + 5% = 9%；地板抬高 1 个百分点，必要回报变成 10%。这就是国债利率牵动所有资产折现率的原因。",
+      explain: "**\\(\\text{必要回报} = \\text{无风险利率} + \\text{风险溢价}\\)**：\\(4\\% + 5\\% = 9\\%\\)；地板抬高 1 个百分点，必要回报变成 10%。这就是国债利率牵动所有资产折现率的原因。",
     },
     {
       q: "下面哪一项不是持有美国长期国债的风险？",
@@ -178,7 +179,7 @@ $$
         "美联储给优先股的补贴",
       ],
       answer: 0,
-      explain: "**收益率 − 无风险利率 = 风险溢价**。10% 并不是“更高收益的国债”，而是为一组具体风险开出的价格。阶段 18.1 会逐项拆解。",
+      explain: "**\\(\\text{收益率} - \\text{无风险利率} = \\text{风险溢价}\\)**。10% 并不是“更高收益的国债”，而是为一组具体风险开出的价格。阶段 18.1 会逐项拆解。",
     },
     {
       q: "稳定币发行方把储备放在短期国债里，这笔国债利息通常归谁？",

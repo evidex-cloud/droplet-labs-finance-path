@@ -52,7 +52,7 @@ It is also worth being precise about how this product differs from a stablecoin:
 <tr><td>Holder's return</td><td>Zero (interest is prohibited)</td><td>T-bill yield minus fees</td></tr>
 <tr><td>Who can hold it</td><td>Nearly anyone</td><td>Usually only approved qualified investors or institutions</td></tr>
 <tr><td>Main use</td><td>Payments, trade settlement</td><td>Parking cash, collateral, reserves</td></tr>
-<tr><td>Assets behind it</td><td>Cash, T-bills of 93 days or less, repo</td><td>T-bills, Treasury repo, cash</td></tr>
+<tr><td>Assets behind it</td><td>Cash, T-bills of \\(\\le 93\\) days, repo</td><td>T-bills, Treasury repo, cash</td></tr>
 </table>
 
 **The assets are almost identical. The differences are who keeps the interest and who is allowed to hold the token.** A stablecoin is the on-chain checking account; a tokenized Treasury fund is the on-chain money-fund account.
@@ -97,9 +97,9 @@ Stage 8.3 showed that repo markets and margin systems are really **collateral ch
 Crypto markets trade 24/7, and margin calls arrive 24/7. Institutions used to have two options: **post stablecoins as margin** (always available, no yield) or **keep Treasuries in a traditional account** (yield, but frozen at weekends). Tokenized Treasuries offer a third: **yield and 24/7 mobility at once**.
 
 Run the numbers. An institution has $50 million and needs $20 million of margin at an exchange.
-- Post stablecoins: the $20 million earns nothing; the other $30 million sits in a Treasury fund earning about 4%, so annual interest is about $1.2 million.
-- Post tokenized Treasuries: suppose the exchange applies a 2% haircut, so the firm must post about $20.41 million of tokens. But those tokens keep accruing interest, so all $50 million earns about 4%, roughly $2 million a year.
-- **The difference, about $800,000 a year, is exactly $20 million of margin × 4%.** The collateral is no longer dead money.
+- Post stablecoins: the $20 million earns nothing; the other $30 million sits in a Treasury fund earning about 4%, so annual interest is about \\(\\$30\\text{M} \\times 4\\% = \\$1.2\\text{M}\\).
+- Post tokenized Treasuries: suppose the exchange applies a 2% haircut, so the firm must post about \\(\\dfrac{\\$20\\text{M}}{1 - 2\\%} \\approx \\$20.41\\text{M}\\) of tokens. But those tokens keep accruing interest, so all $50 million earns about 4%, roughly \\(\\$50\\text{M} \\times 4\\% = \\$2\\text{M}\\) a year.
+- **The difference, about $800,000 a year, is exactly \\(\\$20\\text{M}\\ \\text{of margin} \\times 4\\%\\).** The collateral is no longer dead money.
 
 The haircut exists because a tokenized Treasury's price is not perfectly fixed (rate risk is small but real) and redemption takes time, so the party accepting it wants a cushion. **The smaller the haircut and the more venues that accept the token, the more valuable it is as collateral.** That is why Binance accepting BUIDL as off-exchange collateral in November 2025 was big news: it turned a fund into a kind of on-chain margin currency.
 
@@ -142,13 +142,13 @@ The limits come from the same picture. The garage is open 24 hours, but the egg-
       q: "A DAO keeps $10 million of spare cash in stablecoins. With short-term Treasuries yielding about 4.24% and a tokenized Treasury fund charging 0.15% a year, roughly how much more interest would it earn in a year by holding the fund instead?",
       options: ["About $424,000", "About $15,000", "About $409,000", "Nothing, because stablecoins pay interest too"],
       answer: 2,
-      explain: "**$10M × (4.24% − 0.15%) ≈ $409,000.** Stablecoin holders earn zero (the GENIUS Act bans interest), so the gap equals the fund's net yield. Before fees it would be about $424,000.",
+      explain: "**\\(\\$10\\text{M} \\times (4.24\\% - 0.15\\%) \\approx \\$409{,}000\\).** Stablecoin holders earn zero (the GENIUS Act bans interest), so the gap equals the fund's net yield. Before fees it would be about $424,000.",
     },
     {
       q: "An institution has $50 million and must post $20 million of margin at an exchange. Compared with posting stablecoins, how much more does it earn per year by posting tokenized Treasuries yielding about 4%?",
       options: ["About $2 million", "About $800,000", "About $1.2 million", "About $40,000"],
       answer: 1,
-      explain: "Posted stablecoins earn nothing; posted tokenized Treasuries keep accruing. The gap is roughly **$20M × 4% = $800,000 a year.** The haircut changes how many tokens must be posted, not the fact that those tokens keep earning.",
+      explain: "Posted stablecoins earn nothing; posted tokenized Treasuries keep accruing. The gap is roughly **\\(\\$20\\text{M} \\times 4\\% = \\$800{,}000\\) a year.** The haircut changes how many tokens must be posted, not the fact that those tokens keep earning.",
     },
     {
       q: "Why is there a liquidity mismatch inside a tokenized Treasury fund?",
@@ -160,7 +160,7 @@ The limits come from the same picture. The garage is open 24 hours, but the egg-
       q: "A 3-month T-bill has a modified duration of about 0.25. If yields jump by one percentage point, roughly how much does the NAV of a fund holding such bills change?",
       options: ["About −0.25%", "About −15.5%", "About −2.5%", "About +1%"],
       answer: 0,
-      explain: "Price change ≈ −modified duration × change in yield = −0.25 × 1% ≈ **−0.25%** (Stage 4.4). That is why short bills make good collateral. The 30-year, with a modified duration of about 15.5, would fall about 14% on the same shock.",
+      explain: "\\(\\text{price change} \\approx -\\text{modified duration} \\times \\text{change in yield} = -0.25 \\times 1\\% \\approx\\) **\\(-0.25\\%\\)** (Stage 4.4). That is why short bills make good collateral. The 30-year, with a modified duration of about 15.5, would fall about 14% on the same shock.",
     },
     {
       q: "Which explanation best fits the fact that most of Circle's USYC balance in 2026 sat on BNB Chain?",

@@ -1,7 +1,7 @@
 // 交互演示：反身性飞轮模拟器——以橙子公司为例，比特币走一条可复现的随机路径；
 // 公司在 mNAV > 1 时发股买币（issueAndBuy），“叙事热度”由每股比特币增长与币价涨跌驱动，并反过来推动 mNAV。
 // 把反身性强度调到 0 对照：同一条比特币路径，有无反身性，股价与每股比特币的轨迹差多少。
-import { issueAndBuy, rng, randn, clamp, fmtPct, fmtNum } from "./_fin.js";
+import { issueAndBuy, rng, randn, clamp, fmtPct, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -37,7 +37,7 @@ export default function mount(root, lang) {
       <div id="brx-c1"></div>
       <div id="brx-c2"></div>
       <div class="demo-log" id="brx-log"></div>
-      <div class="demo-meta">${T("示意模型：每季 mNAV = 上季 mNAV + 0.15 ×（1 − 上季 mNAV）+ 0.6 × 反身性强度 × 叙事热度；叙事热度是“4 × 每股比特币增长 + 币价涨跌”的指数平滑。起点为橙子公司：10,000 BTC、1 亿股。不是预测，也不构成投资建议。", "Stylized model: each quarter mNAV = last mNAV + 0.15 × (1 − last mNAV) + 0.6 × reflexivity × narrative heat; narrative heat is an exponential average of “4 × BTC-per-share growth + bitcoin's return.” Starts from Orange Corp: 10,000 BTC, 100 million shares. Not a forecast and not investment advice.")}</div>
+      <div class="demo-meta">${T(`示意模型：每季${tex(String.raw`\mathrm{mNAV}_{\text{本季}} = \mathrm{mNAV}_{\text{上季}} + 0.15 \times (1 - \mathrm{mNAV}_{\text{上季}}) + 0.6 \times \text{反身性强度} \times \text{叙事热度}`, true)}叙事热度是“${tex(String.raw`4 \times \text{每股比特币增长} + \text{币价涨跌}`)}”的指数平滑。起点为橙子公司：10,000 BTC、1 亿股。不是预测，也不构成投资建议。`, `Stylized model: each quarter${tex(String.raw`\mathrm{mNAV}_{\text{now}} = \mathrm{mNAV}_{\text{last}} + 0.15 \times (1 - \mathrm{mNAV}_{\text{last}}) + 0.6 \times \text{reflexivity} \times \text{narrative heat}`, true)}Narrative heat is an exponential average of “${tex(String.raw`4 \times \text{BTC-per-share growth} + \text{bitcoin's return}`)}.” Starts from Orange Corp: 10,000 BTC, 100 million shares. Not a forecast and not investment advice.`)}</div>
       <p class="demo-tip">${T(
         "先把反身性强度拉到 0：mNAV 会慢慢回到 1，飞轮只靠起始溢价转几圈。再拉到 1.2 左右，比特币路径完全不变，但股价的涨跌被明显放大，mNAV 在上涨段冲高、在下跌段跌破 1——这就是“价格改变基本面”。最后打开“卖币回购”，看 mNAV 低于 1 时回购如何反过来提高每股比特币。",
         "First set reflexivity to 0: mNAV drifts back toward 1 and the flywheel only turns a few times on the starting premium. Then raise it to about 1.2: the bitcoin path is identical, yet the share price swings far more, mNAV spikes in the rallies and falls below 1 in the slumps — price changing fundamentals. Finally switch on “sell BTC, buy back stock” and see how buybacks below mNAV 1 raise BTC per share instead."
@@ -89,7 +89,7 @@ export default function mount(root, lang) {
 
     const step = (key) => (x) => R.rows[Math.min(Q, Math.round(x))][key];
     const c1 = lineChart({ fns: [{ f: step("m"), cls: "line5" }, { f: step("bps"), cls: "line4" }, { f: () => 1, cls: "line2" }], lo: 0, hi: Q, xlabel: T("季度", "quarter"), uid: "brx1", samples: Q * 2 });
-    q("#brx-c1").innerHTML = chartBlock(c1, [["var(--btc)", "mNAV"], ["var(--green)", T("每股比特币（起点 = 1）", "BTC per share (start = 1)")], ["var(--blue)", T("mNAV = 1 基准线", "mNAV = 1 reference")]]);
+    q("#brx-c1").innerHTML = chartBlock(c1, [["var(--btc)", "mNAV"], ["var(--green)", T("每股比特币（起点 = 1）", "BTC per share (start = 1)")], ["var(--blue)", T(`${tex(String.raw`\mathrm{mNAV} = 1`)} 基准线`, `${tex(String.raw`\mathrm{mNAV} = 1`)} reference`)]]);
     const c2 = lineChart({ fns: [{ f: step("btc"), cls: "line2" }, { f: step("eq"), cls: "line" }], lo: 0, hi: Q, xlabel: T("季度", "quarter"), uid: "brx2", forceZero: true, samples: Q * 2 });
     q("#brx-c2").innerHTML = chartBlock(c2, [["var(--blue)", T("比特币价格（起点 = 1）", "Bitcoin price (start = 1)")], ["var(--orange)", T("股价（起点 = 1）", "Share price (start = 1)")]]);
 
@@ -102,7 +102,7 @@ export default function mount(root, lang) {
     else lines.push(`<span class="ok">${T("在这条路径上，mNAV 始终没有跌破 1。换几条路径或降低比特币趋势试试。", "On this path mNAV never fell below 1. Try other paths or a weaker bitcoin trend.")}</span>`);
     const amp = Math.abs(last.btc - 1) > 0.01 ? (last.eq - 1) / (last.btc - 1) : NaN;
     if (isFinite(amp) && amp < 0) lines.push(T("股价与比特币朝相反方向走：溢价与每股比特币的变化压过了币价本身。", "The share price and bitcoin moved in opposite directions: changes in the premium and in BTC per share outweighed the coin price itself."));
-    else if (isFinite(amp)) lines.push(T(`股价涨跌 ÷ 比特币涨跌 ≈ ${fmtNum(amp, 2)}：溢价的变化本身是一层额外的“杠杆”。`, `Share-price move ÷ bitcoin move ≈ ${fmtNum(amp, 2)}: changes in the premium act as an extra layer of “leverage.”`));
+    else if (isFinite(amp)) lines.push(T(`${tex(String.raw`\dfrac{\text{股价涨跌}}{\text{比特币涨跌}} \approx ${fmtNum(amp, 2)}`)}：溢价的变化本身是一层额外的“杠杆”。`, `${tex(String.raw`\dfrac{\text{share-price move}}{\text{bitcoin move}} \approx ${fmtNum(amp, 2)}`)}: changes in the premium act as an extra layer of “leverage.”`));
     q("#brx-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   }
 

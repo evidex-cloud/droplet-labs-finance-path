@@ -1,6 +1,6 @@
 // 交互演示：剩余索取权沙盘——拖动资产价值与负债，看债主与股东各拿多少；
 // 切换到“橙子公司”，同一张收益图换成比特币资产与三层优先索取权。
-import { waterfall, amplification, fmtPct, fmtNum, fmtUsd, clamp } from "./_fin.js";
+import { waterfall, amplification, fmtPct, fmtNum, fmtUsd, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -40,7 +40,7 @@ export default function mount(root, lang) {
         </div>
       </div>
       <div class="demo-block">
-        <div class="demo-label">${T("收益图：横轴 = 资产价值，紫线 = 优先索取人合计，蓝线 = 普通股", "Payoff chart: x = asset value, violet = senior claimants combined, blue = common stock")}</div>
+        <div class="demo-label">${T("收益图：横轴为资产价值，紫线为优先索取人合计，蓝线为普通股", "Payoff chart: the x-axis is asset value; violet is senior claimants combined, blue is common stock")}</div>
         <div id="ws-chart"></div>
       </div>
       <div class="demo-block"><div class="demo-log" id="ws-log"></div></div>
@@ -57,9 +57,9 @@ export default function mount(root, lang) {
       ctl.innerHTML = `
         <label class="demo-label">${T("负债（银行贷款，百万元）", "Debt (bank loan, $M)")}${T("：", ": ")}<b id="ws-dv">${st.debt}</b></label>
         <input class="demo-slider" type="range" min="0" max="9.5" step="0.5" value="${st.debt}" id="ws-debt" />
-        <label class="demo-label">${T("资产最终价值（百万元，开店时 = 10）", "Final asset value ($M, 10 at start)")}${T("：", ": ")}<b id="ws-av">${st.assets}</b></label>
+        <label class="demo-label">${T("资产最终价值（百万元，开店时为 10）", "Final asset value ($M, 10 at start)")}${T("：", ": ")}<b id="ws-av">${st.assets}</b></label>
         <input class="demo-slider" type="range" min="0" max="20" step="0.25" value="${st.assets}" id="ws-assets" />
-        <div class="demo-meta">${T("股数：100 万股。开店时资产 10、股东投入 = 10 − 负债。", "Shares: 1 million. At start: assets 10, owners' stake = 10 − debt.")}</div>`;
+        <div class="demo-meta">${T("股数：100 万股。开店时资产 10，", "Shares: 1 million. At start: assets 10, ")}${tex(String.raw`\text{${T("股东投入", "owners' stake")}} = 10 - \text{${T("负债", "debt")}}`)}${T("。", ".")}</div>`;
       ctl.querySelector("#ws-debt").addEventListener("input", (e) => { st.debt = +e.target.value; paint(); });
       ctl.querySelector("#ws-assets").addEventListener("input", (e) => { st.assets = +e.target.value; paint(); });
     } else {
@@ -116,6 +116,8 @@ export default function mount(root, lang) {
     root.querySelector("#ws-chart").innerHTML = chartBlock(res, [["var(--blue)", T("优先索取人（封顶）", "Senior claimants (capped)")], ["var(--orange)", T("普通股（剩余，下限为 0）", "Common (residual, floor at 0)")]]);
 
     const lines = [];
+    const tn = (x) => money(x).replace(/,/g, "{,}");
+    lines.push(tex(String.raw`\text{${T("股东剩余", "Equity residual")}} = \max(\text{${T("资产", "assets")}} - \text{${T("优先索取权", "senior claims")}},\ 0) = \max(${tn(m.V)} - ${tn(senior)},\ 0) = ${tn(E)}`));
     const dA = m.V / m.V0 - 1;
     if (E0 > 0) {
       const dE = E / E0 - 1;

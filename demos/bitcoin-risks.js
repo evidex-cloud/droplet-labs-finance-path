@@ -2,8 +2,10 @@
 // 选一个年份（决定区块补贴）、设一个币价路径（2026 年 9 月约 8.4 万美元起的年化涨跌）和每块平均手续费，
 // 算出全网年安全预算（美元）、占市值比例、手续费占矿工收入的比例，
 // 以及一个粗略的“追上 6 个区块所需的算力成本”代理指标；再算出：要维持 2026 年的美元预算，每块需要多少手续费。
-import { fv, fmtUsd, fmtPct, fmtNum, fmtBig } from "./_fin.js";
+import { fv, fmtUsd, fmtPct, fmtNum, fmtBig, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 → {,}，% → \%，末尾的 K/M/B/T 单位 → \text{…}
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%").replace(/([KMBT])$/, "\\text{$1}");
 
 const BLOCKS_PER_YEAR = 52560;
 const BASE_YEAR = 2026.73, BASE_PX = 84000;
@@ -45,7 +47,7 @@ export default function mount(root, lang) {
         <div class="stat"><div class="k">${T("当年区块补贴", "Block subsidy that year")}</div><div class="v" id="br-sub">–</div></div>
         <div class="stat"><div class="k">${T("假设币价", "Assumed price")}</div><div class="v" id="br-px">–</div></div>
         <div class="stat"><div class="k">${T("年安全预算", "Annual security budget")}</div><div class="v acc" id="br-bud">–</div></div>
-        <div class="stat"><div class="k">${T("预算 ÷ 总市值", "Budget ÷ market value")}</div><div class="v" id="br-pct">–</div></div>
+        <div class="stat"><div class="k">${T(tex(String.raw`\text{预算} \div \text{总市值}`), tex(String.raw`\text{budget} \div \text{market value}`))}</div><div class="v" id="br-pct">–</div></div>
       </div>
       <div class="stat-row">
         <div class="stat"><div class="k">${T("手续费占矿工收入", "Fees as share of miner revenue")}</div><div class="v" id="br-feeshare">–</div></div>
@@ -55,8 +57,8 @@ export default function mount(root, lang) {
       <div id="br-chart"></div>
       <div class="demo-log" id="br-log"></div>
       <p class="demo-tip">${T(
-        "先只拖年份：在币价不变、手续费很低时，每过一次减半，年安全预算就腰斩，“预算 ÷ 市值”也跟着腰斩——注意这个比例几乎不随币价变化。再把币价年化涨幅调到 +19% 左右（约每 4 年翻一番）：美元预算大致保住了，但占市值的比例照样下降。最后拖手续费：看看要把比例拉回 2026 年的水平，每个区块需要多少 BTC 的手续费——这就是“手续费市场必须接班”的含义。",
-        "Start by moving only the year: with a flat price and low fees, every halving cuts the annual security budget in half, and budget ÷ market value halves too — notice that this ratio barely responds to the price. Now set annual price growth to about +19% (roughly doubling every four years): the dollar budget roughly holds, but the share of market value still falls. Finally drag the fee slider and see how many BTC of fees per block it takes to restore the 2026 ratio — that is what “the fee market has to take over” means."
+        `先只拖年份：在币价不变、手续费很低时，每过一次减半，年安全预算就腰斩，${tex(String.raw`\text{预算} \div \text{市值}`)} 也跟着腰斩——注意这个比例几乎不随币价变化。再把币价年化涨幅调到 +19% 左右（约每 4 年翻一番）：美元预算大致保住了，但占市值的比例照样下降。最后拖手续费：看看要把比例拉回 2026 年的水平，每个区块需要多少 BTC 的手续费——这就是“手续费市场必须接班”的含义。`,
+        `Start by moving only the year: with a flat price and low fees, every halving cuts the annual security budget in half, and ${tex(String.raw`\text{budget} \div \text{market value}`)} halves too — notice that this ratio barely responds to the price. Now set annual price growth to about +19% (roughly doubling every four years): the dollar budget roughly holds, but the share of market value still falls. Finally drag the fee slider and see how many BTC of fees per block it takes to restore the 2026 ratio — that is what “the fee market has to take over” means.`
       )}</p>
     </div>`;
 
@@ -97,7 +99,7 @@ export default function mount(root, lang) {
     $("br-chart").innerHTML = chartBlock(ch, [["var(--btc)", T("只有补贴", "Subsidy only")], ["var(--green)", T("补贴 + 你设的手续费", "Subsidy + your fee level")]]);
 
     const lines = [];
-    lines.push(`${T("年安全预算", "Annual security budget")} = (${fmtNum(sub, 4)} + ${fmtNum(st.fee, 2)}) BTC × 52,560 × ${fmtUsd(px)} ≈ <b>$${fmtBig(bud, 1)}</b>${T("，约为总市值的", ", about")} <b>${fmtPct(bud / cap, 2)}</b>${T("。", " of total market value.")}`);
+    lines.push(tex(String.raw`\text{${T("年安全预算", "Annual security budget")}} = (${fmtNum(sub, 4)} + ${fmtNum(st.fee, 2)})\ \text{BTC} \times 52{,}560 \times ${texv(fmtUsd(px))} \approx \mathbf{${texv("$" + fmtBig(bud, 1))}}`) + `${T("，约为总市值的", ", about")} <b>${fmtPct(bud / cap, 2)}</b>${T("。", " of total market value.")}`);
     lines.push(`${T("“6 个区块的矿工收入”只是一个非常粗略的代理：它假设攻击者的成本约等于诚实矿工同期的收入，忽略了购买专用矿机的巨额资本开支——实际攻击要难得多。", "“Miner revenue for 6 blocks” is only a very rough proxy: it assumes an attacker's cost roughly equals honest miners' revenue over the same period and ignores the huge capital cost of acquiring specialized machines — a real attack would be much harder.")}`);
     if (needFee > 1) lines.push(`<span class="bad">${T("要维持 2026 年 9 月的美元预算，每个区块需要约", "To keep the September 2026 dollar budget, each block would need about")} ${fmtNum(needFee, 2)} ${T("BTC 的手续费——远高于大多数平静时期的实际水平。", "BTC in fees — far above actual levels in most quiet periods.")}</span>`);
     else if (needFee > 0) lines.push(`<span class="warn">${T("维持 2026 年的美元预算需要每块约", "Keeping the 2026 dollar budget needs about")} ${fmtNum(needFee, 2)} ${T("BTC 手续费：币价上涨替补贴承担了一部分。", "BTC of fees per block: price growth is covering part of the subsidy's decline.")}</span>`);

@@ -14,7 +14,7 @@ Start with some mental arithmetic. You put $10,000 in cash in a drawer and take 
 
 That is **inflation**: a sustained rise in the general price level — which is the same thing as **a sustained fall in the purchasing power of money.** Note the words “general” and “sustained.” One item getting pricier (eggs, say, during a bird-flu outbreak) is not inflation. Prices jumping once and then holding steady isn't sustained inflation either.
 
-This lesson rests mainly on two of the course's ideas. **Idea ① — the price of time**: Stage 1.3 showed that part of the Fed's mandate is “stable prices,” defined as 2% inflation a year, and interest rates themselves contain compensation for inflation — Stage 2.5 develops the Fisher equation, “nominal rate − inflation ≈ real rate.” **Idea ④ — risk & leverage**: inflation is a risk that quietly rewrites the value of contracts. Someone who borrows at a fixed rate is, in effect, short the dollar.
+This lesson rests mainly on two of the course's ideas. **Idea ① — the price of time**: Stage 1.3 showed that part of the Fed's mandate is “stable prices,” defined as 2% inflation a year, and interest rates themselves contain compensation for inflation — Stage 2.5 develops the Fisher equation, “\\(\\text{nominal rate} - \\text{inflation} \\approx \\text{real rate}\\).” **Idea ④ — risk & leverage**: inflation is a risk that quietly rewrites the value of contracts. Someone who borrows at a fixed rate is, in effect, short the dollar.
 
 To really understand inflation, you have to answer three questions:
 
@@ -44,7 +44,7 @@ The US **Consumer Price Index (CPI)** is published monthly by the Bureau of Labo
 
 <figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Approximate weights in the CPI basket (rounded, recent years)</text><g font-size="11"><text x="150" y="52" text-anchor="end" fill="var(--ink)">Shelter (incl. owners' equiv. rent)</text><rect x="160" y="40" width="350" height="18" rx="4" fill="var(--orange)"/><text x="516" y="53" fill="var(--orange-ink)" font-weight="700">~35%</text><text x="150" y="80" text-anchor="end" fill="var(--ink)">Core goods (cars, clothes…)</text><rect x="160" y="68" width="190" height="18" rx="4" fill="var(--orange)" opacity=".75"/><text x="356" y="81" fill="var(--ink)">~19%</text><text x="150" y="108" text-anchor="end" fill="var(--ink)">Food</text><rect x="160" y="96" width="135" height="18" rx="4" fill="var(--green)" opacity=".8"/><text x="301" y="109" fill="var(--ink)">~13–14%</text><text x="150" y="136" text-anchor="end" fill="var(--ink)">Medical care services</text><rect x="160" y="124" width="68" height="18" rx="4" fill="var(--orange)" opacity=".55"/><text x="234" y="137" fill="var(--ink)">~7%</text><text x="150" y="164" text-anchor="end" fill="var(--ink)">Energy (gas, power, fuel)</text><rect x="160" y="152" width="65" height="18" rx="4" fill="var(--red)" opacity=".75"/><text x="231" y="165" fill="var(--ink)">~6–7%</text><text x="150" y="192" text-anchor="end" fill="var(--ink)">Transport services</text><rect x="160" y="180" width="62" height="18" rx="4" fill="var(--orange)" opacity=".55"/><text x="228" y="193" fill="var(--ink)">~6%</text><text x="150" y="220" text-anchor="end" fill="var(--ink)">Other services and goods</text><rect x="160" y="208" width="140" height="18" rx="4" fill="var(--orange)" opacity=".35"/><text x="306" y="221" fill="var(--ink)">remaining ~14%</text></g><line x1="160" y1="34" x2="160" y2="232" stroke="var(--line)"/><text x="320" y="256" text-anchor="middle" font-size="11" fill="var(--muted)">“Core” = excluding food (green) and energy (red); shelter alone is over a third</text><text x="320" y="276" text-anchor="middle" font-size="10" fill="var(--muted)">Weights are updated annually; see the BLS “Relative Importance” tables for exact figures</text></svg><figcaption>CPI is a weighted average of a basket of prices. Shelter carries the biggest weight, so when rents run hot, CPI is slow to come down.</figcaption></figure>
 
-A mini example makes the weighting concrete. Say the basket has just three parts — housing 40%, gasoline 10%, everything else 50%. Over a year, housing rises 5%, gasoline 20%, everything else 2%. CPI inflation = 0.4×5% + 0.1×20% + 0.5×2% = 2% + 2% + 1% = **5%**. Gasoline jumped the most, but it contributed exactly as much as housing — **the weights decide everything.**
+A mini example makes the weighting concrete. Say the basket has just three parts — housing 40%, gasoline 10%, everything else 50%. Over a year, housing rises 5%, gasoline 20%, everything else 2%. \\(\\text{CPI inflation} = 0.4 \\times 5\\% + 0.1 \\times 20\\% + 0.5 \\times 2\\% = 2\\% + 2\\% + 1\\% = \\mathbf{5\\%}\\). Gasoline jumped the most, but it contributed exactly as much as housing — **the weights decide everything.**
 
 CPI has some well-known limitations. It uses a fixed basket, while real people switch to chicken when beef gets expensive (substitution bias). Products change in quality — a $1,000 phone today is far better than one from ten years ago — so the BLS makes “quality adjustments,” a step that is often questioned. And **the owners' equivalent rent inside shelter is an estimate**: it asks homeowners what their home would rent for, rather than tracking house prices themselves, so a house-price boom shows up in CPI only slowly and indirectly.
 
@@ -71,11 +71,11 @@ Historical reference points: US headline CPI inflation peaked at **9.1%** year o
 Economics' first key is the **equation of exchange** (Irving Fisher, 1911):
 
 $$
-M × V = P × Y
-money supply × velocity = price level × real output
+M \\times V = P \\times Y
+\\text{money supply} \\times \\text{velocity} = \\text{price level} \\times \\text{real output}
 $$
 
-On its own it is an identity: money spent in a year (M×V) equals the nominal value of what was sold (P×Y). Add one assumption — that velocity V is fairly stable — and it becomes a theory: **if money grows faster than real output for long enough, prices must rise.** That is where Milton Friedman's famous line comes from: inflation is “always and everywhere a monetary phenomenon.”
+On its own it is an identity: money spent in a year (\\(M \\times V\\)) equals the nominal value of what was sold (\\(P \\times Y\\)). Add one assumption — that velocity \\(V\\) is fairly stable — and it becomes a theory: **if money grows faster than real output for long enough, prices must rise.** That is where Milton Friedman's famous line comes from: inflation is “always and everywhere a monetary phenomenon.”
 
 In practice, inflation's causes fall into three families that often stack on top of each other:
 
@@ -93,7 +93,7 @@ Inflation doesn't make everyone poorer together; it **redistributes wealth.** Th
 
 **Winners: fixed-rate borrowers.** Suppose 10 years ago you took out a $300,000, 30-year mortgage at 3%, with a monthly payment of about $1,265. Ten years in, about $228,000 of principal remains. If inflation averaged 5% over that decade, that $228,000 is worth only about $140,000 in the purchasing power of 10 years ago — **inflation paid off nearly 40% of your remaining debt for you,** while your wages (usually) rose with prices and your payment didn't change by a cent.
 
-**Losers: creditors and fixed-income holders.** Use the course's standard example: a $1,000 bond with a 5% coupon and 10 years to maturity. With 3% inflation, the real yield is about (1.05 ÷ 1.03) − 1 ≈ **1.9%**. If inflation rises to 6%, the real yield becomes about **−0.9%**: the $50 coupon each year doesn't even cover the lost purchasing power, and the $1,000 principal returned in 10 years is worth only about **$558** in today's money. That is also why bond prices fall when inflation picks up (Stage 4.2).
+**Losers: creditors and fixed-income holders.** Use the course's standard example: a $1,000 bond with a 5% coupon and 10 years to maturity. With 3% inflation, the real yield is about \\(\\dfrac{1.05}{1.03} - 1 \\approx \\mathbf{1.9\\%}\\). If inflation rises to 6%, the real yield becomes about **−0.9%**: the $50 coupon each year doesn't even cover the lost purchasing power, and the $1,000 principal returned in 10 years is worth only about **$558** in today's money. That is also why bond prices fall when inflation picks up (Stage 4.2).
 
 **Losers: cash savers and people without bargaining power.** Deposit rates often trail inflation; wage adjustments lag prices; fixed pensions not linked to inflation shrink in real terms year after year.
 
@@ -149,7 +149,7 @@ Some people get fed up with leaky balloons and swap them for **a solid stone** (
         "2%",
       ],
       answer: 1,
-      explain: "0.4×5% + 0.1×20% + 0.5×2% = **5%**. Gasoline rose the most, but with its small weight it contributed only as much as housing — **the weights decide everything.**",
+      explain: "\\(0.4 \\times 5\\% + 0.1 \\times 20\\% + 0.5 \\times 2\\% = \\mathbf{5\\%}\\). Gasoline rose the most, but with its small weight it contributed only as much as housing — **the weights decide everything.**",
     },
     {
       q: "Which measure defines the Fed's 2% inflation target?",
@@ -171,7 +171,7 @@ Some people get fed up with leaky balloons and swap them for **a solid stone** (
         "The real yield is about 5%",
       ],
       answer: 0,
-      explain: "(1.05 ÷ 1.06) − 1 ≈ −0.9%; 1,000 ÷ 1.06¹⁰ ≈ 558. **Fixed-income holders are inflation's classic losers**; Stage 2.5 covers real rates systematically.",
+      explain: "\\(\\dfrac{1.05}{1.06} - 1 \\approx -0.9\\%\\); \\(\\dfrac{1{,}000}{1.06^{10}} \\approx 558\\). **Fixed-income holders are inflation's classic losers**; Stage 2.5 covers real rates systematically.",
     },
     {
       q: "What does the Cantillon effect describe?",

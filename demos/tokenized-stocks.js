@@ -61,7 +61,7 @@ export default function mount(root, lang) {
             <input class="demo-slider" id="ts-dp" type="range" min="5000000" max="500000000" step="5000000" value="${g.depth}">
           </div>
           <div class="demo-block">
-            <label class="demo-label">${T("周末净成交（负 = 净卖出，按周五价计）", "Weekend net flow (negative = net selling, at Friday's price)")}${T("：", ": ")}<b id="ts-fl-v"></b></label>
+            <label class="demo-label">${T("周末净成交（负数为净卖出，按周五价计）", "Weekend net flow (negative means net selling, at Friday's price)")}${T("：", ": ")}<b id="ts-fl-v"></b></label>
             <input class="demo-slider" id="ts-fl" type="range" min="-20000000" max="20000000" step="250000" value="${g.flow}">
             <div class="demo-btns"><button class="demo-btn" id="ts-full">${T("算出“完全定价新闻”需要的成交额", "Find the flow that fully prices the news")}</button></div>
           </div>
@@ -133,7 +133,7 @@ export default function mount(root, lang) {
         { f: () => fair, cls: "line3" },
         { f: () => P0, cls: "line2" },
       ],
-      lo: -lim / 1e6, hi: lim / 1e6, xlabel: T("周末净成交（百万美元；负 = 卖出）", "Weekend net flow ($ millions; negative = selling)"),
+      lo: -lim / 1e6, hi: lim / 1e6, xlabel: T("周末净成交（百万美元；负数为卖出）", "Weekend net flow ($ millions; negative is selling)"),
       markerX: g.flow / 1e6, markerLabel: T("当前", "now"), uid: "ts",
     });
     $("#ts-chart").innerHTML = chartBlock(res, [

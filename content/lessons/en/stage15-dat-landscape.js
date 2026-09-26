@@ -136,7 +136,7 @@ In the rush, anyone who hung out a sign saying “we're digging for gold too” 
         "About 95%",
       ],
       answer: 2,
-      explain: "846,000 ÷ 1,272,886 ≈ **66%**. Number two, XXI, with 43,514 BTC, holds less than 6% of Strategy's total.",
+      explain: "\\(846{,}000 \\div 1{,}272{,}886 \\approx\\) **66%**. Number two, XXI, with 43,514 BTC, holds less than 6% of Strategy's total.",
     },
     {
       q: "On the same day Metaplanet showed mNAVs of 0.58x, 0.73x and 0.79x. What is the most likely reason?",

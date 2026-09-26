@@ -1,8 +1,11 @@
 // 交互演示：优先股计算器——永续优先股的价格 = 股息 ÷ 要求收益率。
 // 调无风险利率、信用利差、股息率，看价格、久期与利率冲击；并与 30 年期国债对照；
 // 下半部分切换“好年 / 紧张年 / 破产”，看债、优先股、普通股各自拿到什么。
-import { perpetuity, bondPrice, bondRisk, waterfall, fmtPct, fmtNum, fmtUsd , enPunct } from "./_fin.js";
+import { perpetuity, bondPrice, bondRisk, waterfall, fmtPct, fmtNum, fmtUsd , enPunct, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -13,7 +16,7 @@ export default function mount(root, lang) {
 
   root.innerHTML = `
     <div class="demo">
-      <div class="demo-head">${T("🧬 优先股计算器：固定股息 + 永续 = 超长久期", "🧬 Preferred calculator: fixed dividend + perpetual = very long duration")}</div>
+      <div class="demo-head">${T("🧬 优先股计算器：固定股息加上永续，就是超长久期", "🧬 Preferred calculator: a fixed dividend plus no maturity means very long duration")}</div>
       <div class="demo-block">
         <div class="demo-seg" id="ps-par">
           <button data-p="25" class="on">${T("面值 $25（传统零售）", "$25 par (classic retail)")}</button>
@@ -37,7 +40,7 @@ export default function mount(root, lang) {
       <div class="stat-row">
         <div class="stat"><div class="k">${T("要求收益率", "Required yield")}</div><div class="v acc" id="ps-y">–</div></div>
         <div class="stat"><div class="k">${T("理论价格", "Fair price")}</div><div class="v" id="ps-p">–</div></div>
-        <div class="stat"><div class="k">${T("修正久期 ≈ 1/y", "Mod. duration ≈ 1/y")}</div><div class="v" id="ps-d">–</div></div>
+        <div class="stat"><div class="k">${T("修正久期", "Mod. duration")} ${tex(String.raw`\approx 1/y`)}</div><div class="v" id="ps-d">–</div></div>
         <div class="stat"><div class="k">${T("收益率 +1 个百分点", "Yield +1 point")}</div><div class="v neg" id="ps-up">–</div></div>
         <div class="stat"><div class="k">${T("30 年期国债 +1 个百分点", "30y Treasury +1 point")}</div><div class="v neg" id="ps-tu">–</div></div>
       </div>
@@ -80,8 +83,8 @@ export default function mount(root, lang) {
       const w = waterfall(60, layers);
       const r = w.rows;
       cells = [
-        [T("高级债券", "Senior bonds"), `${T("拿回", "Recovers")} ${fmtNum(r[1].paid, 0)} / 25 = ${fmtPct(r[1].recovery, 0)}`, r[1].recovery >= 1 ? "ok" : "bad"],
-        [T("优先股", "Preferred"), `${T("拿回", "Recovers")} ${fmtNum(r[3].paid, 0)} / 10 = ${fmtPct(r[3].recovery, 0)} · ${T("排在全部债务之后", "behind all debt")}`, "bad"],
+        [T("高级债券", "Senior bonds"), `${T("拿回", "Recovers")} ${tex(String.raw`${texv(fmtNum(r[1].paid, 0))} / 25 = ${texv(fmtPct(r[1].recovery, 0))}`)}`, r[1].recovery >= 1 ? "ok" : "bad"],
+        [T("优先股", "Preferred"), `${T("拿回", "Recovers")} ${tex(String.raw`${texv(fmtNum(r[3].paid, 0))} / 10 = ${texv(fmtPct(r[3].recovery, 0))}`)} · ${T("排在全部债务之后", "behind all debt")}`, "bad"],
         [T("普通股", "Common"), `${T("剩余", "Residual")} ${fmtNum(w.equity, 0)}`, "bad"],
       ];
     }
@@ -115,9 +118,9 @@ export default function mount(root, lang) {
     ]);
 
     const lines = [];
-    lines.push(`${T("每年股息", "Annual dividend")} = ${fmtUsd(par, 0)} × ${fmtPct(c, 2)} = <b>${fmtUsd(D, 2)}</b>；${T("价格", "price")} = ${fmtUsd(D, 2)} ÷ ${fmtPct(y, 2)} = <b>${fmtUsd(P, 2)}</b>（${fmtPct(P / par, 1)} ${T("面值", "of par")}）`);
+    lines.push(`${tex(String.raw`\text{${T("每年股息", "Annual dividend")}} = ${texv(fmtUsd(par, 0))} \times ${texv(fmtPct(c, 2))} = \mathbf{${texv(fmtUsd(D, 2))}}`)}；${tex(String.raw`\text{${T("价格", "price")}} = \dfrac{${texv(fmtUsd(D, 2))}}{${texv(fmtPct(y, 2))}} = \mathbf{${texv(fmtUsd(P, 2))}}`)}（${fmtPct(P / par, 1)} ${T("面值", "of par")}）`);
     lines.push(`${T("利率 −1 个百分点：", "Yield −1 point: ")}${fmtUsd(Pdn, 2)}（+${fmtPct(Pdn / P - 1, 1)}）；${T("利率 +1 个百分点：", "yield +1 point: ")}${fmtUsd(Pup, 2)}（${fmtPct(Pup / P - 1, 1)}）。${T("涨得比跌得多——这是凸性。", "It gains more than it loses — that's convexity.")}`);
-    lines.push(`${T("对照：30 年期国债修正久期", "Benchmark: 30-year Treasury modified duration")} ≈ ${fmtNum(tb.modified, 1)}，${T("优先股", "preferred")} ≈ ${fmtNum(1 / y, 1)}。${1 / y > tb.modified ? `<span class="warn">${T("这张优先股比 30 年期国债还怕加息。", "This preferred is even more rate-sensitive than the 30-year Treasury.")}</span>` : `<span class="ok">${T("高收益率把久期压到了 30 年期国债以下——但代价是更大的信用风险。", "The high yield pulls duration below the 30-year's — at the cost of more credit risk.")}</span>`}`);
+    lines.push(`${T("对照：30 年期国债修正久期", "Benchmark: 30-year Treasury modified duration")} ${tex(String.raw`\approx ${fmtNum(tb.modified, 1)}`)}，${T("优先股", "preferred")} ${tex(String.raw`\approx 1/y \approx ${fmtNum(1 / y, 1)}`)}。${1 / y > tb.modified ? `<span class="warn">${T("这张优先股比 30 年期国债还怕加息。", "This preferred is even more rate-sensitive than the 30-year Treasury.")}</span>` : `<span class="ok">${T("高收益率把久期压到了 30 年期国债以下——但代价是更大的信用风险。", "The high yield pulls duration below the 30-year's — at the cost of more credit risk.")}</span>`}`);
     if (P > par * 1.05) lines.push(`<span class="warn">${T("价格远高于面值：现实中若可赎回，发行人很可能按面值赎回后低息重发，价格会被“压”在面值附近（负凸性，阶段 6.3）。", "Price is well above par: if callable, the issuer would likely redeem at par and refinance cheaper, pinning the price near par (negative convexity, Stage 6.3).")}</span>`);
     if (P < par * 0.8) lines.push(`<span class="bad">${T("价格低于面值 20% 以上：市场要求的收益率远高于票面股息率——要么利率大涨，要么市场在担心信用。", "Price is more than 20% below par: the market demands far more than the coupon — either rates have jumped or the market is worried about credit.")}</span>`);
     q("#ps-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

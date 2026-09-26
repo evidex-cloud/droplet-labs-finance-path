@@ -1,7 +1,7 @@
 // 交互演示：30 年期收益率冲击台。选一个真实起点（2020 年底 / 2023-10-19 / 2026-02-27 / 2026-09-25），
 // 拖动 30 年期收益率，看同一冲击如何同时打到：30 年期国债价格、房贷月供、股票合理市盈率、联邦利息账单、
 // 比特币财库公司式的永续优先股价格、持有不生息资产的机会成本；再用“债务–利息循环”玩具模型看 10 年后的债务率。
-import { bondPrice, npv, gordon, fmtUsd, fmtPct, fmtNum, fmtBig, clamp } from "./_fin.js";
+import { bondPrice, npv, gordon, fmtUsd, fmtPct, fmtNum, fmtBig, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -49,7 +49,7 @@ export default function mount(root, lang) {
         <div class="demo-label">${T("假设（可调，均为示意）", "Assumptions (adjustable, all illustrative)")}</div>
         <div class="demo-grid">
           <div>
-            <label class="demo-label">${T("房贷利率 = 10 年期 +", "Mortgage rate = 10-year +")} <b id="lb-v-mSpread"></b></label>
+            <label class="demo-label">${tex(String.raw`\text{${T("房贷利率", "Mortgage rate")}} = \text{${T("10 年期", "10-year")}} +`)} <b id="lb-v-mSpread"></b></label>
             <input class="demo-slider" type="range" id="lb-mSpread" min="1" max="3" step="0.05" />
             <label class="demo-label">${T("股权风险溢价", "Equity risk premium")} <b id="lb-v-erp"></b></label>
             <input class="demo-slider" type="range" id="lb-erp" min="1" max="6" step="0.1" />
@@ -165,7 +165,7 @@ export default function mount(root, lang) {
         { f: (x) => (prefPx(x) / p0) * 100, cls: "line5" },
         { f: (x) => { const v = pe(Math.max(0.05, A.y10 + st.beta * (x - A.y30))); return isFinite(v) && v > 0 && v < 200 ? (v / pe0) * 100 : NaN; }, cls: "line3" },
       ],
-      lo: 1, hi: 8, xlabel: T("30 年期收益率（%）；纵轴：起点 = 100", "30-year yield (%); vertical axis: start = 100"), markerX: st.y30, markerLabel: fmtNum(st.y30, 2) + "%", uid: "lb",
+      lo: 1, hi: 8, xlabel: T("30 年期收益率（%）；纵轴：起点记为 100", "30-year yield (%); vertical axis: start indexed to 100"), markerX: st.y30, markerLabel: fmtNum(st.y30, 2) + "%", uid: "lb",
     });
     q("#lb-chart").innerHTML = chartBlock(res, [["var(--orange)", T("30 年期国债价格", "30-year Treasury price")], ["var(--btc)", T("10% 永续优先股价格", "10% perpetual preferred price")], ["var(--red)", T("合理市盈率", "Fair P/E")]]);
 
@@ -188,8 +188,8 @@ export default function mount(root, lang) {
     if (Math.abs(d30) >= 0.01) {
       lines.push(`${T("30 年期国债", "The 30-year Treasury")} ${fmtNum(b0, 1)} → <b>${fmtNum(b1, 1)}</b>${T("（", " (")}${fmtPct(b1 / b0 - 1, 1)}${T("）；10% 永续优先股", "); the 10% perpetual preferred")} ${fmtUsd(p0, 2)} → <b>${fmtUsd(p1, 2)}</b>${T("（必要收益率 ", " (required yield ")}${fmtNum(A.y30 + st.pSpread, 2)}% → ${fmtNum(st.y30 + st.pSpread, 2)}%${T("）。", ").")}`);
       lines.push(`${T("房贷利率", "Mortgage rate")} ${fmtNum(A.y10 + st.mSpread, 2)}% → ${fmtNum(y10 + st.mSpread, 2)}%${T("：40 万美元房贷月供", ": the monthly payment on $400k goes")} ${fmtUsd(m0, 0)} → <b>${fmtUsd(m1, 0)}</b>${T("，一年多付", ", an extra")} ${fmtUsd((m1 - m0) * 12, 0)}${T("。", " a year.")}`);
-      lines.push(`${T("合理市盈率 = 1 ÷ (10 年期 + 风险溢价 − g)：", "Fair P/E = 1 ÷ (10-year + risk premium − g): ")}${peTxt(pe0)} → <b>${peTxt(pe1)}</b>${T("。同样的盈利，值的钱变了。", ". Same earnings, different value.")}`);
-      lines.push(`${T("联邦利息：公众持有债务约 32.36 万亿美元 × 10 年期变动", "Federal interest: about $32.36T of public debt × change in the 10-year")} ${fmtNum((y10 - A.y10) * 100, 0)}bp × ${T("已重新定价比例", "share repriced")} ${fmtPct(st.share, 0)} ≈ <b>${dInt >= 0 ? "+" : "−"}$${fmtBig(Math.abs(dInt), 0)}</b>${T(" / 年，约占 GDP 的 ", " a year, about ")}${fmtNum(Math.abs(dInt) / GDP * 100, 2)}%${T("。", " of GDP.")}`);
+      lines.push(`${tex(String.raw`\text{${T("合理市盈率", "Fair P/E")}} = \dfrac{1}{\text{${T("10 年期", "10-year")}} + \text{${T("风险溢价", "risk premium")}} - g}`)}${T("：", ": ")}${peTxt(pe0)} → <b>${peTxt(pe1)}</b>${T("。同样的盈利，值的钱变了。", ". Same earnings, different value.")}`);
+      lines.push(`${T("联邦利息：", "Federal interest: ")}${tex(String.raw`\text{${T("公众持有债务", "public debt")}}\ ${T(String.raw`32.36\ \text{万亿美元}`, String.raw`\$32.36\text{T}`)} \times \text{${T("10 年期变动", "change in the 10-year")}}\ ${fmtNum((y10 - A.y10) * 100, 0)}\ \text{bp} \times \text{${T("已重新定价比例", "share repriced")}}\ ${fmtPct(st.share, 0).replace("%", String.raw`\%`)} \approx \mathbf{${dInt >= 0 ? "+" : "-"}\$\text{${fmtBig(Math.abs(dInt), 0)}}}`)}${T(" / 年，约占 GDP 的 ", " a year, about ")}${fmtNum(Math.abs(dInt) / GDP * 100, 2)}%${T("。", " of GDP.")}`);
     }
     if (st.a === 0 && st.y30 >= 5) lines.push(`<span class="bad">${T("这就是 2020 年底到 2026 年 9 月的真实距离：一个违约都没有，30 年期国债的价格却约腰斩——“无风险资产”的久期风险。", "This is the real distance from end-2020 to September 2026: not a single default, yet the 30-year Treasury's price roughly halved. That is the duration risk inside a “risk-free asset.”")}</span>`);
     if (st.beta === 0.5 && d30 > 0) lines.push(`<span class="warn">${T("熊陡：长端比 10 年期涨得多，受伤最重的是永续优先股和 30 年期国债，房贷和市盈率受影响相对小——期限溢价推动的上涨就是这个样子。", "Bear steepener: the long end rises more than the 10-year, so the perpetual preferred and the 30-year Treasury take the biggest hit while mortgages and P/E suffer less. A term-premium-driven selloff looks like this.")}</span>`);

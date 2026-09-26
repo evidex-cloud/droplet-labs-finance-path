@@ -7,7 +7,7 @@ export default {
   prereqs: ["dat-what", "dilution-buybacks"],
 
   oneLiner:
-    "A DAT can post record bitcoin holdings every quarter while your share gets no richer — the company may simply be swapping your equity for coins. The number that belongs to shareholders is **BTC per share**: bitcoin held ÷ shares, usually quoted in sats per share. Orange Corp = 10,000 sats/share. This lesson covers the definition, the three ways to count the denominator (basic, assumed diluted, fully diluted), gross versus net, why it is the one scoreboard in the DAT toolkit that can compound — and what it cannot see.",
+    "A DAT can post record bitcoin holdings every quarter while your share gets no richer — the company may simply be swapping your equity for coins. The number that belongs to shareholders is **BTC per share**: \\(\\dfrac{\\text{bitcoin held}}{\\text{shares}}\\), usually quoted in sats per share. Orange Corp sits at 10,000 sats/share. This lesson covers the definition, the three ways to count the denominator (basic, assumed diluted, fully diluted), gross versus net, why it is the one scoreboard in the DAT toolkit that can compound — and what it cannot see.",
 
   intuition: `
 Imagine you and ninety-nine friends start a "coin club": together you buy 1 bitcoin, one hundred equal shares. Each share stands for **0.01 BTC**.
@@ -18,7 +18,7 @@ Now suppose instead the club signs up only fifty newcomers, but they are so keen
 
 That is the number this lesson is about: **BTC per share (BPS)**. It doesn't ask "how much bitcoin does the company own?" It asks "**how much bitcoin stands behind one share?**" For the common shareholder of a digital asset treasury company (DAT), it is the scoreboard that matters most.
 
-Take Orange Corp from Stage 15.1: 10,000 BTC and 100 million common shares, so 0.0001 BTC per share. Bitcoin is a big unit, so people prefer its smallest one, the **sat** (1 BTC = 100 million sats): **10,000 sats per share**. At $100,000 per bitcoin, those 10,000 sats are worth $10.
+Take Orange Corp from Stage 15.1: 10,000 BTC and 100 million common shares, so 0.0001 BTC per share. Bitcoin is a big unit, so people prefer its smallest one, the **sat** (\\(1\\ \\text{BTC} = 100\\ \\text{million sats}\\)): **10,000 sats per share**. At $100,000 per bitcoin, those 10,000 sats are worth $10.
 
 Why call it "**the only number that compounds**"? Because a DAT shareholder's return breaks into three pieces:
 
@@ -42,7 +42,7 @@ This lesson explains mechanics and analytical frameworks only; it is not investm
 - **① The definition: BTC per share and sats**
 - **② The denominator fight: basic, assumed diluted and fully diluted shares**
 - **③ Gross versus net: BTC per share and Net BTC per share**
-- **④ Compounding: price = mNAV × BTC per share × BTC price**
+- **④ Compounding: \\(\\text{price} = \\mathrm{mNAV} \\times \\text{BTC per share} \\times \\text{BTC price}\\)**
 - **⑤ What it cannot see: limits and critiques**
 `,
 
@@ -51,10 +51,10 @@ This lesson explains mechanics and analytical frameworks only; it is not investm
 
 The plain definition is one line:
 
-$$ BTC per share (BPS) = bitcoin held ÷ shares
-$$ In sats: BPS (sats) = bitcoin held × 100,000,000 ÷ shares
+$$ \\text{BTC per share}\\ (\\mathrm{BPS}) = \\frac{\\text{bitcoin held}}{\\text{shares}}
+$$ \\mathrm{BPS}\\ (\\text{in sats}) = \\frac{\\text{bitcoin held} \\times 100{,}000{,}000}{\\text{shares}}
 
-Orange Corp: 10,000 BTC ÷ 100 million shares = 0.0001 BTC = **10,000 sats per share**. Multiply by the bitcoin price for the bitcoin NAV per share: 0.0001 × $100,000 = **$10 per share**.
+Orange Corp: \\(\\dfrac{10{,}000\\ \\text{BTC}}{100\\ \\text{million shares}} = 0.0001\\ \\text{BTC} = \\mathbf{10{,}000}\\ \\text{sats per share}\\). Multiply by the bitcoin price for the bitcoin NAV per share: \\(0.0001 \\times \\$100{,}000 = \\mathbf{\\$10}\\ \\text{per share}\\).
 
 A few real data points (always defer to the company's latest disclosure — these move every week):
 
@@ -76,7 +76,7 @@ The numerator is unambiguous. All the trouble is in the denominator, which comes
 <table class="pm">
 <tr><th>Count</th><th>What it includes</th><th>Who uses it</th><th>Orange Corp</th></tr>
 <tr><td><b>Basic shares</b></td><td>Common shares actually issued</td><td>Market-cap mNAV; third-party trackers</td><td>100M → 10,000 sats</td></tr>
-<tr><td><b>Assumed Diluted Shares Outstanding</b></td><td>Basic + assumed conversion of <b>all</b> convertible notes and convertible preferred (STRK) + all options, RSUs and PSUs — <b>whether or not in the money</b></td><td>Strategy's BPS and BTC Yield</td><td>100M + $150M ÷ $25 = 106M → about 9,434 sats</td></tr>
+<tr><td><b>Assumed Diluted Shares Outstanding</b></td><td>Basic + assumed conversion of <b>all</b> convertible notes and convertible preferred (STRK) + all options, RSUs and PSUs — <b>whether or not in the money</b></td><td>Strategy's BPS and BTC Yield</td><td>\\(100\\text{M} + \\dfrac{\\$150\\text{M}}{\\$25} = 106\\text{M}\\) → about 9,434 sats</td></tr>
 <tr><td><b>Fully Diluted Shares Outstanding</b></td><td>Basic + only the <b>in-the-money</b> convertibles and preferred (plus RSUs and PSUs)</td><td>Strategy's 2026 Net BTC per share and new mNAV</td><td>Price $15 &lt; conversion $25, so the converts are out of the money → 100M</td></tr>
 </table>
 
@@ -94,29 +94,34 @@ Common stock does not own all of the company's bitcoin. Under the seniority orde
 
 In 2026 Strategy introduced **Net BTC** and **Net BTC Per Share**:
 
-$$ Net Reserve = BTC Reserve − notional of out-of-the-money converts and other debt-like instruments − preferred notional (excluding in-the-money STRK) + USD Assets
-$$ Net BTC per share = Net Reserve ÷ Fully Diluted Shares
+$$ \\begin{aligned} \\text{Net Reserve} &= \\text{BTC Reserve} - \\text{notional of OTM converts and other debt-like instruments} \\\\ &\\quad - \\text{preferred notional (excl. in-the-money STRK)} + \\text{USD Assets} \\end{aligned}
+$$ \\text{Net BTC per share} = \\frac{\\text{Net Reserve}}{\\text{Fully Diluted Shares}}
 
-Orange Corp: $1.0B − $150M (out-of-the-money converts) − $150M (Orange-F $100M + Orange-D $50M) + $30M (USD reserve) = **$730M**; ÷ 100M shares = **$7.30 per share = 7,300 sats**.
+Orange Corp (subtract $150M of out-of-the-money converts and $150M of preferred — Orange-F $100M plus Orange-D $50M — then add back the $30M USD reserve):
+
+$$
+\\text{Net Reserve} = \\$1.0\\text{B} - \\$150\\text{M} - \\$150\\text{M} + \\$30\\text{M} = \\mathbf{\\$730\\text{M}}
+\\text{Net BTC per share} = \\frac{\\$730\\text{M}}{100\\text{M shares}} = \\mathbf{\\$7.30} = \\mathbf{7{,}300}\\ \\text{sats}
+$$
 
 <figure><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Orange Corp: from BTC per share to Net BTC per share (sats/share)</text><line x1="40" y1="230" x2="610" y2="230" stroke="var(--line)"/><rect x="60" y="50" width="80" height="180" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="100" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--btc)">10,000</text><text x="100" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">BTC/share (gross)</text><rect x="175" y="50" width="80" height="27" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="215" y="44" text-anchor="middle" font-size="11" fill="var(--blue)">−1,500</text><text x="215" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">Converts (OTM)</text><rect x="290" y="77" width="80" height="27" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="330" y="71" text-anchor="middle" font-size="11" fill="var(--orange-ink)">−1,500</text><text x="330" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">Preferred F + D</text><rect x="405" y="98" width="80" height="6" fill="var(--green-soft)" stroke="var(--green)"/><text x="445" y="92" text-anchor="middle" font-size="11" fill="var(--green)">+300</text><text x="445" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">USD reserve</text><rect x="520" y="98" width="80" height="132" fill="var(--btc)" opacity=".8"/><text x="560" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">7,300</text><text x="560" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">Net BTC/share</text><line x1="140" y1="50" x2="175" y2="50" stroke="var(--muted)" stroke-dasharray="3 3"/><line x1="255" y1="77" x2="290" y2="77" stroke="var(--muted)" stroke-dasharray="3 3"/><line x1="370" y1="104" x2="405" y2="104" stroke="var(--muted)" stroke-dasharray="3 3"/><line x1="485" y1="98" x2="520" y2="98" stroke="var(--muted)" stroke-dasharray="3 3"/><text x="320" y="266" text-anchor="middle" font-size="10" fill="var(--muted)">100M shares (fully diluted = basic because the converts are out of the money); BTC at $100k, so 1 sat = $0.001</text></svg><figcaption>Of the 10,000 gross sats, 1,500 are effectively owed to convertible holders and 1,500 to preferred holders; add back 300 sats of cash and the common truly owns 7,300.</figcaption></figure>
 
 Strategy's real figures on 2026-08-21: gross $145.25 per share (188,628 sats), net $118.31 per share (153,637 sats). **The gap is about 19%** — that is the weight of debt and preferreds sitting on each share.
 
-The difference is starkest when a DAT **issues preferred stock**. Say Orange Corp sells $100M of new preferred at par and buys 1,000 BTC. Gross: 11,000 BTC ÷ 100M shares = **11,000 sats, up 10%**. Net: ($1.1B − $150M − $250M + $30M) ÷ 100M = **$7.30 — unchanged**. The extra bitcoin is exactly offset by the new senior claim. **The gross figure counts borrowed coins as shareholders' coins**; the net figure only starts growing once bitcoin outruns the cost of the preferred (the heart of Stage 16.7).
+The difference is starkest when a DAT **issues preferred stock**. Say Orange Corp sells $100M of new preferred at par and buys 1,000 BTC. Gross: \\(\\dfrac{11{,}000\\ \\text{BTC}}{100\\text{M shares}} = \\mathbf{11{,}000}\\ \\text{sats}\\), **up 10%**. Net: \\(\\dfrac{\\$1.1\\text{B} - \\$150\\text{M} - \\$250\\text{M} + \\$30\\text{M}}{100\\text{M}} = \\mathbf{\\$7.30}\\) — **unchanged**. The extra bitcoin is exactly offset by the new senior claim. **The gross figure counts borrowed coins as shareholders' coins**; the net figure only starts growing once bitcoin outruns the cost of the preferred (the heart of Stage 16.7).
 
-### ④ Compounding: price = mNAV × BTC per share × BTC price
+### ④ Compounding: \\(\\text{price} = \\mathrm{mNAV} \\times \\text{BTC per share} \\times \\text{BTC price}\\)
 
 Decompose the share price and BTC per share's place in shareholder returns becomes obvious:
 
-$$ Share price = mNAV × BTC per share × BTC price
-$$ Orange Corp: 1.5 × 0.0001 BTC × $100,000 = $15
+$$ \\text{Share price} = \\mathrm{mNAV} \\times \\text{BTC per share} \\times \\text{BTC price}
+$$ \\text{Orange Corp share price} = 1.5 \\times 0.0001\\ \\text{BTC} \\times \\$100{,}000 = \\$15
 
 (Here mNAV is the market-cap version; switch definitions and you must switch the denominator or use net BTC to match — Stage 16.2 covers this.) Take logs and the product becomes a sum:
 
-$$ Stock return ≈ BTC return + growth in BTC per share + change in mNAV (all as log returns)
+$$ \\text{Stock return} \\approx \\text{BTC return} + \\text{growth in BTC per share} + \\text{change in } \\mathrm{mNAV}
 
-Of the three, **the bitcoin price** is external and **mNAV** mean-reverts — in October 2025 Strategy's issuance guidance was still tiered at mNAV bands of 2.5x and above 4.0x; by 2025-11-28 its EV-based mNAV was 1.2x, and on 2026-08-21 its new-definition mNAV was about 1.01x. Only **growth in BTC per share** is banked on the balance sheet. That's why it compounds:
+(All three are log returns.) Of the three, **the bitcoin price** is external and **mNAV** mean-reverts — in October 2025 Strategy's issuance guidance was still tiered at mNAV bands of 2.5x and above 4.0x; by 2025-11-28 its EV-based mNAV was 1.2x, and on 2026-08-21 its new-definition mNAV was about 1.01x. Only **growth in BTC per share** is banked on the balance sheet. That's why it compounds:
 
 <table class="pm">
 <tr><th>Annual BPS growth</th><th>Multiple after 5 years</th><th>Multiple after 10 years</th><th>Doubling time (Rule of 72)</th></tr>
@@ -175,7 +180,7 @@ Finally, why does it "compound"? Because each year the store can use members' en
         "15,000 sats",
       ],
       answer: 2,
-      explain: "Assumed diluted shares treat every convertible as converted, in the money or not: $150M ÷ $25 = 6M shares, 106M in total. 10,000 BTC ÷ 106M = 0.00009434 BTC ≈ **9,434 sats**.",
+      explain: "Assumed diluted shares treat every convertible as converted, in the money or not: \\(\\dfrac{\\$150\\text{M}}{\\$25} = 6\\text{M}\\) shares, 106M in total. \\(\\dfrac{10{,}000\\ \\text{BTC}}{106\\text{M}} = 0.00009434\\ \\text{BTC} \\approx \\mathbf{9{,}434}\\ \\text{sats}\\).",
     },
     {
       q: "What denominator does Strategy's 2026 Net BTC per share use?",
@@ -186,7 +191,7 @@ Finally, why does it "compound"? Because each year the store can use members' en
         "Free float: excluding insider holdings",
       ],
       answer: 0,
-      explain: "Net BTC per share = Net Reserve ÷ **Fully Diluted Shares**. Out-of-the-money convertibles are deducted as debt in the numerator, so they are not also counted as shares — no double counting.",
+      explain: "\\(\\text{Net BTC per share} = \\dfrac{\\text{Net Reserve}}{\\textbf{Fully Diluted Shares}}\\). Out-of-the-money convertibles are deducted as debt in the numerator, so they are not also counted as shares — no double counting.",
     },
     {
       q: "Orange Corp issues $100M of new preferred at par and buys 1,000 BTC at $100,000. At the moment of issuance, which is true?",
@@ -197,10 +202,10 @@ Finally, why does it "compound"? Because each year the store can use members' en
         "Neither changes",
       ],
       answer: 1,
-      explain: "Gross: 11,000 BTC ÷ 100M shares = 11,000 sats (+10%). Net: the extra $100M of bitcoin is exactly offset by the new $100M senior claim, so **Net BTC per share stays at $7.30**.",
+      explain: "Gross: \\(\\dfrac{11{,}000\\ \\text{BTC}}{100\\text{M shares}} = 11{,}000\\ \\text{sats}\\) (+10%). Net: the extra $100M of bitcoin is exactly offset by the new $100M senior claim, so **Net BTC per share stays at $7.30**.",
     },
     {
-      q: "Share price = mNAV × BTC per share × BTC price. Why is BTC per share the only term that compounds?",
+      q: "\\(\\text{Share price} = \\mathrm{mNAV} \\times \\text{BTC per share} \\times \\text{BTC price}\\). Why is BTC per share the only term that compounds?",
       options: [
         "Because the bitcoin price always rises",
         "Because mNAV can't legally fall below 1",
@@ -219,7 +224,7 @@ Finally, why does it "compound"? Because each year the store can use members' en
         "Intraday bitcoin price noise",
       ],
       answer: 2,
-      explain: "Net Reserve = BTC Reserve − OTM debt − preferred notional + USD Assets. The roughly 19% gap is the weight of **senior claims** per share — the balance-sheet view of Idea ②.",
+      explain: "\\(\\text{Net Reserve} = \\text{BTC Reserve} - \\text{OTM debt} - \\text{preferred notional} + \\text{USD Assets}\\). The roughly 19% gap is the weight of **senior claims** per share — the balance-sheet view of Idea ②.",
     },
   ],
 

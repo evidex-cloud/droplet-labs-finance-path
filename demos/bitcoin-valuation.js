@@ -3,8 +3,10 @@
 // 并算出从当前价格到那里所需的年化增长率；
 // 下半部分“情景加权”：熊 / 基准 / 牛三个情景的价格与概率 → 期望价格 → 按要求回报折现回今天（观念①），
 // 再反推“按当前价格买入，你这组假设隐含的年化期望回报”，并画出现值对折现率的敏感度。
-import { pv, fmtUsd, fmtPct, fmtNum, fmtBig } from "./_fin.js";
+import { pv, fmtUsd, fmtPct, fmtNum, fmtBig, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 → {,}，% → \%，末尾的 K/M/B/T 单位 → \text{…}
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%").replace(/([KMBT])$/, "\\text{$1}");
 
 const OZ_PER_TONNE = 32150.7466;
 const SUPPLY = 20.09e6; // 2026-09-26 约 2,009 万枚
@@ -135,8 +137,8 @@ export default function mount(root, lang) {
     $("bv-chart").innerHTML = chartBlock(ch, [["var(--btc)", T("情景加权的现值", "Present value of the weighted scenarios")], ["var(--red)", T("当前价格", "Current price")]]);
 
     const lines = [];
-    lines.push(`${T("份额法：黄金盘子", "Share method: a gold pie of")} $${fmtBig(pie, 1)} × ${fmtPct(st.share, 0)} ÷ ${fmtBig(eff, 2)} ${T("枚", "coins")} = <b>${fmtUsd(px)}</b>${T("，", ", ")}${T("要在", "which needs")} ${st.years} ${T("年内达到需要年化", "years at an annual rate of")} <b>${fmtPct(cagr, 1)}</b>${T("。", ".")}`);
-    lines.push(`${T("情景加权：期望价格", "Scenarios: expected price")} ${fmtUsd(ev)} ÷ (1 + ${fmtPct(st.r, 1)})^${st.years} = <b>${fmtUsd(pvNow)}</b>${T("。", ".")}`);
+    lines.push(`${T("份额法：", "Share method: ")}` + tex(String.raw`\text{${T("隐含价格", "implied price")}} = \frac{${texv("$" + fmtBig(pie, 1))} \times ${texv(fmtPct(st.share, 0))}}{${texv(fmtBig(eff, 2))}\ \text{${T("枚", "coins")}}} = \mathbf{${texv(fmtUsd(px))}}`) + `${T("，", ", ")}${T("要在", "which needs")} ${st.years} ${T("年内达到需要年化", "years at an annual rate of")} <b>${fmtPct(cagr, 1)}</b>${T("。", ".")}`);
+    lines.push(`${T("情景加权：期望价格", "Scenarios: expected price")} ${fmtUsd(ev)}${T("，折现回今天：", ", discounted to today: ")}` + tex(String.raw`\mathrm{PV} = \frac{${texv(fmtUsd(ev))}}{(1 + ${texv(fmtPct(st.r, 1))})^{${st.years}}} = \mathbf{${texv(fmtUsd(pvNow))}}`) + T("。", "."));
     if (pvNow >= st.cur) lines.push(`<span class="ok">${T("在你的假设下，现值高于当前价格：隐含年化回报", "Under your assumptions the present value exceeds today's price: implied annual return")} ${fmtPct(irr, 1)} ${T("高于你要求的", "beats your required")} ${fmtPct(st.r, 1)}${T("。但注意，有", ". But note there is a")} ${fmtPct(lose, 0)} ${T("的概率期末低于今天的价格——期望值高不等于大概率赚钱。", "chance of ending below today's price — a high expected value is not the same as a likely gain.")}</span>`);
     else lines.push(`<span class="warn">${T("在你的假设下，现值低于当前价格：隐含年化回报", "Under your assumptions the present value is below today's price: implied annual return")} ${fmtPct(irr, 1)} ${T("低于你要求的", "falls short of your required")} ${fmtPct(st.r, 1)}${T("。要么市场用了更乐观的概率，要么用了更低的折现率。", ". Either the market is using rosier odds or a lower discount rate.")}</span>`);
     $("bv-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

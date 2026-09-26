@@ -1,7 +1,7 @@
 // 交互演示：AMM 沙盘——
 // ① 换币：在恒定乘积池（初始报价 3,000 USDC/ETH）里用 USDC 买 ETH，调池子深度、单子大小与手续费档位，看成交均价、价格冲击与交易后报价；
 // ② 做 LP：存入 10 ETH + 30,000 USDC，拖动 ETH 价格倍数、手续费年化与持有天数，看 LP 价值 vs 单纯持有，以及无常损失曲线。
-import { ammSwap, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { ammSwap, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -16,7 +16,7 @@ export default function mount(root, lang) {
 
   root.innerHTML = `
     <div class="demo">
-      <div class="demo-head">${T("🔁 AMM 沙盘：x·y=k 怎么报价，LP 怎么赚钱又怎么亏钱", "🔁 AMM sandbox: how x·y=k quotes, and how LPs earn and lose")}</div>
+      <div class="demo-head">${T(`🔁 AMM 沙盘：${tex(String.raw`x \cdot y = k`)} 怎么报价，LP 怎么赚钱又怎么亏钱`, `🔁 AMM sandbox: how ${tex(String.raw`x \cdot y = k`)} quotes, and how LPs earn and lose`)}</div>
       <div class="demo-seg" id="am-mode">
         <button data-m="swap" class="on">${T("① 换币：滑点与价格冲击", "① Swap: slippage & price impact")}</button>
         <button data-m="lp">${T("② 做 LP：手续费 vs 无常损失", "② Be an LP: fees vs impermanent loss")}</button>
@@ -60,7 +60,7 @@ export default function mount(root, lang) {
           <div class="demo-block">
             <label class="demo-label">${T("做 LP 的天数", "Days as an LP")}${C}<b id="am-d-v"></b></label>
             <input class="demo-slider" id="am-d" type="range" min="1" max="730" step="1" value="${lp.days}">
-            <div class="demo-meta">${T("起点：存入 10 ETH + 30,000 USDC（ETH = 3,000，总值 60,000 美元），占池子 1%。", "Start: deposit 10 ETH + 30,000 USDC (ETH = 3,000, $60,000 total), 1% of the pool.")}</div>
+            <div class="demo-meta">${T(`起点：存入 ${tex(String.raw`10\ \text{ETH} + 30{,}000\ \text{USDC}`)}（${tex(String.raw`\text{ETH} = 3{,}000`)}，总值 60,000 美元），占池子 1%。`, `Start: deposit ${tex(String.raw`10\ \text{ETH} + 30{,}000\ \text{USDC}`)} (${tex(String.raw`\text{ETH} = 3{,}000`)}, $60,000 total), 1% of the pool.`)}</div>
           </div>
         </div>
         <div class="stat-row">
@@ -74,8 +74,8 @@ export default function mount(root, lang) {
       </div>
 
       <p class="demo-tip">${T(
-        "换币时，看“总成本”几乎等于“单子占池子的比例 + 手续费”——把池子加深十倍，同一笔单的价格冲击就降到约十分之一（手续费不变）。做 LP 时，把价格拖到 0.5 倍或 2 倍再拖到 4 倍：无论涨跌，红线都往下弯，这就是卖出波动率；再看手续费要多高、时间要多长，绿线才能回到零以上。",
-        "When swapping, notice that the all-in cost is almost exactly the order's share of the pool plus the fee: make the pool ten times deeper and the same order's price impact shrinks to about a tenth (the fee stays the same). As an LP, drag the price to 0.5× or 2×, then to 4×. Up or down, the red line bends below zero, which is what selling volatility looks like. Then see how high the fees and how long the holding period must be before the green line gets back above zero."
+        `换币时，看 ${tex(String.raw`\text{总成本} \approx \text{单子占池子的比例} + \text{手续费}`)}——把池子加深十倍，同一笔单的价格冲击就降到约十分之一（手续费不变）。做 LP 时，把价格拖到 0.5 倍或 2 倍再拖到 4 倍：无论涨跌，红线都往下弯，这就是卖出波动率；再看手续费要多高、时间要多长，绿线才能回到零以上。`,
+        `When swapping, notice that ${tex(String.raw`\text{all-in cost} \approx \text{order's share of the pool} + \text{fee}`)}: make the pool ten times deeper and the same order's price impact shrinks to about a tenth (the fee stays the same). As an LP, drag the price to ${tex(String.raw`0.5\times`)} or ${tex(String.raw`2\times`)}, then to ${tex(String.raw`4\times`)}. Up or down, the red line bends below zero, which is what selling volatility looks like. Then see how high the fees and how long the holding period must be before the green line gets back above zero.`
       )}</p>
     </div>`;
 
@@ -133,7 +133,8 @@ export default function mount(root, lang) {
 
     const il = IL(r);
     const lines = [];
-    lines.push(T("无常损失 = 2√r ÷ (1 + r) − 1 = ", "Impermanent loss = 2√r ÷ (1 + r) − 1 = ") + fmtPct(il, 2) + T("；手续费收入 ", "; fee income ") + fmtUsd(fees) + T("（相当于存入价值的 ", " (") + fmtPct(feePct, 1) + T("）。", " of the deposit)."));
+    const rs = fmtNum(r, 2);
+    lines.push(tex(String.raw`\text{${T("无常损失", "Impermanent loss")}} = \frac{2\sqrt{r}}{1 + r} - 1 = \frac{2\sqrt{${rs}}}{1 + ${rs}} - 1 = ${fmtPct(il, 2).replace("%", "\\%")}`) + T("；手续费收入 ", "; fee income ") + fmtUsd(fees) + T("（相当于存入价值的 ", " (") + fmtPct(feePct, 1) + T("）。", " of the deposit)."));
     if (il < -0.001) {
       const need = -il * hodl / V0 / (lp.apr || 1e-9) * 365;
       lines.push(lp.apr > 0

@@ -4,8 +4,18 @@
 import {
   btcNav, mnavBasic, mnavDiluted, mnavEV, mnavNetBps, netReserve, amplification, amplificationStrategy, striveAmpRatio,
   coverageByLayer, waterfall, btcFloorPrice, monthsCovered, breakevenArr, issueAndBuy, btcRiskProb, btcCredit,
-  bondPrice, perpetuity, fmtPct, fmtNum, fmtUsd,
+  bondPrice, perpetuity, fmtPct, fmtNum, fmtUsd, tex,
 } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位逗号 → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+// “复制为纯文本”用：把报告里用到的少量 LaTeX 还原成可读的纯文本公式
+const texPlain = (s) => {
+  let t = String(s).replace(/\{,\}/g, ",").replace(/\\(?:text|mathrm)\{([^{}]*)\}/g, "$1");
+  for (let i = 0; i < 6; i++) t = t.replace(/\\d?frac\{([^{}]*)\}\{([^{}]*)\}/g, (m, a, b) => `${/[ +]/.test(a.trim()) ? "(" + a + ")" : a} \u00f7 ${/[ +]/.test(b.trim()) ? "(" + b + ")" : b}`);
+  return t.replace(/\\times/g, "\u00d7").replace(/\\approx/g, "\u2248").replace(/\\sum_\{i\}/g, "\u03a3").replace(/\\infty/g, "\u221e")
+    .replace(/_\{([^{}]*)\}/g, "_$1").replace(/\\([%$])/g, "$1").replace(/\\[ ,]/g, " ").replace(/\s+/g, " ").trim();
+};
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -44,7 +54,7 @@ export default function mount(root, lang) {
       <div class="demo-head">${T("🎓 毕业设计报告生成器：从宏观一路写到资本结构", "🎓 Capstone report builder: from macro all the way down to the capital stack")}</div>
 
       <div class="demo-block">
-        <div class="demo-label"><b>${T("第 1 步 · 宏观体制", "Step 1 · Macro regime")}</b>${T("（默认 = 2026 年 9 月的读数）", " (default = September 2026 readings)")}</div>
+        <div class="demo-label"><b>${T("第 1 步 · 宏观体制", "Step 1 · Macro regime")}</b>${T("（默认：2026 年 9 月的读数）", " (default: September 2026 readings)")}</div>
         <div class="demo-grid-3">
           <div><div class="demo-meta">${T("增长", "Growth")}</div>${seg("growth", [["strong", T("偏强", "Stronger")], ["weak", T("偏弱", "Weaker")]])}</div>
           <div><div class="demo-meta">${T("通胀", "Inflation")}</div>${seg("infl", [["high", T("偏高", "Higher")], ["low", T("偏低", "Lower")]])}</div>
@@ -58,7 +68,7 @@ export default function mount(root, lang) {
       </div>
 
       <div class="demo-block">
-        <div class="demo-label"><b>${T("第 4 步 · 公司（默认 = 橙子公司）", "Step 4 · The company (default = Orange Corp)")}</b></div>
+        <div class="demo-label"><b>${T("第 4 步 · 公司（默认：橙子公司）", "Step 4 · The company (default: Orange Corp)")}</b></div>
         <label class="demo-label">${T("公司名称", "Company name")}</label>
         <input id="cs-name" type="text" style="${taStyle};min-height:0" value="${st.name}" />
         <div class="demo-grid" style="margin-top:8px"><div>${sliders("co1")}</div><div>${sliders("co2")}</div></div>
@@ -150,7 +160,7 @@ export default function mount(root, lang) {
     for (let k = 1; k <= st.shut; k++) {
       const payD = Math.min(res, mdiv); res -= payD; if (mdiv - payD > 0) sold += (mdiv - payD) / pS;
       if (res <= 1e-6 && outAt === null && mdiv > 0) outAt = k;
-      if (k === st.putM && conv > 0) { const payP = Math.min(res, conv); res -= payP; putSold = (conv - payP) / pS; sold += putSold; }
+      if (k === st.putM && conv > 0) { const payP = Math.min(res, conv); res -= payP; m.putCash = conv - payP; putSold = (conv - payP) / pS; sold += putSold; }
     }
     m.sold = sold; m.putSold = putSold; m.outAt = outAt; m.putInWindow = st.putM <= st.shut && conv > 0;
     const btcEnd = Math.max(0, btc - sold), layersEnd = m.putInWindow ? layers.slice(1) : layers; // 回售已付清 → 可转债层移除
@@ -161,6 +171,14 @@ export default function mount(root, lang) {
   const build = (m) => {
     const R = regime();
     const blank = (v, ph) => (v.trim() ? esc(v.trim()) : `<span style="color:var(--muted)">${ph}</span>`);
+    // 公式读数：KaTeX 排版，data-plain 留给“复制为纯文本”
+    const F = (latex) => `<span class="cs-f" data-plain="${esc(texPlain(latex))}">${tex(latex)}</span>`;
+    const tx = (s) => String.raw`\text{${s}}`;
+    const u = (v, d = 0) => texv(fmtUsd(v, d));
+    const uM = (v, d = 0) => String.raw`${texv(fmtUsd(v / 1e6, d))}\text{M}`;
+    const pc = (v, d = 2) => texv(fmtPct(v, d));
+    const xx = (v) => (isFinite(v) ? String.raw`${fmtNum(v, 2)}\times` : String.raw`\infty`);
+    const nn = (v, d = 0) => (isFinite(v) ? texv(fmtNum(v, d)) : String.raw`\infty`);
     const S = [];
     S.push([T("1. 结论", "1. Conclusion"), [
       blank(st.thesis, T("（在上方写下你的一句话结论）", "(write your one-sentence conclusion above)")),
@@ -168,31 +186,31 @@ export default function mount(root, lang) {
     ]]);
     S.push([T("2. 宏观与利率", "2. Macro and rates"), [
       R.note,
-      T("30 年期美债", "30-year Treasury") + C + fmtPct(st.y30 / 100, 2) + T("；5% 票息 30 年期债券价格约 ", "; a 30-year 5% bond prices at about ") + fmtNum(m.b30, 1) + T("，收益率再升 1 个百分点约 ", "; one point higher, about ") + fmtNum(m.b30up, 1) + T("（修正久期约 15.5，阶段 4.4）。", " (modified duration about 15.5, Stage 4.4)."),
-      T("优先股要求收益率 = 30 年期 + 利差 ", "Preferred required yield = 30-year + spread ") + fmtPct(st.spr / 100, 2) + " = " + fmtPct(m.req, 2) + T("；", "; ") + fmtPct(st.rF / 100, 2) + T(" 股息的 F 约值 ", " F is worth about ") + fmtUsd(m.Fpx, 2) + T("（永续年金，阶段 18.1）。按面值计，F 相对 30 年期的利差为 ", " (perpetuity, Stage 18.1). At par, F's spread over the 30-year is ") + fmtPct(m.FsprPar, 2) + T("。", "."),
+      T("30 年期美债", "30-year Treasury") + C + F(String.raw`y = ${pc(st.y30 / 100)}`) + T("；5% 票息 30 年期债券价格", "; a 30-year 5% bond prices at") + C + F(String.raw`P(${pc(st.y30 / 100)}) \approx ${fmtNum(m.b30, 1)},\ P(${pc(st.y30 / 100 + 0.01)}) \approx ${fmtNum(m.b30up, 1)}`) + T("（后者为收益率再升 1 个百分点；修正久期约 15.5，阶段 4.4）。", " (the second is one point higher; modified duration about 15.5, Stage 4.4)."),
+      F(String.raw`${tx(T("优先股要求收益率", "preferred required yield"))} = ${tx(T("30 年期", "30-year"))} + ${tx(T("利差", "spread"))} = ${pc(st.y30 / 100)} + ${pc(st.spr / 100)} = ${pc(m.req)}`) + T("；", "; ") + fmtPct(st.rF / 100, 2) + T(" 股息的 F", " F") + C + F(String.raw`P_{\text{F}} = \dfrac{${tx(T("年股息", "annual dividend"))}}{${tx(T("要求收益率", "required yield"))}} = \dfrac{${fmtNum(st.rF, 2)}}{${pc(m.req)}} \approx ${u(m.Fpx, 2)}`) + T("（永续年金，阶段 18.1）。按面值计，F 相对 30 年期的利差为 ", " (perpetuity, Stage 18.1). At par, F's spread over the 30-year is ") + F(String.raw`${pc(st.rF / 100)} - ${pc(st.y30 / 100)} = ${pc(m.FsprPar)}`) + T("。", "."),
     ]]);
     S.push([T("3. 比特币情景（不是预测）", "3. Bitcoin scenarios (not forecasts)"), [
       ...m.scen.map((r) => `${r.n} ${fmtUsd(r.p, 0)} · ${T("权重", "weight")} ${fmtNum(r.w, 0)}% · ${T("最劣后层覆盖", "junior-most coverage")} ${x(r.jr)} · ${T("穿透每股净值", "look-through NAV per share")} ${fmtUsd(r.eq, 2)}`),
-      T("加权比特币价格 ", "Probability-weighted bitcoin price ") + fmtUsd(m.ePx, 0) + T("。BTC Breakeven ARR（年度股息 ÷ 比特币净值）", ". BTC Breakeven ARR (annual dividends ÷ bitcoin NAV)") + C + fmtPct(m.be, 2) + T("（阶段 16.6）。", " (Stage 16.6)."),
+      T("加权比特币价格", "Probability-weighted bitcoin price") + C + F(String.raw`\sum_{i} w_{i} P_{i} = ${m.scen.map((r) => String.raw`${fmtNum(r.w / 100, 2)} \times ${u(r.p, 0)}`).join(" + ")} = ${u(m.ePx, 0)}`) + T("。", ". ") + F(String.raw`\text{BTC Breakeven ARR} = \dfrac{${tx(T("年度股息", "annual dividends"))}}{${tx(T("比特币净值", "bitcoin NAV"))}} = \dfrac{${uM(m.oblig, 1)}}{${uM(m.nav, 0)}} = ${pc(m.be)}`) + T("（阶段 16.6）。", " (Stage 16.6)."),
     ]]);
     S.push([T("4. 指标（每项写明口径）", "4. Metrics (each with its definition)"), [
       T("比特币净值 ", "Bitcoin NAV ") + fmtUsd(m.nav / 1e6, 0) + "M" + T("；普通股市值 ", "; common market cap ") + fmtUsd(m.mkt / 1e6, 0) + "M" + T("。", "."),
-      `mNAV${C}${T("市值口径", "market cap")} ${x(m.mB)} · ${T("稀释市值口径", "diluted market cap")} ${x(m.mD)} · ${T("企业价值口径（Strategy 2025）", "enterprise value (Strategy 2025)")} ${x(m.mE)} · ${T("股价 ÷ 每股净比特币（Strategy 2026）", "price ÷ net BTC per share (Strategy 2026)")} ${x(m.mN)}${T("（阶段 16.2）", " (Stage 16.2)")}`,
+      `mNAV${C}${T("市值口径", "market cap")} ${x(m.mB)} · ${T("稀释市值口径", "diluted market cap")} ${x(m.mD)} · ${T("企业价值口径（Strategy 2025）", "enterprise value (Strategy 2025)")} ${x(m.mE)} · ${F(String.raw`\dfrac{${tx(T("股价", "price"))}}{${tx(T("每股净比特币", "net BTC per share"))}}`)}${T("（Strategy 2026）", " (Strategy 2026)")} ${x(m.mN)}${T("（阶段 16.2）", " (Stage 16.2)")}`,
       T("每股比特币 ", "BTC per share ") + fmtNum(m.bps, 0) + T(" 聪（基本股数）/ ", " sats (basic shares) / ") + fmtNum(m.bpsA, 0) + T(" 聪（假设全部转股）", " sats (all converts assumed converted)") + T("（阶段 16.1）", " (Stage 16.1)"),
       T("放大倍数", "Amplification") + C + T("简单口径 ", "simple ") + x(m.amp) + T(" · Strategy 口径 ", " · Strategy's ") + x(m.ampS) + T(" · Strive 比率 ", " · Strive's ratio ") + fmtPct(m.ampV, 0) + T("（阶段 16.4）", " (Stage 16.4)"),
       T("飞轮一次（以当前股价增发 10% 股本全部买币）", "One turn of the flywheel (issue 10% of shares at the current price, buy bitcoin)") + C + T("每股比特币 ", "BTC per share ") + fmtPct(m.fly.change, 2) + (m.fly.change < 0 ? T("——mNAV 低于 1，发股稀释（阶段 16.7）", ": mNAV below 1, issuance dilutes (Stage 16.7)") : T("（阶段 16.7）", " (Stage 16.7)")),
     ]]);
     S.push([T("5. 资本结构", "5. Capital stack"), [
-      ...m.cov.map((r) => `${r.name}${C}${T("累计索取权", "cumulative claims")} ${fmtUsd(r.cum / 1e6, 0)}M · ${T("BTC 评级", "BTC Rating")} ${x(r.coverage)} · ${T("地板价", "floor price")} ${fmtUsd(r.floor, 0)} · ${T("模型所需利差", "model-required spread")} ${fmtNum(r.credit * 1e4, 0)} bp`),
-      T("美元储备 ", "USD reserve ") + fmtUsd(st.cash, 0) + "M" + T(" ÷ 年度股息 ", " ÷ annual dividends ") + fmtUsd(m.oblig / 1e6, 1) + "M" + T(" = 覆盖 ", " = ") + fmtNum(m.months, 0) + T(" 个月（阶段 16.6）。", " months of cover (Stage 16.6)."),
+      ...m.cov.map((r) => `${r.name}${C}${T("累计索取权", "cumulative claims")} ${fmtUsd(r.cum / 1e6, 0)}M · ${F(String.raw`${tx(T("BTC 评级", "BTC Rating"))} = \dfrac{${uM(m.nav)}}{${uM(r.cum)}} = ${xx(r.coverage)}`)} · ${F(String.raw`${tx(T("地板价", "floor price"))} = \dfrac{${u(st.px)}}{${nn(r.coverage, 2)}} = ${u(r.floor)}`)} · ${T("模型所需利差", "model-required spread")} ${F(String.raw`\text{BTC Credit} \approx ${nn(r.credit * 1e4, 0)}\ \text{bp}`)}`),
+      T("美元储备覆盖", "USD reserve cover") + C + F(String.raw`\dfrac{${tx(T("美元储备", "USD reserve"))}}{${tx(T("年度股息", "annual dividends"))}} \times 12 = \dfrac{${uM(st.cash * 1e6)}}{${uM(m.oblig, 1)}} \times 12 = ${nn(m.months, 0)}`) + T(" 个月（阶段 16.6）。", " months (Stage 16.6)."),
       T("模型假设：年化回报 10%、波动率 45%、久期 10 年（阶段 ∞.1 讨论了这些假设有多敏感）。", "Model assumptions: 10% expected return, 45% volatility, 10-year duration (Stage ∞.1 discusses how sensitive these are)."),
     ]]);
     const stressLines = [
-      T("比特币 ", "Bitcoin ") + st.shock + "% → " + fmtUsd(m.pS, 0) + T("，比特币净值 ", ", bitcoin NAV ") + fmtUsd(m.navS / 1e6, 0) + "M" + T("；简单放大倍数 ", "; simple amplification ") + x(m.ampStress) + T("。", "."),
-      ...m.covS.map((r, i) => `${r.name}${C}${x(r.coverage)} · ${T("清算回收", "liquidation recovery")} ${fmtPct(m.wf.rows[i].recovery, 0)}`),
+      T("比特币", "Bitcoin") + C + F(String.raw`${u(st.px)} \times (1 - ${Math.abs(st.shock)}\%) = ${u(m.pS)}`) + T("，比特币净值", ", bitcoin NAV") + C + F(String.raw`${texv(fmtNum(st.btc, 0))} \times ${u(m.pS)} = ${uM(m.navS)}`) + T("；简单放大倍数 ", "; simple amplification ") + x(m.ampStress) + T("。", "."),
+      ...m.covS.map((r, i) => `${r.name}${C}${F(String.raw`\dfrac{${uM(m.navS)}}{${uM(r.cum)}} = ${xx(r.coverage)}`)} · ${T("清算回收", "liquidation recovery")} ${fmtPct(m.wf.rows[i].recovery, 0)}`),
       T("资本市场关门 ", "Markets shut for ") + st.shut + T(" 个月", " months") + T("；储备", "; the reserve ") + (m.outAt ? T("在第 " + m.outAt + " 个月耗尽", "runs out in month " + m.outAt) : T("在关门期内没有耗尽", "lasts through the shutdown")) + T("。", "."),
       m.putInWindow
-        ? T("第 " + st.putM + " 个月可转债回售（假设股价低于转股价、持有人要现金）", "Month " + st.putM + " convertible put (stock assumed below the conversion price, so holders want cash)") + C + T("卖出约 ", "sell about ") + fmtNum(m.putSold, 0) + T(" 枚比特币。", " bitcoin.")
+        ? T("第 " + st.putM + " 个月可转债回售（假设股价低于转股价、持有人要现金）", "Month " + st.putM + " convertible put (stock assumed below the conversion price, so holders want cash)") + C + T("卖出", "sell") + " " + F(String.raw`\dfrac{${uM(m.putCash || 0)}}{${u(m.pS)}} \approx ${nn(m.putSold, 0)}`) + T(" 枚比特币。", " bitcoin.")
         : T("回售日不在关门期内：假设市场重开后可再融资。", "The put falls outside the shutdown: refinancing assumed once markets reopen."),
       T("关门期内合计卖出约 ", "Total sold during the shutdown: about ") + fmtNum(m.sold, 0) + T(" 枚（占持仓 ", " bitcoin (") + fmtPct(m.sold / st.btc, 1) + T("）；之后最劣后层覆盖 ", " of holdings); junior-most coverage afterwards ") + (m.covEnd.length ? x(m.covEnd[m.covEnd.length - 1].coverage) : "–") + T("（阶段 18.2）。", " (Stage 18.2)."),
     ];
@@ -227,7 +245,7 @@ export default function mount(root, lang) {
       `<div class="demo-meta" style="margin-top:0">${T("宏观与利率默认值为 2026 年 9 月快照；公司默认值为橙子公司示意数据。", "Macro and rate defaults are a September 2026 snapshot; company defaults are illustrative Orange Corp data.")}</div>` +
       S.map(([h, lines]) => `<div style="margin-top:12px;font-weight:700;color:var(--orange-ink)">${h}</div>` + lines.map((l) => `<div style="margin-left:4px">· ${l}</div>`).join("")).join("");
     const tmp = document.createElement("div");
-    lastText = [title.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"'), ""].concat(S.flatMap(([h, lines]) => [h, ...lines.map((l) => { tmp.innerHTML = l; return "- " + tmp.textContent; }), ""])).join("\n");
+    lastText = [title.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"'), ""].concat(S.flatMap(([h, lines]) => [h, ...lines.map((l) => { tmp.innerHTML = l; tmp.querySelectorAll(".cs-f").forEach((f) => f.replaceWith(f.dataset.plain)); return "- " + tmp.textContent; }), ""])).join("\n");
     // 自查
     const wSum = st.pBear + st.pBull;
     const checks = [

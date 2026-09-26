@@ -54,10 +54,10 @@ The three are contagious. The macro tide falls → funding gets dearer and scarc
 Stage 9.1 showed that the items on the Fed's liability side trade off against each other. Markets have turned that rule into a popular rough indicator:
 
 $$
-net liquidity ≈ Fed total assets − Treasury General Account (TGA) − overnight reverse repo (ON RRP)
+\\text{net liquidity} \\approx \\text{Fed total assets} - \\mathrm{TGA} - \\mathrm{ON\\ RRP}
 $$
 
-The intuition: of the money on the Fed's balance sheet, cash sitting in the Treasury's account isn't buying assets, and cash in ON RRP is money funds' idle balance. What's left is, roughly, the reserves in the banking system that can flow out into markets.
+Here \\(\\mathrm{TGA}\\) is the Treasury General Account and \\(\\mathrm{ON\\ RRP}\\) the overnight reverse repo facility. The intuition: of the money on the Fed's balance sheet, cash sitting in the Treasury's account isn't buying assets, and cash in ON RRP is money funds' idle balance. What's left is, roughly, the reserves in the banking system that can flow out into markets.
 
 <figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The “net liquidity” waterfall (late Sep 2026; TGA and ON RRP illustrative)</text><line x1="40" y1="220" x2="600" y2="220" stroke="var(--line)" stroke-width="1.5"/><rect x="60" y="40" width="90" height="180" rx="4" fill="var(--orange)"/><text x="105" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Fed total assets</text><text x="105" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">about $6.75T</text><rect x="190" y="40" width="90" height="23" rx="4" fill="var(--red-soft)" stroke="var(--red)"/><text x="235" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">− TGA</text><text x="235" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">~$0.85T (illustrative)</text><rect x="320" y="63" width="90" height="3" fill="var(--red)"/><text x="365" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">− ON RRP</text><text x="365" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">nearly drained (illus.)</text><rect x="450" y="66" width="90" height="154" rx="4" fill="var(--blue)"/><text x="495" y="236" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">= Net liquidity</text><text x="495" y="252" text-anchor="middle" font-size="11" fill="var(--muted)">~$5.85T (illustrative)</text><line x1="150" y1="40" x2="190" y2="40" stroke="var(--line)" stroke-dasharray="3 3"/><line x1="280" y1="63" x2="320" y2="63" stroke="var(--line)" stroke-dasharray="3 3"/><line x1="410" y1="66" x2="450" y2="66" stroke="var(--line)" stroke-dasharray="3 3"/><text x="320" y="272" text-anchor="middle" font-size="10" fill="var(--muted)">QE and reserve purchases raise the first bar; a Treasury cash build raises TGA and lowers the last; funds leaving ON RRP to buy bills raise it back</text></svg><figcaption>This is a rough accounting identity, not an economic law: it tells you where money is parked, not what it will buy.</figcaption></figure>
 
@@ -133,7 +133,7 @@ At high tide the sailboats float highest, and it looks as if the water level dec
 
   quiz: [
     {
-      q: "Using the rough formula “net liquidity ≈ Fed assets − TGA − ON RRP,” which event lowers net liquidity?",
+      q: "Using the rough formula “\\(\\text{net liquidity} \\approx \\text{Fed assets} - \\mathrm{TGA} - \\mathrm{ON\\ RRP}\\),” which event lowers net liquidity?",
       options: [
         "The Fed starts QE and buys long Treasuries",
         "The Treasury sells lots of debt and rebuilds the TGA from $300 billion to $800 billion, mostly paid for out of bank deposits",

@@ -38,7 +38,7 @@ This lesson rests on two of the course's four ideas: **Idea ② — balance shee
   mechanics: `
 ### ① Loans create deposits: walking through the T-accounts
 
-The **T-account** is the one tool you need to understand a bank. On the left go assets (what the bank owns and what others owe it); on the right go liabilities and shareholders' equity (what the bank owes others, and what belongs to the owners). **The two sides always balance**: assets = liabilities + equity.
+The **T-account** is the one tool you need to understand a bank. On the left go assets (what the bank owns and what others owe it); on the right go liabilities and shareholders' equity (what the bank owes others, and what belongs to the owners). **The two sides always balance**: \\(\\text{assets} = \\text{liabilities} + \\text{equity}\\).
 
 Take a small bank, “Green Orange Bank” (figures in $ millions). At the start its assets are reserves 10, loans 60 and bonds 30, for 100 in total; its liabilities are deposits of 90, and shareholders' equity is 10.
 
@@ -53,7 +53,7 @@ Two things to take from the picture:
 
 **Reserves** are the balances commercial banks hold in their accounts at the central bank — the top layer of the money pyramid from Stage 1.1. Ordinary people never touch them; only banks (and a few other institutions) can hold them. Their core job is **final settlement between banks**: trillions of dollars of payments every day ultimately show up as reserves moving from one bank's account at the central bank to another's.
 
-The old textbook tells the **money multiplier** story: suppose the reserve requirement is 10%. You deposit $100; the bank keeps $10 and lends $90; the $90 lands in another bank, which keeps $9 and lends $81; and so on. Add it all up and $100 of reserves “supports” $1,000 of deposits — a multiplier of 1 ÷ 10% = 10.
+The old textbook tells the **money multiplier** story: suppose the reserve requirement is 10%. You deposit $100; the bank keeps $10 and lends $90; the $90 lands in another bank, which keeps $9 and lends $81; and so on. Add it all up and $100 of reserves “supports” $1,000 of deposits — a multiplier of \\(\\dfrac{1}{10\\%} = 10\\).
 
 The story has the causation backward. It assumes **deposits come first and loans second**, and that banks are held back by reserves. In reality:
 
@@ -67,15 +67,15 @@ So the more accurate statement is: **reserves are the banking system's settlemen
 
 The first gate on lending is **capital.** Shareholders' equity is the cushion under depositors: when loans go bad, shareholders lose first, and depositors lose only once the cushion is gone. Regulators insist the cushion not be too thin.
 
-The international standard, **Basel III**, requires a bank's common equity tier 1 capital (CET1) to be at least 4.5% of its **risk-weighted assets**, plus a 2.5% capital conservation buffer, for 7% in total, with extra surcharges for the largest banks. On top of that sits a **leverage ratio** floor that ignores risk weights (capital over total exposure, a baseline of 3%).
+The international standard, **Basel III**, requires a bank's common equity tier 1 capital (CET1) to be at least 4.5% of its **risk-weighted assets**, plus a 2.5% capital conservation buffer, for 7% in total, with extra surcharges for the largest banks. On top of that sits a **leverage ratio** floor that ignores risk weights (\\(\\text{capital} \\div \\text{total exposure}\\), a baseline of 3%).
 
 Feel it in numbers: Green Orange Bank has equity of 10 against assets of 100 — a 10% leverage ratio. If its assets lose 10% of their value, the equity is gone. **A bank is essentially an institution levered about ten to one** — that is Idea ④, risk & leverage, wearing a banker's suit. It is also why capital, not reserves, sets the real ceiling on lending: to add 100 of new loans, the bank needs roughly 7–10 more of shareholders' capital, either retained from profits or raised by issuing new shares (issuance and dilution are Stage 5.5).
 
 <table>
 <tr><th>Constraint</th><th>What it limits</th><th>Example</th></tr>
-<tr><td>Capital requirement</td><td>How big assets can be relative to shareholders' equity</td><td>CET1 ≥ 7% of risk-weighted assets (including the buffer)</td></tr>
-<tr><td>Liquidity requirement</td><td>Cash and liquid assets available at short notice</td><td>Liquidity coverage ratio (LCR): high-quality liquid assets ≥ net outflows in a 30-day stress</td></tr>
-<tr><td>Profit and risk</td><td>Whom to lend to and at what rate</td><td>The loan rate must cover funding cost + expected losses + a return on capital</td></tr>
+<tr><td>Capital requirement</td><td>How big assets can be relative to shareholders' equity</td><td>\\(\\mathrm{CET1} \\ge 7\\% \\times \\text{risk-weighted assets}\\) (including the buffer)</td></tr>
+<tr><td>Liquidity requirement</td><td>Cash and liquid assets available at short notice</td><td>Liquidity coverage ratio (LCR): \\(\\text{high-quality liquid assets} \\ge \\text{net outflows in a 30-day stress}\\)</td></tr>
+<tr><td>Profit and risk</td><td>Whom to lend to and at what rate</td><td>The loan rate must cover \\(\\text{funding cost} + \\text{expected losses} + \\text{a return on capital}\\)</td></tr>
 <tr><td>Loan demand</td><td>Whether anyone wants to borrow</td><td>When rates rise, mortgage applications fall and new loans (new deposits) slow</td></tr>
 </table>
 
@@ -163,7 +163,7 @@ A stablecoin is a different kind of warehouse: **for every ticket issued, an equ
         "90%",
       ],
       answer: 0,
-      explain: "Equity = assets − liabilities. With liabilities fixed at 90, a 10% fall in assets (to 90) leaves zero equity. **A bank is levered roughly ten to one**, which is why capital requirements exist.",
+      explain: "\\(\\text{Equity} = \\text{assets} - \\text{liabilities}\\). With liabilities fixed at 90, a 10% fall in assets (to 90) leaves zero equity. **A bank is levered roughly ten to one**, which is why capital requirements exist.",
     },
     {
       q: "Which statement best describes maturity mismatch?",

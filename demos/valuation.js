@@ -1,6 +1,6 @@
 // 交互演示：DCF 与利率滑块——预测晨光咖啡的自由现金流，拖动无风险利率与风险溢价，
 // 看每股价值、终值占比、“股票久期”怎么变；再反推：市价 12 元隐含了多高的永续增长？
-import { npv, gordon, fmtPct, fmtNum } from "./_fin.js";
+import { npv, gordon, fmtPct, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -54,9 +54,9 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-block"><div class="demo-log" id="vl-log"></div></div>
       <p class="demo-tip">${T(
-        "先点“长债收益率 +1 个百分点”：生意什么都没变，每股价值却跌了近两成。再把第 1–5 年增长拖到 25%、永续增长拖到 4.5%——价值飙升，但久期也变得极长，图上那条蓝线变得陡峭：高增长 = 长久期 = 对利率最敏感。",
-        "Click “Long yield +1 point” first: nothing about the business changed, yet value per share drops by nearly a fifth. Then push years 1–5 growth to 25% and perpetual growth to 4.5% — value soars, but duration gets very long and the blue curve turns steep: high growth = long duration = most rate-sensitive."
-      )}</p>
+        "先点“长债收益率 +1 个百分点”：生意什么都没变，每股价值却跌了近两成。再把第 1–5 年增长拖到 25%、永续增长拖到 4.5%——价值飙升，但久期也变得极长，图上那条蓝线变得陡峭：高增长意味着长久期，也就对利率最敏感（",
+        "Click “Long yield +1 point” first: nothing about the business changed, yet value per share drops by nearly a fifth. Then push years 1–5 growth to 25% and perpetual growth to 4.5% — value soars, but duration gets very long and the blue curve turns steep: high growth means long duration, which means the most rate sensitivity ("
+      )}${tex(String.raw`\text{${T("久期", "duration")}} \approx \dfrac{1}{r - g}`)}${T("）。", ").")}</p>
     </div>`;
 
   // 企业价值（万元）
@@ -100,9 +100,12 @@ export default function mount(root, lang) {
     root.querySelector("#vl-tv").textContent = fmtPct(e.pvTv / e.total, 0);
     root.querySelector("#vl-dur").textContent = fmtNum(dur, 1);
     root.querySelector("#vl-ig").textContent = ig <= -0.0499 ? "< −5%" : fmtPct(ig, 2);
+    const n0 = (x) => fmtNum(x * K, 0).replace(/,/g, "{,}");
+    const unitT = String.raw`\text{${en ? "\\$K" : "万元"}}`;
+    const psT = en ? String.raw`\$${fmtNum(ps, 2)}` : String.raw`${fmtNum(ps, 2)}\ \text{元}`;
     root.querySelector("#vl-bridge").innerHTML =
-      `${T("前 5 年现值", "PV of years 1–5")} ${fmtNum(e.pvExplicit * K, 0)} + ${T("终值现值", "PV of terminal value")} ${fmtNum(e.pvTv * K, 0)} = EV ${fmtNum(e.total * K, 0)} ${unit}<br>` +
-      `EV − ${T("净负债", "net debt")} ${fmtNum(NET_DEBT * K, 0)} = ${T("股权", "equity")} ${fmtNum((e.total - NET_DEBT) * K, 0)} ÷ ${T("100 万股", "1M shares")} = <b>${cur(ps)}</b>`;
+      tex(String.raw`\mathrm{EV} = \underbrace{${n0(e.pvExplicit)}}_{\text{${T("前 5 年现值", "PV of years 1–5")}}} + \underbrace{${n0(e.pvTv)}}_{\text{${T("终值现值", "PV of terminal value")}}} = ${n0(e.total)}\ ${unitT}`, true) +
+      tex(String.raw`\text{${T("每股价值", "Value per share")}} = \frac{\mathrm{EV} - \text{${T("净负债", "net debt")}}}{\text{${T("股数", "shares")}}} = \frac{${n0(e.total)} - ${n0(NET_DEBT)}}{\text{${T("100 万股", "1M shares")}}} = ${psT}`, true);
 
     // 同价“短久期”公司：无负债、永续增长 1%（戈登），按比例缩放到当前 r 下与你的公司同价
     const vv = (rr) => gordon(1, rr, 0.01);
@@ -119,7 +122,7 @@ export default function mount(root, lang) {
 
     const dUp = psUp / ps - 1, dV = vv(r + 0.01) / vv(r) - 1;
     log.push(`${T("折现率 +1 个百分点 → 你的公司", "Discount rate +1 point → your company")} <b class="bad">${fmtPct(dUp, 1)}</b>${T("，价值型公司", ", value company")} <b>${fmtPct(dV, 1)}</b>`);
-    log.push(`${T("股票久期约 ", "Equity duration ≈ ")}${fmtNum(dur, 1)}${T(" 年；对比：30 年期国债修正久期约 15.5。", " years; compare the 30-year Treasury's modified duration of about 15.5.")}${dur > 15.5 ? ` <span class="warn">${T("这只股票比 30 年期国债还“长”。", "This stock is “longer” than a 30-year bond.")}</span>` : ""}`);
+    log.push(`${tex(String.raw`\text{${T("股票久期", "Equity duration")}} \approx ${fmtNum(dur, 1)}`)}${T(" 年；对比：30 年期国债修正久期约 15.5。", " years; compare the 30-year Treasury's modified duration of about 15.5.")}${dur > 15.5 ? ` <span class="warn">${T("这只股票比 30 年期国债还“长”。", "This stock is “longer” than a 30-year bond.")}</span>` : ""}`);
     log.push(`${T("终值占 ", "The terminal value is ")}${fmtPct(e.pvTv / e.total, 0)}${T(" 的价值：大部分价值来自第 5 年以后。", " of the value: most of the value lies beyond year 5.")}`);
     log.push(`${T("反向 DCF：要让市价 12 元“刚好合理”，第 5 年后的永续增长需要约 ", "Reverse DCF: for the $12 market price to be “just right,” perpetual growth after year 5 would need to be about ")}<b>${ig <= -0.0499 ? "< −5%" : fmtPct(ig, 2)}</b>${T("。你觉得这个假设保守还是激进？", ". Is that assumption conservative or aggressive?")}`);
     root.querySelector("#vl-log").innerHTML = log.map((l) => `<div>${l}</div>`).join("");

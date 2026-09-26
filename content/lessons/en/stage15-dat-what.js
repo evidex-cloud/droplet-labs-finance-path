@@ -52,39 +52,38 @@ Orange Corp is the course's standard toy company; every illustrative calculation
 
 <table class="pm">
 <tr><th>Item</th><th>Value</th><th>Note</th></tr>
-<tr><td><b>Bitcoin</b></td><td>10,000 BTC × $100,000 = <b>$1.0B</b></td><td>Bitcoin NAV; Strategy calls it the BTC Reserve</td></tr>
+<tr><td><b>Bitcoin</b></td><td>\\(10{,}000\\ \\text{BTC} \\times \\$100{,}000 =\\) <b>$1.0B</b></td><td>Bitcoin NAV; Strategy calls it the BTC Reserve</td></tr>
 <tr><td><b>Cash / USD reserve</b></td><td>$30M</td><td>Earmarked for dividends</td></tr>
 <tr><td><b>Convertible notes</b></td><td>$150M, 0% coupon, $25 conversion price</td><td>Most senior layer (Stage 6.4)</td></tr>
 <tr><td><b>Orange-F</b></td><td>$100M, 10% <b>cumulative</b> preferred</td><td>Senior preferred (Stage 6.3)</td></tr>
 <tr><td><b>Orange-D</b></td><td>$50M, 10% <b>non-cumulative</b> preferred</td><td>Junior preferred</td></tr>
-<tr><td><b>Common stock</b></td><td>100M shares × $15 = <b>$1.5B market cap</b></td><td>Residual claim (Stage 5.1)</td></tr>
+<tr><td><b>Common stock</b></td><td>\\(100\\text{M shares} \\times \\$15 =\\) <b>$1.5B market cap</b></td><td>Residual claim (Stage 5.1)</td></tr>
 </table>
 
-<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Orange Corp's balance sheet ($ millions, to scale)</text><text x="130" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Assets</text><rect x="60" y="52" width="140" height="200" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="130" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="var(--btc)">Bitcoin 1,000</text><text x="130" y="163" text-anchor="middle" font-size="11" fill="var(--muted)">10,000 BTC × $100k</text><rect x="60" y="252" width="140" height="8" fill="var(--green-soft)" stroke="var(--green)"/><text x="130" y="276" text-anchor="middle" font-size="11" fill="var(--green)">Cash 30</text><text x="350" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Claims (top = paid first)</text><rect x="280" y="52" width="140" height="30" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="350" y="71" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Converts 150</text><rect x="280" y="82" width="140" height="20" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="350" y="96" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Orange-F 100</text><rect x="280" y="102" width="140" height="10" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="430" y="111" font-size="10" fill="var(--orange-ink)">Orange-D 50</text><rect x="280" y="112" width="140" height="148" fill="var(--surface-2)" stroke="var(--line)"/><text x="350" y="180" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Common (residual)</text><text x="350" y="197" text-anchor="middle" font-size="11" fill="var(--muted)">1,030 − 300 = 730</text><text x="430" y="71" font-size="10" fill="var(--blue)">covered 6.7x</text><text x="430" y="96" font-size="10" fill="var(--orange-ink)">cum. 250 → 4.0x</text><text x="430" y="126" font-size="10" fill="var(--red)">cum. 300 → 3.3x</text><text x="350" y="224" text-anchor="middle" font-size="11" font-weight="700" fill="var(--btc)">Market pays 1,500 (premium)</text><text x="320" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="var(--orange-ink)">One asset on the left; four layers sold to four kinds of investor on the right</text></svg><figcaption>The vault on the left, the floors on the right. Each layer's “BTC Rating” = bitcoin NAV ÷ the cumulative claims of that layer and everything above it. The common takes whatever is left — and the market prices it well above that book residual. The premium is the fuel of the whole DAT business.</figcaption></figure>
+<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Orange Corp's balance sheet ($ millions, to scale)</text><text x="130" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Assets</text><rect x="60" y="52" width="140" height="200" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="130" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="var(--btc)">Bitcoin 1,000</text><text x="130" y="163" text-anchor="middle" font-size="11" fill="var(--muted)">10,000 BTC × $100k</text><rect x="60" y="252" width="140" height="8" fill="var(--green-soft)" stroke="var(--green)"/><text x="130" y="276" text-anchor="middle" font-size="11" fill="var(--green)">Cash 30</text><text x="350" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Claims (top = paid first)</text><rect x="280" y="52" width="140" height="30" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="350" y="71" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Converts 150</text><rect x="280" y="82" width="140" height="20" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="350" y="96" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Orange-F 100</text><rect x="280" y="102" width="140" height="10" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="430" y="111" font-size="10" fill="var(--orange-ink)">Orange-D 50</text><rect x="280" y="112" width="140" height="148" fill="var(--surface-2)" stroke="var(--line)"/><text x="350" y="180" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Common (residual)</text><text x="350" y="197" text-anchor="middle" font-size="11" fill="var(--muted)">1,030 − 300 = 730</text><text x="430" y="71" font-size="10" fill="var(--blue)">covered 6.7x</text><text x="430" y="96" font-size="10" fill="var(--orange-ink)">cum. 250 → 4.0x</text><text x="430" y="126" font-size="10" fill="var(--red)">cum. 300 → 3.3x</text><text x="350" y="224" text-anchor="middle" font-size="11" font-weight="700" fill="var(--btc)">Market pays 1,500 (premium)</text><text x="320" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="var(--orange-ink)">One asset on the left; four layers sold to four kinds of investor on the right</text></svg><figcaption>The vault on the left, the floors on the right. Each layer's \\(\\text{BTC Rating} = \\dfrac{\\text{bitcoin NAV}}{\\text{cumulative claims of that layer and everything above it}}\\). The common takes whatever is left — and the market prices it well above that book residual. The premium is the fuel of the whole DAT business.</figcaption></figure>
 
 Three things to read off this picture:
 
 - **No bitcoin is pledged to any layer.** The converts are unsecured and the preferreds are equity, so nobody can force the company to sell coins because the price fell — the “no margin call” point from Stage 7.5. The real Strategy works the same way: its preferreds are “perpetual equity, not debt”, and no bitcoin is pledged to them (August 2026 investor briefing).
-- **Each layer's cushion is its asset coverage** (Stage 6.5): converts $1.0B ÷ $150M ≈ **6.7x**; through Orange-F, cumulative $250M → **4.0x**; through Orange-D, cumulative $300M → **3.3x**. Strategy calls this number the **BTC Rating**; Stage 16.5 is devoted to it.
-- **The annual bill**: preferred dividends ($100M + $50M) × 10% = **$15M**; the converts pay 0%. The $30M of cash covers **24 months** — the “USD reserve coverage” of Stage 16.6.
+- **Each layer's cushion is its asset coverage** (Stage 6.5): converts \\(\\dfrac{\\$1.0\\text{B}}{\\$150\\text{M}} \\approx\\) **6.7x**; through Orange-F, cumulative $250M → \\(\\dfrac{\\$1.0\\text{B}}{\\$250\\text{M}} =\\) **4.0x**; through Orange-D, cumulative $300M → \\(\\dfrac{\\$1.0\\text{B}}{\\$300\\text{M}} \\approx\\) **3.3x**. Strategy calls this number the **BTC Rating**; Stage 16.5 is devoted to it.
+- **The annual bill**: preferred dividends \\((\\$100\\text{M} + \\$50\\text{M}) \\times 10\\% =\\) **$15M**; the converts pay 0%. The $30M of cash covers **24 months** — the “USD reserve coverage” of Stage 16.6.
 
 ### ③ Why the common behaves like levered bitcoin
 
-The common is the residual claim: whatever the bitcoin and cash are worth after the three senior layers are paid belongs to it. Suppose bitcoin rises 10%, from $1.0B to $1.1B:
+The common is the residual claim: whatever the bitcoin and cash are worth after the three senior layers are paid belongs to it. Suppose bitcoin rises 10%, from $1.0B to $1.1B. The common's underlying value moves like this:
 
 $$
-BTC +10%: the common's underlying value goes from 1,000 + 30 − 300 = 730 to 1,100 + 30 − 300 = 830, up 13.7%
-BTC −10%: it goes from 730 to 630, down 13.7%
+\\begin{aligned} \\text{BTC } {+10\\%}\\text{:}\\ & 1{,}000 + 30 - 300 = 730 \\\\ & \\to\\ 1{,}100 + 30 - 300 = 830\\quad(\\text{up } 13.7\\%) \\\\ \\text{BTC } {-10\\%}\\text{:}\\ & 730 \\to 630\\quad(\\text{down } 13.7\\%) \\end{aligned}
 $$
 
 **The three senior claims are fixed, so every move in bitcoin lands on the common.** That is amplification (Stage 16.4), and there are two common ways to compute it:
 
-- **Simple version, ignoring cash**: bitcoin NAV ÷ (bitcoin NAV − cumulative senior claims) = 10 ÷ (10 − 3) ≈ **1.43x**.
-- **Strategy's official Amplification**: BTC Reserve ÷ Net Reserve = 10 ÷ 7.3 ≈ **1.37x** (Net Reserve adds the cash back; see part ④). The 13.7% above is exactly 1.37 × 10%.
+- **Simple version, ignoring cash**: \\(\\dfrac{\\text{bitcoin NAV}}{\\text{bitcoin NAV} - \\text{cumulative senior claims}} = \\dfrac{10}{10 - 3} \\approx\\) **1.43x**.
+- **Strategy's official Amplification**: \\(\\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}} = \\dfrac{10}{7.3} \\approx\\) **1.37x** (Net Reserve adds the cash back; see part ④). The 13.7% above is exactly \\(1.37 \\times 10\\%\\).
 
 Three caveats. First, **1.37x is modest** — compare a house bought with an 80% mortgage (5x) or a 10x perpetual futures position. The main reason DAT common stock swings much harder than bitcoin is that **mNAV moves too**: when bitcoin rallies, the market tends to pay a fatter premium; when it falls, the premium compresses, and the two forces compound (the reflexivity of Stage 10.4). Second, amplification cuts **both ways**: from October 2025 to July 2026 bitcoin fell from about $126,000 to about $58,000 (−54%), and DAT common stocks generally fell further. Third, amplification **drifts** with the bitcoin price: the lower bitcoin goes, the larger the fixed claims loom and the higher the multiplier — a path dependence that echoes the volatility drag of Stage 11.4.
 
-Real data point: Strategy reported an Amplification of **1.30x** on August 23, 2026 (BTC Reserve $64.7B ÷ Net Reserve $49.7B).
+Real data point: Strategy reported an Amplification of **1.30x** on August 23, 2026 (\\(\\text{BTC Reserve } \\$64.7\\text{B} \\div \\text{Net Reserve } \\$49.7\\text{B}\\)).
 
 ### ④ Official definitions side by side: one company, four mNAVs
 
@@ -92,20 +91,20 @@ Real data point: Strategy reported an Amplification of **1.30x** on August 23, 2
 
 <table class="pm">
 <tr><th>Definition</th><th>Formula</th><th>Orange Corp</th></tr>
-<tr><td><b>Basic market-cap</b> (bitcointreasuries “basic”)</td><td>Market cap ÷ bitcoin NAV</td><td>15 ÷ 10 = <b>1.50</b></td></tr>
-<tr><td><b>Diluted market-cap</b></td><td>Price × diluted shares ÷ bitcoin NAV (converts assumed converted: +6M shares → 106M)</td><td>15.9 ÷ 10 = <b>1.59</b></td></tr>
-<tr><td><b>Enterprise-value mNAV</b> (Strategy's 2025 definition)</td><td>(Market cap + debt + preferred notional − cash) ÷ bitcoin NAV</td><td>(15 + 1.5 + 1.5 − 0.3) ÷ 10 = <b>1.77</b></td></tr>
-<tr><td><b>Price ÷ Net BTC per share</b> (Strategy's 2026 definition)</td><td>Net Reserve = BTC − out-of-the-money converts − preferred + USD assets = $730M; fully diluted shares count only in-the-money instruments = 100M → $7.30 per share</td><td>15 ÷ 7.30 = <b>2.05</b></td></tr>
+<tr><td><b>Basic market-cap</b> (bitcointreasuries “basic”)</td><td>\\(\\mathrm{mNAV} = \\dfrac{\\text{market cap}}{\\text{bitcoin NAV}}\\)</td><td>\\(\\dfrac{15}{10} =\\) <b>1.50</b></td></tr>
+<tr><td><b>Diluted market-cap</b></td><td>\\(\\mathrm{mNAV} = \\dfrac{\\text{price} \\times \\text{diluted shares}}{\\text{bitcoin NAV}}\\) (converts assumed converted: +6M shares → 106M)</td><td>\\(\\dfrac{15.9}{10} =\\) <b>1.59</b></td></tr>
+<tr><td><b>Enterprise-value mNAV</b> (Strategy's 2025 definition)</td><td>\\(\\mathrm{mNAV} = \\dfrac{\\text{market cap} + \\text{debt} + \\text{preferred notional} - \\text{cash}}{\\text{bitcoin NAV}}\\)</td><td>\\(\\dfrac{15 + 1.5 + 1.5 - 0.3}{10} =\\) <b>1.77</b></td></tr>
+<tr><td><b>\\(\\text{Price} \\div \\text{Net BTC per share}\\)</b> (Strategy's 2026 definition)</td><td>\\(\\text{Net Reserve} = \\text{BTC} - \\text{out-of-the-money converts} - \\text{preferred} + \\text{USD assets} = \\$730\\text{M}\\); fully diluted shares count only in-the-money instruments, 100M in all → \\(\\dfrac{\\$730\\text{M}}{100\\text{M shares}} = \\$7.30\\) per share</td><td>\\(\\dfrac{15}{7.30} =\\) <b>2.05</b></td></tr>
 </table>
 
-**Same company, same day: 1.50 through 2.05 are all “correct.”** Hence the course rule: **whenever you quote mNAV, say which definition.** A real example: on Strategy's 2026 definition its mNAV on August 21, 2026 was **1.01x** ($119.25 share price ÷ $118.31 net bitcoin per share); on the 2025 enterprise-value definition the same day works out to about **1.00x**. On November 28, 2025, under the old definition, it was 1.2x. **Numbers from different years are not comparable.**
+**Same company, same day: 1.50 through 2.05 are all “correct.”** Hence the course rule: **whenever you quote mNAV, say which definition.** A real example: on Strategy's 2026 definition its mNAV on August 21, 2026 was **1.01x** (\\(\\dfrac{\\$119.25\\ \\text{share price}}{\\$118.31\\ \\text{net bitcoin per share}}\\)); on the 2025 enterprise-value definition the same day works out to about **1.00x**. On November 28, 2025, under the old definition, it was 1.2x. **Numbers from different years are not comparable.**
 
 A few other definitions also need settling now (all reproducible with _fin.js):
 
-- **Amplification**: 1.43x is the simple, cash-ignoring version; Strategy's official Amplification = BTC Reserve ÷ Net Reserve = 10 ÷ 7.3 ≈ **1.37x**; and **Strive's “Amplification Ratio” is a different animal** = (debt + preferred) ÷ bitcoin value = 3 ÷ 10 = **30%** (Strive's own figure in September 2026 was 50.4%). Nearly the same name, completely different formula.
-- **Bitcoin per share**: on 100M common shares, 0.0001 BTC = **10,000 sats per share**; on Strategy's “Assumed Diluted Shares” (every convert counted as converted, in or out of the money: 106M shares) ≈ **9,434 sats per share**.
-- **BTC Breakeven ARR** (how much bitcoin must appreciate each year to “cover” the dividends) = $15M ÷ $1.0B = **1.5%**. Strategy's figure on August 23, 2026 was 2.63%.
-- **BTC floor price** (the bitcoin price at which a layer's BTC Rating is exactly 1.0x): Orange-F = $100,000 ÷ 4.0 = **$25,000**; Orange-D ≈ **$30,000**.
+- **Amplification**: 1.43x is the simple, cash-ignoring version; Strategy's official \\(\\text{Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}} = \\dfrac{10}{7.3} \\approx\\) **1.37x**; and **Strive's “Amplification Ratio” is a different animal**: \\(\\text{Amplification Ratio} = \\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin value}} = \\dfrac{3}{10} =\\) **30%** (Strive's own figure in September 2026 was 50.4%). Nearly the same name, completely different formula.
+- **Bitcoin per share**: on 100M common shares, \\(\\dfrac{10{,}000\\ \\text{BTC}}{100\\text{M}} = 0.0001\\ \\text{BTC} =\\) **10,000 sats per share**; on Strategy's “Assumed Diluted Shares” (every convert counted as converted, in or out of the money: 106M shares) \\(\\dfrac{10{,}000\\ \\text{BTC}}{106\\text{M}} \\approx\\) **9,434 sats per share**.
+- **BTC Breakeven ARR** (how much bitcoin must appreciate each year to “cover” the dividends): \\(\\dfrac{\\$15\\text{M}}{\\$1.0\\text{B}} =\\) **1.5%**. Strategy's figure on August 23, 2026 was 2.63%.
+- **BTC floor price** (the bitcoin price at which a layer's BTC Rating is exactly 1.0x): Orange-F \\(= \\dfrac{\\$100{,}000}{4.0} =\\) **$25,000**; Orange-D \\(\\approx\\) **$30,000**.
 
 Why would the market ever pay more than 1x? The bulls' answer: access (plenty of money can buy stocks but not bitcoin itself); the ability to issue at a premium and grow bitcoin per share (the flywheel of Stage 16.7 — sell 10 million new shares at $15, buy bitcoin with all of it, and bitcoin per share rises **4.5%**); and the volatility value embedded in converts and listed options (Stage 7.3). The bears' reply: the premium is reflexive — **high premium → issue and buy → better story → higher premium**, and the loop runs in reverse just as easily. In September 2026, per DWF Ventures, **16 of the 20 largest DATs traded below 1x mNAV.** The full treatment of mNAV is Stage 16.2; what a company can do once it slips below 1x is Stage 18.3.
 
@@ -143,15 +142,15 @@ One more thing: no rope ties the building to the foundation, so nobody can order
 
   misconceptions: [
     "**“A DAT is just a bitcoin fund.”** — A fund creates and redeems at NAV, so arbitrage pins its price near NAV. A DAT is an operating company whose shares can trade far above or below its bitcoin NAV for long stretches (mNAVs from about 0.6x to above 2x have all been seen), and its capital stack includes debt and preferreds, so the common is an amplified residual claim.",
-    "**“mNAV is one number.”** — For the same Orange Corp it is 1.50 on basic market cap, 1.59 diluted, 1.77 on enterprise value and 2.05 on price ÷ net BTC per share. Strategy even changed its own definition in 2026. An mNAV without a stated definition tells you nothing.",
+    "**“mNAV is one number.”** — For the same Orange Corp it is 1.50 on basic market cap, 1.59 diluted, 1.77 on enterprise value and 2.05 on \\(\\text{price} \\div \\text{net BTC per share}\\). Strategy even changed its own definition in 2026. An mNAV without a stated definition tells you nothing.",
     "**“Bitcoin-backed preferred means the bitcoin is collateral.”** — No bitcoin is pledged to the preferreds. “Backed” refers to asset coverage: bitcoin NAV as a multiple of the cumulative claims of that layer and everything senior. The coverage floats with the bitcoin price, and in a bankruptcy the preferred still ranks behind all debt.",
     "**“No margin calls means leverage carries no risk.”** — Without a trigger, the risk turns chronic: preferred dividends need cash, and bitcoin produces none. When the funding window shuts, the company must spend its reserve or sell coins — and in 2026 several DATs, Strategy included, sold bitcoin to fund dividends, buybacks or debt repayment.",
-    "**“Strive's 30% amplification ratio is far lower than Strategy's 1.37x, so it is more conservative.”** — They are different formulas. Strive's Amplification Ratio = (debt + preferred) ÷ bitcoin, a percentage; Strategy's Amplification = BTC Reserve ÷ Net Reserve, a multiple. Orange Corp is simultaneously “30%” and “1.37x.” Convert to one definition before you compare.",
+    "**“Strive's 30% amplification ratio is far lower than Strategy's 1.37x, so it is more conservative.”** — They are different formulas. Strive's \\(\\text{Amplification Ratio} = \\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin}}\\), a percentage; Strategy's \\(\\text{Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\), a multiple. Orange Corp is simultaneously “30%” and “1.37x.” Convert to one definition before you compare.",
   ],
 
   quiz: [
     {
-      q: "Orange Corp: 10,000 BTC, bitcoin at $100,000, 100M shares at $15, $150M of converts (conversion price $25), $150M of preferreds in total, $30M cash. On Strategy's 2026 definition (price ÷ net BTC per share), what is its mNAV?",
+      q: "Orange Corp: 10,000 BTC, bitcoin at $100,000, 100M shares at $15, $150M of converts (conversion price $25), $150M of preferreds in total, $30M cash. On Strategy's 2026 definition (\\(\\text{price} \\div \\text{net BTC per share}\\)), what is its mNAV?",
       options: [
         "1.50",
         "1.77",
@@ -159,18 +158,18 @@ One more thing: no rope ties the building to the foundation, so nobody can order
         "2.05",
       ],
       answer: 3,
-      explain: "Net Reserve = $1.0B − $150M (out-of-the-money converts) − $150M (preferred) + $30M = **$730M**; fully diluted shares count only in-the-money instruments = 100M → $7.30 net BTC per share; $15 ÷ $7.30 ≈ **2.05**. 1.50 is basic market cap, 1.59 diluted market cap, 1.77 enterprise value.",
+      explain: "\\(\\text{Net Reserve} = \\$1.0\\text{B} - \\$150\\text{M}\\,(\\text{out-of-the-money converts}) - \\$150\\text{M}\\,(\\text{preferred}) + \\$30\\text{M} =\\) **$730M**; fully diluted shares count only in-the-money instruments, 100M in all → $7.30 net BTC per share; \\(\\dfrac{\\$15}{\\$7.30} \\approx\\) **2.05**. 1.50 is basic market cap, 1.59 diluted market cap, 1.77 enterprise value.",
     },
     {
       q: "If bitcoin rises 10%, roughly how much does the common's underlying value (bitcoin + cash − all senior claims) rise?",
       options: [
-        "About 13.7%: amplification of 10 ÷ 7.3 ≈ 1.37",
+        "About 13.7%: amplification of \\(10 \\div 7.3 \\approx 1.37\\)",
         "Exactly 10%",
         "About 15%, because mNAV is 1.5",
         "About 30%, because senior claims are 30% of the bitcoin",
       ],
       answer: 0,
-      explain: "The senior claims are fixed, so the whole move lands on the common: 730 becomes 830, **+13.7% = 1.37 × 10%**. That is Strategy's official Amplification (BTC Reserve ÷ Net Reserve). The actual share-price move also depends on what mNAV does.",
+      explain: "The senior claims are fixed, so the whole move lands on the common: 730 becomes 830, \\(\\mathbf{+13.7\\% = 1.37 \\times 10\\%}\\). That is Strategy's official Amplification (\\(\\text{BTC Reserve} \\div \\text{Net Reserve}\\)). The actual share-price move also depends on what mNAV does.",
     },
     {
       q: "What are Orange-F's (the senior preferred's) BTC Rating and BTC floor price?",
@@ -181,7 +180,7 @@ One more thing: no rope ties the building to the foundation, so nobody can order
         "3.3x; $30,000",
       ],
       answer: 1,
-      explain: "BTC Rating = bitcoin NAV ÷ **cumulative** claims of the layer and everything above = $1.0B ÷ ($150M + $100M) = **4.0x**; floor price = $100,000 ÷ 4.0 = **$25,000**. 3.3x / $30,000 is Orange-D.",
+      explain: "\\(\\text{BTC Rating} = \\dfrac{\\text{bitcoin NAV}}{\\textbf{cumulative}\\ \\text{claims of the layer and everything above}} = \\dfrac{\\$1.0\\text{B}}{\\$150\\text{M} + \\$100\\text{M}} =\\) **4.0x**; \\(\\text{floor price} = \\dfrac{\\$100{,}000}{4.0} =\\) **$25,000**. 3.3x / $30,000 is Orange-D.",
     },
     {
       q: "Which statement best describes “backed” in “bitcoin-backed preferred”?",

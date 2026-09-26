@@ -1,6 +1,6 @@
 // 交互演示：指数与 ETF 的管道——①同一篮子股票用四种加权方式编指数，看权重与“一只股票涨跌”对指数的影响；
 // ②纳入效应计算器：被动资金需要买多少、相当于几天成交量；③ETF 套利：价格偏离净值时 AP 怎么做、赚多少。
-import { fmtPct, fmtNum, fmtBig, clamp } from "./_fin.js";
+import { fmtPct, fmtNum, fmtBig, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -60,12 +60,13 @@ export default function mount(root, lang) {
             <div class="stat"><div class="k">${T("被动资金需买入", "Passive buying needed")}</div><div class="v acc" id="ie-buy">–</div></div>
             <div class="stat"><div class="k">${T("相当于几天成交量", "Days of total volume")}</div><div class="v" id="ie-days">–</div></div>
           </div>
+          <div class="demo-out" id="ie-incl"></div>
         </div>
         <div class="demo-block">
           <div class="demo-label">${T("③ ETF 套利：净值 100 美元，交易所价格是？", "③ ETF arbitrage: NAV is $100 — what is the market price?")}</div>
           <label class="demo-label">${T("ETF 价格", "ETF price")}${T("：", ": ")}<b id="ie-ev"></b></label>
           <input class="demo-slider" type="range" min="99" max="101" step="0.05" value="${st.etf}" id="ie-etf" />
-          <div class="demo-meta">${T("假设一个创设单位 = 5 万份，AP 的往返交易成本约每份 0.05 美元。", "Assume one creation unit = 50,000 shares and AP round-trip costs of about $0.05 per share.")}</div>
+          <div class="demo-meta">${T("假设一个创设单位为 5 万份，AP 的往返交易成本约每份 0.05 美元。", "Assume one creation unit is 50,000 shares and AP round-trip costs are about $0.05 per share.")}</div>
           <div class="demo-out" id="ie-arb"></div>
         </div>
       </div>
@@ -101,14 +102,18 @@ export default function mount(root, lang) {
     const buy = st.cap * st.passive, days = buy / st.adv;
     q("#ie-buy").textContent = "$" + fmtBig(buy);
     const dEl = q("#ie-days"); dEl.textContent = fmtNum(days, 1); dEl.className = "v " + (days > 3 ? "neg" : "");
+    const bigT = (x) => String.raw`\$` + fmtBig(x).replace(/([KMBT])$/, String.raw`\text{$1}`);
+    q("#ie-incl").innerHTML =
+      tex(String.raw`\text{${T("需买入", "Buying needed")}} = ${bigT(st.cap)} \times ${fmtPct(st.passive, 0).replace("%", "\\%")} = ${bigT(buy)}`, true) +
+      tex(String.raw`\text{${T("天数", "Days")}} = \frac{${bigT(buy)}}{${bigT(st.adv)}\ \text{${T("/天", "a day")}}} = ${fmtNum(days, 1)}`, true);
 
     // ETF 套利
     q("#ie-ev").textContent = "$" + fmtNum(st.etf, 2);
     const gap = st.etf - 100, cost = 0.05, unit = 50000;
     let arb;
     if (Math.abs(gap) <= cost) arb = `<span class="pill ok">${T("无套利空间", "No arbitrage")}</span> ${T("偏离小于交易成本，AP 不动手——价格就停在净值附近这个“带”里。", "The gap is smaller than trading costs, so APs do nothing — the price sits inside a narrow band around NAV.")}`;
-    else if (gap > 0) arb = `<span class="pill ok">${T("创设", "Create")}</span> ${T("买入篮子（100 美元）→ 换新份额 → 以 ", "Buy the basket ($100) → swap for new shares → sell at ")}$${fmtNum(st.etf, 2)}${T(" 卖出。每个创设单位净赚约 ", ". Net profit per creation unit ≈ ")}<b>$${fmtNum((gap - cost) * unit, 0)}</b>${T("。持续卖出把价格压回净值。", ". The selling pushes the price back to NAV.")}`;
-    else arb = `<span class="pill bad">${T("赎回", "Redeem")}</span> ${T("以 ", "Buy ETF shares at ")}$${fmtNum(st.etf, 2)}${T(" 买入份额 → 交回发行人换出价值 100 美元的篮子 → 卖掉篮子。每个单位净赚约 ", " → hand them to the issuer for a $100 basket → sell the basket. Net profit per unit ≈ ")}<b>$${fmtNum((-gap - cost) * unit, 0)}</b>${T("。持续买入把价格抬回净值。", ". The buying lifts the price back to NAV.")}`;
+    else if (gap > 0) arb = `<span class="pill ok">${T("创设", "Create")}</span> ${T("买入篮子（100 美元）→ 换新份额 → 以 ", "Buy the basket ($100) → swap for new shares → sell at ")}$${fmtNum(st.etf, 2)}${T(" 卖出。每个创设单位净赚：", ". Net profit per creation unit: ")}${tex(String.raw`(${fmtNum(st.etf, 2)} - 100 - 0.05) \times 50{,}000 \approx \$${fmtNum((gap - cost) * unit, 0).replace(/,/g, "{,}")}`)}${T("。持续卖出把价格压回净值。", ". The selling pushes the price back to NAV.")}`;
+    else arb = `<span class="pill bad">${T("赎回", "Redeem")}</span> ${T("以 ", "Buy ETF shares at ")}$${fmtNum(st.etf, 2)}${T(" 买入份额 → 交回发行人换出价值 100 美元的篮子 → 卖掉篮子。每个单位净赚：", " → hand them to the issuer for a $100 basket → sell the basket. Net profit per unit: ")}${tex(String.raw`(100 - ${fmtNum(st.etf, 2)} - 0.05) \times 50{,}000 \approx \$${fmtNum((-gap - cost) * unit, 0).replace(/,/g, "{,}")}`)}${T("。持续买入把价格抬回净值。", ". The buying lifts the price back to NAV.")}`;
     q("#ie-arb").innerHTML = arb;
 
     const log = [];

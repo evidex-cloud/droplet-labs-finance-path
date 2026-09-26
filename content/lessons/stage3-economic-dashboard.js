@@ -47,7 +47,7 @@ export default {
 美国劳工统计局（BLS）每月发布的《就业形势报告》其实来自**两份不同的调查**：
 
 - **机构调查（企业调查）**：询问大量企业和政府机构的工资名单，得出**非农就业人数的月度变化**（Nonfarm Payrolls，简称 NFP）。“非农”是因为农业就业季节性太强，被排除在外。
-- **家庭调查**：询问约六万户家庭，得出**失业率**、劳动参与率等。失业率 = 失业人数 ÷ 劳动力（有工作的人 + 在找工作的人）。**没在找工作的人不算失业**，所以失业率低也可能是因为很多人放弃找工作。
+- **家庭调查**：询问约六万户家庭，得出**失业率**、劳动参与率等。\\(\\text{失业率} = \\dfrac{\\text{失业人数}}{\\text{劳动力}}\\)，其中 \\(\\text{劳动力} = \\text{有工作的人} + \\text{在找工作的人}\\)。**没在找工作的人不算失业**，所以失业率低也可能是因为很多人放弃找工作。
 
 两份调查偶尔会讲出相反的故事，所以要一起看。还要看**修正**：每次报告都会修正前两个月的非农数字，每年还有一次“基准修订”。一份看起来强劲的报告，如果同时把前两个月大幅下修，整体信息可能是“偏弱”。
 
@@ -73,15 +73,15 @@ export default {
 
 读通胀还有两个陷阱：
 
-- **环比 vs 同比**：交易员最盯的是**环比**（这个月比上个月），尤其是核心 CPI 环比。环比 0.2% 年化约 2.4%，0.4% 年化约 4.9%——看起来只差 0.2，意义天差地别。
-- **基数效应**：同比 = 过去 12 个月环比的累积。如果去年同月物价暴涨，今年同比会“自动”下降，哪怕这个月物价涨得不少。
+- **环比 vs 同比**：交易员最盯的是**环比**（这个月比上个月），尤其是核心 CPI 环比。环比 0.2% 年化约 \\((1.002)^{12} - 1 \\approx 2.4\\%\\)，0.4% 年化约 \\((1.004)^{12} - 1 \\approx 4.9\\%\\)——看起来只差 0.2，意义天差地别。
+- **基数效应**：同比就是过去 12 个月环比的累积。如果去年同月物价暴涨，今年同比会“自动”下降，哪怕这个月物价涨得不少。
 
 ### ③ 景气与消费：PMI、零售销售与初请失业金
 
 **PMI（采购经理人指数）**是一种调查：问企业的采购经理，新订单、生产、就业、交货时间、库存比上个月“更好、一样、还是更差”。算法让 **50 成为分界线**：
 
-- PMI > 50：多数企业说在扩张；
-- PMI < 50：多数企业说在收缩；
+- \\(\\mathrm{PMI} > 50\\)：多数企业说在扩张；
+- \\(\\mathrm{PMI} < 50\\)：多数企业说在收缩；
 - 离 50 越远，变化越强烈。
 
 美国最常用的是 ISM 制造业和服务业 PMI，以及标普全球的 PMI。PMI 的优点是**快**（月初就出）、**不修正**，而且其中的“新订单”“价格支付”分项常常领先于硬数据。缺点是它衡量的是“方向和广度”，不是“幅度”——PMI 52 不代表增长 2%。
@@ -94,13 +94,13 @@ export default {
 
 ### ④ 预期与意外：市场只对“没想到”的部分反应
 
-<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">数据公布的那一秒：价格只对“意外”部分反应（示意）</text><line x1="40" y1="110" x2="600" y2="110" stroke="var(--line)" stroke-width="1.5"/><text x="40" y="128" font-size="10" fill="var(--muted)">0</text><text x="596" y="128" text-anchor="end" font-size="10" fill="var(--muted)">非农新增（千人）300</text><rect x="180" y="70" width="140" height="40" fill="var(--surface-2)" stroke="var(--line)"/><text x="250" y="62" text-anchor="middle" font-size="10.5" fill="var(--muted)">常见的预测分歧区间</text><line x1="250" y1="66" x2="250" y2="116" stroke="var(--blue)" stroke-width="2.5"/><text x="250" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--blue)">共识 150</text><line x1="453" y1="60" x2="453" y2="116" stroke="var(--orange)" stroke-width="2.5"/><text x="453" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">实际 260</text><line x1="256" y1="92" x2="446" y2="92" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="350" y="86" text-anchor="middle" font-size="11" fill="var(--orange-ink)">意外 = +110</text><rect x="40" y="170" width="170" height="80" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="125" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--ink)">已经“计入价格”</text><text x="125" y="215" text-anchor="middle" font-size="10.5" fill="var(--muted)">共识的 150 早已反映</text><text x="125" y="232" text-anchor="middle" font-size="10.5" fill="var(--muted)">在国债和股票价格里</text><rect x="235" y="170" width="170" height="80" rx="8" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="320" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--orange-ink)">新闻 = 意外部分</text><text x="320" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">经济比想的热</text><text x="320" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">→ 加息预期上调</text><rect x="430" y="170" width="170" height="80" rx="8" fill="var(--red-soft)" stroke="var(--red)"/><text x="515" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--red)">价格几秒内重估</text><text x="515" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">2 年期收益率 ↑ 最多</text><text x="515" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">10 年期 ↑，股票看环境</text><line x1="212" y1="210" x2="232" y2="210" stroke="var(--muted)" stroke-width="1.5"/><line x1="407" y1="210" x2="427" y2="210" stroke="var(--muted)" stroke-width="1.5"/><text x="320" y="272" text-anchor="middle" font-size="10.5" fill="var(--muted)">意外越大、越出乎“常见误差”，价格反应越大</text></svg><figcaption>数据公布前，共识已经在价格里；公布那一刻，只有“实际 − 共识”的部分是新信息。</figcaption></figure>
+<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">数据公布的那一秒：价格只对“意外”部分反应（示意）</text><line x1="40" y1="110" x2="600" y2="110" stroke="var(--line)" stroke-width="1.5"/><text x="40" y="128" font-size="10" fill="var(--muted)">0</text><text x="596" y="128" text-anchor="end" font-size="10" fill="var(--muted)">非农新增（千人）300</text><rect x="180" y="70" width="140" height="40" fill="var(--surface-2)" stroke="var(--line)"/><text x="250" y="62" text-anchor="middle" font-size="10.5" fill="var(--muted)">常见的预测分歧区间</text><line x1="250" y1="66" x2="250" y2="116" stroke="var(--blue)" stroke-width="2.5"/><text x="250" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--blue)">共识 150</text><line x1="453" y1="60" x2="453" y2="116" stroke="var(--orange)" stroke-width="2.5"/><text x="453" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">实际 260</text><line x1="256" y1="92" x2="446" y2="92" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="350" y="86" text-anchor="middle" font-size="11" fill="var(--orange-ink)">意外 = +110</text><rect x="40" y="170" width="170" height="80" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="125" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--ink)">已经“计入价格”</text><text x="125" y="215" text-anchor="middle" font-size="10.5" fill="var(--muted)">共识的 150 早已反映</text><text x="125" y="232" text-anchor="middle" font-size="10.5" fill="var(--muted)">在国债和股票价格里</text><rect x="235" y="170" width="170" height="80" rx="8" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="320" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--orange-ink)">新闻 = 意外部分</text><text x="320" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">经济比想的热</text><text x="320" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">→ 加息预期上调</text><rect x="430" y="170" width="170" height="80" rx="8" fill="var(--red-soft)" stroke="var(--red)"/><text x="515" y="195" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--red)">价格几秒内重估</text><text x="515" y="215" text-anchor="middle" font-size="10.5" fill="var(--ink)">2 年期收益率 ↑ 最多</text><text x="515" y="232" text-anchor="middle" font-size="10.5" fill="var(--ink)">10 年期 ↑，股票看环境</text><line x1="212" y1="210" x2="232" y2="210" stroke="var(--muted)" stroke-width="1.5"/><line x1="407" y1="210" x2="427" y2="210" stroke="var(--muted)" stroke-width="1.5"/><text x="320" y="272" text-anchor="middle" font-size="10.5" fill="var(--muted)">意外越大、越出乎“常见误差”，价格反应越大</text></svg><figcaption>数据公布前，共识已经在价格里；公布那一刻，只有 \\(\\text{实际} - \\text{共识}\\) 这部分是新信息。</figcaption></figure>
 
 每一份重要数据公布前，彭博、路透等会汇总几十位经济学家的预测，取中位数作为**共识预期**。数据公布时：
 
 $$
-意外 = 实际值 − 共识预期
-标准化意外 = 意外 ÷ 这项数据通常的预测误差
+\\text{意外} = \\text{实际值} - \\text{共识预期}
+\\text{标准化意外} = \\frac{\\text{意外}}{\\text{这项数据通常的预测误差}}
 $$
 
 为什么要标准化？因为不同数据的“正常误差”不一样：非农差 10 万人可能只是一次普通的偏差，核心 CPI 环比差 0.2 个百分点却是很大的意外。标准化后才能比较“这次有多出乎意料”。
@@ -117,12 +117,13 @@ $$
 数据意外沿着一条固定的链条传到价格上：
 
 $$
-数据意外 → 对美联储利率路径的预期 → 国债收益率 → 所有资产的折现率
+\\text{数据意外} \\to \\text{对美联储利率路径的预期}
+\\to \\text{国债收益率} \\to \\text{所有资产的折现率}
 $$
 
 - **2 年期国债最敏感**：它几乎就是“未来两年平均政策利率”的市场预测。截至 2026 年 9 月 25 日，2 年期收益率约 **4.81%**，明显高于联邦基金利率 3.75%–4.00%——这个差距说明市场预计还要加息；CNBC 报道市场当时给 10 月再加息约三分之二的概率。
 - **10 年期、30 年期**：既受政策预期影响，也受期限溢价、通胀预期和国债供给影响（阶段 4.3、阶段 4.5）。2026 年 9 月 15 日，10 年期收益率**首次收在 5% 以上**；到 9 月 24 日约 5.18%，是 2007 年以来最高。媒体列出的推动因素里就包括“强劲的经济数据”和一个鹰派的美联储。
-- **债券价格**：用标准例子换算一下。面值 1,000 美元、票息 5%、10 年期的债券，如果一次强劲的就业数据让 10 年期收益率从 5.00% 升到 5.10%，价格会从 1,000 美元跌到约 992 美元——10 个基点，约 −0.8%（演示里可以直接算）。
+- **债券价格**：用标准例子换算一下。面值 1,000 美元、票息 5%、10 年期的债券，如果一次强劲的就业数据让 10 年期收益率从 5.00% 升到 5.10%，价格会从 1,000 美元跌到约 992 美元——10 个基点，\\(\\dfrac{992}{1{,}000} - 1 \\approx -0.8\\%\\)（演示里可以直接算）。
 - **股票**：取决于环境（见上）。估值越高、久期越长的成长股，对利率意外越敏感（阶段 5.3）。
 - **比特币**：比特币 7×24 小时交易，美国东部时间早上 8:30 数据一出，它往往是**最先反应的资产之一**。它对实际利率和流动性敏感（阶段 12.4），所以强通胀数据常常让比特币承压。
 
@@ -149,7 +150,7 @@ $$
 
   misconceptions: [
     "**“数据强，股市就该涨。”** —— 市场只对“比预期强多少”反应，而且方向取决于环境。在通胀是主要担忧的时期，强数据意味着更高的利率，股票反而可能下跌。",
-    "**“失业率低 = 就业市场一定很好。”** —— 失业率只算在找工作的人。如果很多人放弃找工作退出劳动力，失业率也会下降。要同时看非农新增、劳动参与率和初请失业金。",
+    "**“失业率低，就业市场就一定很好。”** —— 失业率只算在找工作的人。如果很多人放弃找工作退出劳动力，失业率也会下降。要同时看非农新增、劳动参与率和初请失业金。",
     "**“CPI 就是美联储的通胀目标。”** —— 美联储的 2% 目标用的是 **PCE 物价指数**。两者覆盖范围、权重不同，通常 CPI 略高；2026 年年中两者的核心指标差距异常大。",
     "**“PMI 52 说明经济增长 2%。”** —— PMI 是扩散指数，衡量“说变好的企业是否多于说变差的”，50 是分界线。它反映方向和广度，不是增长的幅度。",
     "**“第一次公布的数据就是事实。”** —— 非农、GDP 都会被修正，有时修正幅度大到改变结论。市场对首发数据的反应，可能在修正公布后反转。",
@@ -165,7 +166,7 @@ $$
         "市场不会有任何反应",
       ],
       answer: 1,
-      explain: "**意外 = 实际 − 共识 = −4 万**。价格已经计入了 30 万，所以 26 万被读成“比想的弱”，加息预期下调、收益率倾向下降。",
+      explain: "**\\(\\text{意外} = \\text{实际} - \\text{共识} = -4\\ \\text{万}\\)**。价格已经计入了 30 万，所以 26 万被读成“比想的弱”，加息预期下调、收益率倾向下降。",
     },
     {
       q: "美联储 2% 的通胀目标用的是哪个指标？",
@@ -182,7 +183,7 @@ $$
         "其实这是很小的意外，市场不会在意",
       ],
       answer: 0,
-      explain: "环比数字小，但**年化后差别巨大**：(1.004)¹² − 1 ≈ 4.9%，(1.002)¹² − 1 ≈ 2.4%。相对于通常的预测误差，0.2 个百分点是一个很大的标准化意外。",
+      explain: "环比数字小，但**年化后差别巨大**：\\((1.004)^{12} - 1 \\approx 4.9\\%\\)，\\((1.002)^{12} - 1 \\approx 2.4\\%\\)。相对于通常的预测误差，0.2 个百分点是一个很大的标准化意外。",
     },
     {
       q: "哪一种国债收益率对数据意外、特别是对美联储政策预期的变化最敏感？",
@@ -199,7 +200,7 @@ $$
         "市场预计美联储还会继续加息",
       ],
       answer: 3,
-      explain: "2 年期收益率 ≈ 未来两年政策利率的平均预期。它明显高于当前政策利率，说明市场**预计还有加息**——当时市场给 10 月再加息约三分之二的概率。",
+      explain: "\\(\\text{2 年期收益率} \\approx \\text{未来两年政策利率的平均预期}\\)。它明显高于当前政策利率，说明市场**预计还有加息**——当时市场给 10 月再加息约三分之二的概率。",
     },
   ],
 

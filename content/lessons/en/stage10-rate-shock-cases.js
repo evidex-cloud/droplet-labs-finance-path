@@ -7,7 +7,7 @@ export default {
   prereqs: ["duration-convexity", "long-bond-30y", "swaps-hedging"],
 
   oneLiner:
-    "The enemy in 2008 was **credit risk** — borrowers who couldn't pay. In the three crises of 2020–2023 the enemy was **interest-rate risk**, and it struck the very assets considered safest: US Treasuries, UK gilts, agency mortgage bonds. In March 2020 the deepest government bond market on earth seized up in a scramble for cash; in September 2022 UK 30-year gilt yields jumped more than a full percentage point in days and set off a pension-fund collateral spiral; in March 2023 Silicon Valley Bank was run to death in two days over losses on long bonds. All three share one formula: **duration × leverage × a moment when you need cash = crisis.**",
+    "The enemy in 2008 was **credit risk** — borrowers who couldn't pay. In the three crises of 2020–2023 the enemy was **interest-rate risk**, and it struck the very assets considered safest: US Treasuries, UK gilts, agency mortgage bonds. In March 2020 the deepest government bond market on earth seized up in a scramble for cash; in September 2022 UK 30-year gilt yields jumped more than a full percentage point in days and set off a pension-fund collateral spiral; in March 2023 Silicon Valley Bank was run to death in two days over losses on long bonds. All three share one formula: **\\(\\text{duration} \\times \\text{leverage} \\times \\text{a moment when you need cash} = \\text{crisis}\\).**",
 
   intuition: `
 Stage 4.4 showed that the longer a bond, the more sensitive it is to rates. The standard 30-year Treasury at about 5% has a modified duration of about 15.5 — a one-point rise in yield knocks roughly 14% off its price. That sounds like a mere “paper number”: hold to maturity and you still get your face value back.
@@ -24,7 +24,7 @@ This lesson rests on **Idea ①, the price of time (interest rates)** — when r
 
 **In this lesson we break it into five pieces:**
 
-- **① The common enemy: duration × leverage × the moment you need cash**
+- **① The common enemy: \\(\\text{duration} \\times \\text{leverage} \\times \\text{the moment you need cash}\\)**
 - **② March 2020: when the safest market breaks**
 - **③ September 2022: the UK pension LDI spiral**
 - **④ March 2023: Silicon Valley Bank, sunk by duration**
@@ -32,9 +32,9 @@ This lesson rests on **Idea ①, the price of time (interest rates)** — when r
 `,
 
   mechanics: `
-### ① The common enemy: duration × leverage × the moment you need cash
+### ① The common enemy: \\(\\text{duration} \\times \\text{leverage} \\times \\text{the moment you need cash}\\)
 
-First, a refresher on the Stage 4.4 toolkit. Modified duration D says that a yield change Δy moves the price by roughly −D × Δy. Three benchmarks computed exactly with the course engine:
+First, a refresher on the Stage 4.4 toolkit. Modified duration \\(D\\) says that a yield change \\(\\Delta y\\) moves the price by roughly \\(-D \\times \\Delta y\\). Three benchmarks computed exactly with the course engine:
 
 <table>
 <tr><th>Bond</th><th>Yield change</th><th>Price change</th><th>Modified duration (approx.)</th></tr>
@@ -46,7 +46,7 @@ First, a refresher on the Stage 4.4 toolkit. Modified duration D says that a yie
 Duration only tells you the paper loss. To become a crisis, it must be multiplied by two more factors:
 
 $$
-Crisis intensity ≈ duration × rate move × leverage × share you are forced to sell
+\\text{crisis intensity} \\approx \\text{duration} \\times \\text{rate move} \\times \\text{leverage} \\times \\text{share you are forced to sell}
 $$
 
 - **Leverage** turns a price loss into a capital loss. For a bank with 8% capital and half its assets in 10-year bonds, a 2.5-point rise in yields costs about 20% on the bonds — roughly 10% of total assets, more than all its capital.
@@ -117,7 +117,7 @@ Three shared lessons:
 
 **What this means for DATs.** Each lesson carries straight into the analysis of Stages 15–18:
 
-- **A perpetual preferred is the longest-duration security there is.** Per Stage 4.4, a perpetual's duration is roughly 1 divided by its yield: a perpetual preferred yielding 10% has duration of about 10, and if the market's required yield rises from 10% to 12%, its price falls by about 1 − 10/12 ≈ 17%. **Rising long Treasury yields push perpetual preferred prices down directly** (Stage 18.1). That is the thread between “the 30-year yield breaks 5%” and “a bitcoin-backed preferred yielding about 10%,” which Stage 20.1 ties together in full.
+- **A perpetual preferred is the longest-duration security there is.** Per Stage 4.4, a perpetual's duration is roughly \\(\\dfrac{1}{\\text{yield}}\\): a perpetual preferred yielding 10% has duration of about 10, and if the market's required yield rises from 10% to 12%, its price falls by about \\(1 - \\dfrac{10}{12} \\approx 17\\%\\). **Rising long Treasury yields push perpetual preferred prices down directly** (Stage 18.1). That is the thread between “the 30-year yield breaks 5%” and “a bitcoin-backed preferred yielding about 10%,” which Stage 20.1 ties together in full.
 - **Engineering the duration away.** STRC, covered in Stage 17.4, uses a monthly-adjusted variable dividend rate aimed at keeping its price near $100 — in effect the opposite of what SVB did: **don't leave the rate risk with the holder.**
 - **No forced-sale structure.** A DAT's liabilities include no demand deposits and no margin that is called as market values move — a design response to the lessons of LDI and SVB (part ⑤ of Stage 10.1). A stress test still has to ask where dividends come from and how long the company can last if capital markets shut (Stage 18.2).
 `,
@@ -143,7 +143,7 @@ As long as nobody forces you to sell now, that discount is just a number on pape
     "**“The UK pension crisis shows the pensions were nearly bankrupt.”** — Quite the opposite: higher yields cut the present value of pension liabilities, and many schemes' funding ratios actually improved. The crisis was purely about liquidity: levered hedges demanded immediate cash collateral that wasn't at hand. It is the textbook case of solvency fine, liquidity broken.",
     "**“Unrealized losses on held-to-maturity bonds are an accounting game and don't matter.”** — If you never have to sell, you can indeed wait for maturity. But the loss is economically real (you've locked in a below-market yield), and once the liabilities run, the bonds must be sold and the paper loss becomes a real one. SVB's losses were disclosed in the footnotes — once the market read them seriously, the run began.",
     "**“Treasury yields rose in March 2020 because investors stopped trusting the US government.”** — The selling came from a need for cash, not fear of default: foreign official holders, funds and levered traders were liquidating the easiest thing to sell, and dealers constrained by capital rules couldn't absorb it. The market recovered quickly once the Fed bought on a massive scale — a plumbing problem, not a credit problem.",
-    "**“Rising rates only affect bonds; they have nothing to do with bitcoin or DATs.”** — Interest rates are the discount rate for every asset (Idea ①). Rising long yields push down perpetual preferred prices (duration ≈ 1/yield), raise the cost of new DAT preferred issuance, and often come with tighter liquidity for risk assets; in March 2023 the USDC stablecoin even briefly lost its peg because of the banking crisis.",
+    "**“Rising rates only affect bonds; they have nothing to do with bitcoin or DATs.”** — Interest rates are the discount rate for every asset (Idea ①). Rising long yields push down perpetual preferred prices (\\(\\text{duration} \\approx \\dfrac{1}{\\text{yield}}\\)), raise the cost of new DAT preferred issuance, and often come with tighter liquidity for risk assets; in March 2023 the USDC stablecoin even briefly lost its peg because of the banking crisis.",
   ],
 
   quiz: [
@@ -156,7 +156,7 @@ As long as nobody forces you to sell now, that discount is just a number on pape
         "Nothing, because it still repays face value at maturity",
       ],
       answer: 1,
-      explain: "Approximation: −9.3 × 2.5% ≈ −23%; exact (including convexity): about −20%, a price near 79.6. It does repay par at maturity, but **if you are forced to sell before then,** you sell at 79.6 — exactly SVB's position.",
+      explain: "Approximation: \\(-9.3 \\times 2.5\\% \\approx -23\\%\\); exact (including convexity): about −20%, a price near 79.6. It does repay par at maturity, but **if you are forced to sell before then,** you sell at 79.6 — exactly SVB's position.",
     },
     {
       q: "What was the essence of the UK LDI crisis in September 2022?",
@@ -197,10 +197,10 @@ As long as nobody forces you to sell now, that discount is just a number on pape
         "About +20%",
         "About −2%",
         "No change, because a perpetual preferred never matures",
-        "About −17%, because a perpetual's price ≈ dividend / yield",
+        "About −17%, because \\(\\text{a perpetual's price} \\approx \\dfrac{\\text{dividend}}{\\text{yield}}\\)",
       ],
       answer: 3,
-      explain: "The price goes from dividend/10% to dividend/12%, a ratio of 10/12 ≈ 0.83 — about a 17% drop. **A perpetual's duration is roughly 1/yield,** so rising long rates hit it directly (Stage 18.1).",
+      explain: "The price goes from \\(\\dfrac{\\text{dividend}}{10\\%}\\) to \\(\\dfrac{\\text{dividend}}{12\\%}\\), a ratio of \\(\\dfrac{10}{12} \\approx 0.83\\) — about a 17% drop. **A perpetual's duration is roughly \\(\\dfrac{1}{\\text{yield}}\\),** so rising long rates hit it directly (Stage 18.1).",
     },
   ],
 

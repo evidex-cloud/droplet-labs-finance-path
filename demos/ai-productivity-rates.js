@@ -1,8 +1,13 @@
 // 交互演示：AI 与中性利率 r∗ 的拔河。用拉姆齐式 r∗ ≈ ρ + θ·g 加上“投资需求”与“储蓄过剩”两个楔子，
 // 再叠加通胀预期与期限溢价得到 30 年期收益率；计算 5% 票息 30 年期国债价格、10% 永续优先股价格、
 // 戈登模型下股票的“每 1 美元股息的价格”，以及 r − g 的债务动态信号。计算走 _fin.js。
-import { bondPrice, bondRisk, perpetuity, gordon, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { bondPrice, bondRisk, perpetuity, gordon, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+const pv = (x, d = 2) => texv(fmtPct(x / 100, d)); // 百分数 → LaTeX
+const pvp = (x, d = 2) => (x < 0 ? `(${pv(x, d)})` : pv(x, d)); // 负数加括号
+const RS = tex(String.raw`r^{*}`);
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -25,12 +30,12 @@ export default function mount(root, lang) {
 
   root.innerHTML = `
     <div class="demo">
-      <div class="demo-head">${T("🪢 AI 与中性利率的拔河：从 r∗ 到 30 年期收益率，再到你手里的资产", "🪢 The AI tug-of-war: from r∗ to the 30-year yield to the assets you hold")}</div>
+      <div class="demo-head">${T(`🪢 AI 与中性利率的拔河：从 ${RS} 到 30 年期收益率，再到你手里的资产`, `🪢 The AI tug-of-war: from ${RS} to the 30-year yield to the assets you hold`)}</div>
       <div class="demo-btns" id="apr-presets">
         ${Object.keys(PRESETS).map((k) => `<button class="demo-btn" data-k="${k}">${PRESETS[k].name}</button>`).join("")}
       </div>
       <div class="demo-block">
-        <div class="demo-label">${T("① r∗ 的零件（拉姆齐：r∗ ≈ ρ + θ·g，再加减两个楔子）", "① Parts of r∗ (Ramsey: r∗ ≈ ρ + θ·g, plus two wedges)")}</div>
+        <div class="demo-label">${T(`① ${RS} 的零件（拉姆齐：${tex(String.raw`r^{*} \approx \rho + \theta \times g`)}，再加减两个楔子）`, `① Parts of ${RS} (Ramsey: ${tex(String.raw`r^{*} \approx \rho + \theta \times g`)}, plus two wedges)`)}</div>
         <div class="demo-grid">
           ${sl("g", "趋势增长 g（AI 生产率）", "Trend growth g (AI productivity)", 0.5, 4, 0.1)}
           ${sl("th", "θ（多在意平滑消费）", "θ (desire to smooth consumption)", 0.5, 2, 0.1)}
@@ -48,7 +53,7 @@ export default function mount(root, lang) {
         </div>
       </div>
       <div class="stat-row">
-        <div class="stat"><div class="k">${T("中性利率 r∗（实际）", "Neutral rate r∗ (real)")}</div><div class="v acc" id="apr-rstar"></div></div>
+        <div class="stat"><div class="k">${T(`中性利率 ${RS}（实际）`, `Neutral rate ${RS} (real)`)}</div><div class="v acc" id="apr-rstar"></div></div>
         <div class="stat"><div class="k">${T("30 年期名义收益率", "30-year nominal yield")}</div><div class="v" id="apr-y30"></div></div>
         <div class="stat"><div class="k">${T("5% 票息 30 年国债价格", "5%-coupon 30y bond price")}</div><div class="v" id="apr-bond"></div></div>
         <div class="stat"><div class="k">${T("修正久期", "Modified duration")}</div><div class="v" id="apr-dur"></div></div>
@@ -57,13 +62,13 @@ export default function mount(root, lang) {
         <div class="stat"><div class="k">${T("10 美元股息永续优先股", "Perpetual preferred, $10 dividend")}</div><div class="v" id="apr-pref"></div></div>
         <div class="stat"><div class="k">${T("股票：每 1 美元股息的价格", "Stock: price per $1 of dividend")}</div><div class="v" id="apr-stock"></div></div>
         <div class="stat"><div class="k">${T("相对 2010 年代基准", "vs the 2010s baseline")}</div><div class="v" id="apr-stockchg"></div></div>
-        <div class="stat"><div class="k">${T("债务动态 r − g", "Debt dynamics r − g")}</div><div class="v" id="apr-rg"></div></div>
+        <div class="stat"><div class="k">${T("债务动态", "Debt dynamics")} ${tex("r - g")}</div><div class="v" id="apr-rg"></div></div>
       </div>
       <div id="apr-chart"></div>
       <div class="demo-log" id="apr-log" style="margin-top:12px"></div>
       <p class="demo-tip">${T(
-        "先点“2010 年代”，再点“AI 建设期”：r∗ 与 30 年期收益率一起上升，长债和永续优先股应声下跌。接着对比“AI 兑现”和“只借不长”——<strong>“只借不长”的利率反而更低，股票却更便宜</strong>，差别只在盈利增长有没有跟上。最后试“建成后”：储蓄过剩和廉价智能把利率又拉回来。",
-        "Click “2010s”, then “AI build-out”: r∗ and the 30-year yield rise together, and long bonds and perpetual preferreds fall. Then compare “AI delivers” with “All borrowing, no growth” — <strong>“All borrowing” has the lower yield yet the cheaper stocks</strong>, and the only difference is whether earnings growth keeps up. Finally try “After the build”: the saving glut and cheap intelligence pull rates back down."
+        `先点“2010 年代”，再点“AI 建设期”：${RS} 与 30 年期收益率一起上升，长债和永续优先股应声下跌。接着对比“AI 兑现”和“只借不长”——<strong>“只借不长”的利率反而更低，股票却更便宜</strong>，差别只在盈利增长有没有跟上。最后试“建成后”：储蓄过剩和廉价智能把利率又拉回来。`,
+        `Click “2010s”, then “AI build-out”: ${RS} and the 30-year yield rise together,and long bonds and perpetual preferreds fall. Then compare “AI delivers” with “All borrowing, no growth” — <strong>“All borrowing” has the lower yield yet the cheaper stocks</strong>, and the only difference is whether earnings growth keeps up. Finally try “After the build”: the saving glut and cheap intelligence pull rates back down.`
       )}</p>
     </div>`;
 
@@ -105,7 +110,7 @@ export default function mount(root, lang) {
     pr.textContent = isFinite(pref) ? "$" + fmtNum(pref, 1) + T("（收益率 ", " (yield ") + fmtPct(prefY, 1) + T("）", ")") : "–";
     pr.classList.toggle("pos", pref > 100.05); pr.classList.toggle("neg", pref < 99.95);
     const st = $("#apr-stock");
-    st.textContent = isFinite(mult) ? "$" + fmtNum(mult, 1) : T("r ≤ g：模型失效", "r ≤ g: model breaks");
+    st.innerHTML = isFinite(mult) ? "$" + fmtNum(mult, 1) : tex(String.raw`r \le g`) + T("：模型失效", ": model breaks");
     const chg = isFinite(mult) && isFinite(baseMult) ? mult / baseMult - 1 : NaN;
     const sc = $("#apr-stockchg");
     sc.textContent = isFinite(chg) ? (chg >= 0 ? "+" : "") + fmtPct(chg, 0) : "–";
@@ -123,25 +128,25 @@ export default function mount(root, lang) {
       lo: 0.5, hi: 4, xlabel: T("趋势增长 g（%）", "trend growth g (%)"), markerX: p.g, markerLabel: T("当前 g", "current g"), forceZero: true, uid: "apr",
     });
     $("#apr-chart").innerHTML = chartBlock(res, [
-      ["var(--orange)", T("r∗（实际，%）", "r∗ (real, %)")],
+      ["var(--orange)", tex(String.raw`r^{*}`) + T("（实际，%）", " (real, %)")],
       ["var(--red)", T("30 年期名义收益率（%）", "30-year nominal yield (%)")],
       ["var(--green)", T("股息名义增速（%）", "Nominal dividend growth (%)")],
     ]);
 
     const L = [];
     const up = p.th * p.g + p.inv, down = p.sav;
-    L.push(`${T("拔河：往上拉", "Tug-of-war: pulling up")} ρ + θ·g + ${T("投资", "investment")} = <b>${fmtPct((p.rho + up) / 100, 2)}</b>${T("，往下拽（储蓄过剩）", "; pulling down (saving glut)")} = <b>${fmtPct(down / 100, 2)}</b> → r∗ = <b>${fmtPct(rs / 100, 2)}</b>${T("。", ".")}`);
-    L.push(`${T("30 年期收益率 = r∗", "30-year yield = r∗")} ${fmtPct(rs / 100, 2)} + ${T("通胀预期", "inflation expectations")} ${fmtPct(p.pi / 100, 1)} + ${T("期限溢价", "term premium")} ${fmtPct(p.tp / 100, 2)} = <b>${fmtPct(y30 / 100, 2)}</b>${T("。", ".")}`);
+    L.push(`${T("拔河：往上拉", "Tug-of-war: pulling up")} ${tex(String.raw`\rho + \theta \times g + \text{${T("投资", "investment")}} = \mathbf{${pv(p.rho + up)}}`)}${T("，往下拽（储蓄过剩）", "; pulling down (saving glut)")} ${tex(String.raw`\mathbf{${pv(down)}}`)} → ${tex(String.raw`r^{*} = ${pv(p.rho + up)} - ${pv(down)} = \mathbf{${pv(rs)}}`)}${T("。", ".")}`);
+    L.push(`${tex(String.raw`\text{${T("30 年期收益率", "30-year yield")}} = \underbrace{${pvp(rs)}}_{r^{*}} + \underbrace{${pvp(p.pi, 1)}}_{\text{${T("通胀预期", "inflation exp.")}}} + \underbrace{${pvp(p.tp)}}_{\text{${T("期限溢价", "term premium")}}} = \mathbf{${pv(y30)}}`)}${T("。", ".")}`);
     if (y30 > 5.0) L.push(`<span class="warn">${T("长端收益率在 5% 以上——小林第一条新闻的世界。票息 5% 的 30 年期国债低于面值交易，永续优先股的价格跟着受压。", "The long yield is above 5% — the world of Lin's first headline. The 5% 30-year trades below par and perpetual preferreds are squeezed.")}</span>`);
     if (isFinite(mult)) {
       const re = y30 / 100 + ERP / 100, gd = (p.pi + p.k * p.g) / 100;
-      L.push(`${T("股票：要求回报 r = 长端收益率 + 3% 风险溢价 =", "Stocks: required return r = long yield + 3% ERP =")} ${fmtPct(re, 2)}${T("，股息增长 g =", "; dividend growth g =")} ${fmtPct(gd, 2)}${T("，r − g =", "; r − g =")} <b>${fmtPct(re - gd, 2)}</b>${T("。", ".")} ${p.k < 0.6 ? `<span class="bad">${T("盈利没跟上增长预期——利率涨了、g 没涨，估值被两头夹击。", "Earnings didn't keep up — rates rose but g didn't, so valuations get squeezed from both sides.")}</span>` : `<span class="ok">${T("盈利跟上了：r 和 g 一起升，股票可以扛住更高的利率。", "Earnings kept up: r and g rise together, so stocks can absorb higher rates.")}</span>`}`);
+      L.push(`${T("股票：要求回报", "Stocks: required return")} ${tex(String.raw`r = \text{${T("长端收益率", "long yield")}} + 3\%\ \text{${T("风险溢价", "ERP")}} = ${pv(re * 100)}`)}${T("，股息增长", "; dividend growth")} ${tex(String.raw`g = ${pv(gd * 100)}`)}${T("，", "; ")}${tex(String.raw`r - g = \mathbf{${pv((re - gd) * 100)}}`)}${T("。", ".")}${p.k < 0.6 ? `<span class="bad">${T("盈利没跟上增长预期——利率涨了、g 没涨，估值被两头夹击。", "Earnings didn't keep up — rates rose but g didn't, so valuations get squeezed from both sides.")}</span>` : `<span class="ok">${T("盈利跟上了：r 和 g 一起升，股票可以扛住更高的利率。", "Earnings kept up: r and g rise together, so stocks can absorb higher rates.")}</span>`}`);
     } else {
       L.push(`<span class="warn">${T("股息增速接近或超过要求回报，戈登公式不再适用——这通常意味着市场的增长假设过于乐观。", "Dividend growth is at or above the required return, so the Gordon formula breaks — usually a sign the growth assumption is too optimistic.")}</span>`);
     }
     L.push(rg > 0
-      ? `<span class="bad">${T("债务动态：平均债务利率高于名义增长（r − g > 0），在不改变赤字的情况下，债务占 GDP 会继续上升（阶段 9.4 的逻辑，示意）。", "Debt dynamics: the average rate on debt exceeds nominal growth (r − g > 0), so with unchanged deficits debt-to-GDP keeps rising (the Stage 9.4 logic, illustrative).")}</span>`
-      : `<span class="ok">${T("债务动态：名义增长高于平均债务利率（r − g ≤ 0），增长在帮忙稀释债务负担（示意）。", "Debt dynamics: nominal growth exceeds the average rate on debt (r − g ≤ 0), so growth helps dilute the debt burden (illustrative).")}</span>`);
+      ? `<span class="bad">${T(`债务动态：平均债务利率高于名义增长（${tex("r - g > 0")}），在不改变赤字的情况下，债务占 GDP 会继续上升（阶段 9.4 的逻辑，示意）。`, `Debt dynamics: the average rate on debt exceeds nominal growth (${tex("r - g > 0")}), so with unchanged deficits debt-to-GDP keeps rising (the Stage 9.4 logic, illustrative).`)}</span>`
+      : `<span class="ok">${T(`债务动态：名义增长高于平均债务利率（${tex(String.raw`r - g \le 0`)}），增长在帮忙稀释债务负担（示意）。`, `Debt dynamics: nominal growth exceeds the average rate on debt (${tex(String.raw`r - g \le 0`)}), so growth helps dilute the debt burden (illustrative).`)}</span>`);
     $("#apr-log").innerHTML = L.map((l) => `<div>${l}</div>`).join("");
   };
 

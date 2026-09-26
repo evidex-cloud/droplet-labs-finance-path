@@ -50,16 +50,16 @@ Access has a flip side: **index rules can change.** In October 2025 MSCI propose
 
 ### ② Selling the premium: issuing above NAV
 
-The second machine is the heart of the DAT. Let the company have S shares and B bitcoin at price P, and let the share price imply a basic market-cap mNAV of m. It sells k × S new shares (k is the issuance fraction) and converts the proceeds into bitcoin:
+The second machine is the heart of the DAT. Let the company have \\(S\\) shares and \\(B\\) bitcoin at price \\(P\\), and let the share price imply a basic market-cap mNAV of \\(m\\). It sells \\(k \\times S\\) new shares (\\(k\\) is the issuance fraction) and converts the proceeds into bitcoin:
 
 $$
-new BTC per share ÷ old BTC per share = (1 + k × m) ÷ (1 + k)
-m > 1 → accretive; m = 1 → unchanged; m < 1 → dilutive
+\\frac{\\text{new BTC per share}}{\\text{old BTC per share}} = \\frac{1 + k \\times m}{1 + k}
+m > 1 \\Rightarrow \\text{accretive};\\quad m = 1 \\Rightarrow \\text{unchanged};\\quad m < 1 \\Rightarrow \\text{dilutive}
 $$
 
-Orange Corp (m = 1.5) issuing 10% (k = 0.1): (1 + 0.15) ÷ 1.1 = **1.045, bitcoin per share +4.5%** — from 10,000 sats to about 10,455. The same move at m = 0.8: (1 + 0.08) ÷ 1.1 = 0.982, **bitcoin per share −1.8%.**
+Orange Corp (\\(m = 1.5\\)) issuing 10% (\\(k = 0.1\\)): \\(\\dfrac{1 + 0.15}{1.1} =\\) **1.045, bitcoin per share +4.5%** — from 10,000 sats to about 10,455. The same move at \\(m = 0.8\\): \\(\\dfrac{1 + 0.08}{1.1} = 0.982\\), **bitcoin per share −1.8%.**
 
-<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Issue 10% more shares, buy bitcoin: change in BTC per share vs mNAV</text><line x1="70" y1="230" x2="600" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="70" y1="40" x2="70" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="70" y1="160" x2="600" y2="160" stroke="var(--muted)" stroke-dasharray="4 3"/><text x="64" y="164" text-anchor="end" font-size="10" fill="var(--muted)">0%</text><text x="64" y="105" text-anchor="end" font-size="10" fill="var(--muted)">+9%</text><text x="64" y="46" text-anchor="end" font-size="10" fill="var(--muted)">+18%</text><text x="64" y="193" text-anchor="end" font-size="10" fill="var(--muted)">−4.5%</text><polyline points="70,189.5 158.5,174.8 247,160 335,130.5 423.5,100.9 512,71.4 600,41.8" fill="none" stroke="var(--btc)" stroke-width="3"/><circle cx="247" cy="160" r="5" fill="var(--ink)"/><text x="255" y="178" font-size="10" fill="var(--ink)">m = 1.0: no change</text><circle cx="335" cy="130.5" r="6" fill="var(--btc)"/><text x="345" y="140" font-size="11" font-weight="700" fill="var(--btc)">Orange Corp m = 1.5 → +4.5%</text><circle cx="176" cy="171.8" r="5" fill="var(--red)"/><text x="168" y="212" text-anchor="middle" font-size="10" fill="var(--red)">m = 0.8 → −1.8%</text><text x="70" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="158" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">0.75</text><text x="247" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">1.0</text><text x="423" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="600" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">3.0</text><text x="335" y="270" text-anchor="middle" font-size="11" fill="var(--muted)">Basic market-cap mNAV (x-axis not evenly spaced)</text></svg><figcaption>The line crosses zero at mNAV = 1. The higher the premium, the more bitcoin per share the same issuance buys; below 1, the identical move becomes dilution.</figcaption></figure>
+<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Issue 10% more shares, buy bitcoin: change in BTC per share vs mNAV</text><line x1="70" y1="230" x2="600" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="70" y1="40" x2="70" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="70" y1="160" x2="600" y2="160" stroke="var(--muted)" stroke-dasharray="4 3"/><text x="64" y="164" text-anchor="end" font-size="10" fill="var(--muted)">0%</text><text x="64" y="105" text-anchor="end" font-size="10" fill="var(--muted)">+9%</text><text x="64" y="46" text-anchor="end" font-size="10" fill="var(--muted)">+18%</text><text x="64" y="193" text-anchor="end" font-size="10" fill="var(--muted)">−4.5%</text><polyline points="70,189.5 158.5,174.8 247,160 335,130.5 423.5,100.9 512,71.4 600,41.8" fill="none" stroke="var(--btc)" stroke-width="3"/><circle cx="247" cy="160" r="5" fill="var(--ink)"/><text x="255" y="178" font-size="10" fill="var(--ink)">m = 1.0: no change</text><circle cx="335" cy="130.5" r="6" fill="var(--btc)"/><text x="345" y="140" font-size="11" font-weight="700" fill="var(--btc)">Orange Corp m = 1.5 → +4.5%</text><circle cx="176" cy="171.8" r="5" fill="var(--red)"/><text x="168" y="212" text-anchor="middle" font-size="10" fill="var(--red)">m = 0.8 → −1.8%</text><text x="70" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="158" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">0.75</text><text x="247" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">1.0</text><text x="423" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="600" y="248" text-anchor="middle" font-size="10" fill="var(--muted)">3.0</text><text x="335" y="270" text-anchor="middle" font-size="11" fill="var(--muted)">Basic market-cap mNAV (x-axis not evenly spaced)</text></svg><figcaption>The line crosses zero at \\(\\mathrm{mNAV} = 1\\). The higher the premium, the more bitcoin per share the same issuance buys; below 1, the identical move becomes dilution.</figcaption></figure>
 
 At bottom this machine is a **wealth transfer**: new shareholders pay 1.5 times NAV, and the excess they pay becomes extra bitcoin per share for the old holders. Why would new holders agree? Because they believe **the machine will keep turning** — tomorrow someone else will buy at a premium and thicken *their* bitcoin per share. This is the reflexivity of Stage 10.4: premium → issuance → bitcoin per share grows → better story → premium.
 
@@ -67,10 +67,10 @@ Real-world readings: Strategy's BTC Yield was 74.3% in 2024, 22.8% in 2025, and 
 
 ### ③ Selling volatility: why anyone buys a 0% convertible
 
-Back to Stage 6.4: a convertible is a bond floor plus a call option. Run Orange Corp's numbers: a 0% coupon, 5-year convertible with a $25 conversion price (the stock is at $15, a **67% conversion premium**). Each $1,000 of face converts into 40 shares.
+Back to Stage 6.4: \\(\\text{convertible} = \\text{bond floor} + \\text{call option}\\). Run Orange Corp's numbers: a 0% coupon, 5-year convertible with a $25 conversion price (the stock is at $15, a **67% conversion premium**). Each $1,000 of face converts into 40 shares.
 
-- **Bond floor**: $1,000 back in five years, discounted at an 8% credit yield = **about $681.**
-- **Option value**: 40 × the value of a 5-year call struck at $25 (Black–Scholes, 4.5% risk-free rate). At 40% volatility each call is worth about $3.84 → about $154 in total; **at 60%, about $255; at 80%, about $345.**
+- **Bond floor**: $1,000 back in five years, discounted at an 8% credit yield: \\(\\dfrac{\\$1{,}000}{1.08^{5}} \\approx\\) **$681.**
+- **Option value**: \\(40 \\times \\text{the value of a 5-year call struck at } \\$25\\) (Black–Scholes, 4.5% risk-free rate). At 40% volatility each call is worth about $3.84 → \\(40 \\times \\$3.84 \\approx \\$154\\) in total; **at 60%, about $255; at 80%, about $345.**
 - **Total**: about $834 at 40% volatility, about $936 at 60%, **about $1,025 at 80%.**
 
 In other words, **once the stock's implied volatility is high enough (roughly 75%–80% here), a 0% coupon convertible with a 67% conversion premium is worth par.** DAT common stock is naturally volatile: bitcoin itself swings hard, amplification multiplies that, and mNAV adds swings of its own. **The company is, in effect, selling the volatility of its own stock at a good price.**
@@ -83,12 +83,13 @@ A real example: at June 30, 2026 Strategy had six convertible series with **$6.7
 
 The fourth machine sells to another crowd: **people who want fixed income.** The 30-year Treasury paid about 5.5% in late September 2026 and investment-grade corporates a little more, while DAT preferreds offer 10%–13%: STRF 10%, STRC 12.00% (since July 2026), Strive's SATA 13.00%.
 
-For the common shareholders, this is **borrowing to buy bitcoin**, with the “loan” taking the form of preferred stock. Suppose the company issues X dollars of preferred at dividend rate r, buys bitcoin with all of it, and bitcoin appreciates at g a year. After t years the net gain to the common from this trade is roughly:
+For the common shareholders, this is **borrowing to buy bitcoin**, with the “loan” taking the form of preferred stock. Suppose the company issues \\(X\\) dollars of preferred at dividend rate \\(r\\), buys bitcoin with all of it, and bitcoin appreciates at \\(g\\) a year. After \\(t\\) years the net gain to the common from this trade is roughly:
 
 $$
-X × (1 + g)^t − X − X × r × t
-Example: X = $100M, r = 10%, t = 5 years. g = 20% → about +$99M; g = 10% → about +$11M; g = 5% → about −$22M
+X \\times (1 + g)^{t} - X - X \\times r \\times t
 $$
+
+Example: \\(X = \\$100\\text{M}\\), \\(r = 10\\%\\), \\(t = 5\\) years. \\(g = 20\\%\\) → about +$99M; \\(g = 10\\%\\) → about +$11M; \\(g = 5\\%\\) → about −$22M.
 
 **Bitcoin's return has to beat the cost of the preferred for this machine to make money for the common.** Strategy calls that bar the **BTC Hurdle ARR** — “Strategy's current effective cost of credit. If BTC ARR is above this rate, Net BTC Per Share appreciates faster than bitcoin” — and put it at **10.74%** on August 23, 2026.
 
@@ -105,7 +106,7 @@ But **no trigger does not mean no cost.** Dividends are due in cash every year: 
 
 Put the four machines side by side and the critics' case boils down to five points:
 
-- **The premium is self-fulfilling — and self-destroying.** Machine two needs m > 1, and m > 1 needs everyone to believe the machine will keep turning. In September 2026, per DWF Ventures, **16 of the 20 largest DATs traded below 1x mNAV.** Once the premium is gone, the machine runs in reverse as dilution (Stage 18.3).
+- **The premium is self-fulfilling — and self-destroying.** Machine two needs \\(m > 1\\), and \\(m > 1\\) needs everyone to believe the machine will keep turning. In September 2026, per DWF Ventures, **16 of the 20 largest DATs traded below 1x mNAV.** Once the premium is gone, the machine runs in reverse as dilution (Stage 18.3).
 - **A transfer is not creation.** The “BTC Yield” that premium issuance delivers to old holders is money overpaid by new holders. The system as a whole conjures no extra bitcoin; it only redistributes bitcoin among shareholders.
 - **Procyclicality.** All four machines accelerate together in bull markets (high premiums, high volatility, easy funding) and slow together in bear markets — exactly when cash for dividends is most needed.
 - **Rigid obligations, cash-less assets.** Preferred dividends and convertible puts need cash; the asset produces none. This is the other face of Stage 6.5's point that cash-flow rulers break down.
@@ -148,13 +149,13 @@ If the cuts together sell for more than a whole cow, the butcher uses the surplu
     {
       q: "Orange Corp trades at a basic market-cap mNAV of 1.5. If it issues new shares equal to 10% of the existing count and buys bitcoin with all the proceeds, roughly how does bitcoin per share change?",
       options: [
-        "+4.5%: (1 + 0.1 × 1.5) ÷ 1.1",
+        "+4.5%: \\((1 + 0.1 \\times 1.5) \\div 1.1\\)",
         "+15%",
         "−10%, because the share count rises 10%",
         "0%, because cash was swapped for bitcoin of equal value",
       ],
       answer: 0,
-      explain: "The BTC-per-share ratio = (1 + k·m) ÷ (1 + k) = 1.15 ÷ 1.1 ≈ **1.045**. At m = 0.8 it would be 1.08 ÷ 1.1 ≈ 0.982, **−1.8%** — dilution.",
+      explain: "The BTC-per-share ratio \\(= \\dfrac{1 + k \\cdot m}{1 + k} = \\dfrac{1.15}{1.1} \\approx\\) **1.045**. At \\(m = 0.8\\) it would be \\(\\dfrac{1.08}{1.1} \\approx 0.982\\), **−1.8%** — dilution.",
     },
     {
       q: "Why can a 0% coupon, 5-year convertible with a conversion price 67% above today's stock price be worth par?",
@@ -165,18 +166,18 @@ If the cuts together sell for more than a whole cow, the butcher uses the surplu
         "Because interest rates are zero",
       ],
       answer: 2,
-      explain: "The bond floor is about $681 (discounted at 8%), leaving about $319 for the option to cover. In the Orange Corp example, volatility of roughly 75%–80% gives an option value of about $320–$345 — **the company is selling volatility** (Stage 7.3).",
+      explain: "The bond floor is about $681 (discounted at 8%), leaving about \\(\\$1{,}000 - \\$681 = \\$319\\) for the option to cover. In the Orange Corp example, volatility of roughly 75%–80% gives an option value of about $320–$345 — **the company is selling volatility** (Stage 7.3).",
     },
     {
       q: "A company issues $100M of preferred at a 10% dividend and buys bitcoin with all of it. Over five years, roughly what annual bitcoin return makes the trade break even for the common?",
       options: [
         "0%",
-        "About 8.4%: (1 + g)^5 − 1 ≈ 10% × 5",
+        "About 8.4%: \\((1 + g)^{5} - 1 \\approx 10\\% \\times 5\\)",
         "10%",
         "20%",
       ],
       answer: 1,
-      explain: "Five years of dividends cost about X × 10% × 5 = 50%, so bitcoin must rise 50% in total: (1 + g)^5 = 1.5 → g ≈ **8.4%**. This simplified version ignores reinvestment; Strategy expresses a similar bar as the **BTC Hurdle ARR** (about 10.74% in August 2026).",
+      explain: "Five years of dividends cost about \\(X \\times 10\\% \\times 5 = 50\\%\\), so bitcoin must rise 50% in total: \\((1 + g)^{5} = 1.5 \\Rightarrow g \\approx\\) **8.4%**. This simplified version ignores reinvestment; Strategy expresses a similar bar as the **BTC Hurdle ARR** (about 10.74% in August 2026).",
     },
     {
       q: "Which of these is the **downside risk** of the “access” reason for DATs to exist?",

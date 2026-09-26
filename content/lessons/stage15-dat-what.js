@@ -52,39 +52,38 @@ export default {
 
 <table class="pm">
 <tr><th>项目</th><th>数值</th><th>说明</th></tr>
-<tr><td><b>比特币</b></td><td>10,000 BTC × 100,000 美元 = <b>10 亿美元</b></td><td>比特币净值（BTC NAV）/ Strategy 口径叫 BTC Reserve</td></tr>
+<tr><td><b>比特币</b></td><td>\\(10{,}000\\ \\text{BTC} \\times 100{,}000\\ \\text{美元} =\\) <b>10 亿美元</b></td><td>比特币净值（BTC NAV）/ Strategy 口径叫 BTC Reserve</td></tr>
 <tr><td><b>现金 / 美元储备</b></td><td>3,000 万美元</td><td>专门用来付股息</td></tr>
 <tr><td><b>可转债</b></td><td>1.5 亿美元，0% 票息，转股价 25 美元</td><td>最优先的一层（阶段 6.4）</td></tr>
 <tr><td><b>Orange-F</b></td><td>1 亿美元，10% <b>累积</b>优先股</td><td>高级优先股（阶段 6.3）</td></tr>
 <tr><td><b>Orange-D</b></td><td>5,000 万美元，10% <b>非累积</b>优先股</td><td>次级优先股</td></tr>
-<tr><td><b>普通股</b></td><td>1 亿股 × 15 美元 = <b>市值 15 亿美元</b></td><td>剩余索取权（阶段 5.1）</td></tr>
+<tr><td><b>普通股</b></td><td>\\(1\\ \\text{亿股} \\times 15\\ \\text{美元} =\\) <b>市值 15 亿美元</b></td><td>剩余索取权（阶段 5.1）</td></tr>
 </table>
 
-<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">橙子公司的资产负债表（百万美元，按比例）</text><text x="130" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">资产</text><rect x="60" y="52" width="140" height="200" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="130" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="var(--btc)">比特币 1,000</text><text x="130" y="163" text-anchor="middle" font-size="11" fill="var(--muted)">10,000 BTC × 10 万美元</text><rect x="60" y="252" width="140" height="8" fill="var(--green-soft)" stroke="var(--green)"/><text x="130" y="276" text-anchor="middle" font-size="11" fill="var(--green)">现金 30</text><text x="350" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">索取权（从上到下 = 从先到后）</text><rect x="280" y="52" width="140" height="30" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="350" y="71" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">可转债 150</text><rect x="280" y="82" width="140" height="20" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="350" y="96" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Orange-F 100</text><rect x="280" y="102" width="140" height="10" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="430" y="111" font-size="10" fill="var(--orange-ink)">Orange-D 50</text><rect x="280" y="112" width="140" height="148" fill="var(--surface-2)" stroke="var(--line)"/><text x="350" y="180" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">普通股（剩余）</text><text x="350" y="197" text-anchor="middle" font-size="11" fill="var(--muted)">1,030 − 300 = 730</text><text x="430" y="71" font-size="10" fill="var(--blue)">覆盖 6.7 倍</text><text x="430" y="96" font-size="10" fill="var(--orange-ink)">累计 250 → 4.0 倍</text><text x="430" y="126" font-size="10" fill="var(--red)">累计 300 → 3.3 倍</text><text x="350" y="224" text-anchor="middle" font-size="11" font-weight="700" fill="var(--btc)">市场付 1,500（溢价）</text><text x="320" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="var(--orange-ink)">资产几乎只有一样东西；负债一侧被切成卖给不同人群的四层</text></svg><figcaption>左边是金库，右边是楼层。可转债、Orange-F、Orange-D 各自的“BTC 评级”= 比特币净值 ÷ 本层及以上累计索取权。普通股拿剩下的一切，而市场给它的价格远高于账面剩余——这个溢价就是 DAT 生意的燃料。</figcaption></figure>
+<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">橙子公司的资产负债表（百万美元，按比例）</text><text x="130" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">资产</text><rect x="60" y="52" width="140" height="200" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="130" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="var(--btc)">比特币 1,000</text><text x="130" y="163" text-anchor="middle" font-size="11" fill="var(--muted)">10,000 BTC × 10 万美元</text><rect x="60" y="252" width="140" height="8" fill="var(--green-soft)" stroke="var(--green)"/><text x="130" y="276" text-anchor="middle" font-size="11" fill="var(--green)">现金 30</text><text x="350" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">索取权（从上到下 = 从先到后）</text><rect x="280" y="52" width="140" height="30" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="350" y="71" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">可转债 150</text><rect x="280" y="82" width="140" height="20" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="350" y="96" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Orange-F 100</text><rect x="280" y="102" width="140" height="10" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="430" y="111" font-size="10" fill="var(--orange-ink)">Orange-D 50</text><rect x="280" y="112" width="140" height="148" fill="var(--surface-2)" stroke="var(--line)"/><text x="350" y="180" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">普通股（剩余）</text><text x="350" y="197" text-anchor="middle" font-size="11" fill="var(--muted)">1,030 − 300 = 730</text><text x="430" y="71" font-size="10" fill="var(--blue)">覆盖 6.7 倍</text><text x="430" y="96" font-size="10" fill="var(--orange-ink)">累计 250 → 4.0 倍</text><text x="430" y="126" font-size="10" fill="var(--red)">累计 300 → 3.3 倍</text><text x="350" y="224" text-anchor="middle" font-size="11" font-weight="700" fill="var(--btc)">市场付 1,500（溢价）</text><text x="320" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="var(--orange-ink)">资产几乎只有一样东西；负债一侧被切成卖给不同人群的四层</text></svg><figcaption>左边是金库，右边是楼层。可转债、Orange-F、Orange-D 各自的 \\(\\text{BTC 评级} = \\dfrac{\\text{比特币净值}}{\\text{本层及以上累计索取权}}\\)。普通股拿剩下的一切，而市场给它的价格远高于账面剩余——这个溢价就是 DAT 生意的燃料。</figcaption></figure>
 
 读这张表的三个要点：
 
 - **比特币没有被抵押给任何一层**。可转债是无担保的、优先股是权益，没有人能因为比特币下跌而强行卖掉公司的币——这就是阶段 7.5 讲的“没有追保”。真实的 Strategy 也是如此：它的优先股是“永续权益，不是债务”，没有比特币被质押给它们（2026 年 8 月投资者简报）。
-- **每一层的安全垫 = 资产覆盖**（阶段 6.5）：可转债层 10 亿 ÷ 1.5 亿 ≈ **6.7 倍**；到 F 层累计 2.5 亿 → **4.0 倍**；到 D 层累计 3 亿 → **3.3 倍**。Strategy 把这个数叫做 **BTC 评级（BTC Rating）**，阶段 16.5 专门讲。
-- **每年要付的钱**：优先股股息 (1 亿 + 5,000 万) × 10% = **1,500 万美元**；可转债 0% 票息。3,000 万美元现金能覆盖 **24 个月**——这是阶段 16.6 的“美元储备覆盖”。
+- **每一层的安全垫就是资产覆盖**（阶段 6.5）：可转债层 \\(\\dfrac{10\\ \\text{亿}}{1.5\\ \\text{亿}} \\approx\\) **6.7 倍**；到 F 层累计 2.5 亿 → \\(\\dfrac{10\\ \\text{亿}}{2.5\\ \\text{亿}} =\\) **4.0 倍**；到 D 层累计 3 亿 → \\(\\dfrac{10\\ \\text{亿}}{3\\ \\text{亿}} \\approx\\) **3.3 倍**。Strategy 把这个数叫做 **BTC 评级（BTC Rating）**，阶段 16.5 专门讲。
+- **每年要付的钱**：优先股股息 \\((1\\ \\text{亿} + 5{,}000\\ \\text{万}) \\times 10\\% =\\) **1,500 万美元**；可转债 0% 票息。3,000 万美元现金能覆盖 **24 个月**——这是阶段 16.6 的“美元储备覆盖”。
 
 ### ③ 为什么普通股像“加了杠杆的比特币”
 
-普通股是剩余索取权：比特币和现金付完上面三层之后剩下的，都是它的。假设比特币涨 10%，从 10 亿变成 11 亿：
+普通股是剩余索取权：比特币和现金付完上面三层之后剩下的，都是它的。假设比特币涨 10%，从 10 亿变成 11 亿。普通股的“底子”这样变：
 
 $$
-比特币 +10%：普通股的“底子”从 1,000 + 30 − 300 = 730 变成 1,100 + 30 − 300 = 830，涨 13.7%
-比特币 −10%：底子从 730 变成 630，跌 13.7%
+\\begin{aligned} \\text{比特币 } {+10\\%}\\text{：}\\ & 1{,}000 + 30 - 300 = 730 \\\\ & \\to\\ 1{,}100 + 30 - 300 = 830\\quad(\\text{涨 } 13.7\\%) \\\\ \\text{比特币 } {-10\\%}\\text{：}\\ & 730 \\to 630\\quad(\\text{跌 } 13.7\\%) \\end{aligned}
 $$
 
 **上面三层的索取权是固定的，比特币的涨跌全部落在普通股身上**。这就是“放大”（阶段 16.4）。它有两种常见的简单算法：
 
-- **不计现金的简单口径**：比特币净值 ÷ (比特币净值 − 累计优先索取权) = 10 ÷ (10 − 3) ≈ **1.43 倍**。
-- **Strategy 官方口径（Amplification）**：BTC Reserve ÷ Net Reserve = 10 ÷ 7.3 ≈ **1.37 倍**（Net Reserve 把现金加回来，见第④块）。上面的 13.7% 正是 1.37 × 10%。
+- **不计现金的简单口径**：\\(\\dfrac{\\text{比特币净值}}{\\text{比特币净值} - \\text{累计优先索取权}} = \\dfrac{10}{10 - 3} \\approx\\) **1.43 倍**。
+- **Strategy 官方口径（Amplification）**：\\(\\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}} = \\dfrac{10}{7.3} \\approx\\) **1.37 倍**（Net Reserve 把现金加回来，见第④块）。上面的 13.7% 正是 \\(1.37 \\times 10\\%\\)。
 
 注意三件事。第一，**1.37 倍不算高**——对比一家 LTV 80% 的房子（放大 5 倍）或一个 10 倍杠杆的永续合约。DAT 的普通股之所以波动比比特币大得多，**另一半原因是 mNAV 本身也在动**：比特币涨时市场往往愿意给更高的溢价，跌时溢价被压缩，两股力量叠加（阶段 10.4 的反身性）。第二，放大是**双向的**：2025 年 10 月到 2026 年 7 月比特币从约 12.6 万美元跌到约 5.8 万美元（−54%），DAT 普通股的跌幅普遍更大。第三，放大倍数会随比特币价格**滑动**：比特币越跌，固定索取权占比越高，放大倍数越大——这是一种路径依赖，阶段 11.4 的“波动拖累”在这里同样成立。
 
-真实数据对照：Strategy 在 2026 年 8 月 23 日公布的 Amplification 为 **1.30 倍**（BTC Reserve 647 亿 ÷ Net Reserve 497 亿美元）。
+真实数据对照：Strategy 在 2026 年 8 月 23 日公布的 Amplification 为 **1.30 倍**（\\(\\text{BTC Reserve } 647\\ \\text{亿} \\div \\text{Net Reserve } 497\\ \\text{亿美元}\\)）。
 
 ### ④ 官方口径对照：同一家公司，四种 mNAV
 
@@ -92,20 +91,20 @@ $$
 
 <table class="pm">
 <tr><th>口径</th><th>公式</th><th>橙子公司</th></tr>
-<tr><td><b>市值口径</b>（bitcointreasuries “basic”）</td><td>市值 ÷ 比特币净值</td><td>15 ÷ 10 = <b>1.50</b></td></tr>
-<tr><td><b>稀释市值口径</b></td><td>股价 × 稀释股数 ÷ 比特币净值（可转债全部假设转股，+600 万股 → 1.06 亿股）</td><td>15.9 ÷ 10 = <b>1.59</b></td></tr>
-<tr><td><b>企业价值口径</b>（Strategy 2025 定义）</td><td>(市值 + 债务 + 优先股名义 − 现金) ÷ 比特币净值</td><td>(15 + 1.5 + 1.5 − 0.3) ÷ 10 = <b>1.77</b></td></tr>
-<tr><td><b>股价 ÷ 每股净比特币</b>（Strategy 2026 定义）</td><td>净储备 = 比特币 − 价外可转债 − 优先股 + 美元资产 = 7.3 亿；完全稀释股数只算价内工具 = 1 亿股 → 每股 7.30 美元</td><td>15 ÷ 7.30 = <b>2.05</b></td></tr>
+<tr><td><b>市值口径</b>（bitcointreasuries “basic”）</td><td>\\(\\mathrm{mNAV} = \\dfrac{\\text{市值}}{\\text{比特币净值}}\\)</td><td>\\(\\dfrac{15}{10} =\\) <b>1.50</b></td></tr>
+<tr><td><b>稀释市值口径</b></td><td>\\(\\mathrm{mNAV} = \\dfrac{\\text{股价} \\times \\text{稀释股数}}{\\text{比特币净值}}\\)（可转债全部假设转股，+600 万股 → 1.06 亿股）</td><td>\\(\\dfrac{15.9}{10} =\\) <b>1.59</b></td></tr>
+<tr><td><b>企业价值口径</b>（Strategy 2025 定义）</td><td>\\(\\mathrm{mNAV} = \\dfrac{\\text{市值} + \\text{债务} + \\text{优先股名义} - \\text{现金}}{\\text{比特币净值}}\\)</td><td>\\(\\dfrac{15 + 1.5 + 1.5 - 0.3}{10} =\\) <b>1.77</b></td></tr>
+<tr><td><b>\\(\\text{股价} \\div \\text{每股净比特币}\\)</b>（Strategy 2026 定义）</td><td>\\(\\text{净储备} = \\text{比特币} - \\text{价外可转债} - \\text{优先股} + \\text{美元资产} = 7.3\\ \\text{亿}\\)；完全稀释股数只算价内工具，共 1 亿股 → 每股 \\(\\dfrac{7.3\\ \\text{亿}}{1\\ \\text{亿股}} = 7.30\\ \\text{美元}\\)</td><td>\\(\\dfrac{15}{7.30} =\\) <b>2.05</b></td></tr>
 </table>
 
-**同一家公司、同一天，1.50 到 2.05 都是“对”的。** 所以全课的规矩是：**提到 mNAV，必须说明口径**。真实例子：Strategy 按 2026 定义，2026 年 8 月 21 日的 mNAV 为 **1.01 倍**（股价 119.25 美元 ÷ 每股净比特币 118.31 美元）；按 2025 年的企业价值口径推算，同一天约 **1.00 倍**。2025 年 11 月 28 日按旧定义是 1.2 倍。**跨年的数字不能直接比较。**
+**同一家公司、同一天，1.50 到 2.05 都是“对”的。** 所以全课的规矩是：**提到 mNAV，必须说明口径**。真实例子：Strategy 按 2026 定义，2026 年 8 月 21 日的 mNAV 为 **1.01 倍**（\\(\\dfrac{\\text{股价 } 119.25\\ \\text{美元}}{\\text{每股净比特币 } 118.31\\ \\text{美元}}\\)）；按 2025 年的企业价值口径推算，同一天约 **1.00 倍**。2025 年 11 月 28 日按旧定义是 1.2 倍。**跨年的数字不能直接比较。**
 
 其他几个口径也要一次讲清（全部能用 _fin.js 复算）：
 
-- **放大倍数**：1.43 倍是不计现金的简单口径；Strategy 官方 Amplification = BTC Reserve ÷ Net Reserve = 10 ÷ 7.3 ≈ **1.37 倍**；而 **Strive 的 “Amplification Ratio” 是另一回事** =（债务 + 优先股）÷ 比特币价值 = 3 ÷ 10 = **30%**（Strive 自己在 2026 年 9 月的数字是 50.4%）。名字几乎一样，公式完全不同。
-- **每股比特币**：按普通股 1 亿股 = 0.0001 BTC = **10,000 聪/股**；按 Strategy 的“假设稀释股数”（可转债无论价内价外都算转股，1.06 亿股）≈ **9,434 聪/股**。
-- **BTC Breakeven ARR**（比特币每年需涨多少才能“覆盖”股息）= 1,500 万 ÷ 10 亿 = **1.5%**。Strategy 在 2026 年 8 月 23 日的数字是 2.63%。
-- **BTC 地板价**（该层 BTC 评级恰好 = 1 倍时的比特币价格）：Orange-F = 100,000 ÷ 4.0 = **25,000 美元**；Orange-D ≈ **30,000 美元**。
+- **放大倍数**：1.43 倍是不计现金的简单口径；Strategy 官方 \\(\\text{Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}} = \\dfrac{10}{7.3} \\approx\\) **1.37 倍**；而 **Strive 的 “Amplification Ratio” 是另一回事**：\\(\\text{Amplification Ratio} = \\dfrac{\\text{债务} + \\text{优先股}}{\\text{比特币价值}} = \\dfrac{3}{10} =\\) **30%**（Strive 自己在 2026 年 9 月的数字是 50.4%）。名字几乎一样，公式完全不同。
+- **每股比特币**：按普通股 1 亿股，\\(\\dfrac{10{,}000\\ \\text{BTC}}{1\\ \\text{亿股}} = 0.0001\\ \\text{BTC} =\\) **10,000 聪/股**；按 Strategy 的“假设稀释股数”（可转债无论价内价外都算转股，1.06 亿股）\\(\\dfrac{10{,}000\\ \\text{BTC}}{1.06\\ \\text{亿股}} \\approx\\) **9,434 聪/股**。
+- **BTC Breakeven ARR**（比特币每年需涨多少才能“覆盖”股息）：\\(\\dfrac{1{,}500\\ \\text{万}}{10\\ \\text{亿}} =\\) **1.5%**。Strategy 在 2026 年 8 月 23 日的数字是 2.63%。
+- **BTC 地板价**（该层 BTC 评级恰好为 1 倍时的比特币价格）：Orange-F \\(= \\dfrac{100{,}000}{4.0} =\\) **25,000 美元**；Orange-D \\(\\approx\\) **30,000 美元**。
 
 为什么市场会付超过 1 倍？支持者的解释：准入（很多资金不能直接买比特币却能买股票）、公司能以溢价增发让每股比特币增长（阶段 16.7 的飞轮：以 15 美元增发 1,000 万股全部买币，每股比特币 **+4.5%**）、可转债与期权里的波动率价值（阶段 7.3）。批评者的回答：溢价本身就是反身性的——**溢价高 → 增发买币 → 故事更好 → 溢价更高**，反过来也一样。2026 年 9 月，据 DWF Ventures 统计，**最大的 20 家 DAT 中有 16 家 mNAV 低于 1**。mNAV 的完整讲法在阶段 16.2，跌破 1 之后怎么办在阶段 18.3。
 
@@ -121,7 +120,7 @@ $$
 
 最后把两边的最强论证并排放好（**本课只讲机制与分析框架，不构成投资建议**）：
 
-- **支持者最强的论证**：资本结构没有追保、没有比特币被抵押，义务大多是永续或多年后才到期，公司可以等；只要能以 mNAV > 1 融资、或比特币长期回报高于融资成本，每股比特币就会增长；它把比特币“翻译”成了股票、信用、固定收益这些传统资金能买的形态。
+- **支持者最强的论证**：资本结构没有追保、没有比特币被抵押，义务大多是永续或多年后才到期，公司可以等；只要能以 \\(\\mathrm{mNAV} > 1\\) 融资、或比特币长期回报高于融资成本，每股比特币就会增长；它把比特币“翻译”成了股票、信用、固定收益这些传统资金能买的形态。
 - **批评者最强的论证**：整个模式依赖溢价，而溢价是反身性的，可以消失（2026 年大多数 DAT 跌破 1 倍）；优先股股息要付**现金**，而比特币不产生现金——融资渠道一关，就只能动用储备或卖币（Strategy 在 2026 年 5 月底出现了 2022 年以来首次卖币，全年累计卖出约 6,948 BTC，同时也在 8 月底恢复了买入）；高度集中在一种资产、一个创始人、一套指数规则上（MSCI 的“非经营性公司”咨询结果截至 2026 年 9 月下旬仍未公布）。
 `,
 
@@ -136,7 +135,7 @@ $$
 - **二、三楼（优先股）**卖给想要稳定房租的人：每年固定收 10% 的“租金”，但地基真塌了，他们排在一楼后面。
 - **顶层（普通股）**卖给想赌地基会继续膨胀的人：没有租金，但地基胀多少，扣掉下面几层固定的份额之后，全归他们——所以顶层的起伏比地基还大。
 
-奇怪的是，顶层常常能卖出比“地基剩余价值”更高的价格（mNAV > 1）。开发商就趁机多盖几层、把钱全换成更多地基——只要卖价高于地基价值，每个顶层住户分到的地基就变多。**可一旦顶层的价格跌到地基价值以下，这台机器就开始倒着转。**
+奇怪的是，顶层常常能卖出比“地基剩余价值”更高的价格（\\(\\mathrm{mNAV} > 1\\)）。开发商就趁机多盖几层、把钱全换成更多地基——只要卖价高于地基价值，每个顶层住户分到的地基就变多。**可一旦顶层的价格跌到地基价值以下，这台机器就开始倒着转。**
 
 还有一件事：楼里没有一根绳子拴着地基——没有人能因为地基缩了一半就强行拆楼。但二、三楼的租金每个月都要付现金，而地基本身不产生任何现金。开发商口袋里的那笔“租金储备”能撑多久，就是这栋楼真正的计时器。
 `,
@@ -146,12 +145,12 @@ $$
     "**“mNAV 只有一个数。”** —— 同一家橙子公司，市值口径 1.50、稀释口径 1.59、企业价值口径 1.77、每股净比特币口径 2.05。Strategy 在 2026 年还改了自己的定义。不说口径的 mNAV 没有意义。",
     "**“比特币支撑优先股，就是用比特币做抵押。”** —— 没有任何比特币被质押给优先股。“支撑”指的是资产覆盖：比特币净值是本层及以上累计索取权的几倍。覆盖会随比特币价格滑动，破产时优先股仍排在所有债务之后。",
     "**“DAT 没有追保，所以杠杆没有风险。”** —— 没有扳机，风险换成了慢性的形态：优先股股息要付现金，比特币不产生现金；融资窗口一关，就要动用储备或卖币。2026 年多家 DAT（包括 Strategy）都卖过比特币来付股息、回购或还债。",
-    "**“Strive 的放大比率 30%，比 Strategy 的 1.37 倍低很多，所以更保守。”** —— 两者是不同公式：Strive 的 Amplification Ratio = (债务 + 优先股) ÷ 比特币，是百分比；Strategy 的 Amplification = BTC Reserve ÷ Net Reserve，是倍数。橙子公司同时是“30%”和“1.37 倍”。比较前先换算到同一口径。",
+    "**“Strive 的放大比率 30%，比 Strategy 的 1.37 倍低很多，所以更保守。”** —— 两者是不同公式：Strive 的 \\(\\text{Amplification Ratio} = \\dfrac{\\text{债务} + \\text{优先股}}{\\text{比特币}}\\)，是百分比；Strategy 的 \\(\\text{Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\)，是倍数。橙子公司同时是“30%”和“1.37 倍”。比较前先换算到同一口径。",
   ],
 
   quiz: [
     {
-      q: "橙子公司：10,000 BTC、比特币 100,000 美元、1 亿股、股价 15 美元、可转债 1.5 亿（转股价 25 美元）、优先股共 1.5 亿、现金 3,000 万。按 Strategy 的 2026 年定义（股价 ÷ 每股净比特币），mNAV 是多少？",
+      q: "橙子公司：10,000 BTC、比特币 100,000 美元、1 亿股、股价 15 美元、可转债 1.5 亿（转股价 25 美元）、优先股共 1.5 亿、现金 3,000 万。按 Strategy 的 2026 年定义（\\(\\text{股价} \\div \\text{每股净比特币}\\)），mNAV 是多少？",
       options: [
         "1.50",
         "1.77",
@@ -159,18 +158,18 @@ $$
         "2.05",
       ],
       answer: 3,
-      explain: "净储备 = 10 亿 − 1.5 亿（价外可转债）− 1.5 亿（优先股）+ 0.3 亿 = **7.3 亿**；完全稀释股数只算价内工具 = 1 亿股 → 每股净比特币 7.30 美元；15 ÷ 7.30 ≈ **2.05**。1.50 是市值口径，1.59 是稀释市值口径，1.77 是企业价值口径。",
+      explain: "\\(\\text{净储备} = 10\\ \\text{亿} - 1.5\\ \\text{亿}\\,(\\text{价外可转债}) - 1.5\\ \\text{亿}\\,(\\text{优先股}) + 0.3\\ \\text{亿} =\\) **7.3 亿**；完全稀释股数只算价内工具，共 1 亿股 → 每股净比特币 7.30 美元；\\(\\dfrac{15}{7.30} \\approx\\) **2.05**。1.50 是市值口径，1.59 是稀释市值口径，1.77 是企业价值口径。",
     },
     {
       q: "比特币上涨 10%，橙子公司普通股的“底子”（比特币 + 现金 − 所有优先索取权）大约涨多少？",
       options: [
-        "约 13.7%：放大倍数 10 ÷ 7.3 ≈ 1.37",
+        "约 13.7%：放大倍数 \\(10 \\div 7.3 \\approx 1.37\\)",
         "正好 10%",
         "约 15%：因为 mNAV 是 1.5",
         "约 30%：因为优先索取权占比特币的 30%",
       ],
       answer: 0,
-      explain: "上面三层的索取权固定，涨跌全落在普通股上：底子从 730 变 830，**+13.7% = 1.37 × 10%**。这正是 Strategy 官方的 Amplification（BTC Reserve ÷ Net Reserve）。股价实际涨幅还取决于 mNAV 怎么变。",
+      explain: "上面三层的索取权固定，涨跌全落在普通股上：底子从 730 变 830，\\(\\mathbf{+13.7\\% = 1.37 \\times 10\\%}\\)。这正是 Strategy 官方的 Amplification（\\(\\text{BTC Reserve} \\div \\text{Net Reserve}\\)）。股价实际涨幅还取决于 mNAV 怎么变。",
     },
     {
       q: "橙子公司 Orange-F（高级优先股）的 BTC 评级与 BTC 地板价分别是？",
@@ -181,7 +180,7 @@ $$
         "3.3 倍；30,000 美元",
       ],
       answer: 1,
-      explain: "BTC 评级 = 比特币净值 ÷ **本层及以上累计**索取权 = 10 亿 ÷ (1.5 亿 + 1 亿) = **4.0 倍**；地板价 = 100,000 ÷ 4.0 = **25,000 美元**。3.3 倍 / 30,000 美元是 Orange-D。",
+      explain: "\\(\\text{BTC 评级} = \\dfrac{\\text{比特币净值}}{\\textbf{本层及以上累计}\\text{索取权}} = \\dfrac{10\\ \\text{亿}}{1.5\\ \\text{亿} + 1\\ \\text{亿}} =\\) **4.0 倍**；\\(\\text{地板价} = \\dfrac{100{,}000}{4.0} =\\) **25,000 美元**。3.3 倍 / 30,000 美元是 Orange-D。",
     },
     {
       q: "下列哪一项最准确地描述了“比特币支撑优先股”里的“支撑”？",

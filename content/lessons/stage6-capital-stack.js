@@ -49,11 +49,11 @@ export default {
 用一个等式把资产负债表“竖着”读：
 
 $$
-资产价值 = 各层固定索取权之和 + 普通股权益（剩余）
-普通股权益 = max(0, 资产价值 − 各层固定索取权之和)
+\\text{资产价值} = \\text{各层固定索取权之和} + \\text{普通股权益（剩余）}
+\\text{普通股权益} = \\max\\left(0,\\ \\text{资产价值} - \\text{各层固定索取权之和}\\right)
 $$
 
-第二行的 max(0, …) 是整节课最重要的一个符号：**普通股股东有限责任**，最多亏光投入，不会倒欠。这个“下有底、上无顶”的形状，第⑤块会告诉你它其实是一张期权。
+第二行的 \\(\\max(0, \\ldots)\\) 是整节课最重要的一个符号：**普通股股东有限责任**，最多亏光投入，不会倒欠。这个“下有底、上无顶”的形状，第⑤块会告诉你它其实是一张期权。
 
 注意“固定”指的是**合同金额**，不是**市场价格**。一张面值 1,000 美元的债券，合同上永远写着 1,000，但它在市场上值多少，取决于大家估计它**能不能拿满**——这正是阶段 4.6 的信用利差在定价的东西。
 
@@ -78,7 +78,7 @@ $$
 
 ### ③ 瀑布：钱从顶楼往下流
 
-把“按顺序灌水”写成算法，就是**瀑布（waterfall）**，课程共享引擎里的 waterfall 函数只做一件事：拿着资产价值，从最高一层开始，每层拿 min(剩余, 本层债权)，剩下的往下流，最后的余数归普通股。
+把“按顺序灌水”写成算法，就是**瀑布（waterfall）**，课程共享引擎里的 waterfall 函数只做一件事：拿着资产价值，从最高一层开始，每层拿 \\(\\min(\\text{剩余},\\ \\text{本层债权})\\)，剩下的往下流，最后的余数归普通股。
 
 用枫叶制造算三个情景（单位：万元）：
 
@@ -110,16 +110,16 @@ $$
 
 ### ⑤ 风险与回报沿楼层递增：普通股是一张看涨期权
 
-楼层越低，承担的“坏日子”越多，所以投资者要求的回报越高。这不是道德判断，而是定价：阶段 4.6 的公式“预期损失 = 违约概率 × 违约损失率”在每一层都成立，只是低楼层的违约损失率更大（回收得更少），利差就得更宽。
+楼层越低，承担的“坏日子”越多，所以投资者要求的回报越高。这不是道德判断，而是定价：阶段 4.6 的公式 \\(\\text{预期损失} = \\text{违约概率} \\times \\text{违约损失率}\\) 在每一层都成立，只是低楼层的违约损失率更大（回收得更少），利差就得更宽。
 
 更深一层的看法来自罗伯特·默顿（1974）：**普通股就是一张以公司资产为标的、以全部债务为行权价的看涨期权**。
 
 $$
-普通股价值（到期时）= max(0, 资产价值 − 债务总额)
-这正是看涨期权的收益：max(0, 标的价格 − 行权价)
+\\text{普通股价值（到期时）} = \\max(0,\\ \\text{资产价值} - \\text{债务总额})
+\\text{看涨期权的收益} = \\max(0,\\ \\text{标的价格} - \\text{行权价})
 $$
 
-这个视角解释了很多现象：
+两行的形状一模一样：普通股的收益正是一张看涨期权的收益。这个视角解释了很多现象：
 
 - **资产波动越大，普通股越值钱（期权价值随波动上升），债权人越吃亏。** 所以债券合同里总有限制条款，防止股东拿公司去“赌一把”。
 - **公司越接近资不抵债，股票越像彩票**，价格很低但弹性极大；债券则越来越像股票，价格随资产价值起落。
@@ -131,14 +131,14 @@ $$
 
 现在把同一把尺子放到全课的玩具公司身上。**橙子公司（Orange Corp）**持有 10,000 BTC，比特币价格 100,000 美元，比特币净值（BTC NAV）10 亿美元，另有现金 3,000 万美元。它的楼层图是这样的：
 
-<figure><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">橙子公司的资本结构：地基是比特币</text><rect x="60" y="44" width="230" height="46" rx="4" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="175" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">可转债 1.5 亿</text><text x="175" y="80" text-anchor="middle" font-size="10" fill="var(--muted)">0% 票息 · 转股价 25 美元</text><rect x="60" y="94" width="230" height="40" rx="4" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="175" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-F 高级优先股 1 亿</text><text x="175" y="126" text-anchor="middle" font-size="10" fill="var(--muted)">10% · 累积</text><rect x="60" y="138" width="230" height="34" rx="4" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="175" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-D 次级优先股 0.5 亿</text><text x="175" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">10% · 非累积</text><rect x="60" y="178" width="230" height="56" rx="4" fill="var(--green-soft)" stroke="var(--green)"/><text x="175" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">普通股 1 亿股</text><text x="175" y="219" text-anchor="middle" font-size="10" fill="var(--muted)">剩余索取权（净值约 7.3 亿）</text><rect x="40" y="246" width="270" height="44" rx="4" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="175" y="266" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">地基：10,000 BTC ≈ 10 亿美元</text><text x="175" y="282" text-anchor="middle" font-size="10" fill="var(--muted)">+ 现金 / 美元储备 0.3 亿</text><text x="330" y="62" font-size="11" font-weight="600" fill="var(--ink)">累计 1.5 亿</text><text x="330" y="78" font-size="11" fill="var(--btc)" font-weight="700">覆盖 ≈ 6.7 倍</text><text x="330" y="110" font-size="11" font-weight="600" fill="var(--ink)">累计 2.5 亿</text><text x="330" y="126" font-size="11" fill="var(--btc)" font-weight="700">覆盖 = 4.0 倍</text><text x="330" y="152" font-size="11" font-weight="600" fill="var(--ink)">累计 3 亿</text><text x="330" y="167" font-size="11" fill="var(--btc)" font-weight="700">覆盖 ≈ 3.3 倍</text><line x1="440" y1="60" x2="440" y2="280" stroke="var(--line)"/><text x="455" y="70" font-size="11" fill="var(--muted)">比特币跌到多少，</text><text x="455" y="86" font-size="11" fill="var(--muted)">这一层开始受损？</text><text x="455" y="112" font-size="11" fill="var(--ink)">可转债：约 12,000 美元</text><text x="455" y="130" font-size="11" fill="var(--ink)">F 层：约 22,000 美元</text><text x="455" y="148" font-size="11" fill="var(--ink)">D 层：约 27,000 美元</text><text x="455" y="176" font-size="10" fill="var(--muted)">（算上 0.3 亿现金，</text><text x="455" y="190" font-size="10" fill="var(--muted)">不计破产费用）</text><text x="320" y="316" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">同一栋楼，地基从“厂房与客户”换成“比特币”：楼层逻辑一模一样，地基的波动大得多</text></svg><figcaption>橙子公司的每一层都是固定索取权，唯独地下室的普通股承接比特币的全部涨跌。覆盖倍数 = 比特币净值 ÷ 本层及以上累计索取权。</figcaption></figure>
+<figure><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">橙子公司的资本结构：地基是比特币</text><rect x="60" y="44" width="230" height="46" rx="4" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="175" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">可转债 1.5 亿</text><text x="175" y="80" text-anchor="middle" font-size="10" fill="var(--muted)">0% 票息 · 转股价 25 美元</text><rect x="60" y="94" width="230" height="40" rx="4" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="175" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-F 高级优先股 1 亿</text><text x="175" y="126" text-anchor="middle" font-size="10" fill="var(--muted)">10% · 累积</text><rect x="60" y="138" width="230" height="34" rx="4" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="175" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Orange-D 次级优先股 0.5 亿</text><text x="175" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">10% · 非累积</text><rect x="60" y="178" width="230" height="56" rx="4" fill="var(--green-soft)" stroke="var(--green)"/><text x="175" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">普通股 1 亿股</text><text x="175" y="219" text-anchor="middle" font-size="10" fill="var(--muted)">剩余索取权（净值约 7.3 亿）</text><rect x="40" y="246" width="270" height="44" rx="4" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="175" y="266" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">地基：10,000 BTC ≈ 10 亿美元</text><text x="175" y="282" text-anchor="middle" font-size="10" fill="var(--muted)">+ 现金 / 美元储备 0.3 亿</text><text x="330" y="62" font-size="11" font-weight="600" fill="var(--ink)">累计 1.5 亿</text><text x="330" y="78" font-size="11" fill="var(--btc)" font-weight="700">覆盖 ≈ 6.7 倍</text><text x="330" y="110" font-size="11" font-weight="600" fill="var(--ink)">累计 2.5 亿</text><text x="330" y="126" font-size="11" fill="var(--btc)" font-weight="700">覆盖 = 4.0 倍</text><text x="330" y="152" font-size="11" font-weight="600" fill="var(--ink)">累计 3 亿</text><text x="330" y="167" font-size="11" fill="var(--btc)" font-weight="700">覆盖 ≈ 3.3 倍</text><line x1="440" y1="60" x2="440" y2="280" stroke="var(--line)"/><text x="455" y="70" font-size="11" fill="var(--muted)">比特币跌到多少，</text><text x="455" y="86" font-size="11" fill="var(--muted)">这一层开始受损？</text><text x="455" y="112" font-size="11" fill="var(--ink)">可转债：约 12,000 美元</text><text x="455" y="130" font-size="11" fill="var(--ink)">F 层：约 22,000 美元</text><text x="455" y="148" font-size="11" fill="var(--ink)">D 层：约 27,000 美元</text><text x="455" y="176" font-size="10" fill="var(--muted)">（算上 0.3 亿现金，</text><text x="455" y="190" font-size="10" fill="var(--muted)">不计破产费用）</text><text x="320" y="316" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">同一栋楼，地基从“厂房与客户”换成“比特币”：楼层逻辑一模一样，地基的波动大得多</text></svg><figcaption>橙子公司的每一层都是固定索取权，唯独地下室的普通股承接比特币的全部涨跌。\\(\\text{覆盖倍数} = \\dfrac{\\text{比特币净值}}{\\text{本层及以上累计索取权}}\\)。</figcaption></figure>
 
 几个关键数字，后面会反复用到：
 
 - **累计索取权**：可转债 1.5 亿 → 加上 F 层 2.5 亿 → 加上 D 层 3 亿。
-- **资产覆盖（BTC 评级的雏形）**：10 亿 ÷ 1.5 亿 ≈ **6.7 倍**；10 亿 ÷ 2.5 亿 = **4.0 倍**；10 亿 ÷ 3 亿 ≈ **3.3 倍**。
-- **受损价位**：比特币要跌到约 27,000 美元（资产 = 2.7 亿 BTC + 0.3 亿现金 = 3 亿），D 层才开始亏本金；跌到约 12,000 美元，可转债才开始亏。这就是“覆盖倍数”的直观意思：**3.3 倍覆盖 ≈ 比特币可以跌约 70% 而这一层仍能拿满**（算上现金略多一点）。
-- **放大倍数**：普通股承接 10 亿比特币的涨跌，但自己的“净值”只有 10 − 3 = 7 亿，所以比特币涨 10%，普通股净值涨约 14%——10 / 7 ≈ **1.43 倍**。阶段 16.4 会专门讲。
+- **资产覆盖（BTC 评级的雏形）**：\\(\\dfrac{10\\ \\text{亿}}{1.5\\ \\text{亿}} \\approx \\mathbf{6.7\\times}\\)；\\(\\dfrac{10\\ \\text{亿}}{2.5\\ \\text{亿}} = \\mathbf{4.0\\times}\\)；\\(\\dfrac{10\\ \\text{亿}}{3\\ \\text{亿}} \\approx \\mathbf{3.3\\times}\\)。
+- **受损价位**：比特币要跌到约 27,000 美元（\\(\\text{资产} = 2.7\\ \\text{亿 BTC} + 0.3\\ \\text{亿现金} = 3\\ \\text{亿}\\)），D 层才开始亏本金；跌到约 12,000 美元，可转债才开始亏。这就是“覆盖倍数”的直观意思：**3.3 倍覆盖，大约意味着比特币可以跌约 70% 而这一层仍能拿满**（\\(1 - \\tfrac{1}{3.3} \\approx 70\\%\\)；算上现金略多一点）。
+- **放大倍数**：普通股承接 10 亿比特币的涨跌，但自己的“净值”只有 \\(10 - 3 = 7\\ \\text{亿}\\)，所以比特币涨 10%，普通股净值涨约 14%——\\(10 \\div 7 \\approx \\mathbf{1.43\\times}\\)。阶段 16.4 会专门讲。
 
 和枫叶制造相比，橙子公司的楼有两个特点：**没有有担保债务**（没有人对比特币有留置权，也就没有“跌破线就强制平仓”的追保），**中间层大量用优先股而不是债**（跳过优先股股息不构成违约）。这两点正是阶段 15.3 说的“没有追保的杠杆”，也是阶段 17.6 把真实公司放上这栋楼、用比特币滑块做压力测试的出发点。橙子公司是示意用的玩具，真实公司的层级与条款以其最新披露为准。
 `,
@@ -175,7 +175,7 @@ DAT 的梯田有一个不同：水库不是靠雨水，而是一座**水位剧�
         "75%，按债权比例平均分配",
       ],
       answer: 1,
-      explain: "**按楼层灌水**：担保贷款拿 30、高级债拿 25，只剩 5 流到次级票据，5 / 15 ≈ 33%。优先股和普通股都是 0。瀑布是逐层灌满，不是按比例平分。",
+      explain: "**按楼层灌水**：担保贷款拿 30、高级债拿 25，只剩 5 流到次级票据，\\(5 \\div 15 \\approx 33\\%\\)。优先股和普通股都是 0。瀑布是逐层灌满，不是按比例平分。",
     },
     {
       q: "为什么说普通股像一张以公司资产为标的的看涨期权？",
@@ -183,7 +183,7 @@ DAT 的梯田有一个不同：水库不是靠雨水，而是一座**水位剧�
         "因为普通股股东有权在任何时候把股票换成债券",
         "因为股价每天都会波动",
         "因为公司可以随时回购股票",
-        "因为到期时普通股价值 = max(0, 资产 − 债务)，与看涨期权的收益形状相同",
+        "因为到期时 \\(\\text{普通股价值} = \\max(0,\\ \\text{资产} - \\text{债务})\\)，与看涨期权的收益形状相同",
       ],
       answer: 3,
       explain: "**默顿模型**：有限责任让普通股“下有底（0）、上无顶”，行权价就是全部债务。所以资产波动越大，普通股这张期权越值钱，债权人越吃亏。",
@@ -191,13 +191,13 @@ DAT 的梯田有一个不同：水库不是靠雨水，而是一座**水位剧�
     {
       q: "橙子公司的比特币净值 10 亿美元，可转债 1.5 亿、Orange-F 1 亿、Orange-D 0.5 亿。Orange-F 这一层的资产覆盖倍数是多少？",
       options: [
-        "4.0 倍：10 亿 ÷（1.5 亿 + 1 亿）",
-        "10 倍：10 亿 ÷ 1 亿",
-        "6.7 倍：10 亿 ÷ 1.5 亿",
-        "3.3 倍：10 亿 ÷ 3 亿",
+        "4.0 倍：\\(10\\ \\text{亿} \\div (1.5\\ \\text{亿} + 1\\ \\text{亿})\\)",
+        "10 倍：\\(10\\ \\text{亿} \\div 1\\ \\text{亿}\\)",
+        "6.7 倍：\\(10\\ \\text{亿} \\div 1.5\\ \\text{亿}\\)",
+        "3.3 倍：\\(10\\ \\text{亿} \\div 3\\ \\text{亿}\\)",
       ],
       answer: 0,
-      explain: "覆盖倍数看的是**本层及以上的累计索取权**。F 层上面压着 1.5 亿可转债，所以要用 2.5 亿做分母：10 / 2.5 = 4.0 倍。只用本层的 1 亿会严重高估安全性。",
+      explain: "覆盖倍数看的是**本层及以上的累计索取权**。F 层上面压着 1.5 亿可转债，所以要用 2.5 亿做分母：\\(10 \\div 2.5 = 4.0\\times\\)。只用本层的 1 亿会严重高估安全性。",
     },
     {
       q: "母公司发行了“高级无担保债”，但几乎所有资产都在一家也有自己债务的子公司里。这种情况下母公司债权人面临什么风险？",

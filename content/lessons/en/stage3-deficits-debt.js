@@ -7,12 +7,12 @@ export default {
   prereqs: ["gdp-cycle", "risk-free-rate"],
 
   oneLiner:
-    "**A deficit is how much more a government spends than it collects in a year (a flow); the debt is all those deficits piled up (a stock).** In August 2026 total US federal debt passed **$40 trillion**, and yearly net interest is about **$1 trillion**, more than the defense budget. This lesson explains how the budget adds up, who holds Treasuries, how the Treasury auctions its debt, and the one formula that decides whether debt spirals: **the interest rate r, growth g and the primary deficit**. It is the first piece of the puzzle behind \"the 30-year yield breaks 5%.\"",
+    "**A deficit is how much more a government spends than it collects in a year (a flow); the debt is all those deficits piled up (a stock).** In August 2026 total US federal debt passed **$40 trillion**, and yearly net interest is about **$1 trillion**, more than the defense budget. This lesson explains how the budget adds up, who holds Treasuries, how the Treasury auctions its debt, and the one formula that decides whether debt spirals: **the interest rate \\(r\\), growth \\(g\\) and the primary deficit**. It is the first piece of the puzzle behind \"the 30-year yield breaks 5%.\"",
 
   intuition: `
 Start with a household. The Wangs earn $100,000 this year and spend $115,000. The extra $15,000 goes on a credit card — that $15,000 is this year's **deficit**. They did the same last year and the year before, and the card now carries $300,000 — that's the **debt**.
 
-- **The deficit is a flow**: "spent minus collected" over one year.
+- **The deficit is a flow**: \\(\\text{spent} - \\text{collected}\\) over one year.
 - **The debt is a stock**: all past deficits added up (minus any occasional surpluses).
 
 As long as there's any deficit at all, the debt keeps growing. A "shrinking" deficit doesn't mean the debt is shrinking — only that it's growing more slowly.
@@ -29,7 +29,7 @@ But a country differs from a household in three crucial ways:
 2. **A country never has to pay its debt off.** Maturing Treasuries are normally repaid by issuing new ones ("rolling over"). What really matters is whether **debt relative to the size of the economy (debt-to-GDP) is stable**, and whether **the interest burden is bearable**.
 3. **A country's debt is somebody else's asset.** The Treasuries sitting in your money fund, in banks, pension funds, foreign central banks — even inside stablecoin issuers — are money the government owes them. That's **Idea ② Balance sheets & claims**: every Treasury is a claim written as a liability on the Treasury's balance sheet and showing up as an asset on someone else's.
 
-This lesson also rests on **Idea ① The price of time**. The bigger the debt, the more interest rates matter. With $300,000 on the card, a rate rise from 3% to 5% lifts yearly interest from $9,000 to $15,000. The same holds for the US: as of 2026, yearly net interest is about **$1 trillion**, already **more than defense spending**. And the Congressional Budget Office's February 2026 projections assumed a 10-year Treasury yield of about 4.1% for 2026, while the market rate in September 2026 was about 5.2% — **so the interest bill is likely to come in above the official forecast.**
+This lesson also rests on **Idea ① The price of time**. The bigger the debt, the more interest rates matter. With $300,000 on the card, a rate rise from 3% to 5% lifts yearly interest from \\(\\$300{,}000 \\times 3\\% = \\$9{,}000\\) to \\(\\$300{,}000 \\times 5\\% = \\$15{,}000\\). The same holds for the US: as of 2026, yearly net interest is about **$1 trillion**, already **more than defense spending**. And the Congressional Budget Office's February 2026 projections assumed a 10-year Treasury yield of about 4.1% for 2026, while the market rate in September 2026 was about 5.2% — **so the interest bill is likely to come in above the official forecast.**
 
 Worse, this can become a loop: **higher rates → higher interest costs → bigger deficits → more Treasuries to sell → investors demand higher returns → rates rise further.** That's the core story when Stage 4.5 asks why the 30-year yield broke 5%, and the starting point for "fiscal dominance" in Stage 9.4.
 
@@ -38,14 +38,14 @@ Worse, this can become a loop: **higher rates → higher interest costs → bigg
 - **① The budget: revenue, spending and the deficit**
 - **② The debt: the total, the public's share, and who holds it**
 - **③ Interest costs: compounding in reverse**
-- **④ Debt-to-GDP dynamics: r, g and the primary deficit**
+- **④ Debt-to-GDP dynamics: \\(r\\), \\(g\\) and the primary deficit**
 - **⑤ How the Treasury borrows: auctions and the bills-vs-bonds fight**
 `,
 
   mechanics: `
 ### ① The budget: revenue, spending and the deficit
 
-The US federal **fiscal year** runs from October 1 to September 30 (fiscal 2026 = October 2025 through September 2026).
+The US federal **fiscal year** runs from October 1 to September 30 (fiscal 2026 runs from October 2025 through September 2026).
 
 **Revenue** comes mainly from individual income taxes (the largest source), Social Security and Medicare payroll taxes, corporate income taxes, and customs duties among others. **Spending** is dominated by Social Security, Medicare and Medicaid, defense, other discretionary programs, and **net interest**.
 
@@ -60,11 +60,11 @@ The US federal **fiscal year** runs from October 1 to September 30 (fiscal 2026 
 Keep two concepts apart:
 
 $$
-Total deficit = Spending − Revenue
-Primary deficit = Total deficit − Net interest
+\\text{Total deficit} = \\text{Spending} - \\text{Revenue}
+\\text{Primary deficit} = \\text{Total deficit} - \\text{Net interest}
 $$
 
-The **primary deficit** measures the government's own gap between spending and revenue, leaving aside interest on past borrowing. CBO's 2026 projection has the total deficit at about 5.8% of GDP and net interest at about 3.3%, so the primary deficit is roughly **2.5% of GDP**. That number becomes crucial in piece ④.
+The **primary deficit** measures the government's own gap between spending and revenue, leaving aside interest on past borrowing. CBO's 2026 projection has the total deficit at about 5.8% of GDP and net interest at about 3.3%, so the primary deficit is roughly **\\(5.8\\% - 3.3\\% = 2.5\\%\\) of GDP**. That number becomes crucial in piece ④.
 
 **Policies shaping the deficit (as of September 2026):**
 
@@ -88,7 +88,7 @@ The "$40 trillion" headline needs unpacking:
 
 ### ③ Interest costs: compounding in reverse
 
-Stage 2.2 showed how compounding makes savings snowball; for a borrower it runs in reverse. **Interest ≈ debt × average interest rate**:
+Stage 2.2 showed how compounding makes savings snowball; for a borrower it runs in reverse. **\\(\\text{Interest} \\approx \\text{debt} \\times \\text{average interest rate}\\)**:
 
 - Net interest was about **$970 billion** in fiscal 2025; CBO's February 2026 baseline has it at **$1 trillion-plus** in 2026 (3.3% of GDP) and about **$2.1 trillion** in 2036 (4.6% of GDP).
 - **Net interest now exceeds defense spending**: CBO projects about $1.0 trillion of net interest in fiscal 2026 versus about $885 billion for defense.
@@ -96,40 +96,43 @@ Stage 2.2 showed how compounding makes savings snowball; for a borrower it runs 
 **Higher rates don't hit the interest bill all at once**, because existing long-term Treasuries locked in their old rates. The effect seeps in: each time old debt matures and is replaced, the new debt pays whatever the market rate is at that moment. Two things set the speed:
 
 - **Average maturity**: the larger the share of short-term bills, the faster interest costs respond to hikes. On August 31, 2026 bills were **22.8%** of marketable debt, above the commonly cited 15%–20% guideline.
-- **The gap between market rates and the average rate**: roughly, $1 trillion of interest divided by about $31–32 trillion of public debt gives an **average rate of about 3.2%–3.3%**, while new 10-year and 30-year Treasuries in September 2026 yielded about 5.2% and 5.5%. As long as market rates sit above the average rate, **every rollover raises the interest bill.**
+- **The gap between market rates and the average rate**: roughly, $1 trillion of interest divided by about $31–32 trillion of public debt gives an **average rate of about \\(\\dfrac{1}{31\\text{–}32} \\approx 3.2\\%\\text{–}3.3\\%\\)**, while new 10-year and 30-year Treasuries in September 2026 yielded about 5.2% and 5.5%. As long as market rates sit above the average rate, **every rollover raises the interest bill.**
 
-One more number to remember: CBO's February 2026 projections assumed a 10-year yield of about **4.1%** for 2026, while the market was at about **5.2%** in September 2026, roughly 1.1 percentage points higher. **The official interest projections are therefore probably too low.**
+One more number to remember: CBO's February 2026 projections assumed a 10-year yield of about **4.1%** for 2026, while the market was at about **5.2%** in September 2026, roughly \\(5.2\\% - 4.1\\% = 1.1\\) percentage points higher. **The official interest projections are therefore probably too low.**
 
-### ④ Debt-to-GDP dynamics: r, g and the primary deficit
+### ④ Debt-to-GDP dynamics: \\(r\\), \\(g\\) and the primary deficit
 
-Sustainability isn't about the dollar amount of debt; it's about where **debt-to-GDP** is heading. A simple formula governs it (d = debt-to-GDP):
+Sustainability isn't about the dollar amount of debt; it's about where **debt-to-GDP** is heading. A simple formula governs it (\\(d\\) is debt-to-GDP):
 
 $$
-Next year's d = d × (1 + r) ÷ (1 + g) + primary deficit ratio
-Approximately: Δd ≈ (r − g) ÷ (1 + g) × d + primary deficit ratio
-r = average nominal interest rate on the debt; g = nominal GDP growth
+d_{\\text{next year}} = d \\times \\frac{1 + r}{1 + g} + \\text{primary deficit ratio}
+\\Delta d \\approx \\frac{r - g}{1 + g} \\times d + \\text{primary deficit ratio}
 $$
+
+The second line approximates the first. Here \\(r\\) is the average nominal interest rate on the debt and \\(g\\) is nominal GDP growth.
 
 It says two things:
 
-- **The race between r and g**: if nominal GDP growth (g) beats the average interest rate (r), old debt shrinks as a share of GDP on its own, even without a primary surplus. If r > g, debt snowballs by itself.
+- **The race between \\(r\\) and \\(g\\)**: if nominal GDP growth (\\(g\\)) beats the average interest rate (\\(r\\)), old debt shrinks as a share of GDP on its own, even without a primary surplus. If \\(r > g\\), debt snowballs by itself.
 - **The primary deficit** adds a fresh layer every year.
 
-**A numerical example** (illustrative, close to the 2026 orders of magnitude): d = 100%, r = 3.3%, g = 4%, primary deficit 2.5%.
+**A numerical example** (illustrative, close to the 2026 orders of magnitude): \\(d = 100\\%\\), \\(r = 3.3\\%\\), \\(g = 4\\%\\), primary deficit 2.5%.
 
 $$
-Δd ≈ (0.033 − 0.04) ÷ 1.04 × 100% + 2.5% ≈ −0.7% + 2.5% ≈ +1.8 points per year
+\\Delta d \\approx \\frac{0.033 - 0.04}{1.04} \\times 100\\% + 2.5\\%
+\\Delta d \\approx -0.7\\% + 2.5\\% \\approx +1.8\\ \\text{points per year}
 $$
 
 Now suppose that as old debt rolls over, the average rate drifts up to 5% (close to long-end market yields in September 2026):
 
 $$
-Δd ≈ (0.05 − 0.04) ÷ 1.04 × 100% + 2.5% ≈ +1.0% + 2.5% ≈ +3.5 points per year
+\\Delta d \\approx \\frac{0.05 - 0.04}{1.04} \\times 100\\% + 2.5\\%
+\\Delta d \\approx +1.0\\% + 2.5\\% \\approx +3.5\\ \\text{points per year}
 $$
 
-**Same fiscal policy, and just because rates rose, debt-to-GDP climbs almost twice as fast.** The primary balance needed to stabilize debt is (r − g) ÷ (1 + g) × d. With r = 5%, that means moving from a 2.5% primary deficit to about a 1% primary **surplus** — tightening on the order of a trillion dollars a year. That's why markets have started talking about **fiscal dominance**: once debt is large enough, central-bank hikes directly worsen the budget, and investors begin to wonder whether the central bank will be pushed into tolerating higher inflation (Stage 9.4).
+**Same fiscal policy, and just because rates rose, debt-to-GDP climbs almost twice as fast.** The primary balance needed to stabilize debt is \\(\\dfrac{r - g}{1 + g} \\times d\\). With \\(r = 5\\%\\), that means moving from a 2.5% primary deficit to about a 1% primary **surplus** — tightening on the order of a trillion dollars a year. That's why markets have started talking about **fiscal dominance**: once debt is large enough, central-bank hikes directly worsen the budget, and investors begin to wonder whether the central bank will be pushed into tolerating higher inflation (Stage 9.4).
 
-**Where inflation fits**: inflation raises nominal GDP (g goes up). If the rate on old debt is locked in, debt-to-GDP falls — the "hidden tax" of Stage 2.5, and one of the ways the US worked its debt down from 106% after World War II. But if markets see inflation coming, they demand higher rates (r rises too), and that exit closes.
+**Where inflation fits**: inflation raises nominal GDP (\\(g\\) goes up). If the rate on old debt is locked in, debt-to-GDP falls — the "hidden tax" of Stage 2.5, and one of the ways the US worked its debt down from 106% after World War II. But if markets see inflation coming, they demand higher rates (\\(r\\) rises too), and that exit closes.
 
 **Ratings**: S&P (2011), Fitch (2023) and Moody's (May 16, 2025) each cut the US one notch from the top rating. Moody's was the last of the three to hold AAA, and it cited rising debt and interest ratios and the failure of successive administrations and Congresses to reverse the deficit trend.
 
@@ -146,7 +149,7 @@ The Treasury sells three kinds of marketable securities at **auction**:
 
 There are also inflation-protected TIPS and floating-rate notes (FRNs). Auctions are **single-price**: bidders state the yield they'll accept, the Treasury fills bids from the lowest yield up until the issue is sold, and every winner gets the highest accepted yield. Markets watch two gauges:
 
-- **Bid-to-cover ratio**: total bids ÷ amount sold. Higher means stronger demand.
+- **Bid-to-cover ratio**: \\(\\dfrac{\\text{total bids}}{\\text{amount sold}}\\). Higher means stronger demand.
 - **The tail**: how far the auction's yield lands above the market yield just before the auction. A big tail means the Treasury had to "pay up" to clear the sale — a sign of weak demand for duration. **Primary dealers** (big banks) are expected to bid at every auction, which backstops any shortfall.
 
 **Bills or bonds?** This was a live policy fight in 2024–2026:
@@ -166,7 +169,7 @@ In the next lesson (Stage 3.4) we'll see why foreigners are willing to hold so m
   analogy: `
 Picture someone rolling a snowball down a hill.
 
-The size of the snowball is **debt-to-GDP**. The slope of the hill is **r − g**. If interest rates beat growth (r > g), the hill slopes down and the snowball grows by itself as it rolls. If growth beats rates (g > r), the hill slopes up and the snowball slowly melts a little.
+The size of the snowball is **debt-to-GDP**. The slope of the hill is **\\(r - g\\)**. If interest rates beat growth (\\(r > g\\)), the hill slopes down and the snowball grows by itself as it rolls. If growth beats rates (\\(g > r\\)), the hill slopes up and the snowball slowly melts a little.
 
 And every year the roller **adds a fresh handful of snow** by hand — that's the primary deficit.
 
@@ -180,7 +183,7 @@ The subtler point: the bigger the snowball, the more the slope matters. The same
     "**\"The US will go bankrupt like a household that can't pay.\"** — The US borrows in dollars it issues, so it can't technically run out of dollars. The real risks are higher rates, interest crowding out other spending, inflation and a loss of confidence in the dollar — not a conventional default.",
     "**\"China owns most US debt.\"** — As of July 2026, foreigners held about $9.25 trillion and China about $0.62 trillion, behind Japan and the UK. Most publicly held Treasuries are owned by domestic investors, including the Fed.",
     "**\"When rates rise, the government's interest bill jumps to the new rate immediately.\"** — Existing long-term Treasuries locked in old rates. Interest costs rise gradually as old debt matures and is refinanced; the bigger the share of bills, the faster the pass-through.",
-    "**\"Debt above 100% of GDP guarantees a crisis.\"** — There's no magic threshold. What matters is r versus g, the size of the primary deficit, and whether investors keep holding the debt at reasonable rates. Japan's debt ratio is far higher than America's, and Britain's was very high after World War II.",
+    "**\"Debt above 100% of GDP guarantees a crisis.\"** — There's no magic threshold. What matters is \\(r\\) versus \\(g\\), the size of the primary deficit, and whether investors keep holding the debt at reasonable rates. Japan's debt ratio is far higher than America's, and Britain's was very high after World War II.",
   ],
 
   quiz: [
@@ -188,13 +191,13 @@ The subtler point: the bigger the snowball, the more the slope matters. The same
       q: "A country spends $7 trillion, collects $5.2 trillion, and pays $1 trillion of net interest. What are its total deficit and primary deficit?",
       options: ["$1.8T; $0.8T", "$1.8T; $2.8T", "$0.8T; $1.8T", "$7T; $5.2T"],
       answer: 0,
-      explain: "**Total deficit = spending − revenue = $1.8T**; **primary deficit = total deficit − net interest = $0.8T**. The primary deficit measures the government's own gap, excluding interest on past borrowing.",
+      explain: "**\\(\\text{Total deficit} = \\text{spending} - \\text{revenue} = 7 - 5.2 = \\$1.8\\text{T}\\)**; **\\(\\text{primary deficit} = \\text{total deficit} - \\text{net interest} = 1.8 - 1 = \\$0.8\\text{T}\\)**. The primary deficit measures the government's own gap, excluding interest on past borrowing.",
     },
     {
-      q: "Debt-to-GDP is 100%, the average rate r = 5%, nominal growth g = 4%, and the primary deficit is 2.5% of GDP. Roughly how does debt-to-GDP change in a year?",
+      q: "Debt-to-GDP is 100%, the average rate \\(r = 5\\%\\), nominal growth \\(g = 4\\%\\), and the primary deficit is 2.5% of GDP. Roughly how does debt-to-GDP change in a year?",
       options: ["Falls about 1 point", "Roughly unchanged", "Rises about 3.5 points", "Rises about 11.5 points"],
       answer: 2,
-      explain: "**Δd ≈ (r − g) ÷ (1 + g) × d + primary deficit** = (0.05 − 0.04) ÷ 1.04 × 100% + 2.5% ≈ 1.0% + 2.5% ≈ **+3.5 points**.",
+      explain: "**\\(\\Delta d \\approx \\dfrac{r - g}{1 + g} \\times d + \\text{primary deficit}\\)**, so \\(\\dfrac{0.05 - 0.04}{1.04} \\times 100\\% + 2.5\\% \\approx 1.0\\% + 2.5\\% \\approx +3.5\\ \\text{points}\\).",
     },
     {
       q: "Why doesn't the US government's interest bill reprice to the new rate as soon as the Fed hikes?",

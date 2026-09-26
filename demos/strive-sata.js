@@ -2,7 +2,7 @@
 // 两种模式：① 真实快照（Strive 2026-09-18；Strategy 2026-09-20 推算）；② 橙子公司：同样 3 亿美元杠杆，两种写法。
 // 拖动比特币涨跌：看各层清算回收（waterfall）、各层 BTC 覆盖（coverageByLayer）、普通股的放大、
 // 现金可覆盖的股息月数，以及“有没有到期 / 回售压力”。
-import { waterfall, coverageByLayer, amplification, striveAmpRatio, monthsCovered, fmtPct, fmtNum, fmtUsd, fmtBig } from "./_fin.js";
+import { waterfall, coverageByLayer, amplification, striveAmpRatio, monthsCovered, fmtPct, fmtNum, fmtUsd, fmtBig, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -78,9 +78,9 @@ export default function mount(root, lang) {
       <h5>${c.name}</h5>
       <div class="demo-meta">${T("比特币价格", "Bitcoin price")} ${fmtUsd(p, 0)} · ${T("比特币价值", "bitcoin value")} ${fmtBig(btcV)}</div>
       <div class="stages">${bars}<div class="stage-bar"><span class="lab">${T("普通股", "Common")}</span><div class="track"><div class="fill ghost" style="width:${Math.min(100, assets > 0 ? (w.equity / assets) * 100 : 0).toFixed(1)}%"></div></div><span class="val">${fmtBig(w.equity)}</span></div></div>
-      <div class="demo-meta">${T("条形 = 清算回收率；右侧 = 该层 BTC 覆盖倍数", "bar = liquidation recovery; right = that layer's coverage")}</div>
+      <div class="demo-meta">${T("条形：清算回收率；右侧：该层 BTC 覆盖倍数", "bar: liquidation recovery; right: that layer's coverage")}</div>
       <div class="stat-row">
-        <div class="stat"><div class="k">${T("（债务 + 优先股）÷ 比特币", "(Debt + pref) ÷ bitcoin")}</div><div class="v">${fmtPct(ratio, 1)}</div></div>
+        <div class="stat"><div class="k">${tex(T(String.raw`(\text{债务} + \text{优先股}) \div \text{比特币}`, String.raw`(\text{debt} + \text{pref}) \div \text{bitcoin}`))}</div><div class="v">${fmtPct(ratio, 1)}</div></div>
         <div class="stat"><div class="k">${T("普通股放大（快照时）", "Common amplification (at snapshot)")}</div><div class="v acc">${fmtNum(amp, 2)}x</div></div>
         <div class="stat"><div class="k">${T("普通股剩余价值变化", "Change in common residual")}</div><div class="v ${eqChg >= 0 ? "pos" : "neg"}">${isFinite(eqChg) ? fmtPct(eqChg, 1) : "–"}</div></div>
         <div class="stat"><div class="k">${T("现金可覆盖股息", "Cash covers dividends for")}</div><div class="v">${fmtNum(months, 0)} ${T("个月", "mo")}</div></div>
@@ -105,7 +105,10 @@ export default function mount(root, lang) {
     if (ca < 1 || cb < 1) lines.push(`<span class="bad">${T("至少有一层优先股的覆盖低于 1 倍：若此刻清算，它拿不满名义金额。但两家都没有按市值追加保证金的条款——真实世界里先出现的是股息压力与价格跌破面值，而不是强制清算（阶段 17.6）。", "At least one preferred layer is below 1x: in a liquidation today it would not recover its full notional. Neither company has mark-to-market margin terms, though; in the real world the first symptoms are dividend strain and prices below par, not forced liquidation (Stage 17.6).")}</span>`);
     else if (ca < 1.5 || cb < 1.5) lines.push(`<span class="warn">${T("覆盖已经很薄：再跌一段，最劣后的优先股就会跌破 1 倍。", "Coverage is thin: a further fall would push the most junior preferred below 1x.")}</span>`);
     if (st.mode === "toy") lines.push(`${T("两种写法的普通股放大倍数相同（都是 3 亿美元杠杆压在 10 亿美元比特币上），但只用优先股的那家每年现金股息 3,000 万美元，是橙子公司（1,500 万美元，可转债票息 0%）的两倍——没有债，是用更高的现金成本换来的。", "Both commons are amplified the same ($300M of leverage on $1B of bitcoin), but the preferred-only company pays $30M a year in cash dividends, twice Orange Corp's $15M (its converts pay 0%). Having no debt is bought with a higher cash cost.")}`);
-    else lines.push(`${T("按同一个公式，Strive 的（债务 + 优先股）÷ 比特币约 50%，Strategy 约 30%；Strive 普通股的放大更高，SATA 的覆盖更薄——但 Strive 没有任何到期或回售日期。", "On one formula, Strive's (debt + preferred) ÷ bitcoin is about 50% and Strategy's about 30%: Strive's common is more amplified and SATA's coverage thinner, but Strive has no maturity or put dates at all.")}`);
+    else lines.push(T(
+      `按同一个公式 ${tex(String.raw`(\text{债务} + \text{优先股}) \div \text{比特币}`)}，Strive 约 50%，Strategy 约 30%；Strive 普通股的放大更高，SATA 的覆盖更薄——但 Strive 没有任何到期或回售日期。`,
+      `On one formula, ${tex(String.raw`(\text{debt} + \text{preferred}) \div \text{bitcoin}`)}, Strive is about 50% and Strategy about 30%: Strive's common is more amplified and SATA's coverage thinner, but Strive has no maturity or put dates at all.`
+    ));
     if (st.mode === "real") lines.push(`<span class="warn">${T("* Strategy 的三只次级优先股（STRE、STRK、STRD）合为一层；它们之间的相对顺序未经一手文件核实。", "* Strategy's three junior preferreds (STRE, STRK, STRD) are shown as one layer; their relative order is not verified in primary documents.")}</span>`);
     q("#ss-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };

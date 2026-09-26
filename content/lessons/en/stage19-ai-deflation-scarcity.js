@@ -50,7 +50,7 @@ AI looks more like the first kind: it lowers **production costs.** But remember 
 
 **Baumol's disease in reverse.** William Baumol pointed out that haircuts, education, health care and live performance are hard to make more productive (a string quartet needs the same four players and the same time as in 1800), yet their wages must keep up with the rest of the economy, so these services get **relatively more expensive** over time — one reason services inflation has been so stubborn for decades. **AI is the first technology with a real chance of reaching these "low-productivity" services**: tutoring, legal advice, diagnostic triage, customer support.
 
-**Run it through a basket** (the CPI-basket logic of Stage 1.4; illustrative numbers). Suppose 20% of the basket is "AI-exposed services" whose prices fall 5% a year, while the other 80% rises 3%. Overall inflation ≈ 0.2 × (−5%) + 0.8 × 3% = **1.4%.** **AI doesn't need to make everything cheaper; making a slice cheap enough pulls overall inflation down a notch** — and that flows through inflation expectations into long-term nominal rates (piece ④ of Stage 19.1).
+**Run it through a basket** (the CPI-basket logic of Stage 1.4; illustrative numbers). Suppose 20% of the basket is "AI-exposed services" whose prices fall 5% a year, while the other 80% rises 3%. \\(\\text{Overall inflation} \\approx 0.2 \\times (-5\\%) + 0.8 \\times 3\\% = \\mathbf{1.4\\%}\\). **AI doesn't need to make everything cheaper; making a slice cheap enough pulls overall inflation down a notch** — and that flows through inflation expectations into long-term nominal rates (piece ④ of Stage 19.1).
 
 ### ② The opposite force during the build-out: bottleneck inflation in power, chips and land
 
@@ -67,10 +67,14 @@ As of September 2026, the four hyperscalers' 2026 capex totals about $720–745 
 
 Higher productivity makes the pie bigger. How it's divided depends on whether AI **substitutes for** or **complements** labor:
 
-$$ Real wage growth ≈ labor's share of the gains λ × productivity growth g
-Change in labor's income share ≈ (1 + λ × g) ÷ (1 + g) − 1 (per year, illustrative)
+$$
+\\text{real wage growth} \\approx \\lambda \\times g
+\\text{change in labor's income share} \\approx \\frac{1 + \\lambda \\times g}{1 + g} - 1
+$$
 
-**A worked number:** AI adds 2 points a year to productivity growth. If labor gets all of the gain (λ = 1), real wages rise an extra 2% a year and labor's share is unchanged. If labor gets only half (λ = 0.5), real wages rise an extra 1% a year and labor's share shrinks about 1% a year — from 60% to about 54% after ten years (illustrative). **The pie grows, but the fraction in workers' hands shrinks.**
+Here \\(\\lambda\\) is labor's share of the gains and \\(g\\) is productivity growth; the second line is per year, illustrative.
+
+**A worked number:** AI adds 2 points a year to productivity growth. If labor gets all of the gain (\\(\\lambda = 1\\)), real wages rise an extra 2% a year and labor's share is unchanged. If labor gets only half (\\(\\lambda = 0.5\\)), real wages rise an extra \\(0.5 \\times 2\\% = 1\\%\\) a year and labor's share shrinks about 1% a year (\\(\\dfrac{1 + 0.5 \\times 2\\%}{1 + 2\\%} - 1 \\approx -0.98\\%\\)) — from 60% to about 54% after ten years (\\(60\\% \\times (1 - 0.98\\%)^{10} \\approx 54.4\\%\\), illustrative). **The pie grows, but the fraction in workers' hands shrinks.**
 
 History offers two precedents:
 
@@ -89,15 +93,17 @@ The most useful tool for judging "what gets expensive" is **supply elasticity**:
 
 A toy formula:
 
-$$ Annual price change ≈ (1 + demand growth) ÷ (1 + supply growth) − 1
+$$
+\\text{annual price change} \\approx \\frac{1 + \\text{demand growth}}{1 + \\text{supply growth}} - 1
+$$
 
-**Bitcoin's supply growth** can be computed exactly. After the April 2024 halving, each block pays 3.125 BTC; with a block about every ten minutes, a year has about 52,560 blocks → about 164,000 new coins a year. About 20.09 million had been mined as of September 2026, so **annual supply growth is about 0.8%**, falling to about 0.4% after the next halving around April 2028. If "genuine demand to hold bitcoin" grows 10% in a year, the toy formula gives a price change of about (1.10 ÷ 1.008) − 1 ≈ +9.1%. If demand falls 30%, the price falls by nearly as much. **Fixed supply means demand alone sets the price.**
+**Bitcoin's supply growth** can be computed exactly. After the April 2024 halving, each block pays 3.125 BTC; with a block about every ten minutes, a year has about \\(\\dfrac{365 \\times 24 \\times 60}{10} = 52{,}560\\) blocks → about \\(3.125 \\times 52{,}560 \\approx 164{,}000\\) new coins a year. About 20.09 million had been mined as of September 2026, so **annual supply growth is about \\(\\dfrac{0.164\\text{M}}{20.09\\text{M}} \\approx 0.8\\%\\)**, falling to about 0.4% after the next halving around April 2028. If "genuine demand to hold bitcoin" grows 10% in a year, the toy formula gives a price change of about \\(\\dfrac{1.10}{1.008} - 1 \\approx +9.1\\%\\). If demand falls 30%, the price falls by nearly as much. **Fixed supply means demand alone sets the price.**
 
 **The strongest case for the scarce-asset story:** the vast wealth and profits AI creates need to be stored. If cheap intelligence pushes down the prices of most goods and services while governments widen deficits to cope with job disruption and fiscal strain, then **assets whose supply cannot grow become the sink where wealth settles.** The DAT thesis (Stage 15.1) is built on exactly this narrative.
 
 **The skeptics' strongest rebuttals:**
 
-- **Scarce isn't the same as valuable.** Plenty of things are in fixed supply; demand sets the price. After its peak of about $126,000 in October 2025, bitcoin fell to about $58,000 in June 2026 (about −54%) — right in the thick of the AI capex boom.
+- **Scarce isn't the same as valuable.** Plenty of things are in fixed supply; demand sets the price. After its peak of about $126,000 in October 2025, bitcoin fell to about $58,000 in June 2026 (\\(\\dfrac{58{,}000}{126{,}000} - 1 \\approx -54\\%\\)) — right in the thick of the AI capex boom.
 - **The real-rate headwind.** As Stage 19.1 showed, the build-out pushes real rates up, raising the opportunity cost of assets with no cash flow (gold, bitcoin). Gold fell from about $5,600 at its January 2026 peak to about $3,960 in June; the fact sheet attributes that to rising real yields and a Fed turning hawkish.
 - **The compute lesson.** Today's tightest AI bottlenecks (chips, compute) are precisely the things whose supply can expand — the fiber laid in the late 1990s turned into a severe glut after 2001. **"Scarcity" may be a temporary feature of the build-out.**
 
@@ -107,7 +113,7 @@ Put every tool from this stage together and you can draw a scenario map. It isn'
 
 <table>
 <tr><th>Scenario</th><th>Rates (Stage 19.1)</th><th>Inflation</th><th>Long Treasuries</th><th>AI stocks</th><th>Credit (Stage 19.2)</th><th>Bitcoin / gold</th></tr>
-<tr><td><b>Build-out boom</b> (today?)</td><td>r∗ and term premium up</td><td>Bottleneck inflation</td><td>Under pressure</td><td>Depends on whether earnings keep up</td><td>Heavy issuance, tight spreads</td><td>Real-rate headwind vs deficit narrative</td></tr>
+<tr><td><b>Build-out boom</b> (today?)</td><td>\\(r^{*}\\) and term premium up</td><td>Bottleneck inflation</td><td>Under pressure</td><td>Depends on whether earnings keep up</td><td>Heavy issuance, tight spreads</td><td>Real-rate headwind vs deficit narrative</td></tr>
 <tr><td><b>AI delivers + good deflation</b></td><td>High, then easing</td><td>Falling</td><td>Gain in the easing phase</td><td>Winners profit, share concentrates</td><td>Solid</td><td>Depends on whether wealth seeks a store</td></tr>
 <tr><td><b>AI bubble bursts</b></td><td>Flight to safety pulls long yields down</td><td>Falling</td><td>Gain</td><td>Sharp fall</td><td>Private credit and SPVs stressed</td><td>Unclear: liquidity shock vs rate cuts</td></tr>
 <tr><td><b>Labor shock + fiscal expansion</b></td><td>Term premium up</td><td>Possibly rising</td><td>Under pressure</td><td>Mixed</td><td>Mixed</td><td>"Debasement" narrative gains</td></tr>
@@ -149,7 +155,7 @@ One day a machine arrives that writes letters for a single grain of rice apiece.
         "1.4%",
       ],
       answer: 3,
-      explain: "0.2 × (−5%) + 0.8 × 3% = −1% + 2.4% = **1.4%.** AI only needs to make a slice cheap enough to pull overall inflation down a notch.",
+      explain: "\\(0.2 \\times (-5\\%) + 0.8 \\times 3\\% = -1\\% + 2.4\\% = \\mathbf{1.4\\%}\\). AI only needs to make a slice cheap enough to pull overall inflation down a notch.",
     },
     {
       q: "After the 2024 halving, bitcoin pays 3.125 BTC per block, about 52,560 blocks a year, with about 20.09 million coins mined. Annual supply growth is about:",
@@ -160,10 +166,10 @@ One day a machine arrives that writes letters for a single grain of rice apiece.
         "0%",
       ],
       answer: 1,
-      explain: "3.125 × 52,560 ≈ 164,250 BTC; 164,250 ÷ 20,090,000 ≈ **0.82%.** After the next halving around 2028 it drops to about 0.4%.",
+      explain: "\\(3.125 \\times 52{,}560 \\approx 164{,}250\\ \\text{BTC}\\); \\(\\dfrac{164{,}250}{20{,}090{,}000} \\approx \\mathbf{0.82\\%}\\). After the next halving around 2028 it drops to about 0.4%.",
     },
     {
-      q: "Productivity grows an extra 2% a year and labor gets only half the gain (λ = 0.5). Roughly how does labor's income share change each year?",
+      q: "Productivity grows an extra 2% a year and labor gets only half the gain (\\(\\lambda = 0.5\\)). Roughly how does labor's income share change each year?",
       options: [
         "Falls about 1% (relative)",
         "Unchanged",
@@ -171,7 +177,7 @@ One day a machine arrives that writes letters for a single grain of rice apiece.
         "Falls about 50%",
       ],
       answer: 0,
-      explain: "(1 + 0.5 × 2%) ÷ (1 + 2%) − 1 ≈ −0.98%. **The pie grows, but labor's fraction shrinks about 1% a year** — from 60% to about 54% in ten years (illustrative).",
+      explain: "\\(\\dfrac{1 + 0.5 \\times 2\\%}{1 + 2\\%} - 1 \\approx -0.98\\%\\). **The pie grows, but labor's fraction shrinks about 1% a year** — from 60% to about 54% in ten years (illustrative).",
     },
     {
       q: "Why is AI during the build-out more like a force of local inflation?",

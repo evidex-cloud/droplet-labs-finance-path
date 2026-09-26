@@ -2,7 +2,11 @@
 // ① 被动资金卖压估算（市值 × 被动持股比例 → 卖出天数、平方根冲击、对 mNAV 的影响）；
 // ② MSCI“非经营公司”筛选模拟（按 2026 年 8 月咨询框架的事实表转述；结果截至 2026-09-26 未定）；
 // ③ 标普 500 盈利测试：公允价值会计下，季末币价如何决定“四季合计为正且最近一季为正”。
-import { fmtPct, fmtNum, fmtBig, clamp } from "./_fin.js";
+import { fmtPct, fmtNum, fmtUsd, fmtBig, clamp, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 , → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+const texBig = (x) => String.raw`\$${fmtBig(x).replace(/([TBMK])$/, "\\text{$1}")}`;
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -85,7 +89,8 @@ export default function mount(root, lang) {
       <div class="stat"><div class="k">${T("估算冲击", "Estimated impact")}</div><div class="v neg">${fmtPct(impact, 1)}</div></div>
       <div class="stat"><div class="k">${T("剔除后 mNAV", "mNAV after deletion")}</div><div class="v ${mnavAfter >= 1 ? "" : "neg"}">${fmtNum(mnavAfter, 2)}x</div></div>`;
     const L = [];
-    L.push(`${T("全挤在生效日一天卖完的冲击约", "Impact if it all trades on the effective date: about")} ${fmtPct(clamp(impactOneDay, 0, 0.9), 1)}${T("；分", "; spread over")} ${days} ${T("天卖、每天冲击约", "days, about")} ${fmtPct(impactSpread, 1)}${T("（平方根律，示意系数 1）。", " a day (square-root law, illustrative coefficient of 1).")}`);
+    L.push(`${tex(String.raw`\text{${T("被动卖出", "Passive selling")}} = ${texBig(st.cap * 1e9)} \times ${texv(fmtNum(st.pas, 1))}\% = ${texBig(sell)}`)}${T("；", "; ")}${tex(String.raw`\text{${T("天数", "Days")}} = \left\lceil \dfrac{${texBig(sell)}}{${texBig(adv)} \times ${st.part}\%} \right\rceil = ${days}`)}${T("。", ".")}`);
+    L.push(`${tex(String.raw`\text{${T("一天卖完的冲击", "One-day impact")}} \approx ${texv(fmtNum(st.vol, 1))}\% \times \sqrt{\dfrac{${texBig(sell)}}{${texBig(adv)}}} = ${texv(fmtPct(impactOneDay, 1))}`)}${T("；", "; ")}${tex(String.raw`\text{${T("分天卖的每日冲击", "Spread-out daily impact")}} \approx ${texv(fmtNum(st.vol, 1))}\% \times \sqrt{${st.part}\%} = ${texv(fmtPct(impactSpread, 1))}`)}${T("（平方根律，示意系数 1；冲击上限 90%）。", " (square-root law, illustrative coefficient of 1; impact capped at 90%).")}`);
     if (st.mnav >= 1 && mnavAfter < 1) L.push(`<span class="bad">${T("卖压把 mNAV 推到 1 以下：增发从增值变成稀释，飞轮停转（阶段 18.3）。", "The selling pushes mNAV below 1: issuance flips from accretive to dilutive and the flywheel stops.")}</span>`);
     else if (mnavAfter < 1) L.push(`<span class="warn">${T("mNAV 本来就低于 1，卖压让折价更深，卖币回购的诱惑更大。", "mNAV was already below 1; the selling deepens the discount and strengthens the pull toward selling bitcoin to buy back stock.")}</span>`);
     else L.push(`<span class="ok">${T("mNAV 仍在 1 以上，飞轮还有燃料，但少了一截。", "mNAV stays above 1; the flywheel still has fuel, just less of it.")}</span>`);
@@ -168,7 +173,7 @@ export default function mount(root, lang) {
     L.push(pass
       ? `<span class="ok">${T("满足标普 500 的 GAAP 盈利门槛（纳入仍需委员会裁量）。", "Meets the S&P 500 GAAP profitability hurdle (inclusion still needs committee approval).")}</span>`
       : `<span class="bad">${T("不满足盈利门槛：需要四季合计为正且最近一季为正。", "Fails the profitability hurdle: it needs a positive four-quarter sum and a positive latest quarter.")}</span>`);
-    L.push(`${T("公允价值会计下，每季利润 ≈ 持币量 × 季内币价变化 + 经营损益。Strategy 2026 年第一、二季度净亏损约 125.4 亿与 82.2 亿美元。示意计算，忽略税与其他项目。", "Under fair-value accounting, quarterly profit ≈ bitcoin held × the quarter's price change + operating results. Strategy lost about $12.54B and $8.22B in Q1 and Q2 2026. Illustrative; taxes and other items ignored.")}`);
+    L.push(`${T("公允价值会计下，", "Under fair-value accounting, ")}${tex(String.raw`\text{${T("每季利润", "quarterly profit")}} \approx \text{${T("持币量", "bitcoin held")}} \times \text{${T("季内币价变化", "the quarter's price change")}} + \text{${T("经营损益", "operating results")}}`)}${T("。", ". ")}${tex(String.raw`\text{Q4}\text{${T("：", ": ")}}\ ${texv(fmtNum(st.btc, 0))} \times (${texv(fmtUsd(st.prices[4]))} - ${texv(fmtUsd(st.prices[3]))}) ${st.opInc >= 0 ? "+" : "-"} \$${Math.abs(st.opInc)}\text{M} = ${latest < 0 ? "-" : ""}${texBig(Math.abs(latest))}`)}${T("。Strategy 2026 年第一、二季度净亏损约 125.4 亿与 82.2 亿美元。示意计算，忽略税与其他项目。", ". Strategy lost about $12.54B and $8.22B in Q1 and Q2 2026. Illustrative; taxes and other items ignored.")}`);
     q("#isr-log").innerHTML = L.map((l) => `<div>${l}</div>`).join("");
   };
 

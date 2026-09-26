@@ -3,7 +3,7 @@
 // 逐步看“谁的资产负债表上多了一张什么索取权”，以及最后如何回流到美国。
 // 下半部分：一家境外银行用短期美元存款支撑长期美元资产（10 年期、票息 5% 的美国国债，按 _fin.js bondPrice 定价），
 // 恐慌时存款被提走、收益率跳升；比较“在市场上抛售国债”与“通过本国央行的互换额度借美元”两种应对的损失。数字均为示意。
-import { bondPrice, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { bondPrice, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -18,7 +18,7 @@ export default function mount(root, lang) {
         [T("日本的银行 / 央行", "Japanese bank / central bank"), T("手上多了 100 美元，买入美国国库券。", "now holds $100 and buys US Treasury bills."), T("日本：+100 美元美国国债", "Japan: +$100 of US Treasuries")],
         [T("美国财政部", "US Treasury"), T("用这 100 美元为赤字融资（阶段 3.3）。", "uses the $100 to finance the deficit (Stage 3.3)."), T("财政部：+100 美元国债负债", "Treasury: +$100 of debt liabilities")],
       ],
-      end: T("美元回流美国，变成外国对美国政府的索取权。贸易逆差 = 资本流入。", "The dollar returns to the US as a foreign claim on the US government. Trade deficit = capital inflow."),
+      end: T("美元回流美国，变成外国对美国政府的索取权。", "The dollar returns to the US as a foreign claim on the US government. ") + tex(String.raw`\text{${T("贸易逆差", "Trade deficit")}} = \text{${T("资本流入", "capital inflow")}}`) + T("。", "."),
     },
     euro: {
       n: T("留在海外：欧洲美元存款", "Keep it offshore: a eurodollar deposit"),
@@ -77,8 +77,8 @@ export default function mount(root, lang) {
       <div class="cmp" id="dsy-cmp"></div>
       <div class="demo-log" id="dsy-log"></div>
       <p class="demo-tip">${T(
-        "第一部分里把四条路径都走一遍：<strong>无论美元走哪条路，最后总有人在资产负债表上持有一张对美国的索取权</strong>——这就是“贸易逆差 = 资本流入”。第二部分先把提款比例拉到 60%、收益率跳升拉到 150 个基点，切换互换额度的“能 / 不能”：同一家银行，有没有最后贷款人，结局天差地别。",
-        "In Part 1, walk all four paths: <strong>whichever way the dollar goes, someone ends up holding a claim on the US on their balance sheet</strong> — that's \"trade deficit = capital inflow.\" In Part 2, set withdrawals to 60% and the yield jump to 150 bp, then toggle the swap line: same bank, and whether a lender of last resort exists makes all the difference."
+        "第一部分里把四条路径都走一遍：<strong>无论美元走哪条路，最后总有人在资产负债表上持有一张对美国的索取权</strong>——这就是 " + tex(String.raw`\text{${T("贸易逆差", "trade deficit")}} = \text{${T("资本流入", "capital inflow")}}`) + "。第二部分先把提款比例拉到 60%、收益率跳升拉到 150 个基点，切换互换额度的“能 / 不能”：同一家银行，有没有最后贷款人，结局天差地别。",
+        "In Part 1, walk all four paths: <strong>whichever way the dollar goes, someone ends up holding a claim on the US on their balance sheet</strong> — that's " + tex(String.raw`\text{${T("贸易逆差", "trade deficit")}} = \text{${T("资本流入", "capital inflow")}}`) + ". In Part 2, set withdrawals to 60% and the yield jump to 150 bp, then toggle the swap line: same bank, and whether a lender of last resort exists makes all the difference."
       )}</p>
     </div>`;
 

@@ -2,8 +2,10 @@
 // 每年分配 = 名义 100 × 股息率；其中“资本返还”比例冲减成本基础，冲减到 0 之后的部分当年按资本利得计税；
 // 其余为股息（按普通收入或合格股息税率）。卖出时：卖价 − 调整后成本基础 = 资本利得。
 // 与“全部按股息计税”对比：税款总额、税款现值（npv）、税后总收益、成本基础路径。
-import { npv, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { npv, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -107,6 +109,9 @@ export default function mount(root, lang) {
       chartBlock(c, [["var(--orange)", T("成本基础", "Cost basis")], ["var(--btc)", T("累计税款：ROC", "Cumulative tax: ROC")], ["var(--blue)", T("累计税款：全部股息", "Cumulative tax: all dividends")]]);
 
     const lines = [];
+    const rocPerYr = (st.rate * st.roc) / 100;
+    lines.push(tex(String.raw`\text{${T("成本基础", "cost basis")}} = \max\!\left(${texv(fmtNum(st.buy, 0))} - ${st.years} \times ${texv(fmtNum(rocPerYr, 2))},\ 0\right) = ${texv(fmtNum(R.basisEnd, 2))}`));
+    lines.push(tex(String.raw`\text{${T("卖出时资本利得", "capital gain at sale")}} = ${texv(fmtNum(st.sell, 0))} - ${texv(fmtNum(R.basisEnd, 2))} = ${texv(fmtNum(R.gain, 2))}`));
     const saved = Dv.pvTax - R.pvTax;
     if (st.roc === 0) lines.push(`${T("ROC 比例为 0：两栏相同，每年的分配都在当年计税。", "ROC share is 0: both columns match, and every distribution is taxed in the year received.")}`);
     else lines.push(`<span class="${saved > 0 ? "ok" : "warn"}">${T("按税款现值计，ROC 比全部股息", "In present-value terms, ROC")} ${saved >= 0 ? T("少交", "saves") : T("多交", "costs")} ${fmtUsd(Math.abs(saved), 2)} ${T("每股。", "per share versus all dividends.")}</span>`);

@@ -7,7 +7,7 @@ export default {
   prereqs: ["price-yield"],
 
   oneLiner:
-    "Lend to the US Treasury and you barely worry about getting paid back; lend to a company and you have to worry about **default**. The extra yield investors demand for that worry is the **credit spread**: corporate bond yield = Treasury yield of the same maturity + spread. Rating agencies rank default risk with letters from **AAA to D**; BBB− and above is **investment grade**, anything below is **high yield (junk)**. This lesson shows you how to split a spread into **expected loss = probability of default × loss given default** plus a risk and liquidity premium, why spreads explode in a crisis, and it lays the groundwork for the **BTC Rating** in Stage 16.5 and preferred pricing in Stage 18.1.",
+    "Lend to the US Treasury and you barely worry about getting paid back; lend to a company and you have to worry about **default**. The extra yield investors demand for that worry is the **credit spread**: \\(\\text{corporate bond yield} = \\text{Treasury yield of the same maturity} + \\text{spread}\\). Rating agencies rank default risk with letters from **AAA to D**; BBB− and above is **investment grade**, anything below is **high yield (junk)**. This lesson shows you how to split a spread into \\(\\text{expected loss} = \\text{probability of default} \\times \\text{loss given default}\\) plus a risk and liquidity premium, why spreads explode in a crisis, and it lays the groundwork for the **BTC Rating** in Stage 16.5 and preferred pricing in Stage 18.1.",
 
   intuition: `
 The first five lessons were about US Treasuries, whose risk is almost entirely one kind: **interest-rate risk**. Now let's change the borrower.
@@ -24,11 +24,11 @@ So are 3.5 points enough? That depends on two things:
 - **Probability of default (PD)**: how likely is default in a given year? Say 3%.
 - **Loss given default (LGD)**: if it defaults, how much do you lose? Say you recover 40%, so you lose 60%.
 
-Multiply them and you get the yearly **expected loss**: 3% × 60% = **1.8%**. Take that 1.8% out of the 3.5% spread and about 1.7% is left over as compensation for uncertainty itself: defaults tend to bunch together, the bonds can be hard to sell, and losses are biggest in recessions. That slice is the **risk premium** (plus a liquidity premium).
+Multiply them and you get the yearly **expected loss**: \\(3\\% \\times 60\\% = 1.8\\%\\). Take that 1.8% out of the 3.5% spread and about 1.7% is left over as compensation for uncertainty itself: defaults tend to bunch together, the bonds can be hard to sell, and losses are biggest in recessions. That slice is the **risk premium** (plus a liquidity premium).
 
 That's the basic equation of the credit market:
 
-> **Corporate yield = Treasury yield + expected loss + risk and liquidity premium**
+> \\(\\text{Corporate yield} = \\text{Treasury yield} + \\text{expected loss} + \\text{risk and liquidity premium}\\)
 
 Who judges a company's chance of default? Professional **rating agencies** (S&P, Moody's, Fitch) rank borrowers with letters: AAA is safest, then AA, A, BBB… all the way to D (in default). **BBB− and above is “investment grade”**, and many pension funds and insurers may only hold bonds in that range. **BB+ and below is “high yield,” better known as “junk.”** Even the US government has a rating: S&P in 2011, Fitch in 2023 and Moody's in 2025 each cut it one notch from the top.
 
@@ -41,7 +41,7 @@ This lesson rests on **Idea ② Balance sheets & claims** and **Idea ④ Risk & 
 - **① Credit risk: the borrower might not pay you back**
 - **② Ratings: the alphabet from AAA to D**
 - **③ Spreads: the extra you get over Treasuries**
-- **④ Expected loss = PD × LGD: how much of a spread is real default risk**
+- **④ \\(\\text{Expected loss} = \\mathrm{PD} \\times \\mathrm{LGD}\\): how much of a spread is real default risk**
 - **⑤ Spreads in a crisis: panic, liquidity and the central bank**
 - **⑥ Credit in the new era: BTC Rating, over-collateralization and bitcoin treasury preferreds**
 `,
@@ -49,7 +49,7 @@ This lesson rests on **Idea ② Balance sheets & claims** and **Idea ④ Risk & 
   mechanics: `
 ### ① Credit risk: the borrower might not pay you back
 
-**Default** is a legal event: the borrower fails to pay interest or principal on time as the contract requires, or files for bankruptcy. Creditors usually don't lose everything after a default; through a restructuring or bankruptcy they get back part of their claim. The share they get back is the **recovery rate**, and the share they lose is the **loss given default (LGD = 1 − recovery rate)**.
+**Default** is a legal event: the borrower fails to pay interest or principal on time as the contract requires, or files for bankruptcy. Creditors usually don't lose everything after a default; through a restructuring or bankruptcy they get back part of their claim. The share they get back is the **recovery rate**, and the share they lose is the **loss given default (\\(\\mathrm{LGD} = 1 - \\text{recovery rate}\\))**.
 
 Recovery depends on your **position** in the capital stack (Stage 6.1):
 
@@ -76,7 +76,7 @@ Key points:
 
 ### ③ Spreads: the extra you get over Treasuries
 
-**Credit spread = corporate bond yield − Treasury yield of the same maturity**, usually quoted in basis points (bp; 1bp = 0.01 percentage points). Use the 10-year Treasury yield on September 25, 2026 (about 5.17%) as the floor and price a 10-year corporate bond with a 5% coupon ($1,000 face; spreads are illustrative):
+\\(\\text{Credit spread} = \\text{corporate bond yield} - \\text{Treasury yield of the same maturity}\\), usually quoted in basis points (bp; \\(1\\ \\text{bp} = 0.01\\) percentage points). Use the 10-year Treasury yield on September 25, 2026 (about 5.17%) as the floor and price a 10-year corporate bond with a 5% coupon ($1,000 face; spreads are illustrative):
 
 <table><tr><th>Issuer (illustrative)</th><th>Spread</th><th>Yield</th><th>Price</th></tr><tr><td>US Treasury</td><td>0</td><td>5.17%</td><td>$986.85</td></tr><tr><td>A-rated company</td><td>+100bp</td><td>6.17%</td><td>$913.65</td></tr><tr><td>BBB-rated company</td><td>+140bp</td><td>6.57%</td><td>$886.23</td></tr><tr><td>BB-rated company</td><td>+250bp</td><td>7.67%</td><td>$815.89</td></tr><tr><td>B-rated company</td><td>+350bp</td><td>8.67%</td><td>$757.85</td></tr></table>
 
@@ -89,12 +89,12 @@ A corporate bond's price is therefore driven by **two forces**:
 
 The two forces can offset each other or stack up. In a recession Treasury yields often fall (flight to safety) while spreads widen (default fears). High-grade corporates are driven mainly by the first; junk bonds mainly by the second. **That's why high-yield bonds often trade more like stocks than like Treasuries.**
 
-### ④ Expected loss = PD × LGD: how much of a spread is real default risk
+### ④ \\(\\text{Expected loss} = \\mathrm{PD} \\times \\mathrm{LGD}\\): how much of a spread is real default risk
 
 $$
-Expected loss (per year) = PD × LGD
-Spread ≈ expected loss + risk premium + liquidity premium
-Break-even default rate ≈ spread ÷ LGD
+\\text{Expected loss (per year)} = \\mathrm{PD} \\times \\mathrm{LGD}
+\\text{Spread} \\approx \\text{expected loss} + \\text{risk premium} + \\text{liquidity premium}
+\\text{Break-even default rate} \\approx \\frac{\\text{spread}}{\\mathrm{LGD}}
 $$
 
 Break the spreads of several rating grades apart (illustrative numbers; default probabilities loosely based on long-run historical averages; LGD of 60%):
@@ -105,7 +105,7 @@ Three conclusions:
 
 - **Most of an investment-grade spread is not compensation for average default losses.** A BBB bond's expected loss is about 0.12% a year, yet its spread is about 1.4%. The rest pays for defaults that **bunch up** in recessions (exactly when it hurts most), for bonds that are harder to sell than Treasuries, and for tax differences. This is the famous **credit spread puzzle**.
 - **High-yield spreads sit closer to actual losses.** A B-rated bond's expected loss of about 2.1% a year is more than half its spread. If defaults spike to 6%–7% in a year (not unusual in a deep recession), the spread no longer covers the losses.
-- **The break-even default rate** is a handy shortcut: spread ÷ LGD. For a B-rated bond, 380bp ÷ 60% ≈ **6.3%**. As long as the annual default rate stays below that, holding such bonds beats holding Treasuries (all else equal).
+- **The break-even default rate** is a handy shortcut: \\(\\dfrac{\\text{spread}}{\\mathrm{LGD}}\\). For a B-rated bond, \\(\\dfrac{380\\ \\text{bp}}{60\\%} \\approx 6.3\\%\\). As long as the annual default rate stays below that, holding such bonds beats holding Treasuries (all else equal).
 
 ### ⑤ Spreads in a crisis: panic, liquidity and the central bank
 
@@ -128,9 +128,9 @@ Spreads are also a **macro signal**: a fast widening in high-yield spreads often
 
 The same questions, “will they pay, and how much comes back if they don't,” take new forms in the new financial system.
 
-**BTC Rating (asset coverage).** A bitcoin treasury company's main asset is bitcoin and it has little operating cash flow, so traditional interest coverage is nearly meaningless (Stage 6.5). Instead, these companies describe their safety cushion with **asset coverage**: **BTC Rating = BTC NAV ÷ the sum of all claims at this layer and above.** Using the course's Orange Corp (10,000 BTC at $100,000, a BTC NAV of $1 billion):
+**BTC Rating (asset coverage).** A bitcoin treasury company's main asset is bitcoin and it has little operating cash flow, so traditional interest coverage is nearly meaningless (Stage 6.5). Instead, these companies describe their safety cushion with **asset coverage**: \\(\\text{BTC Rating} = \\dfrac{\\text{BTC NAV}}{\\text{sum of all claims at this layer and above}}\\). Using the course's Orange Corp (10,000 BTC at $100,000, a BTC NAV of $1 billion):
 
-- Convertible notes ($150 million): $1B ÷ $150M ≈ **6.7x**
+- Convertible notes ($150 million): \\(\\dfrac{\\$1\\text{B}}{\\$150\\text{M}} \\approx 6.7\\times\\)
 - Senior preferred Orange-F (cumulative claims $250 million): **4.0x**
 - Junior preferred Orange-D (cumulative claims $300 million): about **3.3x**
 
@@ -138,7 +138,7 @@ The fundamental difference from a traditional rating: **a traditional rating mos
 
 **DeFi's over-collateralization.** On-chain lending protocols usually require borrowers to post collateral worth more than the loan (say, $100 of ETH to borrow $60 of stablecoins). If the collateral ratio falls below a threshold, liquidation bots automatically sell the collateral to repay the debt (Stage 13.4). That nearly eliminates the traditional credit risk of a borrower who won't pay, but trades it for **liquidation risk and oracle risk**: in a crash, mass liquidations can feed on each other (Stage 7.5).
 
-**Bitcoin treasury companies' preferreds use exactly this lesson's pricing equation**: required yield = Treasury yield + spread. That spread has to compensate for the risk that bitcoin's volatility erodes asset coverage, for the preferred's position behind the debt, for where the dividend cash comes from (new share issuance, a USD reserve, selling bitcoin, Stage 16.6), and for liquidity. Stage 18.1 puts it side by side with investment-grade and high-yield corporate spreads. **This section explains an analytical framework only; it is not investment advice.**
+**Bitcoin treasury companies' preferreds use exactly this lesson's pricing equation**: \\(\\text{required yield} = \\text{Treasury yield} + \\text{spread}\\). That spread has to compensate for the risk that bitcoin's volatility erodes asset coverage, for the preferred's position behind the debt, for where the dividend cash comes from (new share issuance, a USD reserve, selling bitcoin, Stage 16.6), and for liquidity. Stage 18.1 puts it side by side with investment-grade and high-yield corporate spreads. **This section explains an analytical framework only; it is not investment advice.**
 
 Private credit (Stage 8.4) is another new home for credit risk: funds outside the banking system lend directly, at wider spreads, with less transparency and no daily price. The risk hasn't gone away; you just **can't see the price move**.
 `,
@@ -148,7 +148,7 @@ Private credit (Stage 8.4) is another new home for credit risk: funds outside th
   analogy: `
 Think of the credit spread as **the “risk fee” you quietly charge when lending to different friends**.
 
-Lend to your most reliable friend A (think US Treasuries) and the bank's rate is all you ask. Lend to friend B, who runs a business, and you do some mental math: maybe a 3% chance the business fails (probability of default); if it does, selling the equipment might get back 40% (recovery), so you'd lose 60%. On average that's 3% × 60% = 1.8% lost a year, so you need at least an extra 1.8% just to break even.
+Lend to your most reliable friend A (think US Treasuries) and the bank's rate is all you ask. Lend to friend B, who runs a business, and you do some mental math: maybe a 3% chance the business fails (probability of default); if it does, selling the equipment might get back 40% (recovery), so you'd lose 60%. On average that's \\(3\\% \\times 60\\% = 1.8\\%\\) lost a year, so you need at least an extra 1.8% just to break even.
 
 But you'd still ask for a bit more. What if the economy sours and several friends go under at once? What if you need cash and nobody will take the IOU off your hands? That extra slice is the **risk premium and liquidity premium**.
 
@@ -162,7 +162,7 @@ And a bitcoin treasury company? That's a friend who borrows from you against gol
     "**“AAA means no risk.”** A rating only ranks default probability, and it can be wrong: many subprime mortgage securities rated AAA before 2008 later defaulted en masse. Ratings also ignore interest-rate risk: an AAA-rated 30-year bond still falls hard when rates rise (Stage 4.4).",
     "**“If a corporate bond is falling, the company must be close to default.”** The drop might come from rising Treasury yields (rate risk) or from spreads widening across the whole market (liquidity and panic), not from anything wrong with that company. In March 2020 plenty of healthy companies' bonds were dumped too.",
     "**“Default means losing everything.”** Creditors usually recover part of their claim through restructuring or bankruptcy; senior unsecured bonds often recover somewhere around 40%, secured debt more. How much you get back depends on where you sit in the capital stack (Stage 6.1, Stage 6.6).",
-    "**“A bitcoin treasury company's BTC Rating is the same thing as an S&P rating.”** Agency ratings mainly assess the ability to service debt from cash flow and the probability of default. The BTC Rating is asset coverage (BTC NAV ÷ cumulative claims), closer to a mortgage's loan-to-value. It's intuitive, but it swings with bitcoin's price: 4x coverage becomes 1.2x after a 70% drop in bitcoin (Stage 16.5).",
+    "**“A bitcoin treasury company's BTC Rating is the same thing as an S&P rating.”** Agency ratings mainly assess the ability to service debt from cash flow and the probability of default. The BTC Rating is asset coverage (\\(\\dfrac{\\text{BTC NAV}}{\\text{cumulative claims}}\\)), closer to a mortgage's loan-to-value. It's intuitive, but it swings with bitcoin's price: 4x coverage becomes 1.2x after a 70% drop in bitcoin (Stage 16.5).",
   ],
 
   quiz: [
@@ -175,7 +175,7 @@ And a bitcoin treasury company? That's a friend who borrows from you against gol
         "About 0.6%",
       ],
       answer: 2,
-      explain: "**Expected loss = PD × LGD = 3.5% × (1 − 40%) = 2.1%.** If its spread is 3.8%, the remaining 1.7% or so is risk and liquidity premium.",
+      explain: "**\\(\\text{Expected loss} = \\mathrm{PD} \\times \\mathrm{LGD} = 3.5\\% \\times (1 - 40\\%) = 2.1\\%\\).** If its spread is 3.8%, the remaining 1.7% or so is risk and liquidity premium.",
     },
     {
       q: "Where is the line between investment grade and high yield (junk)?",
@@ -197,7 +197,7 @@ And a bitcoin treasury company? That's a friend who borrows from you against gol
         "2.67%; the price rises",
       ],
       answer: 0,
-      explain: "**Yield = 5.17% + 2.50% = 7.67%.** A 2.5-point wider spread × spread duration of about 7 ≈ −17% (convexity makes the exact loss a little smaller). No default has happened, yet the price drops hard. That's credit markets in a crisis.",
+      explain: "**\\(\\text{Yield} = 5.17\\% + 2.50\\% = 7.67\\%\\).** A 2.5-point wider spread with a spread duration of about 7: \\(-7 \\times 2.5\\% \\approx -17\\%\\) (convexity makes the exact loss a little smaller). No default has happened, yet the price drops hard. That's credit markets in a crisis.",
     },
     {
       q: "Why is there said to be a “credit spread puzzle” in investment-grade bonds?",
@@ -219,7 +219,7 @@ And a bitcoin treasury company? That's a friend who borrows from you against gol
         "About 0.3x",
       ],
       answer: 2,
-      explain: "**BTC NAV drops to $300 million, and $300M ÷ $250M = 1.2x.** Asset coverage is a bitcoin treasury company's credit cushion, but it moves in lockstep with the coin, which is the heart of the stress tests in Stage 16.5 and Stage 18.2.",
+      explain: "**BTC NAV drops to $300 million, and \\(\\dfrac{\\$300\\text{M}}{\\$250\\text{M}} = 1.2\\times\\).** Asset coverage is a bitcoin treasury company's credit cushion, but it moves in lockstep with the coin, which is the heart of the stress tests in Stage 16.5 and Stage 18.2.",
     },
   ],
 

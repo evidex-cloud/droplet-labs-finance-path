@@ -36,12 +36,14 @@ All of this is groundwork for the treasury companies later on. Their common stoc
   mechanics: `
 ### ① The numbers: just how volatile is bitcoin?
 
-Volatility is the standard deviation of daily returns, **annualized**. Bitcoin trades every day of the year, so you scale by √365 (stocks use √252):
+Volatility is the standard deviation of daily returns, **annualized**. Bitcoin trades every day of the year, so you scale by \\(\\sqrt{365}\\) (stocks use \\(\\sqrt{252}\\)):
 
 $$
-Annualized volatility = standard deviation of daily returns × √365
-Example: 3% daily → 3% × 19.1 ≈ 57%
+\\text{annualized volatility} = \\text{std. dev. of daily returns} \\times \\sqrt{365}
+3\\% \\times \\sqrt{365} \\approx 3\\% \\times 19.1 \\approx 57\\%
 $$
+
+The second line is an example: 3% daily volatility annualizes to about 57%.
 
 For reference, US large-cap stock indexes have typically run at roughly 15–20% annualized, gold around 15%, and long Treasuries often 10–15% since 2022. Bitcoin's annualized volatility often exceeded 100% in its early years, ran mostly in the 60–90% range in 2017–2022, and fell mostly to 40–60% in 2023–2025 (all rough ranges that depend on the measurement window). **Even in its “calmest” years it has been two to three times as volatile as stocks.**
 
@@ -101,7 +103,7 @@ Over the long run bitcoin's volatility has fallen: a bigger market cap, a broade
 
 High volatility has three concrete implications for a position:
 
-- **Volatility drag.** Compounded return ≈ arithmetic average return − σ²/2. At 60% annualized volatility the drag is about 18 percentage points a year; at 45%, about 10. Of two assets with the same average return, the more volatile one grows more slowly over time (Stage 11.4).
+- **Volatility drag.** \\(\\text{compounded return} \\approx \\text{arithmetic average return} - \\dfrac{\\sigma^{2}}{2}\\). At 60% annualized volatility the drag is about 18 percentage points a year (\\(\\dfrac{0.60^{2}}{2} = 0.18\\)); at 45%, about 10 (\\(\\dfrac{0.45^{2}}{2} \\approx 0.10\\)). Of two assets with the same average return, the more volatile one grows more slowly over time (Stage 11.4).
 - **Risk contribution far exceeds capital share.** Take a traditional portfolio with 10% volatility, bitcoin at 55% volatility, and a correlation of 0.3. A 5% bitcoin allocation raises portfolio volatility only from 10% to about 10.65%, **but bitcoin accounts for about 14% of the total risk**; at a 10% allocation it accounts for about a third. Size positions by risk, not by dollars.
 - **Leverage turns volatility into ruin risk.** Put leverage on a highly volatile asset and a single deep dip along the way can liquidate you, even if the price ends higher. That is the “amplification” of Stage 16.4, and it's why treasury companies stress **liability structures with no margin calls** (Stage 18.2).
 
@@ -127,7 +129,7 @@ As for the “great tide every four years” — old sailors swear a big tide al
     "**“The four-year cycle is a law — just trade around the halving dates.”** — There are only four observations, each halving's supply shock is smaller than the last, and the pattern may be self-fulfilling. The 2025 peak did land about 18 months after the halving, but no mechanism guarantees the next cycle will repeat it.",
     "**“Bitcoin's volatility has fallen to roughly stock-market levels.”** — Volatility has come down, but the 40–60% of 2023–2025 was still two to three times that of stocks, and the roughly −54% drawdown of 2025–26 shows the tail risk is still huge.",
     "**“A 5% bitcoin allocation means 5% of the risk.”** — Risk contribution depends on volatility and correlation. In a portfolio with 10% volatility, a 5% bitcoin position (55% volatility, 0.3 correlation) contributes about 14% of total risk; a 10% position contributes about a third.",
-    "**“A higher average return always means more money in the long run.”** — Volatility drag makes the compounded return roughly the arithmetic return minus σ²/2. At 60% annualized volatility about 18 percentage points a year get eaten by the bumps; add leverage and a single deep dip along the way can knock you out entirely.",
+    "**“A higher average return always means more money in the long run.”** — Volatility drag makes the compounded return roughly the arithmetic return minus \\(\\dfrac{\\sigma^{2}}{2}\\). At 60% annualized volatility about 18 percentage points a year get eaten by the bumps; add leverage and a single deep dip along the way can knock you out entirely.",
   ],
 
   quiz: [
@@ -140,7 +142,7 @@ As for the “great tide every four years” — old sailors swear a big tide al
         "About 1,095%",
       ],
       answer: 2,
-      explain: "Bitcoin trades every day, so annualize with √365 ≈ 19.1: 3% × 19.1 ≈ **57%**. Stocks normally use √252.",
+      explain: "Bitcoin trades every day, so annualize with \\(\\sqrt{365} \\approx 19.1\\): \\(3\\% \\times 19.1 \\approx 57\\%\\). Stocks normally use \\(\\sqrt{252}\\).",
     },
     {
       q: "From the October 6, 2025 high of about $126,000 to about $58,000 in June 2026, what was the drawdown? And rising to about $84,000 afterward, how much did it bounce from the low?",
@@ -151,7 +153,7 @@ As for the “great tide every four years” — old sailors swear a big tide al
         "About −77%; about +100%",
       ],
       answer: 0,
-      explain: "58/126 − 1 ≈ **−54%**; 84/58 − 1 ≈ **+45%**. Note that after a 54% fall you need a gain of about 117% just to get back to even — the asymmetry of drawdowns.",
+      explain: "\\(\\dfrac{58}{126} - 1 \\approx -54\\%\\); \\(\\dfrac{84}{58} - 1 \\approx +45\\%\\). Note that after a 54% fall you need a gain of about 117% (\\(\\dfrac{1}{1 - 0.54} - 1 \\approx 117\\%\\)) just to get back to even — the asymmetry of drawdowns.",
     },
     {
       q: "Which is the strongest criticism of the “four-year cycle” story?",
@@ -173,7 +175,7 @@ As for the “great tide every four years” — old sailors swear a big tide al
         "About 1%",
       ],
       answer: 1,
-      explain: "Risk contribution = w × (w·σ₁² + (1−w)·ρ·σ₁·σ₂) ÷ σₚ² ≈ **14%**. A high-volatility asset's share of risk far exceeds its share of capital, so size positions by risk (Stage 11.1, Stage 11.4).",
+      explain: "\\(\\text{risk contribution} = \\dfrac{w\\left(w\\sigma_{1}^{2} + (1-w)\\,\\rho\\,\\sigma_{1}\\sigma_{2}\\right)}{\\sigma_{p}^{2}} \\approx 14\\%\\) (\\(w = 5\\%,\\ \\sigma_{1} = 55\\%,\\ \\sigma_{2} = 10\\%,\\ \\rho = 0.3\\)). A high-volatility asset's share of risk far exceeds its share of capital, so size positions by risk (Stage 11.1, Stage 11.4).",
     },
     {
       q: "As of September 2026, which set of macro conditions best explains bitcoin's bear-market backdrop?",

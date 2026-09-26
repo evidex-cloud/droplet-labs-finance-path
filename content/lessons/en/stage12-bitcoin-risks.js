@@ -36,16 +36,30 @@ By the end of this lesson you should be able to answer any claim that “bitcoin
   mechanics: `
 ### ① The security budget: who pays the miners after the halvings?
 
-Stage 12.1 explained that the cost of rewriting the ledger depends on how much hash power honest miners commit, and how much they commit depends on how much they earn. Miner revenue = **block subsidy + fees**, and the network's total annual miner revenue is bitcoin's **security budget**.
+Stage 12.1 explained that the cost of rewriting the ledger depends on how much hash power honest miners commit, and how much they commit depends on how much they earn. \\(\\text{Miner revenue} = \\textbf{block subsidy} + \\textbf{fees}\\), and the network's total annual miner revenue is bitcoin's **security budget**.
 
 $$
-Annual security budget ≈ (block subsidy + average fees per block) × 52,560 × price
-Subsidy portion ÷ market value ≈ new supply per year ÷ stock = supply inflation rate
+\\text{annual security budget} \\approx (\\text{block subsidy} + \\text{avg. fees per block}) \\times 52{,}560 \\times \\text{price}
+\\frac{\\text{subsidy portion}}{\\text{market value}} \\approx \\frac{\\text{new supply per year}}{\\text{stock}} = \\text{supply inflation rate}
 $$
 
 The second line is an elegant result: **the security budget paid by the subsidy, as a share of market value, doesn't depend on the price at all — it equals the supply inflation rate from Stage 12.2.** About 0.82% after the 2024 halving, about 0.4% in 2028, about 0.2% in 2032 and about 0.1% in 2036. If the price rises tenfold, the dollar value of the subsidy rises tenfold too, but the protection it buys *per dollar of market value* doesn't improve — and it halves every four years.
 
-Run the numbers at September 2026 levels: subsidy 3.125 × 52,560 ≈ 164,000 coins × about $84,000 ≈ **$13.8 billion a year**. If the price stayed flat, keeping the same dollar budget after the 2032 halving (subsidy 0.78125) would require fees of about $10.3 billion a year — **roughly 2.3 BTC of fees in every block**. In most quiet periods actual fees per block are far below that, spiking only briefly when the chain is congested.
+Run the numbers at September 2026 levels (a price of about $84,000):
+
+$$
+\\text{annual subsidy} = 3.125 \\times 52{,}560 \\approx 164{,}000\\ \\text{coins}
+\\text{annual security budget} \\approx 164{,}000 \\times \\$84{,}000 \\approx \\$13.8\\ \\text{billion a year}
+$$
+
+If the price stayed flat, keeping the same dollar budget after the 2032 halving (subsidy 0.78125) would require fees of about $10.3 billion a year:
+
+$$
+\\text{fees} \\approx \\$13.8\\ \\text{bn} - 0.78125 \\times 52{,}560 \\times \\$84{,}000 \\approx \\$10.3\\ \\text{bn a year}
+\\text{fees per block} \\approx \\frac{\\$10.3\\ \\text{bn}}{52{,}560 \\times \\$84{,}000} \\approx 2.3\\ \\text{BTC}
+$$
+
+That is **roughly 2.3 BTC of fees in every block**. In most quiet periods actual fees per block are far below that, spiking only briefly when the chain is congested.
 
 The two sides of the argument:
 
@@ -161,12 +175,12 @@ Outside the walls, the surrounding kingdoms are sometimes hostile (bans) and som
       q: "After the 2024 halving, roughly what share of bitcoin's total market value does the subsidy-funded annual security budget represent, and why is it independent of price?",
       options: [
         "About 8%, because miners sell all their new coins",
-        "About 0.82%, because subsidy ÷ market value = new supply per year ÷ stock, so the price cancels out",
+        "About 0.82%, because \\(\\dfrac{\\text{subsidy}}{\\text{market value}} = \\dfrac{\\text{new supply per year}}{\\text{stock}}\\), so the price cancels out",
         "About 50%, because miner revenue equals half the market value",
         "It can't be calculated because the price changes daily",
       ],
       answer: 1,
-      explain: "164,250 × price ÷ (about 20.09 million × price) ≈ **0.82%**. The price cancels, so the ratio depends only on the issuance schedule: about 0.4% in 2028 and about 0.2% in 2032.",
+      explain: "\\(\\dfrac{164{,}250 \\times \\text{price}}{20.09\\ \\text{million} \\times \\text{price}} \\approx 0.82\\%\\). The price cancels, so the ratio depends only on the issuance schedule: about 0.4% in 2028 and about 0.2% in 2032.",
     },
     {
       q: "An attacker controlling more than 51% of the network's hash power could NOT do which of these?",

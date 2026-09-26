@@ -1,7 +1,7 @@
 // 交互演示：稳定币储备与挤兑沙盘——
 // 设定一家发行 100 亿美元稳定币的发行人的储备结构（现金 / ≤93 天国库券 / 10 年期国债 / 高风险资产）与储备率，
 // 再施加利率冲击、托管银行倒闭（部分现金冻结）、高风险资产折价，看一场挤兑里“先跑的人”和“后走的人”各拿到多少。
-import { bondPrice, waterfall, fmtPct, fmtNum, fmtUsd, fmtBig } from "./_fin.js";
+import { bondPrice, waterfall, fmtPct, fmtNum, fmtUsd, fmtBig, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -39,7 +39,7 @@ export default function mount(root, lang) {
           ${sl("bills", T("≤93 天国库券 / 回购", "T-bills ≤93 days / repo"), 0, 100, 1, st.bills)}
           ${sl("long", T("10 年期国债", "10-year Treasuries"), 0, 100, 1, st.long)}
           ${sl("risky", T("高风险资产（商业票据、加密资产等）", "Risky assets (commercial paper, crypto, etc.)"), 0, 100, 1, st.risky)}
-          ${sl("ratio", T("储备总额 ÷ 发行量", "Total reserves ÷ coins outstanding"), 0.1, 1.1, 0.01, st.ratio)}
+          ${sl("ratio", tex(String.raw`\text{${T("储备总额", "Total reserves")}} \div \text{${T("发行量", "coins outstanding")}}`), 0.1, 1.1, 0.01, st.ratio)}
         </div>
         <div class="demo-block">
           <div class="demo-label"><b>${T("压力情景", "Stress scenario")}</b></div>
@@ -49,9 +49,9 @@ export default function mount(root, lang) {
           ${sl("run", T("挤兑规模：抢先赎回的比例", "Run size: share of coins redeemed early"), 5, 100, 1, st.run)}
         </div>
       </div>
-      <div class="demo-block"><div class="demo-meta">${T("实心 = 压力后可立即变现的价值；虚线框 = 压力前的价值；满格 = 100 亿美元发行量", "Solid = value realizable now after stress; dashed outline = value before stress; full width = the $10B of coins outstanding")}</div><div class="stages" id="sc-bars"></div></div>
+      <div class="demo-block"><div class="demo-meta">${T("实心：压力后可立即变现的价值；虚线框：压力前的价值；满格：100 亿美元发行量", "Solid: value realizable now after stress; dashed outline: value before stress; full width: the $10B of coins outstanding")}</div><div class="stages" id="sc-bars"></div></div>
       <div class="stat-row">
-        <div class="stat"><div class="k">${T("可立即变现的储备 ÷ 发行量", "Reserves available now ÷ coins")}</div><div class="v" id="sc-cov">–</div></div>
+        <div class="stat"><div class="k">${tex(String.raw`\text{${T("可立即变现的储备", "Reserves available now")}} \div \text{${T("发行量", "coins")}}`)}</div><div class="v" id="sc-cov">–</div></div>
         <div class="stat"><div class="k">${T("先跑的人每枚拿到", "Early redeemers get per coin")}</div><div class="v" id="sc-early">–</div></div>
         <div class="stat"><div class="k">${T("后走的人每枚剩下", "Late holders are left with per coin")}</div><div class="v" id="sc-late">–</div></div>
         <div class="stat"><div class="k">${T("发行人年利息收入（平时）", "Issuer's annual interest (normal times)")}</div><div class="v acc" id="sc-inc">–</div></div>

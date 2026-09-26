@@ -44,9 +44,14 @@ It connects to lessons on both sides. The Treasury basis trade in Stage 7.4 runs
 A repo has five ingredients: **collateral** (usually Treasuries), a **cash amount**, a **repo rate**, a **term** (overwhelmingly overnight, though there is "term repo" for a week or a month) and a **haircut**. Interest follows the money-market convention of actual days over 360:
 
 $$
-Repo interest = cash borrowed × repo rate × days ÷ 360
-Bluebridge: $98M × 3.9% × 1 ÷ 360 ≈ $10,617
-Repurchase price = $98,000,000 + $10,617 ≈ $98,010,617
+\\text{Repo interest} = \\text{cash borrowed} \\times \\text{repo rate} \\times \\frac{\\text{days}}{360}
+$$
+
+Bluebridge's example:
+
+$$
+\\text{Repo interest} = \\$98\\text{M} \\times 3.9\\% \\times \\frac{1}{360} \\approx \\$10{,}617
+\\text{Repurchase price} = \\$98{,}000{,}000 + \\$10{,}617 \\approx \\$98{,}010{,}617
 $$
 
 <figure><svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">An overnight repo: sell today, buy back tomorrow</text><rect x="40" y="70" width="170" height="80" rx="10" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="125" y="100" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">Cash borrower (repo)</text><text x="125" y="120" text-anchor="middle" font-size="10.5" fill="var(--muted)">dealers, hedge funds</text><text x="125" y="136" text-anchor="middle" font-size="10.5" fill="var(--muted)">own bonds, need cash</text><rect x="430" y="70" width="170" height="80" rx="10" fill="var(--green-soft)" stroke="var(--green)"/><text x="515" y="100" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">Cash lender (reverse)</text><text x="515" y="120" text-anchor="middle" font-size="10.5" fill="var(--muted)">money funds, banks, the Fed</text><text x="515" y="136" text-anchor="middle" font-size="10.5" fill="var(--muted)">have cash, want safety</text><text x="320" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">Today (start leg)</text><line x1="215" y1="80" x2="420" y2="80" stroke="var(--muted)" stroke-width="2"/><polygon points="420,75 430,80 420,85" fill="var(--muted)"/><text x="320" y="74" text-anchor="middle" font-size="10.5" fill="var(--ink)">$100M of Treasuries (collateral)</text><line x1="425" y1="102" x2="220" y2="102" stroke="var(--green)" stroke-width="2"/><polygon points="220,97 210,102 220,107" fill="var(--green)"/><text x="320" y="97" text-anchor="middle" font-size="10.5" fill="var(--green)">$98M cash (2% haircut)</text><text x="320" y="176" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">Tomorrow (end leg)</text><line x1="215" y1="128" x2="420" y2="128" stroke="var(--green)" stroke-width="2"/><polygon points="420,123 430,128 420,133" fill="var(--green)"/><text x="320" y="123" text-anchor="middle" font-size="10.5" fill="var(--green)">$98.01M cash (principal + one night)</text><line x1="425" y1="148" x2="220" y2="148" stroke="var(--muted)" stroke-width="2"/><polygon points="220,143 210,148 220,153" fill="var(--muted)"/><text x="320" y="162" text-anchor="middle" font-size="10.5" fill="var(--ink)">Treasuries returned</text><rect x="90" y="192" width="460" height="44" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="320" y="210" text-anchor="middle" font-size="11" fill="var(--ink)">Legally a sale plus agreed buyback: if the borrower fails, the lender sells at once</text><text x="320" y="226" text-anchor="middle" font-size="10.5" fill="var(--muted)">Haircut = the lender's cushion; overnight rate = the price of one night</text></svg><figcaption>Economically a repo is a secured loan. U.S. bankruptcy law gives repo "safe harbor" treatment: if the borrower goes bust, the lender doesn't have to wait for a court and can sell the collateral straight away.</figcaption></figure>
@@ -65,9 +70,10 @@ What repo is used for:
 The haircut directly caps leverage:
 
 $$
-Cash you can borrow = collateral value × (1 − haircut)
-Your own capital = collateral value × haircut
-Maximum leverage = 1 ÷ haircut: 2% → 50x; 5% → 20x; 15% → about 6.7x
+\\text{Cash you can borrow} = \\text{collateral value} \\times (1 - \\text{haircut})
+\\text{Your own capital} = \\text{collateral value} \\times \\text{haircut}
+\\text{Maximum leverage} = \\frac{1}{\\text{haircut}}
+\\frac{1}{2\\%} = 50\\times, \\quad \\frac{1}{5\\%} = 20\\times, \\quad \\frac{1}{15\\%} \\approx 6.7\\times
 $$
 
 The haircut depends on how safe and how easy to sell the collateral is. Short Treasuries get the smallest; long Treasuries a bit more (their prices swing more — the duration of Stage 4.4); agency MBS, corporate bonds and stocks progressively more. It's the lender's estimate of how far the collateral could fall overnight.
@@ -77,11 +83,11 @@ Bluebridge's numbers show both edges of the blade. It supports $100 million of 1
 - **Carry**: $5.17 million a year of coupon income minus about $3.82 million of repo interest leaves a net **$1.35 million** — roughly **67% a year** on $2 million of capital.
 - **Rate risk**: the bond's modified duration is about 7.7. If its yield rises just **10 basis points**, the price drops from 100 to about 99.23: a loss of about **$770,000**, **38%** of the capital. A **50 bp** rise loses about $3.78 million — **the capital is gone, and then some.**
 
-The lender marks the collateral to market every day. When the price falls, it asks the borrower for more cash or more bonds — a **margin call**. In the 10 bp example, the call is about $770,000 × 98% ≈ $755,000.
+The lender marks the collateral to market every day. When the price falls, it asks the borrower for more cash or more bonds — a **margin call**. In the 10 bp example, the call is about \\(\\$770{,}000 \\times 98\\% \\approx \\$755{,}000\\).
 
-Even more dangerous is a **rise in the haircut itself**. If the lender lifts the haircut from 2% to 5%, the borrower must immediately find $100 million × 3% = **$3 million** — even though the price hasn't moved a cent, and even though that's more than its entire capital. That's the Achilles' heel of the basis trade in Stage 7.4, and the mechanism of the 2008 "run on repo": in the crisis, haircuts on some securitized collateral jumped from near zero to tens of percent, forcing the whole "shadow banking" system to deleverage at once.
+Even more dangerous is a **rise in the haircut itself**. If the lender lifts the haircut from 2% to 5%, the borrower must immediately find \\(\\$100\\ \\text{million} \\times 3\\% =\\) **$3 million** — even though the price hasn't moved a cent, and even though that's more than its entire capital. That's the Achilles' heel of the basis trade in Stage 7.4, and the mechanism of the 2008 "run on repo": in the crisis, haircuts on some securitized collateral jumped from near zero to tens of percent, forcing the whole "shadow banking" system to deleverage at once.
 
-**Collateral also gets reused.** The Treasuries a cash lender receives are often repoed out again or lent to short sellers — **rehypothecation**. A $100 million Treasury used three times in a row at a 2% haircut can support about $98M + $96.04M + $94.12M ≈ **$288 million** of financing. Economists call this the **velocity of collateral**: it lets the same safe asset support more credit, and it lets a break at one link travel down the whole chain.
+**Collateral also gets reused.** The Treasuries a cash lender receives are often repoed out again or lent to short sellers — **rehypothecation**. A $100 million Treasury used three times in a row at a 2% haircut can support about \\(\\$98\\text{M} + \\$96.04\\text{M} + \\$94.12\\text{M} \\approx\\) **$288 million** of financing. Economists call this the **velocity of collateral**: it lets the same safe asset support more credit, and it lets a break at one link travel down the whole chain.
 
 The new-era parallel: over-collateralized lending in DeFi (Stage 13.4) is repo on-chain. "Loan-to-value" is the haircut by another name, and when the "health factor" falls below 1, liquidation happens automatically — the margin-call phone call replaced by a line of code.
 
@@ -163,7 +169,7 @@ The town's **central bank** runs two windows at either end of the street. One sa
         "$2 million",
       ],
       answer: 2,
-      explain: "The cash borrowed is $100M × (1 − 2%) = $98M; interest = $98M × 3.9% × 1/360 ≈ **$10,617**. $10,833 is what you get if you mistakenly treat the full $100M as the loan.",
+      explain: "The cash borrowed is \\(\\$100\\text{M} \\times (1 - 2\\%) = \\$98\\text{M}\\); interest \\(= \\$98\\text{M} \\times 3.9\\% \\times \\dfrac{1}{360} \\approx\\) **$10,617**. $10,833 is what you get if you mistakenly treat the full $100M as the loan.",
     },
     {
       q: "The repo haircut is 2%. What is the theoretical maximum leverage? And if the haircut rises to 5%, how much must a borrower holding $100 million of Treasuries put up immediately?",
@@ -174,7 +180,7 @@ The town's **central bank** runs two windows at either end of the street. One sa
         "50x; nothing, because the price hasn't changed",
       ],
       answer: 0,
-      explain: "Maximum leverage = 1 ÷ 2% = **50x**. Moving the haircut from 2% to 5% cuts the cash available from $98M to $95M, so the **$3 million** difference must be found at once — even with no price change. That's the weak spot of the basis trade and of the 2008 run on repo.",
+      explain: "\\(\\text{Maximum leverage} = \\dfrac{1}{2\\%} =\\) **50x**. Moving the haircut from 2% to 5% cuts the cash available from $98M to $95M, so the **$3 million** difference must be found at once — even with no price change. That's the weak spot of the basis trade and of the 2008 run on repo.",
     },
     {
       q: "Which statement about SOFR is correct?",

@@ -1,7 +1,7 @@
 // 交互演示：宏观体制选择器——选增长、通胀、流动性三根轴，看：
 // ① 各类资产的历史倾向（框架，不是预测）；② 60/40 组合波动如何随股债相关性变化（port2Vol）；
 // ③ 费雪公式的实际利率（realRate）；④ 一个示意情景下橙子公司普通股与 Orange-F 的结果（amplification / btcRating / perpetuity）。
-import { port2Vol, realRate, amplification, btcRating, perpetuity, fmtPct, fmtNum, fmtUsd, clamp } from "./_fin.js";
+import { port2Vol, realRate, amplification, btcRating, perpetuity, fmtPct, fmtNum, fmtUsd, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -19,9 +19,9 @@ export default function mount(root, lang) {
     { k: T("长期国债", "Long Treasuries"), s: { "++": -2, "+-": 1, "-+": -2, "--": 2 }, liq: 0.5, why: T("久期大，只怕通胀与加息", "High duration; fears only inflation and hikes") },
     { k: T("股票", "Stocks"), s: { "++": 1, "+-": 2, "-+": -2, "--": -1 }, liq: 1, why: T("盈利与折现率双重敏感", "Sensitive to profits and discount rates") },
     { k: T("黄金", "Gold"), s: { "++": 0, "+-": 0, "-+": 1, "--": 1 }, liq: 0.5, why: T("看实际利率与制度信任", "Driven by real rates and trust in institutions") },
-    { k: T("现金 / 短期国库券", "Cash / T-bills"), s: { "++": 1, "+-": 0, "-+": 1, "--": 0 }, liq: 0, why: T("久期≈0，跟着政策利率", "Duration ≈ 0; tracks the policy rate") },
+    { k: T("现金 / 短期国库券", "Cash / T-bills"), s: { "++": 1, "+-": 0, "-+": 1, "--": 0 }, liq: 0, why: T("久期接近零，跟着政策利率", "Duration near zero; tracks the policy rate") },
     { k: T("比特币", "Bitcoin"), s: { "++": 0, "+-": 2, "-+": -2, "--": -1 }, liq: 2, why: T("流动性与实际利率最敏感", "Most sensitive to liquidity and real rates") },
-    { k: T("DAT 普通股", "DAT common"), s: { "++": 0, "+-": 2, "-+": -2, "--": -2 }, liq: 2, why: T("比特币 × 放大 × mNAV 情绪", "Bitcoin × amplification × mNAV mood") },
+    { k: T("DAT 普通股", "DAT common"), s: { "++": 0, "+-": 2, "-+": -2, "--": -2 }, liq: 2, why: T("比特币乘以放大倍数、再乘以 mNAV 情绪", "Bitcoin times amplification times mNAV mood") },
     { k: T("DAT 固定利率优先股", "DAT fixed-rate preferred"), s: { "++": -1, "+-": 1, "-+": -2, "--": 0 }, liq: 1, why: T("长端利率 + BTC 评级两把刀", "Two knives: long rates + BTC Rating") },
     { k: T("DAT 浮动利率优先股", "DAT variable-rate preferred"), s: { "++": 0, "+-": 1, "-+": -1, "--": 0 }, liq: 1, why: T("挡利率、挡不住信用", "Parries rates, not credit") },
     { k: T("链上美元收益（代币化国库券）", "On-chain dollar yield (tokenized T-bills)"), s: { "++": 1, "+-": 0, "-+": 1, "--": -1 }, liq: -0.5, why: T("跟着短端利率走", "Follows short-term rates") },
@@ -110,7 +110,7 @@ export default function mount(root, lang) {
     const v6040 = port2Vol(0.6, 0.16, 0.07, st.rho), vNeg = port2Vol(0.6, 0.16, 0.07, -0.3);
     $("#mr-6040").innerHTML = `
       <div class="stat"><div class="k">${T("60/40 年化波动", "60/40 annual volatility")}</div><div class="v ${v6040 > vNeg + 0.005 ? "neg" : ""}">${fmtPct(v6040, 1)}</div></div>
-      <div class="stat"><div class="k">${T("对比 ρ = −0.3", "vs ρ = −0.3")}</div><div class="v">${(v6040 / vNeg - 1 > 0 ? "+" : "") + fmtPct(v6040 / vNeg - 1, 0)}</div></div>`;
+      <div class="stat"><div class="k">${T("对比 ", "vs ")}${tex(String.raw`\rho = -0.3`)}</div><div class="v">${(v6040 / vNeg - 1 > 0 ? "+" : "") + fmtPct(v6040 / vNeg - 1, 0)}</div></div>`;
 
     // 实际利率
     const rr = realRate(st.nom / 100, st.inf / 100);
@@ -139,6 +139,9 @@ export default function mount(root, lang) {
     const names = (arr) => arr.map((a) => T(`「${a.k}」`, `"${a.k}"`)).join(T("、", ", "));
     L.push(`<span class="ok">${T(`这一格里历史上最舒服的是${names(tops)}：${tops[0].why}。`, `Historically the most comfortable here: ${names(tops)}. ${tops[0].why}.`)}</span>`);
     L.push(`<span class="bad">${T(`最难受的是${names(bots)}：${bots[0].why}。`, `The most uncomfortable: ${names(bots)}. ${bots[0].why}.`)}</span>`);
+    const pctT = (x, d) => fmtNum(x, d) + String.raw`\%`;
+    L.push(`<span>${T("60/40 波动：", "60/40 volatility: ")}${tex(String.raw`\sigma_{60/40} = \sqrt{w^{2}\sigma_{1}^{2} + (1-w)^{2}\sigma_{2}^{2} + 2w(1-w)\rho\,\sigma_{1}\sigma_{2}} = ${pctT(v6040 * 100, 1)}`)}${T("（", " (")}${tex(String.raw`w = 60\%,\ \sigma_{1} = 16\%,\ \sigma_{2} = 7\%,\ \rho = ${fmtNum(st.rho, 2)}`)}${T("）。", ").")}</span>`);
+    L.push(`<span>${T("费雪公式：", "Fisher equation: ")}${tex(String.raw`r_{\text{${T("实际", "real")}}} = \frac{1 + ${pctT(st.nom, 2)}}{1 ${st.inf < 0 ? "-" : "+"} ${pctT(Math.abs(st.inf), 1)}} - 1 = ${pctT(rr * 100, 2)}`)}${T("。", ".")}</span>`);
     if (rr < 0) L.push(`<span class="warn">${T("实际收益率为负：这是 1970 年代黄金大放光彩的条件，也是“金融抑制”悄悄减债的方式（阶段 9.4）。", "Negative real yield: the condition under which gold shone in the 1970s, and the way financial repression quietly shrinks debt (Stage 9.4).")}</span>`);
     else L.push(`<span class="warn">${T(`实际收益率 ${fmtPct(rr, 2)} 为正：持有黄金、比特币这类不生息资产的机会成本更高。`, `Real yield of ${fmtPct(rr, 2)} is positive: holding non-yielding assets such as gold and bitcoin costs more in forgone income.`)}</span>`);
     L.push(`<span>${T("历史预设里的名义利率与通胀是该时期的粗略示意值（2026 年 9 月的 5.17% 与 3.4% 来自事实表）；情景里的利率与币价变化是示意假设，只为演示传导方向；分数是历史倾向的粗略概括，不构成投资建议。", "Nominal yields and inflation in the historical presets are rough illustrative values (September 2026's 5.17% and 3.4% come from the fact sheet); the rate and BTC moves in the scenario are illustrative assumptions meant only to show direction; the scores roughly summarize historical tendencies and are not investment advice.")}</span>`);

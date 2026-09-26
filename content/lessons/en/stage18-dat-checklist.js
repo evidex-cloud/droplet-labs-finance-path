@@ -60,7 +60,7 @@ The checklist is not a scoring sheet, and it does not produce a "buy" or "sell."
 **Question 2: Is bitcoin per share growing or being diluted?**
 
 - **Look at:** the trend in bitcoin per share (state the share count used), BTC Yield, **and where the growth comes from**: common issued at a premium, or preferred issuance (which ignores the new senior claims; Stage 16.3).
-- **Formula:** BTC Yield = ending bitcoin per share ÷ starting bitcoin per share − 1.
+- **Formula:** \\(\\text{BTC Yield} = \\dfrac{\\text{ending bitcoin per share}}{\\text{starting bitcoin per share}} - 1\\).
 - **Red flags:** falling bitcoin per share (issuing at a discount, or selling coins to pay dividends); a BTC Yield that comes almost entirely from preferreds.
 - **Strategy:** BTC Yield of 22.8% in 2025 and 8.1% in the first half of 2026, falling to 4.5% for the year to July 26 (July's coin sales and issuance that didn't buy bitcoin). **Strive:** +54.5% year to date, but SATA expanded sharply over the same stretch.
 
@@ -69,14 +69,14 @@ The checklist is not a scoring sheet, and it does not produce a "buy" or "sell."
 **Question 3: What is mNAV, and on which definition?**
 
 - **Look at:** at least two definitions side by side (basic and "net"), plus the historical range.
-- **Formulas:** basic = market cap ÷ BTC Reserve; Strategy's 2026 definition = share price ÷ [(BTC Reserve − out-of-the-money debt − preferreds + USD assets) ÷ fully diluted shares].
+- **Formulas:** \\(\\mathrm{mNAV}_{\\text{basic}} = \\dfrac{\\text{market cap}}{\\text{BTC Reserve}}\\); \\(\\mathrm{mNAV}_{\\text{Strategy 2026}} = \\dfrac{\\text{share price}}{\\text{Net Reserve} \\div \\text{fully diluted shares}}\\), where \\(\\text{Net Reserve} = \\text{BTC Reserve} - \\text{out-of-the-money debt} - \\text{preferreds} + \\text{USD assets}\\).
 - **Why it matters:** mNAV decides whether issuing is accretive or dilutive (Stage 16.7, Stage 18.3), and whether what you are buying is "discounted bitcoin."
-- **Orange Corp:** 1.50 basic, **2.05** on the 2026 definition. **Strategy:** **1.01x** on the 2026 definition (2026-08-21: a $119.25 share price over $118.31 of net bitcoin per share).
+- **Orange Corp:** 1.50 basic, **2.05** on the 2026 definition. **Strategy:** **1.01x** on the 2026 definition (2026-08-21: \\(\\dfrac{\\$119.25\\ \\text{share price}}{\\$118.31\\ \\text{net bitcoin per share}} \\approx 1.01\\)).
 - **Red flags:** a single number quoted with no definition; comparing two companies on different definitions (Stage 18.5).
 
 **Question 4: How much leverage, and by which formula?**
 
-- **Formulas:** Strategy-style Amplification = BTC Reserve ÷ Net Reserve; Strive-style leverage ratio = (debt + preferred) ÷ bitcoin value.
+- **Formulas:** \\(\\text{Strategy-style Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\); \\(\\text{Strive-style leverage ratio} = \\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin value}}\\).
 - **Orange Corp:** 1.37x / 30%. **Strategy:** 1.30x (2026-08-23). **Strive:** 50.4%.
 - **Remember:** amplification magnifies falls as well as rises, and brings path dependence and volatility drag (Stage 16.4, Stage 11.4).
 
@@ -84,15 +84,15 @@ The checklist is not a scoring sheet, and it does not produce a "buy" or "sell."
 
 **Question 5: How many times is each layer covered?**
 
-- **Formulas:** BTC Rating = BTC Reserve ÷ (this layer's notional + everything senior to it); floor price = bitcoin price ÷ BTC Rating.
+- **Formulas:** \\(\\text{BTC Rating} = \\dfrac{\\text{BTC Reserve}}{\\text{this layer's notional} + \\text{everything senior to it}}\\); \\(\\text{floor price} = \\dfrac{\\text{bitcoin price}}{\\text{BTC Rating}}\\).
 - **How to use it:** list every layer's multiple and floor price, then apply −50% and −80% shocks (Stage 18.2). State whether USD assets were netted against debt (Strategy's method).
 - **Orange Corp:** 6.67 / 4.00 / 3.33x; Orange-F's floor price is $25,000. **Strategy:** STRC at 5.7x with a floor price of about $13,400 (2026-08-23, company method).
 - **Red flags:** the most junior layer breaks 1x under a −50% shock; only the most senior layer's coverage is reported.
 
 **Question 6: How much must it pay each year, and how many months does the reserve last?**
 
-- **Formulas:** months of coverage = USD Reserve ÷ annual interest and dividends × 12; Breakeven ARR = annual interest and dividends ÷ BTC Reserve.
-- **Orange Corp:** 24 months; 1.5%. **Strategy:** about 37 months ($5.04 billion ÷ about $1.62 billion, 2026-09-20, derived); the company reported a Breakeven ARR of 2.63% (2026-08-23). **Strive:** an 18-month policy; Breakeven ARR about 6.6% (derived).
+- **Formulas:** \\(\\text{months of coverage} = \\dfrac{\\text{USD Reserve}}{\\text{annual interest and dividends}} \\times 12\\); \\(\\text{Breakeven ARR} = \\dfrac{\\text{annual interest and dividends}}{\\text{BTC Reserve}}\\).
+- **Orange Corp:** 24 months; 1.5%. **Strategy:** about 37 months (\\(\\dfrac{\\$5.04\\text{B}}{\\text{about } \\$1.62\\text{B}} \\times 12\\), 2026-09-20, derived); the company reported a Breakeven ARR of 2.63% (2026-08-23). **Strive:** an 18-month policy; Breakeven ARR about 6.6% (derived).
 - **Red flags:** a reserve under 12 months (the floor in Strategy's board policy); a high Breakeven ARR paired with a thin reserve.
 
 **Question 7: Which instruments, who ranks ahead of whom, and when do they come due?**
@@ -177,7 +177,7 @@ The form doesn't tell you whether to buy; that is your decision. What it guarant
         "Use only the lower one",
       ],
       answer: 2,
-      explain: "**Definitions first.** A net reserve of $730M over 100M shares is $7.30 a share, and 15 ÷ 7.30 ≈ 2.05. Both numbers are right; they answer different questions.",
+      explain: "**Definitions first.** \\(\\dfrac{\\$730\\text{M net reserve}}{100\\text{M shares}} = \\$7.30\\) a share, and \\(\\dfrac{15}{7.30} \\approx 2.05\\). Both numbers are right; they answer different questions.",
     },
     {
       q: "Which combination best fits a \"red\" on question 8?",
@@ -199,7 +199,7 @@ The form doesn't tell you whether to buy; that is your decision. What it guarant
         "Because rising long yields push perpetual preferred prices down and make alternatives more attractive, affecting a DAT's preferred funding",
       ],
       answer: 3,
-      explain: "**Idea ①:** a perpetual preferred's duration is about 1 ÷ yield. With the 30-year moving from about 4.64% to about 5.5%, a 10% perpetual with an unchanged spread falls about 7.8% (Stage 18.1).",
+      explain: "**Idea ①:** a perpetual preferred's duration is about \\(\\dfrac{1}{\\text{yield}}\\). With the 30-year moving from about 4.64% to about 5.5%, a 10% perpetual with an unchanged spread falls about 7.8% (Stage 18.1).",
     },
     {
       q: "Strategy's BTC Yield was 8.1% for the first half of 2026 and 4.5% for the year to July 26. What does question 2 make you ask next?",

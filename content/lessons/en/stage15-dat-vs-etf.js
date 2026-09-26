@@ -68,7 +68,7 @@ The ETF trade-off:
 The return on DAT common stock breaks down into three multipliers:
 
 $$
-common return ≈ (1 + BTC return × amplification − dividend and cost drag) × (ending mNAV ÷ starting mNAV) − 1
+\\begin{aligned} \\text{common return} &\\approx \\left(1 + \\text{BTC return} \\times \\text{amplification} - \\text{dividend and cost drag}\\right) \\\\ &\\quad \\times \\frac{\\mathrm{mNAV}_{\\text{end}}}{\\mathrm{mNAV}_{\\text{start}}} - 1 \\end{aligned}
 $$
 
 - **Amplification** (Stage 16.4): debt and preferreds are fixed claims, so every move in bitcoin lands on the common. Orange Corp's official-style amplification is about 1.37x; Strategy's was 1.30x on August 23, 2026.
@@ -77,9 +77,9 @@ $$
 
 A full worked example with Orange Corp (Strategy's 2026 definition: starting mNAV 2.05, net reserve $730M; $15M of dividends paid in the year, out of cash):
 
-- Bitcoin +50%, mNAV unchanged: net reserve → $1.5B + $15M − $300M = **$1.215B**, common **+66%.**
-- Bitcoin −50%, mNAV unchanged: net reserve → $500M + $15M − $300M = **$215M**, common **−71%.**
-- Bitcoin −50% and mNAV falling from 2.05 to 1.0: common about **−86%.**
+- Bitcoin +50%, mNAV unchanged: net reserve → \\(\\$1.5\\text{B} + \\$15\\text{M} - \\$300\\text{M} =\\) **$1.215B**, common \\(\\dfrac{1{,}215}{730} - 1 \\approx\\) **+66%.**
+- Bitcoin −50%, mNAV unchanged: net reserve → \\(\\$500\\text{M} + \\$15\\text{M} - \\$300\\text{M} =\\) **$215M**, common \\(\\dfrac{215}{730} - 1 \\approx\\) **−71%.**
+- Bitcoin −50% and mNAV falling from 2.05 to 1.0: common about \\(\\dfrac{215}{730} \\times \\dfrac{1.0}{2.05} - 1 \\approx\\) **−86%.**
 
 **The same 50% fall in bitcoin leaves the common anywhere from −71% to −86%, depending on the premium.** That is why DAT common stock swings so much harder than bitcoin. It charges no management fee, but it carries its own drags: preferred dividends, convertible interest and corporate running costs.
 
@@ -91,7 +91,7 @@ Preferred holders are not after bitcoin's upside; they want **steady income**: S
 
 Three key risks for the preferred holder:
 
-- **Credit risk = the thickness of the cushion** (Stage 16.5): Orange-F has a BTC Rating of 4.0x and a floor price of $25,000; in theory it is paid in full until bitcoin gets there. But the market **prices ahead**: as the cushion thins, the required yield rises and the price falls.
+- **Credit risk is the thickness of the cushion** (Stage 16.5): Orange-F has a BTC Rating of 4.0x and a floor price of $25,000; in theory it is paid in full until bitcoin gets there. But the market **prices ahead**: as the cushion thins, the required yield rises and the price falls.
 - **Interest-rate risk**: a perpetual preferred behaves like a perpetual bond (Stage 2.3, Stage 4.4), so when the 30-year Treasury yield rises, its price falls too — this is where Lin's first headline meets the third (Stage 18.1). Floating-rate preferreds such as STRC and SATA were designed to cut that sensitivity (Stage 17.4).
 - **No upside**: if bitcoin doubles, the preferred still just collects its dividend (the convertible STRK is the exception).
 
@@ -102,7 +102,7 @@ Tax adds a twist: Strategy expects its preferred dividends to be treated as **re
 <table class="pm">
 <tr><th>Dimension</th><th>Direct</th><th>Spot ETF</th><th>DAT common</th><th>DAT preferred</th></tr>
 <tr><td><b>What you own</b></td><td>The bitcoin itself</td><td>Fund shares</td><td>A company's residual claim</td><td>A fixed claim on the company</td></tr>
-<tr><td><b>Bitcoin exposure</b></td><td>1x</td><td>1x (less fees)</td><td>Amplified (~1.3–1.5x) × mNAV change</td><td>Small; mostly credit exposure</td></tr>
+<tr><td><b>Bitcoin exposure</b></td><td>1x</td><td>1x (less fees)</td><td>\\(\\text{Amplified (about 1.3–1.5x)} \\times \\text{mNAV change}\\)</td><td>Small; mostly credit exposure</td></tr>
 <tr><td><b>Income</b></td><td>None</td><td>None</td><td>None</td><td>10%–13% dividends</td></tr>
 <tr><td><b>Price vs NAV</b></td><td>It is NAV</td><td>Held near NAV by creations/redemptions</td><td>Can trade at a lasting premium or discount</td><td>Around par, moved by credit and rates</td></tr>
 <tr><td><b>Fees / drag</b></td><td>Spread, on-chain fees</td><td>Annual management fee</td><td>Dividends, interest, running costs, dilution</td><td>None (but the return is capped)</td></tr>
@@ -166,7 +166,7 @@ The four suit four kinds of people: those who want full control, those who want 
         "About −71%",
       ],
       answer: 3,
-      explain: "Net reserve → $500M + $15M (remaining cash) − $300M = $215M; 215 ÷ 730 − 1 ≈ **−71%**. If mNAV also falls from 2.05 to 1.0, it is about −86%.",
+      explain: "Net reserve → \\(\\$500\\text{M} + \\$15\\text{M}\\,(\\text{remaining cash}) - \\$300\\text{M} = \\$215\\text{M}\\); \\(\\dfrac{215}{730} - 1 \\approx\\) **−71%**. If mNAV also falls from 2.05 to 1.0, it is about −86%.",
     },
     {
       q: "If bitcoin rises 100% in a year, what is the Orange-F (10% cumulative preferred) holder's return closest to?",

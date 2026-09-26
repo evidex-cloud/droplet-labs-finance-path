@@ -61,9 +61,14 @@ export default function mount(root, lang) {
         <label class="demo-label">${lab}${T("：", ": ")}<b id="br-v-${k}">${fmtCtrl(k, s[k])}</b></label>
         <input class="demo-slider" type="range" data-k="${k}" min="${lo}" max="${hi}" step="${step}" value="${s[k]}" />
       </div>`).join("");
-    q("#br-ctrl").querySelectorAll("[data-k]").forEach((el) => el.addEventListener("input", () => {
-      s[el.dataset.k] = +el.value; q("#br-v-" + el.dataset.k).textContent = fmtCtrl(el.dataset.k, s[el.dataset.k]); paint();
-    }));
+    q("#br-ctrl").querySelectorAll("[data-k]").forEach((el) => {
+      // 读数标签在建控件时就绑定到同一个块里：切换公司 / 路径会重建控件，旧滑块已脱离页面，不能再去全局查它的 id
+      const out = el.closest(".demo-block").querySelector("b");
+      el.addEventListener("input", () => {
+        if (!el.isConnected) return;
+        s[el.dataset.k] = +el.value; out.textContent = fmtCtrl(el.dataset.k, s[el.dataset.k]); paint();
+      });
+    });
     q("#br-path").style.display = co === "maple" ? "" : "none";
   };
 

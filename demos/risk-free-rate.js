@@ -1,11 +1,13 @@
 // 交互演示：必要回报叠叠乐。无风险利率是地板，每种资产在上面叠期限、信用、股权、流动性溢价；
 // 选一种资产、调它的各层溢价，看必要回报与三种现金流（永续 $10、戈登增长股息、30 年期 5% 债券）的估值；
 // 再给无风险利率一个冲击（±1%/+2%），看整排资产怎么一起重估。计算走 _fin.js（perpetuity / gordon / bondPrice）。
-import { perpetuity, gordon, bondPrice, fmtPct, fmtUsd } from "./_fin.js";
+import { perpetuity, gordon, bondPrice, fmtPct, fmtUsd, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  // 把格式化好的数字（"$1,000.00" / "10.00%"）转成可放进 LaTeX 的写法
+  const tx = (s) => String(s).replace(/,/g, "{,}").replace(/%/g, String.raw`\%`).replace(/\$/g, String.raw`\$`);
 
   const LAYERS = [
     ["term", T("期限溢价", "Term premium"), "var(--green)", 3],
@@ -86,7 +88,7 @@ export default function mount(root, lang) {
     const r0 = req(a, rf0), r1 = req(a, rf1);
     const cases = [
       [T("永续 $10/年", "Perpetual $10/yr"), (r) => perpetuity(10, r), T("优先股、统一公债", "preferreds, consols")],
-      [T("增长股息 $5，g = 4%", "Growing dividend $5, g = 4%"), (r) => gordon(5, r, 0.04), T("股票（戈登）", "stocks (Gordon)")],
+      [`${T("增长股息 $5，", "Growing dividend $5, ")}${tex(String.raw`g = 4\%`)}`, (r) => gordon(5, r, 0.04), T("股票（戈登）", "stocks (Gordon)")],
       [T("30 年期、票息 5% 的债券（面值 100）", "30-year 5% coupon bond (face 100)"), (r) => bondPrice(100, 0.05, r, 30), T("长期国债 / 公司债", "long Treasuries / corporates")],
     ];
     $("#rf-vals").innerHTML = cases.map(([lab, f, note]) => {
@@ -96,9 +98,9 @@ export default function mount(root, lang) {
     }).join("");
 
     const lines = [];
-    lines.push(`${a.name}${T("：必要回报 = 无风险", ": required return = risk-free")} ${fmtPct(rf1, 2)} + ${T("风险溢价", "risk premia")} ${fmtPct(r1 - rf1, 2)} = <b>${fmtPct(r1, 2)}</b>`);
-    if (r1 <= 0.04) lines.push(`<span class="warn">${T("必要回报 ≤ 4%：戈登模型中 r ≤ g，增长股息的估值发散——现实里意味着这个组合不可能长期成立。", "Required return ≤ 4%: in the Gordon case r ≤ g and the value explodes — in practice that combination can't last.")}</span>`);
-    if (sel === "pref") lines.push(`<span class="warn">${T("优先股收益率 − 无风险利率 =", "Preferred yield − risk-free rate =")} ${fmtPct(r1 - rf1, 2)}${T("：这是市场对信用、次级地位、永续期限、流动性的定价（阶段 18.1）。示意数字，不构成投资建议。", ": the market's price for credit, subordination, perpetual term and liquidity (Stage 18.1). Illustrative numbers; not investment advice.")}</span>`);
+    lines.push(`${a.name}${T("：", ": ")}${tex(String.raw`\text{${T("必要回报", "required return")}} = \text{${T("无风险 ", "risk-free ")}}${tx(fmtPct(rf1, 2))} + \text{${T("风险溢价 ", "risk premia ")}}${tx(fmtPct(r1 - rf1, 2))} =\mathbf{${tx(fmtPct(r1, 2))}}`)}`);
+    if (r1 <= 0.04) lines.push(`<span class="warn">${tex(String.raw`\text{${T("必要回报", "Required return")}} \le 4\%`)}${T("：戈登模型中 ", ": in the Gordon case ")}${tex(String.raw`r \le g`)}${T("，增长股息的估值发散——现实里意味着这个组合不可能长期成立。", " and the value explodes — in practice that combination can't last.")}</span>`);
+    if (sel === "pref") lines.push(`<span class="warn">${tex(String.raw`\text{${T("优先股收益率", "Preferred yield")}} - \text{${T("无风险利率", "risk-free rate")}} = ${tx(fmtPct(r1 - rf1, 2))}`)}${T("：这是市场对信用、次级地位、永续期限、流动性的定价（阶段 18.1）。示意数字，不构成投资建议。", ": the market's price for credit, subordination, perpetual term and liquidity (Stage 18.1). Illustrative numbers; not investment advice.")}</span>`);
     if (shock) lines.push(`<span class="${shock > 0 ? "bad" : "ok"}">${T("地板移动", "The floor moved")} ${shock > 0 ? "+" : ""}${shock}%${T("，整排资产的必要回报同时移动；现金流没变，价格只能反向调整。", "; every asset's required return moved with it. Cash flows are unchanged, so prices must move the other way.")}</span>`);
     $("#rf-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };

@@ -3,8 +3,13 @@
 // B. 劳动与资本：生产率增量 g 中劳动分到的比例 λ → 实际工资增速与劳动收入份额路径（示意）。
 // C. 稀缺地图：同一股“储值需求”增速，落在供给增速不同的资产上，价格变化 ≈ (1 + 需求) ÷ (1 + 供给) − 1（玩具模型）。
 // 计算走 _fin.js（fv / pv / realRate / fmtPct / clamp）。
-import { fv, pv, realRate, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { fv, pv, realRate, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+const P = (x, d) => texv(fmtPct(x, d)); // 小数 → LaTeX 百分数
+const Pp = (x, d) => (x < 0 ? `(${P(x, d)})` : P(x, d)); // 负数加括号
+const Ps = (x, d) => (x > 0 ? "+" : "") + P(x, d); // 带正号
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -58,6 +63,7 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-block">
         <div class="demo-label">${T("C. 稀缺地图：同样的储值需求，落在不同供给弹性的资产上", "C. Scarcity map: the same store-of-value demand, landing on assets with different supply growth")}</div>
+        <div class="demo-label" style="margin-top:6px">${tex(String.raw`\text{${T("价格年变化", "annual price change")}} \approx \dfrac{1 + \text{${T("需求增速", "demand growth")}}}{1 + \text{${T("供给增速", "supply growth")}}} - 1`)}</div>
         <div class="demo-grid">${sl("d", "对“储值资产”的需求年增速", "Annual growth in demand for stores of value", -30, 30, 1)}</div>
         <div id="ads-scar" style="margin-top:8px"></div>
       </div>
@@ -135,14 +141,14 @@ export default function mount(root, lang) {
     }).join("");
 
     const L = [];
-    L.push(`${T("总体通胀 =", "Overall inflation =")} ${fmtPct(w, 0)} × ${sgn(p.a / 100, 1)} + ${fmtPct(b, 0)} × ${sgn(p.bi / 100, 1)} + ${fmtPct(rest, 0)} × ${fmtPct(p.r / 100, 1)} = <b>${sgn(pi, 2)}</b>${T("。", ".")}`);
+    L.push(`${tex(String.raw`\text{${T("总体通胀", "Overall inflation")}} = ${P(w, 0)} \times ${Pp(p.a / 100, 1)} + ${P(b, 0)} \times ${Pp(p.bi / 100, 1)} + ${P(rest, 0)} \times ${P(p.r / 100, 1)} = \mathbf{${Ps(pi, 2)}}`)}${T("。", ".")}`);
     if (b * p.bi > Math.abs(w * p.a)) L.push(`<span class="warn">${T("瓶颈涨价对总体通胀的贡献，超过了 AI 服务降价的拉低作用——这是建设期的典型形态。", "Bottleneck inflation adds more to the total than cheaper AI services subtract — the typical build-out pattern.")}</span>`);
     if (pi < 0) L.push(`<span class="bad">${T("物价下降：100 美元固定债务 10 年后的实际负担变成", "Prices are falling: the real burden of $100 of fixed debt becomes")} ${fmtNum(burden, 1)}${T("。即便是“好通缩”，也会加重债务人的负担——对一个债务超过 40 万亿美元的国家尤其敏感。", " after 10 years. Even good deflation makes debtors worse off — a sensitive point for a country with over $40 trillion of debt.")}</span>`);
-    L.push(`${T("劳动份额 10 年后从", "Labor's share goes from")} ${fmtPct(L0, 0)} ${T("变为", "to")} <b>${fmtPct(share, 1)}</b>${lam < 0.999 && g > 0 ? T("：多出来的蛋糕更多流向利润——储蓄更集中，中性利率被往下拽（阶段 19.1）。", ": more of the extra pie goes to profits — saving concentrates and the neutral rate gets pulled down (Stage 19.1).") : T("：劳动与资本同步增长。", ": labor and capital grow together.")}`);
+    L.push(`${T("劳动份额 10 年后从", "Labor's share goes from")} ${fmtPct(L0, 0)} ${T("变为", "to")} ${tex(String.raw`${P(L0, 0)} \times \left(\dfrac{1 + ${fmtNum(lam, 2)} \times ${P(g, 1)}}{1 + ${P(g, 1)}}\right)^{10} = \mathbf{${P(share, 1)}}`)}${lam < 0.999 && g > 0 ? T("：多出来的蛋糕更多流向利润——储蓄更集中，中性利率被往下拽（阶段 19.1）。", ": more of the extra pie goes to profits — saving concentrates and the neutral rate gets pulled down (Stage 19.1).") : T("：劳动与资本同步增长。", ": labor and capital grow together.")}`);
     const btcChg = (1 + D) / (1 + BTC_SUPPLY_GROWTH) - 1, compChg = (1 + D) / 1.4 - 1;
     L.push(D >= 0
-      ? `${T("需求增长", "With demand growing")} ${sgn(D, 0)}${T("：比特币约", ": bitcoin about")} ${sgn(btcChg, 1)}${T("，算力约", ", compute about")} ${sgn(compChg, 1)}${T("——供给越能扩张，价格越被压住。", " — the more supply can expand, the more prices are held down.")}`
-      : `<span class="bad">${T("需求下降", "With demand falling")} ${sgn(D, 0)}${T("：供给固定的资产几乎同比例下跌（比特币约", ": fixed-supply assets fall almost one-for-one (bitcoin about")} ${sgn(btcChg, 1)}${T("）。稀缺放大的是需求，而不是保证上涨。", "). Scarcity amplifies demand; it doesn't guarantee gains.")}</span>`);
+      ? `${T("需求增长", "With demand growing")} ${sgn(D, 0)}${T("：比特币约", ": bitcoin about")} ${tex(String.raw`\dfrac{1 + ${P(D, 0)}}{1 + ${P(BTC_SUPPLY_GROWTH, 2)}} - 1 \approx ${Ps(btcChg, 1)}`)}${T("，算力约", ", compute about")} ${tex(String.raw`\dfrac{1 + ${P(D, 0)}}{1 + 40\%} - 1 \approx ${Ps(compChg, 1)}`)}${T("——供给越能扩张，价格越被压住。", " — the more supply can expand, the more prices are held down.")}`
+      : `<span class="bad">${T("需求下降", "With demand falling")} ${sgn(D, 0)}${T("：供给固定的资产几乎同比例下跌（比特币约", ": fixed-supply assets fall almost one-for-one (bitcoin about")} ${tex(String.raw`\dfrac{1 - ${P(-D, 0)}}{1 + ${P(BTC_SUPPLY_GROWTH, 2)}} - 1 \approx ${Ps(btcChg, 1)}`)}${T("）。稀缺放大的是需求，而不是保证上涨。", "). Scarcity amplifies demand; it doesn't guarantee gains.")}</span>`);
     $("#ads-log").innerHTML = L.map((l) => `<div>${l}</div>`).join("");
   };
 

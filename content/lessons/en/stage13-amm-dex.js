@@ -7,7 +7,7 @@ export default {
   prereqs: ["defi-what", "exchanges-brokers"],
 
   oneLiner:
-    "Traditional exchanges match buyers and sellers through an order book and professional market makers. Decentralized exchanges (DEXs) take a different route: put two tokens into a **liquidity pool** and let one formula, `x·y=k`, quote prices automatically. Anyone can trade, and anyone can be the market maker. This lesson takes the formula apart: how it prices, why large orders suffer **slippage**, how arbitrageurs drag the pool back to the market price, and the **impermanent loss** that liquidity providers take on while collecting fees. At bottom, providing liquidity is **selling volatility**.",
+    "Traditional exchanges match buyers and sellers through an order book and professional market makers. Decentralized exchanges (DEXs) take a different route: put two tokens into a **liquidity pool** and let one formula, \\(x \\cdot y = k\\), quote prices automatically. Anyone can trade, and anyone can be the market maker. This lesson takes the formula apart: how it prices, why large orders suffer **slippage**, how arbitrageurs drag the pool back to the market price, and the **impermanent loss** that liquidity providers take on while collecting fees. At bottom, providing liquidity is **selling volatility**.",
 
   intuition: `
 Go back to the exchange of Stage 8.1. Buy orders on one side, sell orders on the other, lined up by price in an **order book**, with the bid–ask spread in between. Who keeps quotes posted so you can always buy or sell? **Market makers**: professional firms that use their own capital and sophisticated models to quote both sides, earn the spread, and carry the price risk.
@@ -17,10 +17,12 @@ Try to move that onto a blockchain and you quickly hit a wall. Ethereum produces
 Uniswap, launched in November 2018, offered a minimalist alternative: **no order book and no professional market maker.** Put two tokens, say 1,000 ETH and 3 million USDC, into a smart contract called a **liquidity pool**. The pool has exactly one rule:
 
 $$
-x × y = k   (the product of the two token balances stays constant across a trade)
+x \\times y = k
 $$
 
-The pool holds ETH and USDC in a ratio of 1 : 3,000, so it believes 1 ETH = 3,000 USDC. Morgan wants to buy ETH with 3,000 USDC. Morgan puts the USDC into the pool, and the pool uses the formula to work out how much ETH to hand back so that the product stays the same: about 0.996 ETH, after a 0.3% fee and a sliver of price impact. No counterparty is "selling" to Morgan. **The formula is the quote.**
+In words: the product of the two token balances stays constant across a trade.
+
+The pool holds ETH and USDC in a ratio of \\(1 : 3{,}000\\), so it believes \\(1\\ \\text{ETH} = 3{,}000\\ \\text{USDC}\\). Morgan wants to buy ETH with 3,000 USDC. Morgan puts the USDC into the pool, and the pool uses the formula to work out how much ETH to hand back so that the product stays the same: about 0.996 ETH, after a 0.3% fee and a sliver of price impact. No counterparty is "selling" to Morgan. **The formula is the quote.**
 
 Now suppose someone buys with 300,000 USDC in one go. That pulls a visible chunk of ETH out of the pool, and the formula's price climbs as it goes. The average price paid ends up around $3,309, and after the trade the pool quotes about $3,630. That's **slippage**: **the shallower the pool and the bigger the order, the further your average price drifts from the quote.**
 
@@ -31,7 +33,7 @@ This lesson rests on **Idea ③ Liquidity & trust (the plumbing)**. An AMM is th
 **In this lesson we break it into five parts:**
 
 - **① Order books vs liquidity pools: why the chain needs AMMs**
-- **② x·y=k: price, slippage and price impact**
+- **② \\(x \\cdot y = k\\): price, slippage and price impact**
 - **③ Arbitrageurs: the hand that pulls the pool back to market**
 - **④ Impermanent loss: liquidity providers are selling volatility**
 - **⑤ Fees, concentrated liquidity and MEV: the reality of DEXs**
@@ -51,19 +53,19 @@ This lesson rests on **Idea ③ Liquidity & trust (the plumbing)**. An AMM is th
 
 The core trade-off: **an AMM swaps "always a quote" for "not always a good quote."** Anyone can create a pool for any two tokens and trading starts instantly, which is why long-tail assets find liquidity on-chain so quickly. The price is that a pool doesn't reprice intelligently on news, inventory or hedging costs the way a professional market maker does. It just slides mechanically along a curve.
 
-### ② x·y=k: price, slippage and price impact
+### ② \\(x \\cdot y = k\\): price, slippage and price impact
 
-Say the pool holds x ETH and y USDC. The pool's **marginal quote**, the price of the very first sliver of ETH you buy, is:
-
-$$
-Spot price = y ÷ x = 3,000,000 ÷ 1,000 = 3,000 USDC per ETH
-$$
-
-You put in Δy USDC and take out Δx ETH, subject to keeping the product constant (ignore the fee for now):
+Say the pool holds \\(x\\) ETH and \\(y\\) USDC. The pool's **marginal quote**, the price of the very first sliver of ETH you buy, is:
 
 $$
-(x − Δx) × (y + Δy) = x × y
-Δx = x × Δy ÷ (y + Δy)
+\\text{Spot price} = \\frac{y}{x} = \\frac{3{,}000{,}000}{1{,}000} = 3{,}000\\ \\text{USDC per ETH}
+$$
+
+You put in \\(\\Delta y\\) USDC and take out \\(\\Delta x\\) ETH, subject to keeping the product constant (ignore the fee for now):
+
+$$
+(x - \\Delta x) \\times (y + \\Delta y) = x \\times y
+\\Delta x = \\frac{x \\times \\Delta y}{y + \\Delta y}
 $$
 
 <figure><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The constant-product curve x·y=k: a trade is a slide along the curve</text><line x1="80" y1="260" x2="600" y2="260" stroke="var(--line)" stroke-width="1.5"/><line x1="80" y1="260" x2="80" y2="40" stroke="var(--line)" stroke-width="1.5"/><text x="600" y="278" text-anchor="end" font-size="11" fill="var(--muted)">ETH in the pool, x</text><text x="86" y="44" font-size="11" fill="var(--muted)">USDC in the pool, y</text><path d="M110,50 C150,150 220,205 330,228 S520,250 590,253" fill="none" stroke="var(--orange)" stroke-width="2.5"/><circle cx="330" cy="228" r="6" fill="var(--blue)"/><text x="340" y="220" font-size="11" fill="var(--ink)">A: 1,000 ETH / 3M USDC, quote 3,000</text><circle cx="250" cy="212" r="6" fill="var(--red)"/><text x="150" y="190" font-size="11" fill="var(--ink)">B: 909 ETH / 3.3M USDC, quote ≈ 3,630</text><line x1="330" y1="228" x2="250" y2="212" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4 3"/><text x="300" y="250" font-size="10" fill="var(--red)">put in 300k USDC, take out ≈ 91 ETH</text><text x="470" y="120" font-size="11" fill="var(--muted)">The curve steepens to the left:</text><text x="470" y="136" font-size="11" fill="var(--muted)">less ETH, pricier ETH</text><text x="320" y="294" text-anchor="middle" font-size="11" font-weight="600" fill="var(--orange-ink)">The quote at any point = the slope of the tangent = y ÷ x; a big order pushes you onto the steeper part</text></svg><figcaption>A → B: buying ETH moves the pool up and left along the curve. The average fill is about 3,300 (before fees) and the quote afterwards is about 3,630. The gap is price impact.</figcaption></figure>
@@ -85,13 +87,14 @@ Keep two ideas apart. **Price impact** is how far your own trade pushes the pric
 
 A pool knows only what it holds. It has no idea what the outside world's price is. Suppose ETH rises to $3,300 on centralized exchanges while the pool still quotes $3,000. Who fixes it?
 
-**Arbitrageurs.** They buy ETH cheaply in the pool with USDC and sell it outside at the higher price, and they keep buying until the pool's quote has risen to about $3,300 as well. By the constant-product math, once the price moves from p to p′ the pool holds:
+**Arbitrageurs.** They buy ETH cheaply in the pool with USDC and sell it outside at the higher price, and they keep buying until the pool's quote has risen to about $3,300 as well. By the constant-product math, once the price moves from \\(p\\) to \\(p'\\) the pool holds:
 
 $$
-New ETH balance x′ = √(k ÷ p′),   new USDC balance y′ = √(k × p′)
+\\text{New ETH balance } x' = \\sqrt{\\frac{k}{p'}}
+\\text{New USDC balance } y' = \\sqrt{k \\times p'}
 $$
 
-Here k = 1,000 × 3,000,000 = 3 billion. At a price of 3,300, x′ ≈ 953.5 ETH and y′ ≈ 3.146 million USDC. The arbitrageur took about 46.5 ETH out of the pool and put in about 146,000 USDC, an average price of about 3,146, then sold outside at 3,300 for a profit of roughly $7,000 before fees and gas.
+Here \\(k = 1{,}000 \\times 3{,}000{,}000 = 3\\ \\text{billion}\\). At a price of 3,300, \\(x' \\approx 953.5\\ \\text{ETH}\\) and \\(y' \\approx 3.146\\ \\text{million USDC}\\). The arbitrageur took about 46.5 ETH out of the pool and put in about 146,000 USDC, an average price of about 3,146, then sold outside at 3,300 for a profit of roughly $7,000 before fees and gas.
 
 **Who paid for that profit? The LPs.** The pool sold ETH at a stale price to an informed arbitrageur. That is the deepest economics of an AMM: **the pool's price always follows passively, and every catch-up pays the arbitrageur some tuition.** Researchers call this cost "loss-versus-rebalancing" (LVR). Whether LPs make money depends on whether fee income covers this steady tuition bill.
 
@@ -99,16 +102,16 @@ It also explains why AMM prices usually sit very close to centralized-exchange p
 
 ### ④ Impermanent loss: liquidity providers are selling volatility
 
-Morgan becomes an LP at ETH = 3,000, depositing 10 ETH + 30,000 USDC ($60,000 in all). ETH then doubles to 6,000 and arbitrageurs rebalance the pool. By the formulas above, Morgan's share becomes about 7.07 ETH + 42,426 USDC:
+Morgan becomes an LP at \\(\\text{ETH} = 3{,}000\\), depositing \\(10\\ \\text{ETH} + 30{,}000\\ \\text{USDC}\\) ($60,000 in all). ETH then doubles to 6,000 and arbitrageurs rebalance the pool. By the formulas above, Morgan's share becomes about \\(7.07\\ \\text{ETH} + 42{,}426\\ \\text{USDC}\\):
 
-- **Value as an LP:** 7.07 × 6,000 + 42,426 ≈ **$84,853**
-- **Value from doing nothing (HODL):** 10 × 6,000 + 30,000 = **$90,000**
-- **Shortfall ≈ −5.7%.** That's the impermanent loss.
+- **Value as an LP:** \\(7.07 \\times 6{,}000 + 42{,}426 \\approx \\mathbf{\\$84{,}853}\\)
+- **Value from doing nothing (HODL):** \\(10 \\times 6{,}000 + 30{,}000 = \\mathbf{\\$90{,}000}\\)
+- **Shortfall \\(\\approx -5.7\\%\\).** That's the impermanent loss.
 
-The general formula depends only on the price ratio r:
+The general formula depends only on the price ratio \\(r\\):
 
 $$
-Impermanent loss = 2√r ÷ (1 + r) − 1
+\\text{Impermanent loss} = \\frac{2\\sqrt{r}}{1 + r} - 1
 $$
 
 <table>
@@ -122,7 +125,7 @@ Three things to notice:
 2. **"Impermanent" means** the loss disappears if the price returns to where you started. Withdraw while the price is away, and the loss becomes permanent.
 3. **It is short volatility.** Recall the options of Stage 7.2 and the vol-selling of Stage 7.3. Someone who sells both a call and a put earns premium when the price sits still and loses when it moves far. The LP's fees are the premium, and impermanent loss is getting exercised. **Calm, choppy markets are an LP's best friend. Big one-way moves up or down are the cruellest.**
 
-So when someone asks "what's the annual return on being an LP?", the right formula is **fee income − impermanent loss (more precisely, LVR) − gas and opportunity cost**. Take a pool advertising "30% a year in fees". If one of its tokens falls 75% during the year, impermanent loss eats 20 percentage points, before you even count the fall in the token itself. Stage 13.5 puts LP fees into the full list of where DeFi yield comes from.
+So when someone asks "what's the annual return on being an LP?", the right formula is **\\(\\text{fee income} - \\text{impermanent loss (more precisely, LVR)} - \\text{gas and opportunity cost}\\)**. Take a pool advertising "30% a year in fees". If one of its tokens falls 75% during the year, impermanent loss eats 20 percentage points, before you even count the fall in the token itself. Stage 13.5 puts LP fees into the full list of where DeFi yield comes from.
 
 ### ⑤ Fees, concentrated liquidity and MEV: the reality of DEXs
 
@@ -167,7 +170,7 @@ Being a shareholder in the kiosk is like **writing exchange-rate insurance**: yo
         "About $2,727",
       ],
       answer: 1,
-      explain: "Δx = 1,000 × 300,000 ÷ 3,300,000 ≈ 90.9 ETH, so the average price ≈ 300,000 ÷ 90.9 ≈ **3,300**, about 10% dearer, matching the order's 10% share of the pool. 3,630 is the pool's quote **after** the trade.",
+      explain: "\\(\\Delta x = \\dfrac{1{,}000 \\times 300{,}000}{3{,}300{,}000} \\approx 90.9\\ \\text{ETH}\\), so the average price \\(\\approx \\dfrac{300{,}000}{90.9} \\approx \\mathbf{3{,}300}\\), about 10% dearer, matching the order's 10% share of the pool. 3,630 is the pool's quote **after** the trade.",
     },
     {
       q: "After ETH rallies on centralized exchanges, what brings the AMM pool's price up to match, and who bears the cost?",
@@ -189,7 +192,7 @@ Being a shareholder in the kiosk is like **writing exchange-rate insurance**: yo
         "−20%",
       ],
       answer: 3,
-      explain: "2√0.25 ÷ 1.25 − 1 = 1 ÷ 1.25 − 1 = **−20%**. Impermanent loss is symmetric: ×4 and ×0.25 cost the same. And it comes **on top of** the large fall that simply holding would already have suffered.",
+      explain: "\\(\\dfrac{2\\sqrt{0.25}}{1.25} - 1 = \\dfrac{1}{1.25} - 1 = \\mathbf{-20\\%}\\). Impermanent loss is symmetric: \\(\\times 4\\) and \\(\\times 0.25\\) cost the same. And it comes **on top of** the large fall that simply holding would already have suffered.",
     },
     {
       q: "Why is being an LP described as \"selling volatility\"?",
@@ -200,7 +203,7 @@ Being a shareholder in the kiosk is like **writing exchange-rate insurance**: yo
         "Because LPs lose money only when prices rise",
       ],
       answer: 0,
-      explain: "Fees ≈ premium; impermanent loss ≈ being exercised. Choppy, calm markets suit LPs best and violent one-way moves hurt most, the same risk shape as the vol-selling of Stage 7.3.",
+      explain: "Fees are the premium; impermanent loss is being exercised. Choppy, calm markets suit LPs best and violent one-way moves hurt most, the same risk shape as the vol-selling of Stage 7.3.",
     },
     {
       q: "What is the main effect of concentrated liquidity (such as Uniswap v3's price ranges) on an LP?",

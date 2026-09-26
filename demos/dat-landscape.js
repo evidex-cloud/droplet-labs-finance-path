@@ -1,6 +1,6 @@
 // 交互演示：DAT 全景表——按资产、类型筛选，按持仓排序；拖动比特币价格看美元市值；
 // 计算集中度（第一名份额、前五份额、赫芬达尔指数）。数据全部来自 _research/dat-facts.md，并注明日期与来源。
-import { btcNav, fmtNum, fmtPct, fmtBig } from "./_fin.js";
+import { btcNav, fmtNum, fmtPct, fmtBig, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -104,8 +104,8 @@ export default function mount(root, lang) {
         [T("前五份额（所列范围）", "Top-five share (of shown)"), fmtPct(top5, 1), ""],
         [T("赫芬达尔指数", "Herfindahl index"), fmtNum(hhi, 3), hhi > 0.25 ? "neg" : "pos"],
       ].map(([k, v, c]) => `<div class="stat"><div class="k">${k}</div><div class="v ${c}">${v}</div></div>`).join("");
-      lines.push(`${T("按榜单全口径：约 196 家上市公司合计约 ", "On the tracker's full count: about 196 listed companies hold about ")}${fmtNum(TRACKER_TOTAL, 0)} BTC${T("，Strategy 占 ", "; Strategy's share is ")}<b>${fmtPct(mstrShare, 1)}</b>${T("，按你设定的价格约值 $", ", worth about $")}${fmtBig(btcNav(TRACKER_TOTAL, st.px), 1)}${T("。", " at your price.")}`);
-      lines.push(`${T("赫芬达尔指数 = 各家份额平方之和；", "Herfindahl index = sum of squared shares; ")}${hhi > 0.25 ? `<span class="bad">${T("高于 0.25，属于“高度集中”。", "above 0.25, i.e. “highly concentrated.”")}</span>` : `<span class="ok">${T("低于 0.25，集中度不算高。", "below 0.25, not highly concentrated.")}</span>`}`);
+      lines.push(`${T("按榜单全口径：约 196 家上市公司合计约 ", "On the tracker's full count: about 196 listed companies hold about ")}${fmtNum(TRACKER_TOTAL, 0)} BTC${T("，Strategy 占 ", "; Strategy's share is ")}${tex(String.raw`\dfrac{846{,}000}{${fmtNum(TRACKER_TOTAL, 0).replace(/,/g, "{,}")}} = \mathbf{${fmtPct(mstrShare, 1).replace("%", "\\%")}}`)}${T("，按你设定的价格约值 $", ", worth about $")}${fmtBig(btcNav(TRACKER_TOTAL, st.px), 1)}${T("。", " at your price.")}`);
+      lines.push(`${tex(String.raw`\text{${T("赫芬达尔指数", "Herfindahl index")}} = \sum_{i} s_{i}^{2} = ${fmtNum(hhi, 3)}`)}${T("（", " (")}${tex(String.raw`s_{i}`)}${T(" 为各家份额）；", " = each company's share); ")}${hhi > 0.25 ? `<span class="bad">${T("高于 0.25，属于“高度集中”。", "above 0.25, i.e. “highly concentrated.”")}</span>` : `<span class="ok">${T("低于 0.25，集中度不算高。", "below 0.25, not highly concentrated.")}</span>`}`);
       const pledged = rows.filter((r) => r[8]);
       if (pledged.length) lines.push(`<span class="warn">${T("有质押或抵押的：", "With pledged coins or collateral: ")}${pledged.map((r) => r[0]).join(T("、", ", "))}${T("——熊市里这类结构最容易被迫卖币。", " — the structures most likely to force coin sales in a bear market.")}</span>`);
     } else {

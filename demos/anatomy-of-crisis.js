@@ -1,6 +1,6 @@
 // 交互演示：银行挤兑模拟器——调现金、资本、急卖折价、谣言强度、存款保险与最后贷款人，
 // 逐日看储户排队、急卖亏损吃掉资本、恐慌自我强化；同一家健康银行在“小谣言”与“大谣言”下走向两个不同结局。
-import { fmtPct, fmtUsd, clamp, rng } from "./_fin.js";
+import { fmtPct, fmtUsd, clamp, rng, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -136,8 +136,9 @@ export default function mount(root, lang) {
       insolvent: `<span class="bad">${T("急卖亏损吃光资本，银行资不抵债，被监管关闭——坏均衡。注意：最初的谣言并不需要是真的。", "Fire-sale losses have eaten all the capital; the bank is insolvent and closed — the bad equilibrium. Note the original rumor never had to be true.")}</span>`,
       illiquid: `<span class="bad">${T("能变现的东西都用完了，后面排队的人拿不到钱。", "Everything that could be turned into cash is gone; the back of the line gets nothing.")}</span>`,
     }[R.outcome];
+    const thrTex = tex(String.raw`W^{*} = C + E \times \frac{p}{1 - p}`);
     const thrLine = isFinite(R.thr) && R.thr < 1
-      ? T(`公式 W* = C + E × p/(1 − p)：取款超过存款的 ${fmtPct(R.thr, 0)}，光是急卖亏损就会让资本归零。`, `Formula W* = C + E × p/(1 − p): withdrawals above ${fmtPct(R.thr, 0)} of deposits wipe out capital through fire-sale losses alone.`)
+      ? T(`公式 ${thrTex}：取款超过存款的 ${fmtPct(R.thr, 0)}，光是急卖亏损就会让资本归零。`, `Formula ${thrTex}: withdrawals above ${fmtPct(R.thr, 0)} of deposits wipe out capital through fire-sale losses alone.`)
       : T("急卖没有折价（或资本极厚）时，理论上不存在“仅因火售而资不抵债”的临界点。", "With no fire-sale discount (or very thick capital) there is no threshold at which fire sales alone cause insolvency.");
     q("#aoc-log").innerHTML = [...lines, end, thrLine].map((l) => `<div>${l}</div>`).join("") || `<div>${end}</div>`;
     root.querySelectorAll("#aoc-presets .demo-btn").forEach((b) => b.classList.remove("active"));

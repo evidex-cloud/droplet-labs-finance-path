@@ -40,7 +40,7 @@ Two warnings up front. First, **this is a map of tendencies, not laws.** Each qu
   mechanics: `
 ### ① Two axes plus one: growth, inflation and liquidity
 
-Why these two axes? Go back to the basic formula of Stage 2.3: **asset price = future cash flows ÷ discount rate.**
+Why these two axes? Go back to the basic formula of Stage 2.3: **\\(\\text{asset price} = \\dfrac{\\text{future cash flows}}{\\text{discount rate}}\\).**
 
 - **Growth** mostly acts on the numerator. When the economy accelerates, corporate profits, tax receipts and jobs all rise. When it slows, defaults climb and profits shrink.
 - **Inflation** mostly acts on the denominator. Rising inflation forces the central bank to hike and makes investors demand more inflation compensation and a bigger term premium (Stage 4.5), so discount rates rise. Falling inflation does the reverse.
@@ -79,11 +79,15 @@ What follows are **historical tendencies, not guarantees.** Every box has counte
 <tr><td>Commodities</td><td>Middling</td><td><b>Good</b></td><td>Good (in supply shocks)</td><td>Poor</td><td>One of the sources of inflation</td></tr>
 </table>
 
-The most important hidden variable is the **stock–bond correlation.** You can compute a 60/40 portfolio's volatility with the two-asset formula from Stage 11.1. Assume stocks have 16% annual volatility and long bonds 7%:
+The most important hidden variable is the **stock–bond correlation.** You can compute a 60/40 portfolio's volatility with the two-asset formula from Stage 11.1. Assume stocks have \\(\\sigma_{1} = 16\\%\\) annual volatility and long bonds \\(\\sigma_{2} = 7\\%\\), with a stock weight of \\(w = 60\\%\\):
 
-$$ Portfolio volatility = √(w²σ₁² + (1−w)²σ₂² + 2w(1−w)ρσ₁σ₂)
-ρ = −0.3 (common in Goldilocks / deflationary busts) → 60/40 volatility ≈ 9.2%
-ρ = +0.5 (common in inflation-driven regimes) → 60/40 volatility ≈ 11.3%
+$$
+\\text{Portfolio volatility} = \\sqrt{w^{2}\\sigma_{1}^{2} + (1-w)^{2}\\sigma_{2}^{2} + 2w(1-w)\\rho\\,\\sigma_{1}\\sigma_{2}}
+\\rho = -0.3 \\;\\Rightarrow\\; \\text{60/40 volatility} \\approx 9.2\\%
+\\rho = +0.5 \\;\\Rightarrow\\; \\text{60/40 volatility} \\approx 11.3\\%
+$$
+
+\\(\\rho = -0.3\\) is common in Goldilocks and deflationary busts; \\(\\rho = +0.5\\) is common in inflation-driven regimes.
 
 **The same holdings carry about a quarter more risk just because the regime changed.** Worse, the hedge disappears exactly when you need it. That is why regime-based diversification ideas such as risk parity and "all weather" came back into discussion after 2022 (Stage 11.2).
 
@@ -96,7 +100,7 @@ The new assets have too little history, so we infer tendencies from **mechanism*
 <table class="pm">
 <tr><th>Asset</th><th>Goldilocks</th><th>Overheating</th><th>Stagflation</th><th>Deflationary bust</th><th>Most sensitive axis</th></tr>
 <tr><td>Bitcoin</td><td><b>Good</b></td><td>Middling (depends on the Fed)</td><td><b>Poor</b> (2022)</td><td>Crashes first, then follows the liquidity response (2020)</td><td>Liquidity + real rates</td></tr>
-<tr><td>DAT common</td><td><b>Best</b> (amplification + mNAV premium)</td><td>Middling</td><td><b>Worst</b> (amplification + mNAV compression)</td><td>Poor</td><td>Bitcoin × amplification × open capital markets</td></tr>
+<tr><td>DAT common</td><td><b>Best</b> (amplification + mNAV premium)</td><td>Middling</td><td><b>Worst</b> (amplification + mNAV compression)</td><td>Poor</td><td>\\(\\text{bitcoin} \\times \\text{amplification} \\times \\text{open capital markets}\\)</td></tr>
 <tr><td>DAT fixed-rate preferreds</td><td>Good (spreads tighten)</td><td>Poor (rates rise)</td><td><b>Poor</b> (rates and credit both hit)</td><td>Middling (rates fall, credit worsens)</td><td>Long-end rates + BTC Rating</td></tr>
 <tr><td>DAT variable-rate preferreds (STRC/SATA type)</td><td>Good</td><td>Middling (resets offset rates)</td><td>Poor (credit still hurts)</td><td>Middling</td><td>Credit + whether management resets in time</td></tr>
 <tr><td>Stablecoin / tokenized T-bill yield</td><td>Middling</td><td><b>Good</b> (short rates rise)</td><td>Good</td><td>Poor (rates drop to zero)</td><td>Policy rate</td></tr>
@@ -105,8 +109,8 @@ The new assets have too little history, so we infer tendencies from **mechanism*
 Some explanation:
 
 - **Bitcoin** multiplied several times over in the liquidity flood of 2020–2021 and fell about 77% in the stagflation-plus-QT of 2022. In 2026 it gave another demonstration: an oil shock pushed inflation up, the Fed hiked, and bitcoin fell from about $126,000 in October 2025 to about $58,000 at the end of June 2026. Supporters argue that once the regime shifts from "central bank tightening" to "fiscal dominance" (Stage 9.4), bitcoin will behave like gold in the 1970s. That is a testable claim, not an established fact.
-- **DAT common stock** is "bitcoin × amplification × capital-market mood." In Goldilocks, the mNAV premium turns issuance into an accretive flywheel (Stage 16.7). In stagflation, the coin price, the amplification and mNAV compression all push down at once (Stage 18.3). In late September 2026, 16 of the 20 largest DATs traded below 1x mNAV, which is a product of exactly this kind of environment.
-- **DAT preferreds** face two knives: long-end rates (a perpetual's duration is roughly 1 ÷ yield, Stage 18.1) and bitcoin credit (BTC Rating, Stage 16.5). Overheating wields the first, a deflationary bust the second, and **stagflation both at once.** A variable-rate design can parry the first knife but not the second.
+- **DAT common stock** is \\(\\text{bitcoin} \\times \\text{amplification} \\times \\text{capital-market mood}\\). In Goldilocks, the mNAV premium turns issuance into an accretive flywheel (Stage 16.7). In stagflation, the coin price, the amplification and mNAV compression all push down at once (Stage 18.3). In late September 2026, 16 of the 20 largest DATs traded below 1x mNAV, which is a product of exactly this kind of environment.
+- **DAT preferreds** face two knives: long-end rates (a perpetual's duration is roughly \\(\\dfrac{1}{\\text{yield}}\\), Stage 18.1) and bitcoin credit (BTC Rating, Stage 16.5). Overheating wields the first, a deflationary bust the second, and **stagflation both at once.** A variable-rate design can parry the first knife but not the second.
 - **On-chain dollar yield.** Stablecoins pay holders nothing (the GENIUS Act), but issuers' reserve income and the yield on tokenized T-bills (Stage 14.2) both follow short-term rates. The higher rates go, the more attractive "on-chain cash" becomes, and the harder it competes with bank deposits for money (Stage 14.5).
 
 <figure><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The four-box regime map: who is most comfortable where</text><rect x="80" y="40" width="250" height="125" fill="var(--green-soft)" stroke="var(--line)"/><rect x="330" y="40" width="250" height="125" fill="var(--orange-soft)" stroke="var(--line)"/><rect x="80" y="165" width="250" height="125" fill="var(--blue-soft)" stroke="var(--line)"/><rect x="330" y="165" width="250" height="125" fill="var(--red-soft)" stroke="var(--line)"/><text x="205" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Goldilocks</text><text x="205" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">Stocks · bitcoin · DAT common</text><text x="205" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">Fixed-rate prefs (spreads tighten)</text><text x="205" y="118" text-anchor="middle" font-size="10" fill="var(--muted)">e.g. late 1990s, 2010s</text><text x="455" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Overheating / reflation</text><text x="455" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">Commodities · cash · on-chain dollar yield</text><text x="455" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">Long bonds, fixed-rate prefs squeezed</text><text x="455" y="118" text-anchor="middle" font-size="10" fill="var(--muted)">e.g. 2021</text><text x="205" y="187" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Deflationary bust</text><text x="205" y="207" text-anchor="middle" font-size="10.5" fill="var(--muted)">Long Treasuries best · gold decent</text><text x="205" y="223" text-anchor="middle" font-size="10.5" fill="var(--muted)">Bitcoin falls first, then follows easing</text><text x="205" y="243" text-anchor="middle" font-size="10" fill="var(--muted)">e.g. 2008, March 2020</text><text x="455" y="187" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Stagflation</text><text x="455" y="207" text-anchor="middle" font-size="10.5" fill="var(--muted)">Cash · gold (when real rates &lt; 0)</text><text x="455" y="223" text-anchor="middle" font-size="10.5" fill="var(--muted)">Stocks and bonds fall · DAT common worst</text><text x="455" y="243" text-anchor="middle" font-size="10" fill="var(--muted)">e.g. 1970s, 2022</text><line x1="80" y1="305" x2="580" y2="305" stroke="var(--ink)" stroke-width="1.2"/><polygon points="580,301 580,309 588,305" fill="var(--ink)"/><text x="330" y="324" text-anchor="middle" font-size="11" fill="var(--muted)">Inflation: below expectations → above expectations</text><line x1="62" y1="290" x2="62" y2="40" stroke="var(--ink)" stroke-width="1.2"/><polygon points="58,40 66,40 62,32" fill="var(--ink)"/><text x="40" y="170" text-anchor="middle" font-size="11" fill="var(--muted)" transform="rotate(-90 40 170)">Growth: slowing → accelerating</text><circle cx="400" cy="140" r="8" fill="var(--btc)" stroke="var(--ink)"/><text x="414" y="144" font-size="10.5" font-weight="700" fill="var(--ink)">Sep 2026 (this course's view)</text><text x="414" y="158" font-size="10" fill="var(--muted)">Near overheating, tilting to stagflation</text></svg><figcaption>Two axes draw four boxes; liquidity is the third axis (not drawn) and sets the "volume" of risk assets in each box. The orange dot is this course's judgment about September 2026, not an official finding.</figcaption></figure>
@@ -169,13 +173,13 @@ Sensible people do not buy clothes for only one season, and they do not throw ou
       q: "Which quadrant is least friendly to a DAT's fixed-rate preferred?",
       options: ["Goldilocks", "Overheating", "Deflationary bust", "Stagflation"],
       answer: 3,
-      explain: "**In stagflation both knives fall at once.** Rising rates push down a perpetual's price (duration about 1 ÷ yield), while weaker growth and risk assets drag bitcoin and the BTC Rating lower, widening credit spreads.",
+      explain: "**In stagflation both knives fall at once.** Rising rates push down a perpetual's price (duration about \\(\\dfrac{1}{\\text{yield}}\\)), while weaker growth and risk assets drag bitcoin and the BTC Rating lower, widening credit spreads.",
     },
     {
       q: "With a 10-year nominal yield of about 5.17% and inflation of about 3.4%, what real yield does the Fisher equation give?",
       options: ["About 1.7%", "About 8.6%", "About −1.7%", "About 3.4%"],
       answer: 0,
-      explain: "**Real rate = (1 + nominal) ÷ (1 + inflation) − 1** = (1.0517 ÷ 1.034) − 1 ≈ 1.7%. Positive, rising real rates are one reason gold and bitcoin struggled in 2026.",
+      explain: "**\\(\\text{Real rate} = \\dfrac{1 + \\text{nominal}}{1 + \\text{inflation}} - 1\\)** \\(= \\dfrac{1.0517}{1.034} - 1 \\approx 1.7\\%\\). Positive, rising real rates are one reason gold and bitcoin struggled in 2026.",
     },
     {
       q: "Which statement about liquidity, the third axis, is most accurate?",

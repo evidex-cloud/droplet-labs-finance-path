@@ -2,8 +2,10 @@
 // alpha(t) = alpha0 ÷ (1 + 模仿者数)；拥挤度越高，“同时出口”的踩踏冲击越频繁、越深。
 // 比较三种投资者：先行者（一直持有）、跟风者（在扩散中点入场）、守纪律者（拥挤度超过阈值就降仓）。
 // 用种子随机数保证可复现；统计走 _fin.js（rng / randn / mean / stdev / sharpe / maxDrawdown）。
-import { rng, randn, mean, stdev, sharpe, maxDrawdown, fmtPct, fmtNum } from "./_fin.js";
+import { rng, randn, mean, stdev, sharpe, maxDrawdown, fmtPct, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -114,7 +116,7 @@ export default function mount(root, lang) {
       ["var(--orange)", T("先行者（一直持有）", "Pioneer (holds throughout)")],
       ["var(--red)", T("跟风者（中点入场）", "Follower (enters at midpoint)")],
       ["var(--green)", T("守纪律者（拥挤时降仓）", "Disciplined (cuts when crowded)")],
-      ["var(--blue)", T("当期 alpha（1 + 3×alpha，示意刻度）", "Current alpha (1 + 3×alpha, display scale)")],
+      ["var(--blue)", T("当期 alpha（放大 3 倍再上移 1 的示意刻度）", "Current alpha (scaled 3-fold and shifted up by 1, display scale)")],
     ]);
 
     const cell = (name, s, cls) => `<div class="cmp-cell ${cls}"><h5>${name}</h5>
@@ -125,7 +127,7 @@ export default function mount(root, lang) {
     $("#aim-cmp").innerHTML = cell(T("先行者", "Pioneer"), pioneer, "") + cell(T("跟风者", "Follower"), follower, "cold") + cell(T("守纪律者", "Disciplined"), disc, "hl");
 
     const L = [];
-    L.push(`${T("alpha 从", "Alpha falls from")} ${fmtPct(p.a0 / 100, 1)} ${T("衰减到第 10 年的", "to")} ${fmtPct(alpha(YEARS), 2)}${T("（= 初始 ÷ (1 + ", " by year 10 (= initial ÷ (1 + ")}${fmtNum(N(YEARS), 1)}${T(" 个模仿者)）；半衰期约 ", " imitators)); half-life about ")}${fmtNum(half, 1)}${T(" 年。", " years.")}`);
+    L.push(`${T("alpha 从", "Alpha falls from")} ${fmtPct(p.a0 / 100, 1)} ${T("衰减到第 10 年的", "by year 10 to")} ${tex(String.raw`\alpha_{10} = \dfrac{\alpha_{\text{${T("初始", "initial")}}}}{1 + N_{10}} = \dfrac{${texv(fmtPct(p.a0 / 100, 1))}}{1 + ${fmtNum(N(YEARS), 1)}} = \mathbf{${texv(fmtPct(alpha(YEARS), 2))}}`)}${T("（", " (")}${fmtNum(N(YEARS), 1)}${T(" 个模仿者）；半衰期约 ", " imitators); half-life about ")}${fmtNum(half, 1)}${T(" 年。", " years.")}`);
     if (follower.ann < pioneer.ann) L.push(`<span class="bad">${T("跟风者的年化回报", "The follower's annual return")} ${fmtPct(follower.ann, 1)} ${T("低于先行者的", "trails the pioneer's")} ${fmtPct(pioneer.ann, 1)}${T("：入场时优势已被分光，却承担了全部拥挤风险。", ": it arrived after the edge was shared away, yet carried all the crowding risk.")}</span>`);
     if (disc.mdd > pioneer.mdd + 0.005) L.push(`<span class="ok">${T("守纪律者的最大回撤", "The disciplined investor's max drawdown")} ${fmtPct(disc.mdd, 1)} ${T("小于先行者的", "is smaller than the pioneer's")} ${fmtPct(pioneer.mdd, 1)}${T("——在拥挤时降仓，是一种“管住自己”的优势（阶段 11.5）。", " — cutting exposure when crowded is an edge of self-control (Stage 11.5).")}</span>`);
     else L.push(`${T("这条路径上降仓没有明显减少回撤——拥挤冲击是概率事件，换几条随机路径看看分布。", "On this path, de-risking didn't cut the drawdown much — crowded exits are probabilistic, so try other paths to see the distribution.")}`);

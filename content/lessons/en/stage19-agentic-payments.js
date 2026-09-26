@@ -15,7 +15,7 @@ Imagine you hire a capable intern to do some market research. The intern needs t
 An AI agent is an intern who never sleeps and does dozens of things a second. But it faces three problems the intern doesn't:
 
 - **It isn't a person.** It has no ID, can't open a bank account and can't sign a card agreement. The existing payment system's "know your customer" (KYC) rules are built for people and companies.
-- **What it buys is tiny.** One API call might be worth $0.001, one article $0.10. Card pricing is usually "a fixed fee plus a percentage" (a common illustrative figure is $0.30 plus about 3%), so **on a $0.10 payment, the fee is more than three times the payment.**
+- **What it buys is tiny.** One API call might be worth $0.001, one article $0.10. Card pricing is usually "a fixed fee plus a percentage" (a common illustrative figure is $0.30 plus about 3%), so **on a $0.10 payment, the fee is more than three times the payment** (\\(\\dfrac{0.30 + 3\\% \\times 0.10}{0.10} \\approx 3.03\\)).
 - **It's too fast and too frequent.** It may pay thousands of times a day, and any "settles in two days" or "the other side needs a human to confirm" stops it cold.
 
 So agents need **programmable money**: money a program can hold and send directly, that settles around the clock, with fees low enough to pay a fraction of a cent, and with rules like "per-payment cap, daily budget, allowlist" built in. **Stablecoins** (Stage 13.2) tick most of those boxes. A stablecoin is a dollar liability backed by short-term Treasuries and cash, and a transfer on a blockchain reaches final settlement in seconds to minutes (compare the T+1 of Stage 8.2).
@@ -40,7 +40,7 @@ This lesson sits on **Idea ③ Liquidity & trust (the plumbing).** Money is a tr
 
 Card networks were designed for "a person buying something in a shop." Each transaction passes through an issuing bank, an acquiring bank and the network; pricing is typically **a fixed fee plus a percentage**, with chargeback protection and one to two days to settle funds. For typical human purchases of tens of dollars, that's reasonable. For machine micropayments, it's fatal.
 
-Run the numbers with an illustrative rate of $0.30 + 2.9% (a common online-acquiring quote; real merchant pricing varies):
+Run the numbers with an illustrative rate of \\(\\text{card fee} = \\$0.30 + 2.9\\% \\times \\text{payment}\\) (a common online-acquiring quote; real merchant pricing varies):
 
 <table>
 <tr><th>Payment</th><th>Card fee (illustrative)</th><th>Fee rate</th><th>Low-fee on-chain stablecoin (assume $0.002 per transfer)</th></tr>
@@ -50,7 +50,7 @@ Run the numbers with an illustrative rate of $0.30 + 2.9% (a common online-acqui
 <tr><td>$0.01</td><td>$0.30</td><td>about 3,000%</td><td>20%</td></tr>
 </table>
 
-**For the card fee to fall below 5% of the payment, the payment must be at least about $14** (0.30 ÷ (5% − 2.9%) ≈ 14.3). With a $0.002 on-chain transfer, anything above $0.04 qualifies. That's why the internet has had only two ways to charge: **subscriptions** (one big charge a month) and **advertising** (no charge at all). The pay-per-use micropayment dream is decades old, and it has always been stuck at the fixed-fee gate.
+**For the card fee to fall below 5% of the payment, the payment must be at least about $14** (\\(\\dfrac{0.30}{5\\% - 2.9\\%} \\approx 14.3\\)). With a $0.002 on-chain transfer, anything above $0.04 qualifies (\\(\\dfrac{0.002}{5\\%} = 0.04\\)). That's why the internet has had only two ways to charge: **subscriptions** (one big charge a month) and **advertising** (no charge at all). The pay-per-use micropayment dream is decades old, and it has always been stuck at the fixed-fee gate.
 
 Three more mismatches: **identity** (an agent isn't a legal person and can't sign a card agreement); **speed** (T+1 or T+2 settlement is far too slow for transactions that complete in a second, Stage 8.2); and **irreversibility** (on-chain transfers have no chargebacks — good for merchants, bad for a payer who gets tricked).
 
@@ -92,7 +92,10 @@ Give an agent a wallet and you give it risk. Some new questions:
 
 So the **control layer** matters more than the payment layer. A decent agent wallet needs at least:
 
-$$ per-payment cap × daily budget × payee allowlist × abnormal-frequency circuit breaker × human-review threshold
+$$
+\\text{per-payment cap} \\times \\text{daily budget} \\times \\text{payee allowlist}
+{} \\times \\text{abnormal-frequency circuit breaker} \\times \\text{human-review threshold}
+$$
 
 That's the same thinking as the liquidation thresholds of DeFi lending in Stage 13.4 and the position sizing of Stage 11.4: **write the rules in advance so the system stops itself before it runs away.**
 
@@ -100,7 +103,7 @@ That's the same thinking as the liquidation thresholds of DeFi lending in Stage 
 
 If an agent economy really takes off, how does money move? Go back to Idea ② and look at each balance sheet:
 
-- **Stablecoin issuers.** Each $1 of stablecoin is backed by about $1 of short-term Treasuries, cash or repo (the GENIUS reserve rules). The issuer earns the interest; **holders, by law, get none.** With the 3-month bill at about 4.24% (September 25, 2026), $312 billion of reserves throws off roughly $13 billion a year of interest income (an illustrative calculation). The pocket money sitting in agent wallets is part of that float.
+- **Stablecoin issuers.** Each $1 of stablecoin is backed by about $1 of short-term Treasuries, cash or repo (the GENIUS reserve rules). The issuer earns the interest; **holders, by law, get none.** With the 3-month bill at about 4.24% (September 25, 2026), $312 billion of reserves throws off roughly $13 billion a year of interest income (an illustrative calculation: \\(\\$312\\text{B} \\times 4.24\\% \\approx \\$13.2\\text{B}\\)). The pocket money sitting in agent wallets is part of that float.
 - **The Treasury market.** Stablecoin reserves are a captive buyer of T-bills (the issuance-mix debate of Stage 3.3). But the Kansas City Fed points out that stablecoins add Treasury demand **only by reducing demand for other assets, such as bank deposits.**
 - **Banks.** If firms and households move working capital into stablecoins in agent wallets, bank deposits shrink and so does banks' lending capacity (Stage 1.2's "loans create deposits"). That's exactly why banks are launching **deposit tokens** — to keep programmability inside the banking system (Stage 14.5).
 - **Where idle balances go.** Stablecoins pay no interest, so an agent's idle cash has a reason to sit in **tokenized Treasury funds** (Stage 14.2) — interest-bearing on-chain assets — and be redeemed when a payment is due. Tokenized money funds could become "the machines' savings accounts."
@@ -130,7 +133,7 @@ The same picture shows the risks. If someone sets up a fake booth by the roadsid
 
   quiz: [
     {
-      q: "With an illustrative card rate of \"$0.30 + 2.9%,\" roughly how large must a payment be for the card fee to fall below 5% of it?",
+      q: "With an illustrative card rate of \"\\(\\$0.30 + 2.9\\%\\),\" roughly how large must a payment be for the card fee to fall below 5% of it?",
       options: [
         "About $1",
         "About $5",
@@ -138,7 +141,7 @@ The same picture shows the risks. If someone sets up a fake booth by the roadsid
         "About $100",
       ],
       answer: 2,
-      explain: "0.30 + 0.029p ≤ 0.05p → p ≥ 0.30 ÷ 0.021 ≈ **$14.3.** The fixed fee is the micropayment killer.",
+      explain: "\\(0.30 + 0.029p \\le 0.05p \\;\\Rightarrow\\; p \\ge \\dfrac{0.30}{0.021} \\approx \\mathbf{\\$14.3}\\). The fixed fee is the micropayment killer.",
     },
     {
       q: "In the x402 flow, which HTTP status code does the server use to tell the agent \"this resource requires payment, and here's the price\"?",

@@ -1,8 +1,10 @@
 // 交互演示：ATM 执行台——橙子公司用 ATM 卖股：调 mNAV、卖出规模、成交量参与率、佣金与波动率，
 // 看执行天数、价格冲击（平方根律）、到手净价、买到多少 BTC、每股比特币变化；对照包销增发；
 // 还可以切换“卖股买币”与“卖股换美元储备”（Strategy 2025-12 与 2026-08 的做法）。
-import { issueAndBuy, monthsCovered, fmtPct, fmtNum, fmtUsd, fmtBig } from "./_fin.js";
+import { issueAndBuy, monthsCovered, fmtPct, fmtNum, fmtUsd, fmtBig, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -21,7 +23,7 @@ export default function mount(root, lang) {
       <div class="demo-head">${T("💧 ATM 执行台：用滴管卖股，算清每一滴的成本", "💧 ATM execution desk: selling stock with an eyedropper, and what each drop costs")}</div>
       <div class="demo-grid">
         <div class="demo-block">
-          <label class="demo-label">${T("mNAV（股价 ÷ 每股比特币净值 10 美元）", "mNAV (share price ÷ $10 of bitcoin per share)")}${T("：", ": ")}<b id="atm-mnav-v"></b></label>
+          <label class="demo-label">${T(`mNAV（${tex(String.raw`\text{股价} \div \text{每股比特币净值 } 10\ \text{美元}`)}）`, `mNAV (${tex(String.raw`\text{share price} \div \$10\ \text{of bitcoin per share}`)})`)}${T("：", ": ")}<b id="atm-mnav-v"></b></label>
           <input class="demo-slider" id="atm-mnav" type="range" min="0.8" max="3" step="0.05" value="${st.mnav}" />
           <label class="demo-label">${T("卖出股数（百万股）", "Shares to sell (millions)")}${T("：", ": ")}<b id="atm-sell-v"></b></label>
           <input class="demo-slider" id="atm-sell" type="range" min="1" max="30" step="1" value="${st.sell}" />
@@ -125,8 +127,8 @@ export default function mount(root, lang) {
     } else {
       lines.push(`<span class="bad">${T("稀释：到手净价低于每股比特币净值 10 美元，每卖一股，老股东分到的比特币就少一点。", "Dilutive: the net price is below the $10 of bitcoin per share, so every share sold leaves existing holders with a little less bitcoin.")}</span>`);
     }
-    lines.push(`${T("卖完", "Selling")} ${st.sell}M ${T("股需要", "shares takes")} ${days} ${T("个交易日；冲击", "trading days; impact")} ${fmtPct(impact, 2)} + ${T("佣金", "commission")} ${fmtPct(comm, 2)} → ${T("盈亏平衡 mNAV", "breakeven mNAV")} ${fmtNum(beATM, 3)}x${T("。", ".")}`);
-    if (st.part >= 25) lines.push(`<span class="warn">${T("参与率很高：卖得快，但冲击随 √参与率上升，还可能把“有人在大量卖”的信号暴露给市场。", "A high participation rate: fast, but impact grows with √participation, and heavy selling may become visible to the market.")}</span>`);
+    lines.push(`${T("卖完", "Selling")} ${st.sell}M ${T("股需要", "shares takes")} ${days} ${T("个交易日；冲击", "trading days; impact")} ${fmtPct(impact, 2)}${T("、佣金", ", commission")} ${fmtPct(comm, 2)} → ${tex(String.raw`\mathrm{mNAV}_{\text{${T("盈亏平衡", "breakeven")}}} = \dfrac{1}{(1 - ${texv(fmtPct(impact, 2))})(1 - ${texv(fmtPct(comm, 2))})} = ${texv(fmtNum(beATM, 3))}\times`)}${T("。", ".")}`);
+    if (st.part >= 25) lines.push(`<span class="warn">${T(`参与率很高：卖得快，但冲击随 ${tex(String.raw`\sqrt{\text{参与率}}`)} 上升，还可能把“有人在大量卖”的信号暴露给市场。`, `A high participation rate: fast, but impact grows with ${tex(String.raw`\sqrt{\text{participation}}`)}, and heavy selling may become visible to the market.`)}</span>`);
     if (chg > uwChg) lines.push(`${T("ATM 比包销多出", "The ATM beats the underwritten deal by")} ${fmtPct(chg - uwChg, 2)} ${T("的每股比特币——代价是慢。", "of BTC per share; the price is speed.")}`);
     else lines.push(`${T("这组参数下包销反而更好：冲击成本已经超过一次性折扣。", "With these settings the underwritten deal is better: impact costs now exceed the one-time discount.")}`);
     q("#atm-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

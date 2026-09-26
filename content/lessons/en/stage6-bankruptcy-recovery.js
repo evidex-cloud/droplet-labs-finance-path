@@ -12,8 +12,8 @@ export default {
   intuition: `
 Maple Manufacturing from Stage 6.1 finally can't go on. One question confronts everyone: **do we break the factory up and sell it, or keep it running?**
 
-- **Break it up (Chapter 7 liquidation).** The equipment, buildings and inventory are auctioned piece by piece. Nobody wants second-hand machines, and inventory goes at clearance prices — say it all fetches only **$35M**. Take off $3M of bankruptcy costs and $32M remains: the secured loan takes its full $30M, the senior bonds get only $2M (**an 8% recovery**), and everyone else gets nothing.
-- **Keep it running (Chapter 11 reorganization).** The plant still runs and customers still place orders; as a living business it is worth **$50M**. Take off $3M of costs and $47M remains: the secured loan takes its full $30M, and the senior bonds receive $17M of value (**a 68% recovery**) — not in cash, but as **shares in the reorganized company.** The old subordinated notes, preferred and common are all wiped out.
+- **Break it up (Chapter 7 liquidation).** The equipment, buildings and inventory are auctioned piece by piece. Nobody wants second-hand machines, and inventory goes at clearance prices — say it all fetches only **$35M**. Take off $3M of bankruptcy costs and \\(\\$35\\text{M} - \\$3\\text{M} = \\$32\\text{M}\\) remains: the secured loan takes its full $30M, the senior bonds get only \\(\\$32\\text{M} - \\$30\\text{M} = \\$2\\text{M}\\) (**a recovery of \\(2 \\div 25 = 8\\%\\)**), and everyone else gets nothing.
+- **Keep it running (Chapter 11 reorganization).** The plant still runs and customers still place orders; as a living business it is worth **$50M**. Take off $3M of costs and \\(\\$50\\text{M} - \\$3\\text{M} = \\$47\\text{M}\\) remains: the secured loan takes its full $30M, and the senior bonds receive \\(\\$47\\text{M} - \\$30\\text{M} = \\$17\\text{M}\\) of value (**a recovery of \\(17 \\div 25 = 68\\%\\)**) — not in cash, but as **shares in the reorganized company.** The old subordinated notes, preferred and common are all wiped out.
 
 Same company, same assets, and **the senior bonds' recovery goes from 8% to 68%** depending only on whether the company is dismantled or survives. That is why modern bankruptcy law isn't focused on punishing debtors; it is focused on **preserving the extra value a living business has over a pile of parts.**
 
@@ -52,7 +52,7 @@ Chapter 11 has several key mechanisms.
 - **The plan and the vote.** The company proposes a plan and creditors vote in classes. An impaired class accepts if holders of at least two-thirds in amount and more than half in number vote yes; under certain conditions the court can confirm the plan over a dissenting class (a "cramdown").
 - **Section 363 sales.** The company can also sell the whole business or its core assets to a buyer inside Chapter 11 and then distribute the proceeds in order. General Motors and Chrysler both took this route in 2009.
 
-**The whole reason Chapter 11 exists**: a company's value as a living business (going-concern value) is often far greater than what its pieces fetch separately (liquidation value). In the Maple example the difference is $15M — and it decides whether the senior bonds recover 8% or 68%.
+**The whole reason Chapter 11 exists**: a company's value as a living business (going-concern value) is often far greater than what its pieces fetch separately (liquidation value). In the Maple example the difference is \\(\\$50\\text{M} - \\$35\\text{M} = \\$15\\text{M}\\) — and it decides whether the senior bonds recover 8% or 68%.
 
 ### ② The absolute priority rule: the order on paper
 
@@ -62,7 +62,7 @@ The rule for dividing value is the **absolute priority rule (APR)**: **until a c
 
 A few details decide real-world recoveries.
 
-- **Secured claims are capped at the value of the collateral.** If the bank's lien is on a plant worth $20M but the loan is $30M, the $10M difference becomes an **unsecured deficiency claim** that queues alongside the senior bonds.
+- **Secured claims are capped at the value of the collateral.** If the bank's lien is on a plant worth $20M but the loan is $30M, the \\(\\$30\\text{M} - \\$20\\text{M} = \\$10\\text{M}\\) difference becomes an **unsecured deficiency claim** that queues alongside the senior bonds.
 - **Administrative costs cut in line.** Lawyers, financial advisers and money lent during the case all rank ahead of general unsecured claims. Professional fees in large cases can run into hundreds of millions of dollars — the origin of the "bankruptcy costs" slider in Stage 6.1's demo.
 - **Senior bonds share a class with suppliers.** Ordinary corporate bonds are usually "general unsecured claims" in bankruptcy, on a par with unpaid suppliers and contract-damage claims. "Senior" only means senior to the subordinated debt that contractually agreed to stand behind it.
 - **The fulcrum security.** Wherever the value runs out, that class catches the new equity. The core homework of distressed investors is working out which class will be the fulcrum — buy the fulcrum and you are buying control of the reorganized company at a discount.
@@ -76,7 +76,7 @@ The absolute priority rule is a rule on paper, and in practice it often bends.
 - **Politics and the public interest.** In Chrysler's 2009 reorganization, some secured lenders objected fiercely to a deal that gave them roughly 29 cents on the dollar while a union retiree health trust received a large equity stake. It is a widely cited example of how, in large and politically sensitive cases, the order on paper isn't the whole story.
 - **Time.** Large Chapter 11 cases often last from several months to a year or two, during which creditors receive nothing and asset values keep moving. **Recoveries have to be discounted for time**: "60% eventually" is worth much less today if it takes two years to arrive.
 
-The conclusion: **seniority decides who has the right to be paid; valuation, negotiation and time decide how much is finally paid.** That is why the "loss given default" term in Stage 4.6's expected loss = probability of default × loss given default always carries a lot of uncertainty.
+The conclusion: **seniority decides who has the right to be paid; valuation, negotiation and time decide how much is finally paid.** That is why the "loss given default" term in Stage 4.6's \\(\\text{expected loss} = \\text{probability of default} \\times \\text{loss given default}\\) always carries a lot of uncertainty.
 
 ### ④ Recovery by floor: what each layer has historically recovered
 
@@ -157,7 +157,7 @@ A bitcoin treasury company is **a ship loaded with gold bars.** The ship itself 
         "0% under both",
       ],
       answer: 1,
-      explain: "Reorganization: 50 − 3 = 47; secured takes 30; senior bonds get 17 / 25 = **68%** (as new equity). Liquidation: 35 − 3 = 32; senior bonds get only 2 / 25 = **8%.** The difference is going-concern value.",
+      explain: "Reorganization: \\(50 - 3 = 47\\); secured takes 30; senior bonds get \\(17 / 25 = \\mathbf{68\\%}\\) (as new equity). Liquidation: \\(35 - 3 = 32\\); senior bonds get only \\(2 / 25 = \\mathbf{8\\%}\\). The difference is going-concern value.",
     },
     {
       q: "What is the \"fulcrum security\"?",

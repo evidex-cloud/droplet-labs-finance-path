@@ -51,7 +51,7 @@ A smart contract is a program you can't patch after the fact. The common bug fam
 - **Access-control errors.** A function meant only for an administrator turns out to be callable by anyone.
 - **Economic-logic exploits.** The code runs as designed, but the design itself can be gamed. A common example borrows an enormous flash loan within one transaction to distort some price or some voting power.
 
-**Audits reduce risk; they don't remove it.** Balancer had been audited many times and had run for years, and it still broke. In practice the more useful signal is **time battle-tested × value locked**. A contract that has run for years with billions of dollars at stake has effectively been under a live bug bounty the whole time. Conversely, **new protocols, new chains and new code** are where incidents cluster.
+**Audits reduce risk; they don't remove it.** Balancer had been audited many times and had run for years, and it still broke. In practice the more useful signal is **\\(\\text{time battle-tested} \\times \\text{value locked}\\)**. A contract that has run for years with billions of dollars at stake has effectively been under a live bug bounty the whole time. Conversely, **new protocols, new chains and new code** are where incidents cluster.
 
 An often-overlooked issue is **upgradeability**. Many protocols keep the power to upgrade their contracts so they can fix bugs. That means you're trusting not just today's code but **the handful of people who can change it**. For any protocol, ask who holds the upgrade key. Is it a single private key? A multisig, say 3 of 5 signers? Or must changes pass a public vote and then wait out a **timelock** that gives users time to leave?
 
@@ -119,12 +119,12 @@ Put it all into a scorecard. The numbers are illustrative, meant to train a way 
 </table>
 
 $$
-Annual survival = (1 − p contract) × (1 − p oracle) × (1 − p governance) × (1 − p bridge) × (1 − p peg) × …
-Expected loss = (1 − annual survival) × loss given failure
-Required yield ≥ T-bill yield + expected loss + risk premium
+\\begin{aligned} \\text{Annual survival} = {} & (1 - p_{\\text{contract}}) \\times (1 - p_{\\text{oracle}}) \\times (1 - p_{\\text{governance}}) \\\\ & \\times (1 - p_{\\text{bridge}}) \\times (1 - p_{\\text{peg}}) \\times \\cdots \\end{aligned}
+\\text{Expected loss} = (1 - \\text{annual survival}) \\times \\text{loss given failure}
+\\text{Required yield} \\ge \\text{T-bill yield} + \\text{expected loss} + \\text{risk premium}
 $$
 
-An example: a mature contract at 1%, a multi-source oracle at 1%, a multisig with timelock at 1%, dependence on one bridge at 3%, a fiat-reserved stablecoin at 1%. Survival ≈ 0.99 × 0.99 × 0.99 × 0.97 × 0.99 ≈ 93.2%, so the chance of an incident within a year is about 6.8%. With a 50% loss on failure, expected loss is about 3.4%. **A 7% headline yield minus 3.4% leaves about 3.6%, already below the 4.24% T-bill.** One extra bridge turned an attractive-looking yield into a bad trade.
+An example: a mature contract at 1%, a multi-source oracle at 1%, a multisig with timelock at 1%, dependence on one bridge at 3%, a fiat-reserved stablecoin at 1%. \\(\\text{Survival} \\approx 0.99 \\times 0.99 \\times 0.99 \\times 0.97 \\times 0.99 \\approx 93.2\\%\\), so the chance of an incident within a year is about \\(1 - 93.2\\% = 6.8\\%\\). With a 50% loss on failure, expected loss is about \\(6.8\\% \\times 50\\% \\approx 3.4\\%\\). **A 7% headline yield minus 3.4% leaves about 3.6%, already below the 4.24% T-bill.** One extra bridge turned an attractive-looking yield into a bad trade.
 
 That closes Stage 13 and sets up what follows. Stage 14.4 covers the legal wrappers and limits of tokenized assets, where moving real-world assets on-chain raises the same question of where the trust went. In the DAT focus tier, the ten-question checklist of Stage 18.6 applies this same way of thinking to a listed company whose entire capital structure rests on bitcoin.
 `,
@@ -148,7 +148,7 @@ So before stepping onto a DeFi bridge, count its sections, and for each one ask 
     "**\"I only deposited USDC and never touched the exotic tokens, so I'm unaffected.\"** If the lending protocol you deposit into accepts some receipt token as collateral, you carry that token's risk indirectly. After KelpDAO's bridge was breached in April 2026, stolen rsETH left Aave with bad debt, a risk that landed on depositors who never held rsETH.",
     "**\"DeFi is decentralized, so nobody can freeze funds or change outcomes.\"** Stablecoin issuers can freeze addresses (the GENIUS Act actually requires the capability). Admins of upgradeable contracts can change the code. Validators on some chains can coordinate to freeze funds: about $162 million was frozen after the Cetus exploit in May 2025. Decentralization is a matter of degree, and you have to check it layer by layer.",
     "**\"Everything on-chain is transparent, so every risk is visible.\"** Code and balances are transparent, but attackers often see the bug first. Off-chain custodians, fund managers and legal arrangements aren't transparent (see Stream Finance in November 2025). And transparency speeds up runs, because everyone sees the bad debt at the same moment and leaves at the same moment.",
-    "**\"A few 1% risks don't add up to much.\"** Risks multiply. Six layers at 1% each give about a 5.9% annual chance of an incident, and adding a 3% bridge takes it close to 9%. Multiply by the loss on failure and the expected loss is often enough to wipe out a DeFi product's entire premium over T-bills.",
+    "**\"A few 1% risks don't add up to much.\"** Risks multiply. Six layers at 1% each give about a \\(1 - 0.99^{6} \\approx 5.9\\%\\) annual chance of an incident, and adding a 3% bridge takes it close to 9%. Multiply by the loss on failure and the expected loss is often enough to wipe out a DeFi product's entire premium over T-bills.",
   ],
 
   quiz: [
@@ -191,10 +191,10 @@ So before stepping onto a DeFi bridge, count its sections, and for each one ask 
         "About 6.5% after expected loss, clearly better than T-bills",
         "Expected loss is zero because each probability is small",
         "About 5.5% after expected loss, still better than T-bills",
-        "Survival ≈ 93%, expected loss ≈ 3.4%, leaving about 3.6%, already below T-bills",
+        "Survival \\(\\approx 93\\%\\), expected loss \\(\\approx 3.4\\%\\), leaving about 3.6%, already below T-bills",
       ],
       answer: 3,
-      explain: "Survival = 0.99⁴ × 0.97 ≈ 93.2%; failure odds ≈ 6.8%; × 50% ≈ **3.4%**; 7% − 3.4% ≈ 3.6% < 4.24%. Risks **multiply**; they aren't set by the strongest layer.",
+      explain: "\\(\\text{Survival} = 0.99^{4} \\times 0.97 \\approx 93.2\\%\\); \\(\\text{failure odds} \\approx 6.8\\%\\); \\(6.8\\% \\times 50\\% \\approx \\mathbf{3.4\\%}\\); \\(7\\% - 3.4\\% \\approx 3.6\\% < 4.24\\%\\). Risks **multiply**; they aren't set by the strongest layer.",
     },
     {
       q: "Compared with the failures of centralized platforms like FTX or Mt. Gox, how do DeFi protocols typically fail?",

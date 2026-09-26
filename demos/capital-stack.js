@@ -1,6 +1,9 @@
 // 交互演示：资本结构瀑布——拖动资产价值（或比特币价格），看“水位”从顶楼往下灌：
 // 哪一层拿满、哪一层被切开、普通股剩多少；并对照每层的累计资产覆盖倍数。
-import { waterfall, coverageByLayer, fmtPct, fmtNum, fmtUsd , enPunct } from "./_fin.js";
+import { waterfall, coverageByLayer, fmtPct, fmtNum, fmtUsd , enPunct, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -156,10 +159,10 @@ export default function mount(root, lang) {
     // 覆盖倍数（用可分配资产）与首个受损层
     const cov = coverageByLayer(assets, p.layers);
     const lines = [];
-    lines.push(`<b>${T("累计资产覆盖（可分配资产 ÷ 本层及以上累计索取权）", "Cumulative asset coverage (distributable assets ÷ claims at this floor and above)")}</b>`);
+    lines.push(`<b>${T("累计资产覆盖", "Cumulative asset coverage")}</b>${T("：", ": ")}${tex(String.raw`\text{${T("覆盖倍数", "coverage")}} = \dfrac{\text{${T("可分配资产", "distributable assets")}}}{\text{${T("本层及以上累计索取权", "claims at this floor and above")}}}`)}`);
     cov.forEach((c) => {
       const cls = c.coverage >= 2 ? "ok" : c.coverage >= 1 ? "warn" : "bad";
-      lines.push(`${c.name}：${T("累计", "cumulative")} ${fmtNum(c.cum, 0)} → <span class="${cls}">${fmtNum(c.coverage, 2)}x</span>`);
+      lines.push(`${c.name}：${T("累计", "cumulative")} ${fmtNum(c.cum, 0)} → ${tex(String.raw`\dfrac{${texv(fmtNum(assets, 0))}}{${texv(fmtNum(c.cum, 0))}} =`)} <span class="${cls}">${fmtNum(c.coverage, 2)}x</span>`);
     });
     const firstHit = rows.find((r) => r.recovery < 1);
     if (!firstHit) {
@@ -170,7 +173,7 @@ export default function mount(root, lang) {
     if (mode === "orange") {
       const claims = p.layers.reduce((s, l) => s + l.claim, 0);
       const bePrice = ((claims / (1 - cost / 100) - p.cash) * 1e6) / p.btc;
-      lines.push(`<span class="warn">${T("在当前成本假设下，比特币跌破约 ", "Under the current cost assumption, bitcoin below about ")}${fmtUsd(bePrice)}${T(" 时 D 层开始亏本金；普通股每股净值 ≈ ", " starts to impair the D layer; common net value per share ≈ ")}${fmtUsd(equity / 100, 2)}${T("（1 亿股）。", " (100M shares).")}</span>`);
+      lines.push(`<span class="warn">${T("在当前成本假设下，比特币跌破约 ", "Under the current cost assumption, bitcoin below about ")}${fmtUsd(bePrice)}${T(" 时 D 层开始亏本金；普通股每股净值 ", " starts to impair the D layer; common net value per share ")}${tex(String.raw`= \dfrac{${T(texv(fmtNum(equity, 0)) + String.raw`\ \text{百万美元}`, String.raw`\$` + texv(fmtNum(equity, 0)) + String.raw`\text{M}`)}}{${T(String.raw`1\ \text{亿股}`, String.raw`100\text{M shares}`)}} \approx ${texv(fmtUsd(equity / 100, 2))}`)}${T("。", ".")}</span>`);
     }
     if (cost > 0) lines.push(`${T("处置成本吃掉了 ", "Costs ate ")}${fmtNum(assets / (1 - cost / 100) - assets, 1)}${T("——它先从最底层的剩余里扣，这就是破产本身会伤害所有人的原因（阶段 6.6）。", " — and it comes out of the bottom first, which is why bankruptcy itself hurts everyone (Stage 6.6).")}`);
     q("#cs-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

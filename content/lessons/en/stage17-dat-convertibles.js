@@ -14,13 +14,13 @@ On December 9, 2020, the company then still called MicroStrategy priced its firs
 
 Borrowing at zero sounds like free money. It isn't. **The company isn't selling debt; it's selling volatility.**
 
-Go back to the formula of Stage 6.4: **a convertible = an ordinary bond (the bond floor) + a call option on the company's stock**. Take Orange Corp: $1,000 face value, 0% coupon, five years, convertible into 40 shares (a $25 conversion price), with the stock at $15 today.
+Go back to the formula of Stage 6.4: **\\(\\text{a convertible} = \\text{an ordinary bond (the bond floor)} + \\text{a call option on the company's stock}\\)**. Take Orange Corp: $1,000 face value, 0% coupon, five years, convertible into 40 shares (a $25 conversion price), with the stock at $15 today.
 
-- **The bond floor.** A bond that pays nothing and returns $1,000 in five years, discounted at about 8% for Orange Corp's credit, is worth only about **$681** today.
+- **The bond floor.** A bond that pays nothing and returns $1,000 in five years, discounted at about 8% for Orange Corp's credit, is worth only about \\(\\dfrac{\\$1{,}000}{1.08^{5}} \\approx \\mathbf{\\$681}\\) today.
 - **The option.** A five-year call on 40 shares with a $25 strike. Orange Corp's stock sits on bitcoin and is extremely volatile; at 70% annualized volatility, Black–Scholes (Stage 7.2) values those 40 options at about **$302**.
 - Together: about **$982**, close to par. **The investor pays for the option by giving up interest.** The higher the volatility, the more the option is worth, and the lower the coupon and the higher the conversion premium the company can negotiate.
 
-So who buys? Mostly not retail bitcoin believers, but **convertible-arbitrage funds** (Stage 8.4). They buy the convert and at the same time **short roughly "delta × 40 shares"** of the stock, so the position barely cares about small moves. Then, when the stock rises they short a little more, and when it falls they buy a little back: **they buy low and sell high automatically**. As long as the stock actually moves more (realized volatility) than the volatility implied in the price they paid, that rebalancing makes money. This is Stage 7.3's point that volatility is an asset you can buy and sell, and it is why Strategy has been called a "volatility factory."
+So who buys? Mostly not retail bitcoin believers, but **convertible-arbitrage funds** (Stage 8.4). They buy the convert and at the same time **short roughly \\(\\Delta \\times 40\\) shares** of the stock, so the position barely cares about small moves. Then, when the stock rises they short a little more, and when it falls they buy a little back: **they buy low and sell high automatically**. As long as the stock actually moves more (realized volatility) than the volatility implied in the price they paid, that rebalancing makes money. This is Stage 7.3's point that volatility is an asset you can buy and sell, and it is why Strategy has been called a "volatility factory."
 
 The lesson sits mainly on **Idea ④ (risk and leverage)**: convertibles re-slice bitcoin's volatility. The arbitrage funds take the volatility, the company gets cheap money, and the common bears either conversion dilution or the pressure of repaying cash. It also sits on **Idea ② (claims)**: convertibles are **senior unsecured debt**, ranking **ahead of every preferred** (Stage 17.6). **This lesson explains mechanisms and analytical frameworks only; it is not investment advice.**
 
@@ -39,10 +39,12 @@ The lesson sits mainly on **Idea ④ (risk and leverage)**: convertibles re-slic
 Stage 6.4 broke a convertible's value into pieces. Here we use that breakdown to understand how DAT converts are priced:
 
 $$
-convertible value ≈ bond floor + conversion ratio × call value
-bond floor = coupons and principal discounted at the issuer's credit yield
-call value depends on share price, conversion price, term, rates and volatility (higher vol, higher value)
+\\text{convertible value} \\approx \\text{bond floor} + \\text{conversion ratio} \\times \\text{call value}
+\\text{bond floor} = \\sum_{t=1}^{T} \\frac{C}{(1+y)^{t}} + \\frac{F}{(1+y)^{T}}
+\\text{call value} = f(S,\\ K,\\ T,\\ r,\\ \\sigma)
 $$
+
+The bond floor is the coupons \\(C\\) and principal \\(F\\) discounted at the issuer's credit yield \\(y\\); the call value depends on share price \\(S\\), conversion price \\(K\\), term \\(T\\), rates \\(r\\) and volatility \\(\\sigma\\) (higher vol, higher value).
 
 Orange Corp under three volatility assumptions ($1,000 face, five years, 0% coupon, 40 shares, $25 conversion price, $15 stock, 4.5% risk-free rate, 8% credit yield):
 
@@ -62,7 +64,7 @@ Two more details set the true cost. One is **credit**: the yield at which the bo
 The standard arbitrage position:
 
 - **Long** one convertible ($1,000 face).
-- **Short** delta × 40 shares of common. For Orange Corp at 70% volatility, delta is about 0.73, so the fund shorts about **29 shares**.
+- **Short** \\(\\Delta \\times 40\\) shares of common. For Orange Corp at 70% volatility, \\(\\Delta \\approx 0.73\\), so the fund shorts about \\(0.73 \\times 40 \\approx \\mathbf{29}\\) shares.
 - **Rebalance daily (or weekly).** When the stock rises, the option's delta rises, so the fund shorts a bit more; when it falls, delta falls, so the fund buys some back.
 
 The position is broadly immune to the **direction** of the stock but positively exposed to the **size** of its swings (long gamma). What it earns is the gap between "realized volatility" and the "implied volatility" it paid for:
@@ -94,7 +96,7 @@ According to Strategy's Q2 2026 10-Q (as of June 30, 2026), and unchanged in the
 
 Points to take away:
 
-- **The interest burden is light.** Only three notes pay a coupon, for about **$35 million** a year in cash interest (0.625% × $1.81B + 0.875% × $0.604B + 2.25% × $0.8B). Compared with over a billion dollars a year in preferred dividends (Stage 17.3), converts are Strategy's cheapest money. There is also about $40 million of secured equipment financing unrelated to bitcoin, for total debt notional of about $6.754 billion.
+- **The interest burden is light.** Only three notes pay a coupon, for about **$35 million** a year in cash interest (\\(0.625\\% \\times \\$1.81\\text{B} + 0.875\\% \\times \\$0.604\\text{B} + 2.25\\% \\times \\$0.8\\text{B}\\)). Compared with over a billion dollars a year in preferred dividends (Stage 17.3), converts are Strategy's cheapest money. There is also about $40 million of secured equipment financing unrelated to bitcoin, for total debt notional of about $6.754 billion.
 - **The May 2026 discounted buyback.** On May 19, 2026 Strategy **repurchased $1.50 billion of principal of the 2029 notes for $1.38 billion**, about 92 cents on the dollar, booking a gain on extinguishment of about $113.9 million. Total converts fell from $8.21 billion to $6.71 billion. With a $672.40 conversion price, the 2029 notes were nowhere near converting and had effectively become **a zero-coupon bond trading at a discount**. Buying them back early earned that discount in cash and trimmed the 2028 put pressure.
 - **They interact with the mNAV definitions.** Under Strategy's 2026 mNAV definition, **out-of-the-money** converts are deducted from net reserve at their notional, as debt, while **in-the-money** ones are counted in fully diluted shares (Stage 16.2). But BTC per share uses "assumed diluted shares," which treat every convert as converted, in the money or not (Stage 16.1). **The same bond is treated as two different things by two different metrics.**
 

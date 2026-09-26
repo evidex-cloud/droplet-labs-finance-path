@@ -2,7 +2,9 @@
 // A. 付款金额 vs 三种管道的手续费（刷卡“固定费 + 百分比”、链上稳定币按笔费、月度汇总后一次刷卡），以及“费率低于 5%”的最小付款；
 // B. 代理一个月的调用量与总费用；C. 控制层：单笔上限、每日预算、白名单、频率熔断 vs 三种事故（失控循环、伪造报价、提示注入）；
 // D. 浮存金：代理钱包里的稳定币余额为发行方带来的国债利息（示意）。费率均为示意。计算走 _fin.js 的格式化与 clamp。
-import { fmtUsd, fmtPct, fmtBig, fmtNum, clamp } from "./_fin.js";
+import { fmtUsd, fmtPct, fmtBig, fmtNum, clamp, tex } from "./_fin.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%").replace(/([KMBT])$/, "\\text{$1}");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -45,15 +47,15 @@ export default function mount(root, lang) {
         <div class="demo-label">${T("C. 控制层：出事那天会亏多少", "C. The control layer: how much is lost on a bad day")}</div>
         <div class="demo-seg" id="agp-inc">
           <button data-v="none">${T("正常的一天", "Normal day")}</button>
-          <button data-v="loop">${T("失控循环（调用 ×20）", "Runaway loop (calls ×20)")}</button>
-          <button data-v="spoof">${T("伪造报价（价格 ×100）", "Spoofed quote (price ×100)")}</button>
+          <button data-v="loop">${T("失控循环（调用暴增 20 倍）", "Runaway loop (calls jump 20-fold)")}</button>
+          <button data-v="spoof">${T("伪造报价（价格抬高 100 倍）", "Spoofed quote (price inflated 100-fold)")}</button>
           <button data-v="inject">${T("提示注入（转走 500 美元）", "Prompt injection (send $500)")}</button>
         </div>
         <div class="demo-grid" style="margin-top:10px">
           ${sl("cap", "单笔上限", "Per-payment cap", 55)}
           ${sl("bud", "每日预算（相对正常日开销的倍数）", "Daily budget (multiple of a normal day)", 30)}
         </div>
-        <div style="margin-top:6px">${chk("allow", "收款方白名单", "Payee allowlist", true)}${chk("cb", "频率熔断（超过正常 3 倍即暂停）", "Frequency circuit breaker (pause above 3× normal)", true)}</div>
+        <div style="margin-top:6px">${chk("allow", "收款方白名单", "Payee allowlist", true)}${chk("cb", "频率熔断（超过正常 3 倍即暂停）", "Frequency circuit breaker (pause above 3 times normal)", true)}</div>
         <div class="stat-row">
           <div class="stat"><div class="k">${T("正常日开销", "Normal daily spend")}</div><div class="v" id="agp-day"></div></div>
           <div class="stat"><div class="k">${T("无护栏的额外损失", "Extra loss, no guardrails")}</div><div class="v neg" id="agp-lossraw"></div></div>
@@ -137,10 +139,12 @@ export default function mount(root, lang) {
     const balance = day * hold;
     const L = [];
     const minCard = CARD_FIX / (0.05 - CARD_PCT), minSt = f / 0.05;
-    L.push(`${T("要让费率低于 5%：刷卡至少", "For fees under 5%: a card payment must be at least")} <b>${money(minCard)}</b>${T("，链上稳定币至少", ", a stablecoin transfer at least")} <b>${money(minSt)}</b>${T("。", ".")}`);
+    const M = (x) => texv(money(x));
+    L.push(`${T("这一笔：", "This payment: ")}${tex(String.raw`\text{${T("刷卡费", "card fee")}} = \$0.30 + 2.9\% \times ${M(p)} \approx ${M(cardFee)}`)}${T("，费率", "; fee rate")} ${tex(String.raw`\dfrac{${M(cardFee)}}{${M(p)}} \approx \mathbf{${texv(cardFee / p >= 10 ? fmtNum(cardFee / p * 100, 0) + "%" : fmtPct(cardFee / p, 1))}}`)}${T("。", ".")}`);
+    L.push(`${T("要让费率低于 5%：刷卡至少", "For fees under 5%: a card payment must be at least")} ${tex(String.raw`\dfrac{\$0.30}{5\% - 2.9\%} \approx \mathbf{${M(minCard)}}`)}${T("，链上稳定币至少", ", a stablecoin transfer at least")} ${tex(String.raw`\dfrac{${M(f)}}{5\%} \approx \mathbf{${M(minSt)}}`)}${T("。", ".")}`);
     if (cardFee / p > 1) L.push(`<span class="bad">${T("逐笔刷卡的手续费超过了付款本身——这就是互联网只剩订阅和广告两种收费方式的原因。", "The per-payment card fee exceeds the payment itself — why the internet ended up with only subscriptions and ads.")}</span>`);
-    L.push(`${T("月底汇总一次刷卡能把费率压到", "Batching into one monthly card charge cuts the fee to")} ${fmtPct(batFee / p, 2)}${T("，但卖方要先信任买方一个月（赊账），而且需要一个账户关系——这正是 x402 想省掉的东西。", ", but the seller has to extend a month of credit and needs an account relationship — exactly what x402 aims to remove.")}`);
-    L.push(`${T("代理钱包常备", "The wallet keeps")} ${money(balance)} ${T("（", " (")}${hold}${T(" 天开销）。这笔稳定币背后的国债利息按 4.24% 计每年约", " days of spending). The T-bill interest behind it, at 4.24%, is about")} ${money(balance * TBILL)}${T("，归发行方而非代理主人（GENIUS 法案禁止付息）。放大到全部约 3,120 亿美元稳定币：每年约", " a year — for the issuer, not the agent's owner (the GENIUS Act bars paying interest). Scaled to all ~$312B of stablecoins: about")} <b>$${fmtBig(STABLE_SUPPLY * TBILL, 1)}</b>${T("（示意）。", " a year (illustrative).")}`);
+    L.push(`${T("月底汇总一次刷卡能把费率压到", "Batching into one monthly card charge cuts the fee to")} ${tex(String.raw`\dfrac{\$0.30 + 2.9\% \times ${M(spend)}}{${M(spend)}} \approx ${texv(fmtPct(batFee / p, 2))}`)}${T("，但卖方要先信任买方一个月（赊账），而且需要一个账户关系——这正是 x402 想省掉的东西。", ", but the seller has to extend a month of credit and needs an account relationship — exactly what x402 aims to remove.")}`);
+    L.push(`${T("代理钱包常备", "The wallet keeps")} ${money(balance)} ${T("（", " (")}${hold}${T(" 天开销）。这笔稳定币背后的国债利息每年约", " days of spending). The T-bill interest behind it is about")} ${tex(String.raw`${M(balance)} \times 4.24\% \approx ${M(balance * TBILL)}`)}${T("，归发行方而非代理主人（GENIUS 法案禁止付息）。放大到全部约 3,120 亿美元稳定币：每年约", " a year — for the issuer, not the agent's owner (the GENIUS Act bars paying interest). Scaled to all ~$312B of stablecoins: about")} ${tex(String.raw`\$${texv(fmtBig(STABLE_SUPPLY, 0))} \times 4.24\% \approx \mathbf{\$${texv(fmtBig(STABLE_SUPPLY * TBILL, 1))}}`)}${T("（示意）。", " a year (illustrative).")}`);
     if (incident !== "none") L.push(`<span class="${guarded < raw * 0.05 ? "ok" : "warn"}">${note}</span>`);
     $("#agp-log").innerHTML = L.map((l) => `<div>${l}</div>`).join("");
   };

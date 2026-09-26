@@ -1,6 +1,9 @@
 // 交互演示：BTC 评级阶梯——比特币价格滑块、美元资产是否与债务相抵、可选“新增更优先的优先股”；
 // 每层给出 BTC 评级、BTC 地板价、可跌幅度，以及对数正态模型下的 BTC Risk 与 BTC Credit（ARR 与波动率可调）。
-import { coverageByLayer, btcFloorPrice, btcRiskProb, btcCredit, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { coverageByLayer, btcFloorPrice, btcRiskProb, btcCredit, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -75,10 +78,20 @@ export default function mount(root, lang) {
     }).join("");
     q("#br-tab").innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:13px;margin:8px 0"><tr><th>${T("层", "Layer")}</th><th>${T("累计索取权（百万美元）", "Cumulative claims ($M)")}</th><th>${T("BTC 评级", "BTC Rating")}</th><th>${T("地板价", "Floor price")}</th><th>${T("可跌", "Can fall")}</th><th>${T("久期", "Duration")}</th><th>BTC Risk</th><th>BTC Credit</th></tr>${rows}</table>`;
 
+    // Orange-F 层的公式读数（BTC 评级 → 地板价 → BTC Credit）
+    const fi = cov.findIndex((c) => c.name === "Orange-F");
+    const fc = cov[fi], fDur = layers[fi].dur;
+    const fRisk = btcRiskProb(fc.coverage, mu, sig, fDur);
+    const fReadout = [
+      tex(String.raw`\text{BTC Rating}_{\text{F}} = \frac{${texv(fmtNum(reserve, 0))}}{${texv(fmtNum(fc.cum, 0))}} = \mathbf{${texv(fmtNum(fc.coverage, 2))}}\times`),
+      tex(String.raw`\text{${T("地板价", "Floor price")}} = \frac{${texv(fmtUsd(s.px))}}{${texv(fmtNum(fc.coverage, 2))}} = ${texv(fmtUsd(btcFloorPrice(s.px, fc.coverage)))}`),
+      tex(String.raw`\text{BTC Credit} = \frac{-\ln(1 - ${texv(fmtPct(fRisk, 1))})}{${fDur}} \approx ${texv(fmtNum(btcCredit(fRisk, fDur) * 10000, 0))}\ \text{bp}`),
+    ].join(T("；", "; "));
     const strf = btcRiskProb(6.2, 0.10, 0.45, 11.1);
     const strc = btcRiskProb(5.74, 0.10, 0.40, 8.1);
     const lines = [];
-    lines.push(`${T("BTC 储备 = ", "BTC Reserve = ")}10,000 × ${fmtUsd(s.px)} = <b>${fmtUsd(reserve)}M</b>${s.net ? T("；3,000 万现金先抵掉可转债（Strategy 的计算桥做法）", "; $30M of cash first offsets the converts (as in Strategy's bridge)") : ""}`);
+    lines.push(`${tex(String.raw`\text{${T("BTC 储备", "BTC Reserve")}} = 10{,}000 \times ${texv(fmtUsd(s.px))} = \mathbf{${texv(fmtUsd(reserve))}\text{M}}`)}${s.net ? T("；3,000 万现金先抵掉可转债（Strategy 的计算桥做法）", "; $30M of cash first offsets the converts (as in Strategy's bridge)") : ""}`);
+    lines.push(`Orange-F${T("：", ": ")}${fReadout}`);
     lines.push(`${T("复算 Strategy：STRF（6.2 倍、11.1 年、ARR 10%、波动率 45%）→ BTC Credit ", "Reproducing Strategy: STRF (6.2x, 11.1 yrs, 10% ARR, 45% vol) → BTC Credit ")}<b>${fmtNum(btcCredit(strf, 11.1) * 10000, 0)} bp</b>${T("（公布 108）；STRC（5.74 倍、8.1 年、10%、40%）→ ", " (published 108); STRC (5.74x, 8.1 yrs, 10%, 40%) → ")}<b>${fmtNum(btcCredit(strc, 8.1) * 10000, 0)} bp</b>${T("（公布 59）", " (published 59)")}`);
     const worst = cov[cov.length - 1];
     lines.push(worst.coverage < 1

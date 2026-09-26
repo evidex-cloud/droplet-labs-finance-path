@@ -46,7 +46,7 @@ Read the income statement from top to bottom. It is a sum that keeps **subtracti
 <tr><td>− Operating expenses</td><td>3,500</td><td>Rent, admin, marketing</td></tr>
 <tr><td>− Depreciation & amortization</td><td>500</td><td>The part of the machines and fit-out “used up” this year</td></tr>
 <tr><td><b>= Operating income (EBIT)</b></td><td><b>2,000</b></td><td>What the business earns, regardless of how it is financed</td></tr>
-<tr><td>− Interest</td><td>400</td><td>$5M loan × 8%</td></tr>
+<tr><td>− Interest</td><td>400</td><td>\\(\\$5\\text{M loan} \\times 8\\%\\)</td></tr>
 <tr><td>= Pre-tax income</td><td>1,600</td><td></td></tr>
 <tr><td>− Income tax (25%)</td><td>400</td><td></td></tr>
 <tr><td><b>= Net income</b></td><td><b>1,200</b></td><td>The “bottom line”: profit belonging to shareholders</td></tr>
@@ -55,16 +55,16 @@ Read the income statement from top to bottom. It is a sum that keeps **subtracti
 A few key points:
 
 - **Interest is deducted after operating income.** That is the Stage 5.1 order of payment showing up on the income statement: the lender's $400K comes out first, and only what remains belongs to the owners.
-- **Depreciation is not a cash payment.** $8M of equipment is not “lost” all in the year it is bought; its cost is spread over its useful life ($500K a year here). That makes profit a fairer picture of what was used up this year — and it means **profit ≠ cash.**
-- **EBITDA** = operating income + depreciation & amortization = $2.5M. It is a rough gauge of operating cash-generating power and a favorite input for valuation multiples (EV/EBITDA in Stage 5.3), but it pretends equipment never has to be replaced. Warren Buffett's 2000 letter to shareholders famously asked whether managers think the tooth fairy pays for capital expenditures.
-- **Earnings per share (EPS)** = $1.2M ÷ 1M shares = $1.20. **Return on equity (ROE)** = 1,200 ÷ 5,000 = 24%.
+- **Depreciation is not a cash payment.** $8M of equipment is not “lost” all in the year it is bought; its cost is spread over its useful life ($500K a year here). That makes profit a fairer picture of what was used up this year — and it means **\\(\\text{profit} \\ne \\text{cash}\\).**
+- **EBITDA** \\(= \\text{operating income} + \\text{depreciation \\& amortization} = 2{,}000 + 500 = \\$2.5\\text{M}\\). It is a rough gauge of operating cash-generating power and a favorite input for valuation multiples (EV/EBITDA in Stage 5.3), but it pretends equipment never has to be replaced. Warren Buffett's 2000 letter to shareholders famously asked whether managers think the tooth fairy pays for capital expenditures.
+- **Earnings per share (EPS)** \\(= \\dfrac{\\$1.2\\text{M}}{1\\text{M shares}} = \\$1.20\\). **Return on equity (ROE)** \\(= \\dfrac{1{,}200}{5{,}000} = 24\\%\\).
 
 ### ② The balance sheet: what you own and whom you owe, at a moment
 
 A balance sheet always satisfies one identity:
 
 $$
-Assets = Liabilities + Shareholders' equity
+\\text{Assets} = \\text{Liabilities} + \\text{Shareholders' equity}
 $$
 
 This is not a discovery; it is a **definition.** Everything a company owns was paid for either with borrowed money (liabilities) or with money the owners put in or earned and did not pay out (equity). Morning Coffee at the start and end of the year ($ thousands):
@@ -77,7 +77,7 @@ This is not a discovery; it is a **definition.** Everything a company owns was p
 <tr><td><b>Total assets</b></td><td><b>10,000</b></td><td><b>10,600</b></td><td><b>Total liabilities + equity</b></td><td><b>10,000</b></td><td><b>10,600</b></td></tr>
 </table>
 
-Notice that equity is split in two: **paid-in capital** (what the owners originally put in) and **retained earnings** (the running total of all past net income minus all past dividends). This year's net income was $1.2M and dividends were $0.4M, so retained earnings rose by $0.8M — **the bottom line of the income statement flows straight into the balance sheet.**
+Notice that equity is split in two: **paid-in capital** (what the owners originally put in) and **retained earnings** (the running total of all past net income minus all past dividends). This year's net income was $1.2M and dividends were $0.4M, so retained earnings rose by \\(\\$1.2\\text{M} - \\$0.4\\text{M} = \\$0.8\\text{M}\\) — **the bottom line of the income statement flows straight into the balance sheet.**
 
 Most balance-sheet numbers are at **historical cost** (equipment at purchase price less depreciation), not at what the items could be sold for today. That is why, in Stage 5.1, “$5 of book value per share and a $12 share price” was no contradiction. There are exceptions: some financial assets are carried at **fair value** (market price). In part ⑤ you will see that bitcoin became one of them under U.S. accounting rules starting in 2025.
 
@@ -99,7 +99,7 @@ The cash flow statement splits the year's change in cash into three kinds of act
 <tr><td><b>Net change in cash</b></td><td><b>−200</b></td><td>1,000 → 800, matching the balance sheet</td></tr>
 </table>
 
-One derived measure gets used constantly: **free cash flow (FCF) = cash from operations − capital expenditure = 1,400 − 1,000 = $400K.** That $400K is the money genuinely available to the providers of capital after the business has been maintained and expanded. The DCF valuation in Stage 5.3 discounts this number, not net income.
+One derived measure gets used constantly: **free cash flow (FCF) \\(= \\text{cash from operations} - \\text{capex} = 1{,}400 - 1{,}000 = \\$400\\text{K}\\).** That $400K is the money genuinely available to the providers of capital after the business has been maintained and expanded. The DCF valuation in Stage 5.3 discounts this number, not net income.
 
 Why watch cash flow so closely? Because **accounting choices can dress up profit; cash is much harder to fake.** A company whose profits grow every year while its operating cash flow is negative every year is usually either “selling on credit” (receivables piling up) or capitalizing costs that should be expenses — the two most common warning signs of manipulated accounts. As the saying goes: **profit is an opinion, cash is a fact.**
 
@@ -110,17 +110,17 @@ The three statements are not three separate documents; they are sewn together by
 <figure><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><defs><marker id="fs-ar-en" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--orange-ink)"/></marker></defs><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The four threads between the statements (Morning Coffee, $K)</text><rect x="20" y="44" width="180" height="200" rx="10" fill="var(--surface-2)" stroke="var(--line)"/><text x="110" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Income statement (year)</text><text x="34" y="92" font-size="11" fill="var(--muted)">Revenue 10,000</text><text x="34" y="112" font-size="11" fill="var(--muted)">− Costs & expenses 7,500</text><text x="34" y="132" font-size="11" fill="var(--blue)" font-weight="600">− Depreciation 500</text><text x="34" y="152" font-size="11" fill="var(--muted)">− Interest 400 − Tax 400</text><rect x="30" y="166" width="160" height="26" rx="6" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="110" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="var(--orange-ink)">Net income 1,200</text><text x="110" y="222" text-anchor="middle" font-size="10" fill="var(--muted)">a video</text><rect x="230" y="44" width="180" height="200" rx="10" fill="var(--surface-2)" stroke="var(--line)"/><text x="320" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Cash flow statement (year)</text><text x="244" y="92" font-size="11" fill="var(--orange-ink)" font-weight="600">Net income 1,200</text><text x="244" y="112" font-size="11" fill="var(--blue)" font-weight="600">+ Depreciation 500</text><text x="244" y="132" font-size="11" fill="var(--muted)">− Work. capital 300 → CFO 1,400</text><text x="244" y="152" font-size="11" fill="var(--muted)">Capex −1,000</text><text x="244" y="172" font-size="11" fill="var(--muted)">Repay −200 · Dividends −400</text><rect x="240" y="184" width="160" height="26" rx="6" fill="var(--green-soft)" stroke="var(--green)"/><text x="320" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="var(--green)">Cash 1,000 → 800</text><text x="320" y="232" text-anchor="middle" font-size="10" fill="var(--muted)">real cash</text><rect x="440" y="44" width="180" height="200" rx="10" fill="var(--surface-2)" stroke="var(--line)"/><text x="530" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Balance sheet (year-end)</text><text x="454" y="92" font-size="11" fill="var(--green)" font-weight="600">Cash 800</text><text x="454" y="112" font-size="11" fill="var(--muted)">Receivables & inventory 1,300</text><text x="454" y="132" font-size="11" fill="var(--blue)" font-weight="600">Equipment 8,000+1,000−500</text><text x="454" y="152" font-size="11" fill="var(--muted)">Loan 5,000−200 = 4,800</text><rect x="450" y="166" width="160" height="26" rx="6" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="530" y="184" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">Retained 1,000+1,200−400</text><text x="530" y="222" text-anchor="middle" font-size="10" fill="var(--muted)">a photo: 10,600 = 4,800 + 5,800</text><path d="M190,179 C215,179 215,88 240,88" fill="none" stroke="var(--orange-ink)" stroke-width="1.8" marker-end="url(#fs-ar-en)"/><path d="M190,186 C320,280 400,280 450,186" fill="none" stroke="var(--orange-ink)" stroke-width="1.8" marker-end="url(#fs-ar-en)"/><path d="M400,197 C425,197 425,88 450,88" fill="none" stroke="var(--green)" stroke-width="1.8" marker-end="url(#fs-ar-en)"/><path d="M150,128 C200,128 200,108 240,108" fill="none" stroke="var(--blue)" stroke-width="1.4" stroke-dasharray="4 3"/><text x="70" y="270" font-size="10" fill="var(--orange-ink)">① Net income → top of cash flow</text><text x="232" y="290" font-size="10" fill="var(--orange-ink)">② Net income − dividends → retained earnings</text><text x="440" y="270" font-size="10" fill="var(--green)">③ Ending cash → balance sheet</text></svg><figcaption>Net income flows both to the first line of the cash flow statement and into retained earnings on the balance sheet; ending cash on the cash flow statement is the balance-sheet cash; depreciation is deducted on the income statement, added back on the cash flow statement and subtracted from net equipment on the balance sheet.</figcaption></figure>
 
 - **Thread ①: net income → the first line of the cash flow statement.** The cash flow statement (indirect method) starts from net income and reverses the non-cash items.
-- **Thread ②: net income − dividends → retained earnings.** This is how the income statement's result accumulates into shareholders' equity.
-- **Thread ③: ending cash on the cash flow statement = cash on the balance sheet.** The two must match to the cent.
-- **Thread ④: depreciation and capex → net equipment.** Opening 8,000 + capex 1,000 − depreciation 500 = 8,500; loan 5,000 − repayment 200 = 4,800.
+- **Thread ②: \\(\\text{net income} - \\text{dividends} \\to \\text{retained earnings}\\).** This is how the income statement's result accumulates into shareholders' equity.
+- **Thread ③: ending cash on the cash flow statement equals cash on the balance sheet.** The two must match to the cent.
+- **Thread ④: depreciation and capex → net equipment.** \\(\\text{Opening}\\ 8{,}000 + \\text{capex}\\ 1{,}000 - \\text{depreciation}\\ 500 = 8{,}500\\); \\(\\text{loan}\\ 5{,}000 - \\text{repayment}\\ 200 = 4{,}800\\).
 
-With all four threads connected, the balance sheet must balance: assets 800 + 1,300 + 8,500 = 10,600; liabilities and equity 4,800 + 4,000 + 1,800 = 10,600. **When analysts build a “three-statement model,” they are simply writing these four threads as formulas** — change one assumption (say revenue +10%) and all three statements move together and still balance. The demo below is a miniature three-statement model.
+With all four threads connected, the balance sheet must balance: assets \\(800 + 1{,}300 + 8{,}500 = 10{,}600\\); liabilities and equity \\(4{,}800 + 4{,}000 + 1{,}800 = 10{,}600\\). **When analysts build a “three-statement model,” they are simply writing these four threads as formulas** — change one assumption (say revenue +10%) and all three statements move together and still balance. The demo below is a miniature three-statement model.
 
 ### ⑤ Reading a DAT's statements: when earnings jump with bitcoin
 
 Now replace Morning Coffee with **Orange Corp**, the standard example in Stages 15–18: it holds 10,000 BTC and has a small software business on the side. Over one quarter bitcoin rises from $100,000 to $110,000. What happens to the three statements?
 
-- **Income statement:** under U.S. GAAP, ASU 2023-08 requires crypto assets like these to be measured at **fair value**, with price changes running through the period's earnings. 10,000 × $10,000 = **$100 million of unrealized gain** lands in net income — even though the company did not sell a single coin. If bitcoin falls back next quarter, that is a $100 million loss. **The income statement becomes a mirror of the bitcoin price.**
+- **Income statement:** under U.S. GAAP, ASU 2023-08 requires crypto assets like these to be measured at **fair value**, with price changes running through the period's earnings. \\(10{,}000 \\times \\$10{,}000 =\\) **$100 million of unrealized gain** lands in net income — even though the company did not sell a single coin. If bitcoin falls back next quarter, that is a $100 million loss. **The income statement becomes a mirror of the bitcoin price.**
 - **Cash flow statement:** that $100M gain is not cash, so it is subtracted straight back out in operating cash flow. The real cash activity is in the other two sections: money raised by selling common stock, convertible notes and preferred stock shows up as **financing inflows**; money spent on bitcoin shows up as **investing outflows**; preferred dividends are **financing outflows**. A typical DAT's cash flow statement reads “capital in, bitcoin out.”
 - **Balance sheet:** bitcoin is carried at the quarter-end market price, and shareholders' equity swings with it. The face amounts of the convertibles and preferreds are precisely the layers stacked above the common in the Stage 6.1 capital-stack picture.
 
@@ -150,7 +150,7 @@ Orange Corp's reservoir is a little strange: its water level is measured in the 
     "**“Balance-sheet numbers are what the assets could be sold for today.”** — Most assets are carried at historical cost less depreciation, which can differ enormously from market value. Only some financial assets — including bitcoin from 2025 under U.S. GAAP — are measured at fair value.",
     "**“EBITDA is the cash a company can spend freely.”** — EBITDA ignores capital expenditure, working capital, interest and taxes. A company that must keep replacing equipment can show handsome EBITDA and very little free cash flow.",
     "**“A DAT reporting a multibillion-dollar quarterly loss must be in operating trouble.”** — Under fair-value accounting that usually just reflects bitcoin ending the quarter lower than it started, with no cash leaving the company. To judge the business, strip out fair-value changes first, then read the cash flow statement and the capital structure.",
-    "**“Assets = liabilities + equity is an empirical rule that needs checking.”** — It is an accounting definition: equity is calculated as assets minus liabilities. If a three-statement model does not balance, a thread has been wired wrongly — the company is not “out of balance.”",
+    "**“\\(\\text{Assets} = \\text{liabilities} + \\text{equity}\\) is an empirical rule that needs checking.”** — It is an accounting definition: equity is calculated as assets minus liabilities. If a three-statement model does not balance, a thread has been wired wrongly — the company is not “out of balance.”",
   ],
 
   quiz: [
@@ -163,15 +163,15 @@ Orange Corp's reservoir is a little strange: its water level is measured in the 
         "−$0.2M",
       ],
       answer: 1,
-      explain: "Operating cash flow = 1.2 + 0.5 − 0.3 = $1.4M; free cash flow = 1.4 − 1.0 = **$0.4M**. The −$0.2M is the net change in cash after also paying down debt and paying dividends.",
+      explain: "\\(\\text{Operating cash flow} = 1.2 + 0.5 - 0.3 = \\$1.4\\text{M}\\); \\(\\text{free cash flow} = 1.4 - 1.0 =\\) **$0.4M**. The −$0.2M is the net change in cash after also paying down debt and paying dividends.",
     },
     {
       q: "Which of these is a “thread” linking the income statement to the balance sheet?",
       options: [
-        "Revenue = ending cash",
-        "Gross profit = paid-in capital",
-        "Capex = interest expense",
-        "Net income − dividends = the increase in retained earnings",
+        "\\(\\text{Revenue} = \\text{ending cash}\\)",
+        "\\(\\text{Gross profit} = \\text{paid-in capital}\\)",
+        "\\(\\text{Capex} = \\text{interest expense}\\)",
+        "\\(\\text{Net income} - \\text{dividends} = \\text{the increase in retained earnings}\\)",
       ],
       answer: 3,
       explain: "Net income, after the dividends paid to shareholders, accumulates into **retained earnings** on the balance sheet — the central thread between the statements.",
@@ -196,7 +196,7 @@ Orange Corp's reservoir is a little strange: its water level is measured in the 
         "Investing cash flow rises by $100M",
       ],
       answer: 2,
-      explain: "Under ASU 2023-08, price changes run through earnings: 10,000 × $10,000 = **$100M** of unrealized gain enters net income. It is not cash, so it is reversed out of operating cash flow.",
+      explain: "Under ASU 2023-08, price changes run through earnings: \\(10{,}000 \\times \\$10{,}000 =\\) **$100M** of unrealized gain enters net income. It is not cash, so it is reversed out of operating cash flow.",
     },
     {
       q: "EBITDA is widely used to compare companies. What is its main flaw?",

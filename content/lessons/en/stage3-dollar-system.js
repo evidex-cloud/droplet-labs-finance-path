@@ -94,13 +94,14 @@ Once foreigners earn dollars, the most common way to "save" them is to buy **US 
 The balance of payments rests on an accounting identity (ignoring statistical errors):
 
 $$
-Current account balance + Capital and financial account balance = 0
+\\text{Current account balance} + \\text{Capital and financial account balance} = 0
+$$
 
 The **current account** is mostly trade (exports and imports of goods and services) plus cross-border income (interest, dividends, remittances). The **capital and financial account** records cross-border purchases of assets: foreigners buying US Treasuries, stocks, property and factories, and Americans buying foreign assets.
 
 The identity says: **if America buys more from the world than it sells (a current account deficit), the gap must be filled by foreigners' net purchases of US assets (a capital account surplus).** The logic is simple. The dollars Americans pay foreign exporters don't vanish. The exporter can spend them on American goods (then there'd be no deficit), or deposit them, buy Treasuries, buy stocks — and each of those adds to foreigners' **claims** on the US (Idea ②).
 
-**A numerical example**: in one year the US imports $400 billion of goods and exports $300 billion, and other income items net to zero. The current account deficit is $100 billion, so **foreigners must end up with $100 billion more in US assets on net** — perhaps $60 billion of Treasuries, $30 billion of stocks and $10 billion of bank deposits.
+**A numerical example**: in one year the US imports $400 billion of goods and exports $300 billion, and other income items net to zero. The current account deficit is \\(\\$400 - \\$300 = \\$100\\) billion, so **foreigners must end up with $100 billion more in US assets on net** — perhaps $60 billion of Treasuries, $30 billion of stocks and $10 billion of bank deposits.
 
 Two opposite readings both hold together, which is why trade policy is so contested:
 
@@ -180,7 +181,7 @@ And whenever people start worrying about the plant's water quality (US debt, pol
         "The Fed must print $100 billion",
       ],
       answer: 2,
-      explain: "**Current account deficit = capital and financial account surplus.** The dollars foreign exporters receive come back as purchases of Treasuries, stocks, deposits and so on — new **claims** on US assets (Idea ②).",
+      explain: "**\\(\\text{Current account deficit} = \\text{capital and financial account surplus}\\).** The dollars foreign exporters receive come back as purchases of Treasuries, stocks, deposits and so on — new **claims** on US assets (Idea ②).",
     },
     {
       q: "What are \"eurodollars\"?",

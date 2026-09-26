@@ -2,12 +2,13 @@
 // ① 健康因子与清算：设定抵押 ETH、借款、清算阈值、清算奖励与平仓比例，拖动 ETH 价格看健康因子与区间；
 //    按“在此价格执行清算”逐轮模拟清算人还债、拿走打折抵押品，直到恢复健康或出现坏账。
 // ② 利率曲线：设定拐点与两段斜率，拖动利用率看借款/存款利率，并与 3 个月期国库券收益率对比。
-import { btcRating, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { btcRating, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  const L = (s) => String(s).replace(/,/g, "{,}").replace(/%/g, "\\%").replace(/\$/g, "\\$"); // 格式化好的数字放进 LaTeX
   const C = T("：", ": ");
   const TBILL = 0.0424; // 3 个月期国库券收益率，2026 年 9 月 25 日（美国财政部）
   let mode = "hf";
@@ -44,7 +45,7 @@ export default function mount(root, lang) {
         <div class="stat-row">
           <div class="stat"><div class="k">${T("健康因子", "Health factor")}</div><div class="v" id="dl-hfv">–</div></div>
           <div class="stat"><div class="k">${T("清算价格", "Liquidation price")}</div><div class="v neg" id="dl-lp">–</div></div>
-          <div class="stat"><div class="k">${T("抵押覆盖倍数（抵押品 ÷ 债务）", "Collateral coverage (collateral ÷ debt)")}</div><div class="v acc" id="dl-cov">–</div></div>
+          <div class="stat"><div class="k">${T(`抵押覆盖倍数（${tex(String.raw`\text{抵押品} \div \text{债务}`)}）`, `Collateral coverage (${tex(String.raw`\text{collateral} \div \text{debt}`)})`)}</div><div class="v acc" id="dl-cov">–</div></div>
           <div class="stat"><div class="k">${T("所处区间", "Zone")}</div><div class="v" id="dl-zone">–</div></div>
         </div>
         <div class="demo-block" id="dl-chart1"></div>
@@ -54,7 +55,7 @@ export default function mount(root, lang) {
       <div id="dl-rate" style="display:none">
         <div class="demo-grid">
           <div class="demo-block">
-            ${sl("dl-u", T("利用率 U（已借出 ÷ 存款）", "Utilization U (borrowed ÷ deposits)"), 0, 1, 0.005, rc.u)}
+            ${sl("dl-u", T(`利用率 ${tex(String.raw`U = \text{已借出} \div \text{存款}`)}`, `Utilization ${tex(String.raw`U = \text{borrowed} \div \text{deposits}`)}`), 0, 1, 0.005, rc.u)}
             ${sl("dl-kink", T("拐点利用率", "Kink utilization"), 0.6, 0.95, 0.01, rc.kink)}
             ${sl("dl-rf", T("储备金率（协议留存）", "Reserve factor (protocol's cut)"), 0, 0.3, 0.01, rc.rf)}
           </div>
@@ -106,8 +107,9 @@ export default function mount(root, lang) {
       fns: [{ f: (p) => Math.min(4, HF(hf.qty, p, hf.lt, hf.debt)), cls: "line" }, { f: () => 1, cls: "line3" }],
       lo: 300, hi: 4500, xlabel: T("ETH 价格（美元）", "ETH price (USD)"), markerX: hf.px, markerLabel: T("当前", "now"), forceZero: true, uid: "dl1",
     });
-    q("#dl-chart1").innerHTML = chartBlock(res, [["var(--orange)", T("健康因子（上限截在 4）", "Health factor (capped at 4)")], ["var(--red)", T("清算线 HF = 1", "Liquidation line HF = 1")]]);
-    q("#dl-log").innerHTML = maxLtvWarn + (liqLog || `<div>${T("清算价 ", "Liquidation price ")}${fmtUsd(lp)}${T("；低于约 ", "; below about ")}${fmtUsd(badPx)}${T(" 时，抵押品连“债务 + 清算奖励”都不够，清算人无利可图。", " the collateral can't cover debt plus the liquidation bonus, so liquidating no longer pays.")}</div>`);
+    q("#dl-chart1").innerHTML = chartBlock(res, [["var(--orange)", T("健康因子（上限截在 4）", "Health factor (capped at 4)")], ["var(--red)", T(`清算线 ${tex(String.raw`\mathrm{HF} = 1`)}`, `Liquidation line ${tex(String.raw`\mathrm{HF} = 1`)}`)]]);
+    const hfTex = isFinite(h) ? tex(String.raw`\mathrm{HF} = \frac{${L(fmtNum(hf.qty, 1))} \times ${L(fmtNum(hf.px, 0))} \times ${L(fmtNum(hf.lt, 2))}}{${L(fmtNum(hf.debt, 0))}} = ${L(fmtNum(h, 3))}`) : "";
+    q("#dl-log").innerHTML = maxLtvWarn + (liqLog || `<div>${hfTex}</div><div>${T("清算价 ", "Liquidation price ")}${fmtUsd(lp)}${T("；低于约 ", "; below about ")}${fmtUsd(badPx)}${T(" 时，抵押品连“债务 + 清算奖励”都不够，清算人无利可图。", " the collateral can't cover debt plus the liquidation bonus, so liquidating no longer pays.")}</div>`);
   };
 
   const runLiq = () => {
@@ -122,7 +124,7 @@ export default function mount(root, lang) {
       rounds.push(`<div class="bad">${T("第 ", "Round ")}${i + 1}${T(" 轮：清算人还 ", ": liquidator repays ")}${fmtUsd(repay)}${T("，拿走 ", ", seizes ")}${fmtNum(seizeVal / px, 3)} ETH${T("（价值 ", " (worth ")}${fmtUsd(seizeVal)}${T("）→ 剩 ", ") → left: ")}${fmtNum(qty, 3)} ETH${T("、债务 ", ", debt ")}${fmtUsd(debt)}${T("，HF ", ", HF ")}${isFinite(HF(qty, px, hf.lt, debt)) ? fmtNum(HF(qty, px, hf.lt, debt), 3) : "∞"}</div>`);
       if (qty <= 1e-9) { bad = debt; break; }
     }
-    if (!rounds.length) { liqLog = `<div class="ok">${T("健康因子 ≥ 1：没有人能清算这笔贷款。", "Health factor ≥ 1: nobody can liquidate this loan.")}</div>`; paint(); return; }
+    if (!rounds.length) { liqLog = `<div class="ok">${T(`健康因子 ${tex(String.raw`\ge 1`)}：没有人能清算这笔贷款。`, `Health factor ${tex(String.raw`\ge 1`)}: nobody can liquidate this loan.`)}</div>`; paint(); return; }
     rounds.push(`<div class="warn">${T("你付出的清算罚金合计 ", "Total liquidation penalty you paid: ")}${fmtUsd(penalty)}${T("，并在 ", ", and you were forced to sell at ")}${fmtUsd(px)}${T(" 的低位被迫卖币。", " near the lows.")}</div>`);
     if (bad > 0.01) rounds.push(`<div class="bad"><b>${T("坏账 ", "Bad debt: ")}${fmtUsd(bad)}</b>${T("——抵押品已被拿光，剩下的债务没人还，由协议金库、安全模块或存款人承担。", ". The collateral is gone and nobody repays the rest; the protocol treasury, a safety module or depositors absorb it.")}</div>`);
     liqLog = rounds.join("");
@@ -153,6 +155,11 @@ export default function mount(root, lang) {
     });
     q("#dl-chart2").innerHTML = chartBlock(res, [["var(--red)", T("借款利率（%）", "Borrow rate (%)")], ["var(--green)", T("存款利率（%）", "Supply rate (%)")], ["var(--blue)", T("3 个月国库券（%）", "3-month T-bill (%)")]]);
     const lines = [];
+    const [BR, SR, RF] = [T("借款利率", "borrow rate"), T("存款利率", "supply rate"), T("储备金率", "reserve factor")];
+    lines.push(rc.u <= rc.kink
+      ? tex(String.raw`\text{${BR}} = ${L(fmtPct(rc.s1, 1))} \times \frac{${L(fmtPct(rc.u, 1))}}{${L(fmtPct(rc.kink, 0))}} = ${L(fmtPct(b, 2))}`)
+      : tex(String.raw`\text{${BR}} = ${L(fmtPct(rc.s1, 1))} + ${L(fmtPct(rc.s2, 0))} \times \frac{${L(fmtPct(rc.u, 1))} - ${L(fmtPct(rc.kink, 0))}}{100\% - ${L(fmtPct(rc.kink, 0))}} = ${L(fmtPct(b, 2))}`));
+    lines.push(tex(String.raw`\text{${SR}} = \text{${BR}} \times U \times (1 - \text{${RF}}) = ${L(fmtPct(b, 2))} \times ${L(fmtPct(rc.u, 1))} \times (1 - ${L(fmtPct(rc.rf, 0))}) = ${L(fmtPct(s, 2))}`));
     if (rc.u > rc.kink) lines.push(`<span class="warn">${T("已越过拐点：利率陡升，协议在用高利率吸引存款、逼借款人还钱，防止池子被借空。", "Past the kink: rates spike as the protocol uses high rates to pull in deposits and push borrowers to repay, so the pool isn't drained.")}</span>`);
     if (rc.u >= 0.995) lines.push(`<span class="bad">${T("利用率接近 100%：存款人此刻几乎取不出钱——这就是链上版的挤兑。", "Utilization near 100%: depositors can barely withdraw right now. This is the on-chain version of a run.")}</span>`);
     lines.push(sp >= 0

@@ -15,10 +15,10 @@ When Stage 6.2 covered preferred stock, it mentioned in passing that US preferre
 Say you buy one share of STRF for $100 and receive $10 a year. Naturally you assume the $10 is "income" and taxable. But US tax law says: **money a corporation distributes to its shareholders is a "dividend" only to the extent it comes out of the company's "earnings and profits" (E&P).** If the company has no E&P, neither this year nor accumulated over past years, the distribution isn't a dividend for tax purposes. It is a **return of capital (ROC)**:
 
 - It is **not included in taxable income** that year.
-- But your **cost basis**, the "book cost" of your share for tax purposes, is reduced: $100 → $90.
+- But your **cost basis**, the "book cost" of your share for tax purposes, is reduced: \\(\\$100 \\to \\$90\\).
 - When you sell, the sale price minus the reduced basis is taxed as a **capital gain**.
 
-A worked example. You hold for five years and all $10 each year is ROC, so your basis falls from $100 to $50. At the end of year five you sell at $100: capital gain = $100 − $50 = **$50**. Held for over a year, that $50 is taxed at the long-term capital gains rate (15% federal for most people). Compare: if the same money had arrived as ordinary dividends taxed at a 32% marginal rate, you'd pay $3.20 every year. **ROC does two things: it pushes the tax back to the sale (deferral), and it can turn "ordinary income" into "capital gains" (rate conversion).**
+A worked example. You hold for five years and all $10 each year is ROC, so your basis falls from $100 to \\(\\$100 - 5 \\times \\$10 = \\$50\\). At the end of year five you sell at $100: \\(\\text{capital gain} = \\$100 - \\$50 = \\mathbf{\\$50}\\). Held for over a year, that $50 is taxed at the long-term capital gains rate (15% federal for most people). Compare: if the same money had arrived as ordinary dividends taxed at a 32% marginal rate, you'd pay \\(\\$10 \\times 32\\% = \\$3.20\\) every year. **ROC does two things: it pushes the tax back to the sale (deferral), and it can turn "ordinary income" into "capital gains" (rate conversion).**
 
 In its earnings materials Strategy has said that because its tax E&P is negative, it expects its preferred distributions to be treated as **tax-deferred return of capital**; Strive also treats SATA distributions as return of capital and files a Form 8937 every month. For income investors that's a real selling point: the same 10% coupon can mean a noticeably higher after-tax return.
 
@@ -80,20 +80,21 @@ A full example (US individual investor, taxable account, illustrative rates): bu
 <tr><th>Assumption</th><th>Tax paid each year while holding</th><th>Tax paid on sale</th><th>Total over 5 years</th><th>Present value of the tax at 5%</th></tr>
 <tr><td>Ordinary dividends (32% marginal rate)</td><td>$3.20</td><td>0 (basis $100, sale $100)</td><td>$16.00</td><td>about $13.85</td></tr>
 <tr><td>Qualified dividends (15%)</td><td>$1.50</td><td>0</td><td>$7.50</td><td>about $6.49</td></tr>
-<tr><td>All return of capital (long-term gains at 15%)</td><td>0</td><td>($100 − $50) × 15% = $7.50</td><td>$7.50</td><td>about $5.88</td></tr>
+<tr><td>All return of capital (long-term gains at 15%)</td><td>0</td><td>\\((\\$100 - \\$50) \\times 15\\% = \\$7.50\\)</td><td>$7.50</td><td>about $5.88</td></tr>
 </table>
 
 $$
-cost basis = purchase price − cumulative return of capital (not below 0)
-capital gain on sale = sale price − adjusted cost basis
-once basis reaches 0, further "return of capital" becomes a capital gain in the year received
+\\text{cost basis} = \\max\\!\\left(\\text{purchase price} - \\text{cumulative return of capital},\\ 0\\right)
+\\text{capital gain on sale} = \\text{sale price} - \\text{adjusted cost basis}
 $$
+
+The basis never goes below 0; once it reaches 0, further "return of capital" becomes a capital gain in the year received.
 
 Three effects:
 
 - **Deferral.** Tax moves from every year to the year of sale (Stage 2.3: the same tax paid later costs less).
 - **Rate conversion.** Money that might have been taxed at ordinary-income rates is taxed at long-term capital gains rates instead.
-- **The basis "floor."** Hold for ten years with $10 a year of ROC and your basis reaches 0; from year eleven, distributions are taxed as capital gains in the year received, even if the company still has no E&P.
+- **The basis "floor."** Hold for ten years with $10 a year of ROC and your basis reaches \\(\\$100 - 10 \\times \\$10 = 0\\); from year eleven, distributions are taxed as capital gains in the year received, even if the company still has no E&P.
 
 Some rules that are often overlooked (general descriptions only; whether they apply depends on your situation):
 
@@ -148,7 +149,7 @@ Once the deposit is refunded down to zero, anything more you receive can only co
         "$0",
       ],
       answer: 2,
-      explain: "**Cost basis = purchase price − cumulative return of capital** = $100 − $30 = $70. Sell at $100 afterward and the capital gain is $30.",
+      explain: "**\\(\\text{Cost basis} = \\text{purchase price} - \\text{cumulative return of capital}\\)** \\(= \\$100 - \\$30 = \\$70\\). Sell at $100 afterward and the capital gain is \\(\\$100 - \\$70 = \\$30\\).",
     },
     {
       q: "Under US tax law, when is a corporate distribution a \"dividend\"?",

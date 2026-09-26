@@ -16,11 +16,11 @@ Now make the rate 5% with income still growing 4%. After ten years the debt is a
 
 That is all the arithmetic of government debt:
 
-- **r (the average interest rate on the debt):** how much interest the government pays per dollar owed each year.
-- **g (nominal GDP growth):** how fast the economy — the government's “income” — grows each year (real growth plus inflation).
+- **\\(r\\) (the average interest rate on the debt):** how much interest the government pays per dollar owed each year.
+- **\\(g\\) (nominal GDP growth):** how fast the economy — the government's “income” — grows each year (real growth plus inflation).
 - **The primary balance:** leaving interest aside, do taxes cover spending? If not, that gap is the primary deficit.
 
-**When r < g, time is on the borrower's side; when r > g, time is on the creditor's side.** From 2008 to 2021 the United States lived in a world where r was far below g. Rates were so low that many concluded a bit more debt didn't matter. After 2022, rates came back. By late September 2026 the 10-year Treasury yielded about 5.17% and the 30-year about 5.49%; total federal debt passed **$40 trillion** on August 18, 2026; and annual net interest was running at about **$1 trillion**, more than defense spending.
+**When \\(r < g\\), time is on the borrower's side; when \\(r > g\\), time is on the creditor's side.** From 2008 to 2021 the United States lived in a world where r was far below g. Rates were so low that many concluded a bit more debt didn't matter. After 2022, rates came back. By late September 2026 the 10-year Treasury yielded about 5.17% and the 30-year about 5.49%; total federal debt passed **$40 trillion** on August 18, 2026; and annual net interest was running at about **$1 trillion**, more than defense spending.
 
 Once debt is large enough and interest heavy enough, a more dangerous question appears: **does the central bank still dare to raise rates to fight inflation?** A hike raises the government's interest bill, widens the deficit, forces more borrowing... If the central bank is pushed into holding rates below inflation for that reason, monetary policy has become the servant of fiscal policy. That is **fiscal dominance.** It is the deepest layer beneath Lin's first headline — the 30-year yield breaking above 5%. Part of the higher term premium that long-bond buyers demand is compensation for the risk of being quietly repaid in inflated dollars.
 
@@ -38,22 +38,22 @@ This lesson rests on **Idea ①, the price of time** — r is the price of time 
   mechanics: `
 ### ① The arithmetic of debt: r, g and the primary deficit
 
-Let d be debt as a share of GDP and pb the primary balance as a share of GDP (surplus positive, deficit negative). Next year's debt ratio is:
+Let \\(d\\) be debt as a share of GDP and \\(\\mathrm{pb}\\) the primary balance as a share of GDP (surplus positive, deficit negative). Next year's debt ratio is:
 
 $$
-d(next year) = d(this year) × (1 + r) ÷ (1 + g) − pb
+d_{\\text{next year}} = d_{\\text{this year}} \\times \\frac{1 + r}{1 + g} - \\mathrm{pb}
 $$
 
-It says two things. Old debt compounds at (1 + r) while the GDP denominator grows at (1 + g); then this year's primary deficit is added on top. The primary balance needed to **hold the debt ratio steady** is:
+It says two things. Old debt compounds at \\((1 + r)\\) while the GDP denominator grows at \\((1 + g)\\); then this year's primary deficit is added on top. The primary balance needed to **hold the debt ratio steady** (the stabilizing primary surplus \\(\\mathrm{pb}^{*}\\)) is:
 
 $$
-primary surplus needed to stabilize, pb* ≈ d × (r − g) ÷ (1 + g)
+\\mathrm{pb}^{*} \\approx d \\times \\frac{r - g}{1 + g}
 $$
 
-Walk through it with US numbers (CBO's February 2026 baseline, rounded). In 2026, debt held by the public is about **101%** of GDP; the total deficit is about **5.8%**, of which net interest is about **3.3%**, so the **primary deficit is about 2.5%**. The average interest rate on the debt is roughly 3.3% ÷ 101% ≈ **3.3%**. Assume nominal growth g = 4% (illustrative):
+Walk through it with US numbers (CBO's February 2026 baseline, rounded). In 2026, debt held by the public is about **101%** of GDP; the total deficit is about **5.8%**, of which net interest is about **3.3%**, so the **primary deficit is about 2.5%**. The average interest rate on the debt is roughly \\(3.3\\% \\div 101\\% \\approx 3.3\\%\\). Assume nominal growth \\(g = 4\\%\\) (illustrative):
 
-- At r = 3.3%: next year's ratio ≈ 101 × 1.033 ÷ 1.04 + 2.5 ≈ **102.8%**, rising about 1.8 points a year — broadly in line with CBO's projection of about 120% by 2036. The stabilizing pb* ≈ −0.7%: cut the primary deficit from 2.5% to about 0.7% of GDP and the ratio holds.
-- But the average rate won't stay at 3.3%. **Every bond that matures has to be refinanced at today's market rate.** If the average rate drifts up to about 5% — close to the 10-year yield in September 2026 — next year's ratio ≈ 101 × 1.05 ÷ 1.04 + 2.5 ≈ **104.5%**, rising about 3.5 points a year, and pb* becomes about **+1.0%**. The government would need to swing from a 2.5% primary deficit to a 1% primary surplus — an adjustment of about 3.5% of GDP, which on nominal GDP of roughly $32.5 trillion is **more than $1 trillion a year.**
+- At \\(r = 3.3\\%\\): next year's ratio \\(\\approx \\dfrac{101 \\times 1.033}{1.04} + 2.5 \\approx 102.8\\%\\), rising about 1.8 points a year — broadly in line with CBO's projection of about 120% by 2036. The stabilizing \\(\\mathrm{pb}^{*} \\approx -0.7\\%\\): cut the primary deficit from 2.5% to about 0.7% of GDP and the ratio holds.
+- But the average rate won't stay at 3.3%. **Every bond that matures has to be refinanced at today's market rate.** If the average rate drifts up to about 5% — close to the 10-year yield in September 2026 — next year's ratio \\(\\approx \\dfrac{101 \\times 1.05}{1.04} + 2.5 \\approx 104.5\\%\\), rising about 3.5 points a year, and \\(\\mathrm{pb}^{*}\\) becomes about **+1.0%**. The government would need to swing from a 2.5% primary deficit to a 1% primary surplus — an adjustment of about 3.5% of GDP, which on nominal GDP of roughly $32.5 trillion is **more than $1 trillion a year.**
 
 That is the brutal part of the r-versus-g race: a small gap between r and g, multiplied by a 100% debt ratio, becomes a big number. **The higher the debt, the more rate-sensitive the budget** — just as a longer-duration bond in Stage 4.4 is more sensitive to yields.
 
@@ -107,7 +107,7 @@ Historically, high debts have rarely been paid off. US debt held by the public p
 - **Inflation:** notably several bursts in the late 1940s.
 - **Financial repression:** from 1942 to 1951, at the Treasury's request, the Fed pegged long-term Treasury yields at about 2.5%. Even when inflation ran far above that, bondholders had to accept **negative real rates.** Only with the Treasury–Fed Accord of March 1951 did the Fed regain the freedom to set rates independently.
 
-Run it through the Fisher equation from Stage 2.5: with a nominal rate of 2.5% and inflation of 5%, the real rate is 1.025 ÷ 1.05 − 1 ≈ **−2.4%.** Every year bondholders quietly lose 2.4% of purchasing power and the government's real debt burden shrinks by the same amount — **a tax that never needs a vote in Congress.** Carmen Reinhart and Belen Sbrancia's 2011 study estimated that the debt “liquidated” by negative real rates in the postwar US and UK averaged roughly 3–4% of GDP a year.
+Run it through the Fisher equation from Stage 2.5: with a nominal rate of 2.5% and inflation of 5%, the real rate is \\(\\dfrac{1.025}{1.05} - 1 \\approx -2.4\\%\\). Every year bondholders quietly lose 2.4% of purchasing power and the government's real debt burden shrinks by the same amount — **a tax that never needs a vote in Congress.** Carmen Reinhart and Belen Sbrancia's 2011 study estimated that the debt “liquidated” by negative real rates in the postwar US and UK averaged roughly 3–4% of GDP a year.
 
 Modern repression is subtler: rules that nudge banks and pension funds to hold more government debt; privileged treatment of “risk-free” assets in collateral rules; limiting the reserves behind a new payment instrument (stablecoins) to short-term Treasuries. **Each has a sensible rationale on its own; together they form a pipe of captive demand** that lets a government borrow below the market-clearing rate.
 
@@ -151,7 +151,7 @@ The third option takes the least effort, which is why history uses it most; but 
 
   quiz: [
     {
-      q: "A country has debt of 100% of GDP, a balanced primary budget (pb = 0), an average interest rate of 3% and nominal growth of 5%. Roughly what is the debt ratio a year later?",
+      q: "A country has debt of 100% of GDP, a balanced primary budget (\\(\\mathrm{pb} = 0\\)), an average interest rate of 3% and nominal growth of 5%. Roughly what is the debt ratio a year later?",
       options: [
         "About 98.1% — growth outruns interest, so the ratio falls on its own",
         "About 102% — interest pushes the ratio up",
@@ -159,7 +159,7 @@ The third option takes the least effort, which is why history uses it most; but 
         "About 95% — because growth is 5%",
       ],
       answer: 0,
-      explain: "100 × 1.03 ÷ 1.05 ≈ 98.1. **When r < g, the debt ratio falls even if nothing is repaid** — that's the r-versus-g race.",
+      explain: "\\(\\dfrac{100 \\times 1.03}{1.05} \\approx 98.1\\). **When \\(r < g\\), the debt ratio falls even if nothing is repaid** — that's the r-versus-g race.",
     },
     {
       q: "Using the lesson's illustrative numbers — debt about 101% of GDP, nominal growth 4% — if the average interest rate rises from about 3.3% to about 5%, how does the primary balance needed to stabilize debt change?",
@@ -170,7 +170,7 @@ The third option takes the least effort, which is why history uses it most; but 
         "From about −2.5% to about −5.8%",
       ],
       answer: 2,
-      explain: "pb* ≈ d × (r − g) ÷ (1 + g): 101 × (−0.7%) ÷ 1.04 ≈ −0.7%; 101 × 1% ÷ 1.04 ≈ +1.0%. **A 1.7-point rise in the rate calls for about 1.7% of GDP of extra fiscal effort — about 3.5% starting from today's roughly −2.5% primary deficit.**",
+      explain: "\\(\\mathrm{pb}^{*} \\approx d \\times \\dfrac{r - g}{1 + g}\\): \\(\\dfrac{101 \\times (-0.7\\%)}{1.04} \\approx -0.7\\%\\); \\(\\dfrac{101 \\times 1\\%}{1.04} \\approx +1.0\\%\\). **A 1.7-point rise in the rate calls for about 1.7% of GDP of extra fiscal effort — about 3.5% starting from today's roughly −2.5% primary deficit.**",
     },
     {
       q: "From 1942 to 1951 the Fed pegged long-term Treasury yields at about 2.5% while inflation at times ran far higher. What is this arrangement called, and what does it do to the debt?",

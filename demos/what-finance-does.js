@@ -144,6 +144,7 @@ export default function mount(root, lang) {
       <div id="wf-bars"></div>
       <div class="demo-log" id="wf-tlog"></div>`;
     const upd = () => {
+      if (!$("#wf-loan")) return; // 面板已切换、旧控件已移除时忽略迟到的事件
       loan = +$("#wf-loan").value; rate = +$("#wf-rate").value; years = +$("#wf-yrs").value;
       $("#wf-loan-v").textContent = fmtUsd(loan);
       $("#wf-rate-v").textContent = fmtPct(rate, 2);
@@ -182,6 +183,7 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-log" id="wf-slog"></div>`;
     const upd = () => {
+      if (!$("#wf-amt")) return;
       amt = +$("#wf-amt").value; wireFee = +$("#wf-wf").value; fxSpread = +$("#wf-fx").value; rampFee = +$("#wf-rf").value;
       $("#wf-amt-v").textContent = fmtUsd(amt);
       $("#wf-wf-v").textContent = fmtUsd(wireFee);
@@ -225,6 +227,7 @@ export default function mount(root, lang) {
       return perHome;
     };
     const upd = () => {
+      if (!$("#wf-h")) return;
       homes = Math.round(Math.pow(10, +$("#wf-h").value)); prob = +$("#wf-p").value; loss = +$("#wf-l").value;
       $("#wf-h-v").textContent = fmtNum(homes, 0);
       $("#wf-p-v").textContent = fmtPct(prob, 1);

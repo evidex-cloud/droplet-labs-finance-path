@@ -2,8 +2,10 @@
 // 发行人按 2025 年 10 月的 VWAP 框架调利率（受合同的降息上限与 SOFR 地板约束），
 // 或按 2026-06-29 的新政策“维持利率 + 折价回购”；对照同票息的固定利率永续优先股。
 // 价格模型（示意）：价格 = 可信度 κ × 理想每月重置价 +（1 − κ）× 永续年金价，封顶 101（赎回价）。
-import { perpetuity, clamp, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { perpetuity, clamp, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -109,10 +111,15 @@ export default function mount(root, lang) {
       chartBlock(c2, [["var(--btc)", T("STRC 股息率", "STRC dividend rate")], ["var(--blue)", T("市场要求收益率", "Required yield")], ["var(--green)", "1M SOFR"]]);
 
     const lines = [];
-    lines.push(`${T("期初：SOFR 约 3.9% + 比特币信用利差约 8.1 个百分点 = 要求收益率 12.0%，与 12% 股息率相等，价格在 100。", "Start: SOFR about 3.9% + about 8.1 points of bitcoin credit spread = a 12.0% required yield, equal to the 12% rate, so the price sits at 100.")}`);
+    lines.push(T(
+      `期初（约数）：${tex(String.raw`\underbrace{3.9\%}_{\text{SOFR}} + \underbrace{8.1\ \text{个百分点}}_{\text{比特币信用利差}} = \underbrace{12.0\%}_{\text{要求收益率}}`)}，与 12% 股息率相等，价格在 100。`,
+      `Start (approx.): ${tex(String.raw`\underbrace{3.9\%}_{\text{SOFR}} + \underbrace{8.1\ \text{pts}}_{\text{bitcoin credit spread}} = \underbrace{12.0\%}_{\text{required yield}}`)}, equal to the 12% rate, so the price sits at 100.`
+    ));
+    const endP = s.P[M], perHalf = (100 * s.r) / 24;
+    lines.push(`${T("期末：", "At the end: ")}${tex(String.raw`\text{${T("每半月股息", "half-month dividend")}} = \dfrac{\$100 \times ${texv(fmtPct(s.r, 2))}}{24} = ${texv(fmtUsd(perHalf, 4))}`)}${T("；", "; ")}${tex(String.raw`\text{${T("当前收益率", "current yield")}} = \dfrac{\$100 \times ${texv(fmtPct(s.r, 2))}}{${texv(fmtUsd(endP, 2))}} \approx ${texv(fmtPct((100 * s.r) / endP, 2))}`)}`);
     if (st.policy === "bands") {
-      lines.push(`${T("旧框架下股息率最高升到", "Under the old framework the rate peaked at")} <b>${fmtPct(s.maxRate, 2)}</b>${T("；每加 25 个基点，按 100 亿美元名义每年多付约 2,500 万美元。", "; each 25 bp costs about $25M a year on $10B of notional.")}`);
-      if (st.sofr < 0) lines.push(`${T("SOFR 下降时，降息仍受“每月 ≤ 25bp + SOFR 降幅”与“不低于 SOFR”约束——利率只能慢慢往下走。", "As SOFR falls, cuts are still limited to 25 bp plus the SOFR decline a month, and never below SOFR, so the rate can only drift down slowly.")}`);
+      lines.push(`${T("旧框架下股息率最高升到", "Under the old framework the rate peaked at")} <b>${fmtPct(s.maxRate, 2)}</b>${T(`；每加 25 个基点，按 100 亿美元名义每年多付约 ${tex(String.raw`0.25\% \times 100\ \text{亿} = 2{,}500\ \text{万}`)} 美元。`, `; each 25 bp costs about ${tex(String.raw`0.25\% \times \$10\text{B} = \$25\text{M}`)} a year on $10B of notional.`)}`);
+      if (st.sofr < 0) lines.push(`${T(`SOFR 下降时，降息仍受“${tex(String.raw`\text{每月降幅} \le 25\ \text{bp} + \text{SOFR 降幅}`)}”与“不低于 SOFR”约束——利率只能慢慢往下走。`, "As SOFR falls, cuts are still limited to 25 bp plus the SOFR decline a month, and never below SOFR, so the rate can only drift down slowly.")}`);
     } else {
       lines.push(`${T("新政策：利率维持", "New policy: the rate holds at")} ${fmtPct(s.r, 2)}${T("；折价回购花费", "; discounted buybacks spent")} ${fmtUsd(s.spent, 2)}B${T("，注销名义", ", retiring")} ${fmtUsd(s.retired, 2)}B ${T("名义，折价收益约", "of notional, a discount capture of about")} ${fmtUsd((s.retired - s.spent) * 1000, 0)}M${T("。", ".")}`);
       lines.push(`${T("（简化：真实政策每月仍综合评估是否调整，这里假设利率一直不动；回购总额以 20 亿美元授权为上限。）", "(Simplified: the real policy still reviews the rate monthly; here the rate never moves, and buybacks are capped at the $2.0B authorization.)")}`);

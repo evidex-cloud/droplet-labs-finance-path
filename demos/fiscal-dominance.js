@@ -1,6 +1,6 @@
 // 交互演示：债务/GDP 路径模拟器——设定基本收支、实际增长、通胀、新债的市场利率与平均期限（重新定价速度），
 // 可选“金融抑制”把新债利率压住；看 30 年里债务率、利息负担、r − g 与“稳定债务所需的基本盈余”怎么变，并与 CBO 式假设对比。
-import { realRate, fmtNum, fmtPct, clamp } from "./_fin.js";
+import { realRate, fmtNum, fmtPct, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -27,7 +27,7 @@ export default function mount(root, lang) {
 
   root.innerHTML = `
     <div class="demo">
-      <div class="demo-head">${T("🧮 r 与 g 的赛跑：美国债务/GDP 的 30 年路径（示意模型）", "🧮 The race between r and g: a 30-year path for US debt/GDP (illustrative model)")}</div>
+      <div class="demo-head">${T("🧮 ", "🧮 The race between ")}${tex("r")}${T(" 与 ", " and ")}${tex("g")}${T(" 的赛跑：美国债务/GDP 的 30 年路径（示意模型）", ": a 30-year path for US debt/GDP (illustrative model)")}</div>
       <div class="demo-grid">
         <div class="demo-block">
           <label class="demo-label">${T("起点债务率（公众持有债务 / GDP）", "Starting debt ratio (debt held by public / GDP)")}${T("：", ": ")}<b id="fd-d0v"></b></label>
@@ -57,8 +57,8 @@ export default function mount(root, lang) {
       <div class="stat-row">
         <div class="stat"><div class="k">${T("10 年后 / 30 年后债务率", "Debt ratio after 10 / 30 years")}</div><div class="v acc" id="fd-d">–</div></div>
         <div class="stat"><div class="k">${T("10 年后利息负担（按今天的 GDP 折算）", "Interest burden in year 10 (in today's GDP dollars)")}</div><div class="v" id="fd-i">–</div></div>
-        <div class="stat"><div class="k">${T("第 10 年 r − g", "r − g in year 10")}</div><div class="v" id="fd-rg10">–</div></div>
-        <div class="stat"><div class="k">${T("第 10 年稳定债务所需基本收支", "Primary balance needed to stabilize, year 10")}</div><div class="v" id="fd-pbs">–</div></div>
+        <div class="stat"><div class="k">${T("第 10 年 ", "")}${tex("r - g")}${T("", " in year 10")}</div><div class="v" id="fd-rg10">–</div></div>
+        <div class="stat"><div class="k">${T("第 10 年稳定债务所需基本收支 ", "Primary balance needed to stabilize, year 10, ")}${tex(String.raw`\mathrm{pb}^{*}`)}</div><div class="v" id="fd-pbs">–</div></div>
       </div>
       <div class="demo-btns">
         <button class="demo-btn" data-p="cbo">${T("📖 CBO 式假设（10 年期 4.1%）", "📖 CBO-style assumption (10-year at 4.1%)")}</button>
@@ -71,8 +71,8 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-log" id="fd-log"></div>
       <p class="demo-tip">${T(
-        "先对比两条线：蓝色是你的设定，紫色是“CBO 式”假设（新债利率 4.1%）。只把市场利率从 4.1% 拉到 5.2%，30 年后的债务率就差出一大截——r 一旦超过 g，利息会自己滚大。再把“平均期限”调短：多发短债让利率上升更快地传到利息账单上。最后依次点三个“出口”：增长和紧缩都能稳住债务，但“通胀 + 抑制”也能——代价是实际利率为负，国债持有人的购买力被悄悄拿走。模型为示意，不是预测。",
-        "Compare the two lines first: blue is your setting, violet is a “CBO-style” assumption (new debt at 4.1%). Just moving the market rate from 4.1% to 5.2% opens a wide gap in the debt ratio after 30 years — once r exceeds g, interest compounds on itself. Then shorten the average maturity: leaning on bills passes higher rates into the interest bill faster. Finally try the three exits: growth and austerity can both stabilize the debt — but so can “inflation + repression,” at the cost of negative real rates that quietly take bondholders' purchasing power. Illustrative model, not a forecast."
+        "先对比两条线：蓝色是你的设定，紫色是“CBO 式”假设（新债利率 4.1%）。只把市场利率从 4.1% 拉到 5.2%，30 年后的债务率就差出一大截——一旦 " + tex("r > g") + "，利息会自己滚大。再把“平均期限”调短：多发短债让利率上升更快地传到利息账单上。最后依次点三个“出口”：增长和紧缩都能稳住债务，但“通胀 + 抑制”也能——代价是实际利率为负，国债持有人的购买力被悄悄拿走。模型为示意，不是预测。",
+        "Compare the two lines first: blue is your setting, violet is a “CBO-style” assumption (new debt at 4.1%). Just moving the market rate from 4.1% to 5.2% opens a wide gap in the debt ratio after 30 years — once " + tex("r > g") + ", interest compounds on itself. Then shorten the average maturity: leaning on bills passes higher rates into the interest bill faster. Finally try the three exits: growth and austerity can both stabilize the debt — but so can “inflation + repression,” at the cost of negative real rates that quietly take bondholders' purchasing power. Illustrative model, not a forecast."
       )}</p>
     </div>`;
 
@@ -89,7 +89,9 @@ export default function mount(root, lang) {
     $("#fd-matv").textContent = fmtNum(st.mat, 1) + T(" 年", " yrs");
     root.querySelectorAll("#fd-rep button").forEach((b) => b.classList.toggle("on", (b.dataset.v === "1") === st.rep));
     const real = realRate(A.rNew, st.inf / 100);
-    $("#fd-meta").innerHTML = `${T("名义增速 g", "Nominal growth g")} = <b>${fmtPct(A.g, 2)}</b>${T("；新债利率", "; new-debt rate")} <b>${fmtPct(A.rNew, 2)}</b>${T("，实际利率", ", real rate")} <b style="color:${real < 0 ? "var(--red)" : "var(--ink)"}">${fmtPct(real, 2)}</b>`;
+    const pc = (x) => fmtNum(x * 100, 2) + String.raw`\%`;
+    const onePlus = (p) => (p < 0 ? String.raw`1 - ${fmtNum(-p, 1)}\%` : String.raw`1 + ${fmtNum(p, 1)}\%`);
+    $("#fd-meta").innerHTML = `${T("名义增速 ", "Nominal growth ")}${tex(String.raw`g = (${onePlus(st.rg)})(${onePlus(st.inf)}) - 1 = ${pc(A.g)}`)}${T("；新债利率", "; new-debt rate")} <b>${fmtPct(A.rNew, 2)}</b>${T("，实际利率 ", ", real rate ")}<span style="color:${real < 0 ? "var(--red)" : "var(--ink)"}">${tex(String.raw`r_{\text{real}} = \frac{1 + ${pc(A.rNew)}}{1 + ${fmtNum(st.inf, 1)}\%} - 1 = ${pc(real)}`)}</span>`;
 
     const c1 = lineChart({
       fns: [{ f: (x) => B.D[Math.round(x)], cls: "line2" }, { f: (x) => A.D[Math.round(x)], cls: "line" }],
@@ -111,6 +113,7 @@ export default function mount(root, lang) {
     $("#fd-pbs").textContent = sg(pbStar, 1) + "%";
 
     const lines = [];
+    lines.push(tex(String.raw`\mathrm{pb}^{*} = d \times \frac{r - g}{1 + g} = ${fmtNum(d10, 0)}\% \times \frac{${pc(r10)} - ${pc(A.g)}}{1 + ${pc(A.g)}} \approx ${sg(pbStar, 1)}\%`));
     const gap = pbStar - st.pb;
     if (gap > 0.05) lines.push(`${T("第 10 年：要让债务率不再上升，基本收支需要约", "Year 10: to stop the ratio rising, the primary balance must be about")} <b>${sg(pbStar, 1)}%</b>${T("，你设定的是", "; you set")} <b>${sg(st.pb, 1)}%</b>${T("——差距约 GDP 的", " — a gap of about")} <b>${fmtNum(gap, 1)}%</b>${T("（按今天 GDP 约 ", " of GDP (about $")}${fmtNum(gap / 100 * GDP_T, 2)}${T(" 万亿美元/年）。", "T a year at today's GDP).")}`);
     else lines.push(`<span class="ok">${T("第 10 年：稳定债务只需要约", "Year 10: stabilizing the debt needs only about")} <b>${sg(pbStar, 1)}%</b>${T("，你设定的", "; your")} <b>${sg(st.pb, 1)}%</b> ${T("已经足够，债务率在下降或持平。", "is already enough, so the ratio is flat or falling.")}</span>`);

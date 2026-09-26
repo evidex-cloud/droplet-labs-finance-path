@@ -1,6 +1,9 @@
 // 交互演示：由两个时点快照算 BTC Yield / BTC Gain / BTC $ Gain，并对照“每股净比特币”的变化；
 // 下半部分：2026 年季度口径（相对年初、可相加）与传统环比口径的对照。
-import { btcYield, btcGain, btcDollarGain, netReserve, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { btcYield, btcGain, btcDollarGain, netReserve, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -95,13 +98,13 @@ export default function mount(root, lang) {
     ].map(([k, v, c]) => `<div class="stat"><div class="k">${k}</div><div class="v ${c}">${v}</div></div>`).join("");
 
     const lines = [];
-    lines.push(`BPS${T("：", ": ")}${fmtNum(bps0, 0)} → ${fmtNum(bps1, 0)} ${T("聪", "sats")} ⇒ BTC Yield = ${fmtNum(bps1, 0)} ÷ ${fmtNum(bps0, 0)} − 1 = <b>${fmtPct(y, 2)}</b>`);
-    lines.push(`BTC Gain = ${T("期初持币", "starting holdings")} ${fmtNum(START.btc, 0)} × ${fmtPct(y, 2)} = <b>${fmtNum(g, 1)} BTC</b>${T("；本期持币变化 ", "; change in holdings this period ")}${bought >= 0 ? "+" : ""}${fmtNum(bought, 0)} BTC${bought > 0 && g < bought ? T("——差额属于新股东。", " — the difference belongs to new shareholders.") : T("。", ".")}`);
-    lines.push(`BTC $ Gain = ${fmtNum(g, 1)} × ${fmtUsd(e.px)} = <b>${fmtUsd(dg)}</b>`);
+    lines.push(`BPS${T("：", ": ")}${fmtNum(bps0, 0)} → ${fmtNum(bps1, 0)} ${T("聪", "sats")} ⇒ ${tex(String.raw`\text{BTC Yield} = \frac{${texv(fmtNum(bps1, 0))}}{${texv(fmtNum(bps0, 0))}} - 1 = \mathbf{${texv(fmtPct(y, 2))}}`)}`);
+    lines.push(`${tex(String.raw`\text{BTC Gain} = \text{${T("期初持币", "starting holdings")}}\ ${texv(fmtNum(START.btc, 0))} \times ${texv(fmtPct(y, 2))} = \mathbf{${texv(fmtNum(g, 1))}}\ \text{BTC}`)}${T("；本期持币变化 ", "; change in holdings this period ")}${bought >= 0 ? "+" : ""}${fmtNum(bought, 0)} BTC${bought > 0 && g < bought ? T("——差额属于新股东。", " — the difference belongs to new shareholders.") : T("。", ".")}`);
+    lines.push(tex(String.raw`\text{BTC \$ Gain} = ${texv(fmtNum(g, 1))} \times ${texv(fmtUsd(e.px))} = \mathbf{${texv(fmtUsd(dg))}}`));
     const note = Math.abs(y - netChg) > 0.005
       ? `<span class="warn">${T("毛口径与净口径分歧：BTC Yield 没有扣除新增的优先索取权、也不承认美元储备——这就是阶段 16.1 讲的“毛与净”。", "Gross and net disagree: BTC Yield ignores new senior claims and gives no credit for the USD reserve — the gross-versus-net gap of Stage 16.1.")}</span>`
       : `<span class="ok">${T("毛口径与净口径基本一致：没有新增优先索取权或现金变化。", "Gross and net roughly agree: no new senior claims or cash changes.")}</span>`;
-    lines.push(`${T("每股净比特币（净储备 ÷ 股数）", "Net BTC per share (Net Reserve ÷ shares)")}${T("：", ": ")}${fmtUsd(net0, 2)} → ${fmtUsd(net1, 2)} (${fmtPct(netChg, 2)}) ${note}`);
+    lines.push(`${tex(String.raw`\text{${T("每股净比特币", "Net BTC per share")}} = \frac{\text{${T("净储备", "Net Reserve")}}}{\text{${T("股数", "shares")}}}`)}${T("：", ": ")}${fmtUsd(net0, 2)} → ${fmtUsd(net1, 2)} (${fmtPct(netChg, 2)}) ${note}`);
     q("#yg-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   }
 
@@ -116,7 +119,7 @@ export default function mount(root, lang) {
       rows += `<tr style="border-top:1px solid var(--line)"><td>Q${i}</td><td>${fmtPct(newQ, 1)}</td><td>${fmtPct(qoq, 1)}</td><td>${fmtPct(sumNew, 1)}</td><td>${fmtPct(chain - 1, 1)}</td></tr>`;
     }
     q("#yg-qtab").innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:13px;margin:8px 0"><tr><th>${T("季度", "Quarter")}</th><th>${T("2026 口径（相对年初）", "2026 convention (vs start)")}</th><th>${T("环比口径", "Quarter on quarter")}</th><th>${T("2026 口径累加", "2026 running sum")}</th><th>${T("环比连乘", "Q-o-Q compounded")}</th></tr>${rows}</table>
-      <div class="demo-out">${T("两列累计值永远相等（都等于 期末 ÷ 年初 − 1），但季度数不同：2026 口径可以直接相加，也更容易出现负的季度。", "The two cumulative columns always match (both equal end ÷ start − 1), but the quarterly figures differ: 2026-style quarters simply add, and negative quarters show up more readily.")}</div>`;
+      <div class="demo-out">${T("两列累计值永远相等（都等于 ", "The two cumulative columns always match (both equal ")}${tex(String.raw`\frac{\mathrm{BPS}_{\text{${T("期末", "end")}}}}{\mathrm{BPS}_{\text{${T("年初", "start")}}}} - 1`)}${T("），但季度数不同：2026 口径可以直接相加，也更容易出现负的季度。", "), but the quarterly figures differ: 2026-style quarters simply add, and negative quarters show up more readily.")}</div>`;
   }
 
   paint();

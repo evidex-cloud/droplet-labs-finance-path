@@ -10,7 +10,7 @@ export default {
     "A 12% fixed-rate perpetual preferred has a modified duration of about 8 years: rates up one point, price down about 8%. STRC's design idea is to **reset the dividend rate every month to pull the price back toward $100**, shifting most of the interest-rate risk onto the issuer and handing investors \"short-duration\" bitcoin credit. Its rate has climbed from 9.00% in July 2025 to **12.00%** from July 2026, its payments have gone from monthly to twice a month and may go daily. This lesson takes apart the contract rules, management's rate-setting framework, the 2026 policy shift, and the ways it is **not** a money fund.",
 
   intuition: `
-Go back to Stage 4.4: duration measures how much a price moves for a one-point change in rates. For a perpetual fixed-rate security, modified duration is roughly 1 ÷ yield, about **8.3 years** at a 12% yield. By September 2026 the US 30-year Treasury yield had climbed to about 5.5%, well above where it stood a year earlier. If the yield investors demand on this kind of credit rose from 12% to 13%, a 12% fixed perpetual preferred would fall from $100 to about **$92**.
+Go back to Stage 4.4: duration measures how much a price moves for a one-point change in rates. For a perpetual fixed-rate security, modified duration is roughly \\(\\dfrac{1}{\\text{yield}}\\), about \\(\\dfrac{1}{0.12} \\approx \\mathbf{8.3}\\) years at a 12% yield. By September 2026 the US 30-year Treasury yield had climbed to about 5.5%, well above where it stood a year earlier. If the yield investors demand on this kind of credit rose from 12% to 13%, a 12% fixed perpetual preferred would fall from $100 to about **$92**.
 
 STRC tries to do something different. Its dividend rate isn't fixed; it **can be reset every month**:
 
@@ -35,7 +35,7 @@ This lesson sits on **Idea ① (the price of time)**: a variable rate re-prices 
   mechanics: `
 ### ① Why a variable rate: squeezing duration from 8 years to one month
 
-The price of a perpetual = annual dividend ÷ required yield (the perpetuity of Stage 2.3). With a fixed rate the dividend never changes, so every move in the required yield moves the price:
+The price of a perpetual is \\(\\text{price} = \\dfrac{\\text{annual dividend}}{\\text{required yield}}\\) (the perpetuity of Stage 2.3). With a fixed rate the dividend never changes, so every move in the required yield moves the price:
 
 <table class="pm">
 <tr><th>Required yield</th><th>12% fixed perpetual (per $100 stated)</th><th>Idealized monthly reset (rate moves to market next month)</th></tr>
@@ -46,8 +46,10 @@ The price of a perpetual = annual dividend ÷ required yield (the perpetuity of 
 </table>
 
 $$
-fixed perpetual: price = 100 × dividend rate ÷ required yield; modified duration ≈ 1 ÷ yield ≈ 8.3 years at 12%
-idealized monthly reset: price ≈ 100 × (1 + (dividend rate − required yield) ÷ 12); effective duration ≈ one month
+\\text{fixed perpetual:}\\ \\text{price} = \\frac{100 \\times \\text{dividend rate}}{\\text{required yield}}
+\\text{modified duration} \\approx \\frac{1}{\\text{yield}} = \\frac{1}{12\\%} \\approx 8.3\\ \\text{years}
+\\text{idealized monthly reset:}\\ \\text{price} \\approx 100 \\times \\left(1 + \\frac{\\text{dividend rate} - \\text{required yield}}{12}\\right)
+\\text{effective duration} \\approx \\text{one month}
 $$
 
 That is "engineered short duration." It **moves the interest-rate risk from the investor to the issuer**: when the required yield rises, the issuer pays more dividends each year instead of the investor's principal shrinking. In the language of Stage 4.3, STRC ties itself to the **left end** of the yield curve (the short end, one-month SOFR) rather than to long-term rates on the right.
@@ -91,13 +93,18 @@ That is a pure thermostat: **watch the price, set the rate**.
 
 **The August 31, 2026 statement:** management will recommend keeping the rate at 12.00% "until STRC has demonstrated sustained, healthy trading near $100 per share"; the stated objective is STRC trading at $99–100.
 
-Why the shift? A thermostat only handles the weather. If the walls have cracked (credit worries), turning up the heat just gets more and more expensive. Bitcoin fell from its roughly $126,000 high on October 6, 2025 to a close of about $58,600 on June 30, 2026, down about 54%. The extra yield investors wanted by then was mostly pricing **bitcoin risk**, not interest rates. Each 25 bp increase costs about $25 million a year in extra dividends on roughly $10 billion of notional. Buying back a $100-stated, 12% security at $86–95, by contrast, retires a slice of funding cost at an effective "yield" of about 12.6% to 14% while putting a bid under the price. **The first buybacks in July 2026 were 288,930 shares at an average of about $86.52; by September 20, 2026 they totalled about $1.125 billion**, and the authorization had been raised from $1.0 billion to $2.0 billion.
+Why the shift? A thermostat only handles the weather. If the walls have cracked (credit worries), turning up the heat just gets more and more expensive. Bitcoin fell from its roughly $126,000 high on October 6, 2025 to a close of about $58,600 on June 30, 2026, down about 54%. The extra yield investors wanted by then was mostly pricing **bitcoin risk**, not interest rates. Each 25 bp increase costs about \\(0.25\\% \\times \\$10\\text{B} = \\$25\\text{M}\\) a year in extra dividends on roughly $10 billion of notional. Buying back a $100-stated, 12% security at $86–95, by contrast, retires a slice of funding cost at an effective "yield" of about 12.6% to 14% (\\(\\dfrac{12}{95} \\approx 12.6\\%\\), \\(\\dfrac{12}{86} \\approx 14\\%\\)) while putting a bid under the price. **The first buybacks in July 2026 were 288,930 shares at an average of about $86.52; by September 20, 2026 they totalled about $1.125 billion**, and the authorization had been raised from $1.0 billion to $2.0 billion.
 
 <figure><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">STRC's thermostat: price ↔ dividend rate (and its limits)</text><rect x="235" y="36" width="170" height="48" rx="8" fill="var(--red-soft)" stroke="var(--red)"/><text x="320" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">Price falls below $99</text><text x="320" y="72" text-anchor="middle" font-size="10" fill="var(--muted)">(5-day VWAP before month-end)</text><rect x="440" y="112" width="170" height="48" rx="8" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="525" y="132" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">Raise the dividend rate</text><text x="525" y="148" text-anchor="middle" font-size="10" fill="var(--muted)">+25 to +50 bp (2025 framework)</text><rect x="235" y="188" width="170" height="48" rx="8" fill="var(--green-soft)" stroke="var(--green)"/><text x="320" y="208" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">Real yield rises</text><text x="320" y="224" text-anchor="middle" font-size="10" fill="var(--muted)">new buyers step in</text><rect x="30" y="112" width="170" height="48" rx="8" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="115" y="132" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">Price back near $100</text><text x="115" y="148" text-anchor="middle" font-size="10" fill="var(--muted)">target $99–100</text><path d="M405 60 Q500 62 520 108" fill="none" stroke="var(--muted)" stroke-width="1.5"/><polygon points="516,106 521,112 524,104" fill="var(--muted)"/><path d="M525 160 Q520 205 409 212" fill="none" stroke="var(--muted)" stroke-width="1.5"/><polygon points="411,208 405,212 411,216" fill="var(--muted)"/><path d="M235 212 Q130 208 118 164" fill="none" stroke="var(--muted)" stroke-width="1.5"/><polygon points="114,166 118,160 122,166" fill="var(--muted)"/><path d="M115 112 Q125 62 231 60" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/><polygon points="229,56 235,60 229,64" fill="var(--muted)"/><text x="320" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Thermostat</text><text x="320" y="147" text-anchor="middle" font-size="10" fill="var(--muted)">price back at 100 → rate stops moving</text><rect x="16" y="250" width="300" height="44" rx="6" fill="var(--surface-2)" stroke="var(--line)"/><text x="26" y="268" font-size="10" fill="var(--ink)">Price ≥ $101: may cut (≤ 25 bp + SOFR decline a month,</text><text x="26" y="284" font-size="10" fill="var(--ink)">never below SOFR), issue more, or call at $101</text><rect x="324" y="250" width="300" height="44" rx="6" fill="var(--red-soft)" stroke="var(--red)"/><text x="334" y="268" font-size="10" fill="var(--ink)">Credit shock: since 2026-06-29, no raise "solely" for</text><text x="334" y="284" font-size="10" fill="var(--ink)">trading below par; buybacks instead (~$1.125B by 9/20)</text></svg><figcaption>Against rate moves the thermostat works well. Against a credit (bitcoin) shock, pulling the price back to par could take a very high rate, so in June 2026 Strategy switched to "hold 12% plus buybacks below par."</figcaption></figure>
 
 ### ④ Rate history and price history: 9.00% to 12.00%, monthly to semi-monthly to daily
 
-Implied from per-share dividends (one month = $100 × annual rate ÷ 12; after June 30, 2026, each half-month = $100 × annual rate ÷ 24) and cross-checked against company filings:
+Implied from per-share dividends (half-monthly after June 30, 2026) and cross-checked against company filings:
+
+$$
+\\text{one month's dividend} = \\frac{\\$100 \\times \\text{annual rate}}{12}
+\\text{each half-month's dividend} = \\frac{\\$100 \\times \\text{annual rate}}{24}
+$$
 
 <table class="pm">
 <tr><th>Period</th><th>Annual rate</th><th>Evidence</th></tr>
@@ -117,7 +124,7 @@ In a little over a year the rate rose 300 basis points, while the federal funds 
 
 The payment cycle has shortened too. At launch it paid monthly. After approval at the June 8, 2026 annual meeting, it has paid **twice a month since June 30, 2026** (record dates on the 15th and the last day of each month), $0.50 each time. On September 24–25, 2026 the company proposed moving to **daily** record dates, with a vote at a special meeting on **October 28, 2026**; if approved, STRC's first daily payment is expected on November 2, 2026. More frequent payments appeal to buyers who want cash-like flow, but they don't change the $12 annual total, and they don't change the risk.
 
-Price and real yield: on August 21, 2026 STRC closed at about $96.18, a current yield of $12 ÷ $96.18 ≈ **12.48%**.
+Price and real yield: on August 21, 2026 STRC closed at about $96.18, a current yield of \\(\\dfrac{\\$12}{\\$96.18} \\approx \\mathbf{12.48\\%}\\).
 
 Size: STRC is Strategy's largest preferred layer, **$9.972 billion** of notional on August 23, 2026, and about **$9.32 billion** after September's buybacks (derived from the 8-Ks); Saylor said on September 25, 2026 it had "in excess of nine billion in notional outstanding." It is also Strategy's main funding pipe: the STRC ATM raised $5.465 billion gross in Q2 2026 (Stage 17.1).
 
@@ -135,7 +142,13 @@ One of STRC's target audiences is buyers who would otherwise hold cash, money fu
 <tr><td>Price anchor</td><td>Repayment at maturity</td><td>Regulation + short-term assets</td><td>The issuer's willingness to reset + buybacks + the $101 call ceiling</td></tr>
 </table>
 
-Using Stage 13.5's breakdown: STRC's 12% ≈ roughly 4% of short risk-free rate + roughly 8 points of **bitcoin credit premium**. Those 8 points aren't free money. They pay for tail scenarios in which bitcoin crashes, capital markets shut, and the company can no longer issue new securities to fund dividends.
+Using Stage 13.5's breakdown:
+
+$$
+\\text{STRC's } 12\\% \\approx \\underbrace{\\text{roughly } 4\\%}_{\\text{short risk-free rate}} + \\underbrace{\\text{roughly } 8\\ \\text{points}}_{\\text{bitcoin credit premium}}
+$$
+
+Those 8 points aren't free money. They pay for tail scenarios in which bitcoin crashes, capital markets shut, and the company can no longer issue new securities to fund dividends.
 
 **The strongest case for:** STRC takes a kind of yield that used to exist only in long-duration, rate-sensitive form (the perpetual preferred) and turns it into something repriced monthly, paid twice a month (perhaps daily in future), with an anchored price. It ranks behind $6.7 billion of debt and STRF, with a BTC Rating of 5.7x on Strategy's method (August 23, 2026), backed by a USD Reserve covering roughly three years of dividends and interest (Stage 16.6). And the 2026 buybacks show the company will spend real money to support the price below par.
 
@@ -161,7 +174,7 @@ So when you read STRC, watch two things at once: **the thermostat (the rate rule
     "**\"STRC's rate went up because the Fed raised rates.\"** — From July 2025 to July 2026 STRC went from 9.00% to 12.00%, while the fed funds rate fell and then rose, for little net change. What rose was mainly the bitcoin credit premium.",
     "**\"A variable rate means the rate simply tracks SOFR.\"** — The contract only caps cuts (at most 25 bp plus the SOFR decline a month) and sets a SOFR floor; there is no cap on increases. How the rate actually moves depends on management's framework, which already changed once, on June 29, 2026.",
     "**\"Strategy says STRC's Duration is 8.1 years, so it's really a long-duration instrument.\"** — That is the Macaulay duration used in the company's BTC Risk model, measuring how far the cash flows stretch. STRC is designed so that its **interest-rate sensitivity** (effective duration) is close to one month. The two durations answer different questions.",
-    "**\"Moving from monthly to semi-monthly to daily payments raises the yield.\"** — The annual total is still notional × rate ($12 at 12%). More frequent payments just smooth the cash flow and suit cash-management buyers, nudging reinvestment timing slightly; they don't change the risk.",
+    "**\"Moving from monthly to semi-monthly to daily payments raises the yield.\"** — The annual total is still \\(\\text{notional} \\times \\text{rate}\\) (\\(\\$100 \\times 12\\% = \\$12\\) at 12%). More frequent payments just smooth the cash flow and suit cash-management buyers, nudging reinvestment timing slightly; they don't change the risk.",
   ],
 
   quiz: [
@@ -174,7 +187,7 @@ So when you read STRC, watch two things at once: **the thermostat (the rate rule
         "About $92.3",
       ],
       answer: 3,
-      explain: "As a perpetuity: price = $12 ÷ 13% ≈ **$92.3**, with a modified duration of about 1 ÷ 0.12 ≈ 8.3 years. An idealized monthly-reset instrument would dip only to about $99.9.",
+      explain: "As a perpetuity: \\(\\text{price} = \\dfrac{\\$12}{13\\%} \\approx \\mathbf{\\$92.3}\\), with a modified duration of about \\(\\dfrac{1}{0.12} \\approx 8.3\\) years. An idealized monthly-reset instrument would dip only to about $99.9.",
     },
     {
       q: "Under STRC's contract terms, which of these is **not** allowed?",

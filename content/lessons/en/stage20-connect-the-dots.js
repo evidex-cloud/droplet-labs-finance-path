@@ -82,23 +82,26 @@ The conclusion: **"rising yields are good for bitcoin" only holds when the rise 
 
 Now the middle of the chain. Suppose some money buys the hard-asset argument but **cannot or will not hold bitcoin directly**. A pension mandate may only allow stocks and bonds. An income fund needs monthly cash. Some people simply cannot stomach a 50% drawdown. Stage 15.3 showed that the core reason DATs exist is to act as **a converter for exactly this money**: put a pile of bitcoin inside a listed company, then stack claims of different risk on top of it and sell each to a different appetite (Stage 15.1: **the balance sheet is the product**).
 
-Look at the structure through Orange Corp, the course's standard illustration: 10,000 BTC × $100,000 = $1 billion of BTC NAV; a $150 million convertible, $100 million of Orange-F (10% cumulative), $50 million of Orange-D (10% non-cumulative), $30 million of USD reserve; 100 million common shares at $15.
+Look at the structure through Orange Corp, the course's standard illustration: \\(10{,}000\\ \\text{BTC} \\times \\$100{,}000 = \\$1\\ \\text{billion}\\) of BTC NAV; a $150 million convertible, $100 million of Orange-F (10% cumulative), $50 million of Orange-D (10% non-cumulative), $30 million of USD reserve; 100 million common shares at $15.
 
 - **Income buyers get fixed dividends.** Orange-F and Orange-D pay $15 million a year between them, and the USD reserve covers **24 months** of that (Stage 16.6).
-- **People who want "bitcoin, but more" get amplified common stock.** The simple amplification is 10 ÷ (10 − 3) ≈ **1.43x**. Strategy's official measure, BTC Reserve ÷ Net Reserve, gives 10 ÷ 7.3 ≈ **1.37x** (Stage 16.4).
+- **People who want "bitcoin, but more" get amplified common stock.** The simple amplification is \\(\\dfrac{10}{10 - 3} \\approx\\) **1.43x**. Strategy's official measure, \\(\\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\), gives \\(\\dfrac{10}{7.3} \\approx\\) **1.37x** (Stage 16.4).
 - **The fundraising itself adds bitcoin per share.** As long as mNAV is above 1, selling 10 million shares at $15 to buy 1,500 BTC lifts BTC per share by **4.5%** (the flywheel of Stage 16.7). Financing purchases with preferreds also raises common holders' net bitcoin per share, provided bitcoin grows faster over time than the dividend rate.
 
 The real-world counterparts (each as of its own date; these change weekly): **Strategy held 846,000 BTC as of September 20, 2026**, at an average cost of about $75,416. On August 23, 2026 its five perpetual preferreds had a combined notional of about **$14.97 billion**, and its annual interest and dividend bill was about $1.70 billion (about $1.62 billion after September's STRC buybacks, by this course's calculation). Stage 17.3 took the preferred family apart one by one: **STRF, 10% fixed and cumulative; STRC, variable rate (12.00% since July 1, 2026); STRE, 10% and euro-denominated; STRK, 8% and convertible; STRD, 10% and non-cumulative.** The seniority order is debt > STRF > STRC > STRE/STRK/STRD (their order among themselves is not confirmed in primary sources) > common. The "about 10%" in Lin's third headline refers to this family. By autumn 2026, STRC, the biggest of them, was paying 12%.
 
-The other model is **Strive** (Stage 17.5): **no debt, amplification through the SATA preferred only.** It held 26,355 BTC as of September 18, 2026, and SATA's dividend rate was 13.00%. Strive's own "Amplification Ratio," (debt + preferred) ÷ bitcoin value, was about 50.4%. That is a different formula from Strategy's Amplification, so never compare the two numbers directly.
+The other model is **Strive** (Stage 17.5): **no debt, amplification through the SATA preferred only.** It held 26,355 BTC as of September 18, 2026, and SATA's dividend rate was 13.00%. Strive's own "Amplification Ratio," \\(\\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin value}}\\), was about 50.4%. That is a different formula from Strategy's Amplification, so never compare the two numbers directly.
 
 ### ④ Priced off Treasuries, policed by BTC Rating
 
-Here the chain **collides head-on** with headline one. A perpetual preferred is, at heart, the perpetuity of Stage 2.3: price ≈ annual dividend ÷ required yield. And the required yield is **the Treasury yield plus a spread** (Stage 18.1):
+Here the chain **collides head-on** with headline one. A perpetual preferred is, at heart, the perpetuity of Stage 2.3: \\(\\text{price} \\approx \\dfrac{\\text{annual dividend}}{\\text{required yield}}\\). And the required yield is **the Treasury yield plus a spread** (Stage 18.1):
 
-$$ Required yield = 30-year Treasury yield + spread (credit + subordination + liquidity + complexity)
-Price ≈ annual dividend ÷ required yield
-Modified duration ≈ 1 ÷ required yield
+$$
+\\text{Required yield} = \\text{30-year Treasury yield} + \\text{spread}
+\\text{spread} = \\text{credit} + \\text{subordination} + \\text{liquidity} + \\text{complexity}
+\\text{Price} \\approx \\frac{\\text{annual dividend}}{\\text{required yield}}
+\\text{Modified duration} \\approx \\frac{1}{\\text{required yield}}
+$$
 
 So headline one lands directly on headline three. **Hold the spread constant and let the 30-year rise 85 basis points, and a 10% perpetual preferred (modified duration about 10) falls from 100 to about 92.2, a drop of roughly 7.8%, with no change at all in its credit.** Stage 17.4 showed that STRC's variable rate is designed to push that rate duration close to zero: if the price slips below par, raise the dividend. In practice STRC's rate climbed from 9.00% in July 2025 to 12.00%. On August 21, 2026 it traded at about $96.18, an effective yield of about **12.5%**, roughly 7 percentage points above the 30-year Treasury. **A higher rate backdrop raises the cost of every security that sells yield. That is the most direct wire between the 30-year Treasury and MSTR's preferreds.**
 
@@ -111,9 +114,9 @@ The biggest piece of that spread is **credit**, and a DAT's credit cannot be mea
 <tr><td>Orange-D (junior preferred)</td><td>$300M</td><td>3.3x</td><td>About $30,000</td><td>1.0x</td></tr>
 </table>
 
-This is Stage 16.5's BTC Rating (BTC Reserve ÷ cumulative notional of this layer and everything senior) combined with Stage 17.6's walk through the seniority order. Real data: on August 23, 2026 Strategy put STRC's BTC Rating at about **5.7x**, which corresponds to a BTC floor price of about **$13,400**. Converting the probability that the rating falls below 1 by the end of the instrument's duration (BTC Risk) into a spread with a lognormal model gives a **BTC Credit of about 59 basis points** (assuming 10% annual bitcoin growth, 40% volatility and an 8.1-year duration). **The model's credit spread is under 1 percentage point; the spread the market actually charges is about 7.** The gap reflects subordination, liquidity, concentration in a single issuer, S&P's "B-" issuer rating on Strategy, and plain uncertainty about the model's own assumptions. Explaining that gap is the analyst's job.
+This is Stage 16.5's BTC Rating (\\(\\dfrac{\\text{BTC Reserve}}{\\text{cumulative notional of this layer and everything senior}}\\)) combined with Stage 17.6's walk through the seniority order. Real data: on August 23, 2026 Strategy put STRC's BTC Rating at about **5.7x**, which corresponds to a BTC floor price of about **$13,400**. Converting the probability that the rating falls below 1 by the end of the instrument's duration (BTC Risk) into a spread with a lognormal model gives a **BTC Credit of about 59 basis points** (assuming 10% annual bitcoin growth, 40% volatility and an 8.1-year duration). **The model's credit spread is under 1 percentage point; the spread the market actually charges is about 7.** The gap reflects subordination, liquidity, concentration in a single issuer, S&P's "B-" issuer rating on Strategy, and plain uncertainty about the model's own assumptions. Explaining that gap is the analyst's job.
 
-You also have to check the **cash side** (Stages 16.6 and 18.2). As of September 20, 2026 Strategy's USD Reserve was about $5.04 billion. Against annual obligations of about $1.62 billion, that covers roughly **37 months** by this course's calculation (company policy sets a 12-month minimum). Its BTC Breakeven ARR (annual obligations ÷ BTC Reserve) was about **2.63%** on August 23. The Orange Corp equivalents are 24 months and 1.5%.
+You also have to check the **cash side** (Stages 16.6 and 18.2). As of September 20, 2026 Strategy's USD Reserve was about $5.04 billion. Against annual obligations of about $1.62 billion, that covers roughly **37 months** by this course's calculation (company policy sets a 12-month minimum). Its BTC Breakeven ARR (\\(\\dfrac{\\text{annual obligations}}{\\text{BTC Reserve}}\\)) was about **2.63%** on August 23. The Orange Corp equivalents are 24 months and 1.5%.
 
 ### ⑤ Headline two, fully explained: the new plumbing and where it meets the other two
 
@@ -176,7 +179,7 @@ What Lin first saw were three unrelated pictures: a reservoir, a new canal, a bu
       q: "Between February 27 and September 25, 2026 the 30-year Treasury yield rose from about 4.64% to 5.49%. With the spread unchanged, what happens to a 10% perpetual preferred priced at 100?",
       options: ["Almost nothing, because it is equity", "It falls about 7.8%, to around 92", "It falls about 14%, just like the 30-year Treasury", "It rises, because the issuer will raise the dividend"],
       answer: 1,
-      explain: "**A perpetual's price ≈ dividend ÷ required yield**: 10 ÷ 10.85% ≈ 92.2. Its modified duration is about 1 ÷ y ≈ 10, shorter than the 5%-coupon 30-year Treasury's roughly 15.5, so it falls about 7.8% rather than 12–14%.",
+      explain: "**\\(\\text{A perpetual's price} \\approx \\dfrac{\\text{dividend}}{\\text{required yield}}\\)**: \\(\\dfrac{10}{10.85\\%} \\approx 92.2\\). Its modified duration is about \\(\\dfrac{1}{y} \\approx 10\\), shorter than the 5%-coupon 30-year Treasury's roughly 15.5, so it falls about 7.8% rather than 12–14%.",
     },
     {
       q: "In which situation is a rising long-term yield most likely to push bitcoin down in the short run?",
@@ -193,7 +196,7 @@ What Lin first saw were three unrelated pictures: a reservoir, a new canal, a bu
       q: "Orange Corp's Orange-F has $250M of cumulative claims against $1B of BTC NAV. What are its BTC Rating and BTC floor price?",
       options: ["6.7x; $15,000", "3.3x; $30,000", "1.43x; $70,000", "4.0x; $25,000"],
       answer: 3,
-      explain: "**BTC Rating = BTC Reserve ÷ cumulative notional of this layer and everything senior** = $1B ÷ $250M = 4.0x. **Floor price = BTC price ÷ rating** = $100,000 ÷ 4.0 = $25,000. 6.7x is the convertible layer, 3.3x is Orange-D, and 1.43x is the amplification.",
+      explain: "**\\(\\text{BTC Rating} = \\dfrac{\\text{BTC Reserve}}{\\text{cumulative notional of this layer and everything senior}}\\)** \\(= \\dfrac{\\$1\\text{B}}{\\$250\\text{M}} = 4.0\\times\\). **\\(\\text{Floor price} = \\dfrac{\\text{BTC price}}{\\text{rating}}\\)** \\(= \\dfrac{\\$100{,}000}{4.0} = \\$25{,}000\\). 6.7x is the convertible layer, 3.3x is Orange-D, and 1.43x is the amplification.",
     },
     {
       q: "What is the most direct link between stablecoins and headline one (Treasury yields)?",

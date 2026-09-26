@@ -4,7 +4,7 @@
 // 全部计算走 _fin.js；橙子公司数字见 AUTHORING §0.2；真实锚点来自 _research（2026 年 9 月）。
 import {
   bondPrice, gordon, netReserve, amplificationStrategy, btcRating, btcFloorPrice, btcRiskProb, btcCredit,
-  perpetuity, breakevenArr, monthsCovered, clamp, fmtPct, fmtNum, fmtUsd, fmtBig,
+  perpetuity, breakevenArr, monthsCovered, clamp, fmtPct, fmtNum, fmtUsd, fmtBig, tex,
 } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
@@ -56,7 +56,7 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-grid">
         <div class="demo-block">
-          ${slider("shock", T("30 年期收益率冲击（基点，起点 = 2026 年 2 月 27 日的 4.64%）", "Shock to the 30-year yield (bp, starting from 4.64% on Feb 27, 2026)"), -150, 250, 5)}
+          ${slider("shock", T("30 年期收益率冲击（基点，起点：2026 年 2 月 27 日的 4.64%）", "Shock to the 30-year yield (bp, starting from 4.64% on Feb 27, 2026)"), -150, 250, 5)}
           ${slider("beta", T("比特币对每 +100 基点的反应（假设）", "Bitcoin's response per +100 bp (assumption)"), -30, 20, 1)}
           ${slider("own", T("比特币其他原因的涨跌", "Bitcoin move from other causes"), -80, 100, 1)}
         </div>
@@ -161,7 +161,7 @@ export default function mount(root, lang) {
     html += `<div class="scn">
       <div class="scn-q"><b>⑦</b> ${T("收益菜单与新管道：同一笔钱的其他去处（阶段 13.2、阶段 14.2）", "The yield menu and the new plumbing: where else the money can go (Stages 13.2, 14.2)")}</div>
       <div class="stat-row">
-        <div class="stat"><div class="k">${T("代币化国库券≈3 个月国库券", "Tokenized T-bill ≈ 3-month bill")}</div><div class="v">${fmtPct(r.bill, 2)}</div></div>
+        <div class="stat"><div class="k">${T("代币化国库券（跟随 3 个月国库券）", "Tokenized T-bill (tracks the 3-month bill)")}</div><div class="v">${fmtPct(r.bill, 2)}</div></div>
         <div class="stat"><div class="k">${T("30 年期国债", "30-year Treasury")}</div><div class="v">${fmtPct(r.y30, 2)}</div></div>
         <div class="stat"><div class="k">${T("Orange-F 要求收益率", "Orange-F required yield")}</div><div class="v acc">${fmtPct(r.req, 2)}</div></div>
         <div class="stat"><div class="k">${T("稳定币发行人储备收入/年", "Stablecoin issuers' reserve income / yr")}</div><div class="v">$${fmtBig(r.stableIncome)}</div></div>
@@ -187,9 +187,12 @@ export default function mount(root, lang) {
     // 叙述
     const L = [];
     const rateHit = r.priceRateOnly - 100, total = r.price - 100;
+    const priceTex = isFinite(r.price)
+      ? tex(String.raw`\text{${T("价格", "Price")}} = \frac{10}{${fmtNum(r.req * 100, 2)}\%} = ${fmtNum(r.price, 1)}`)
+      : "–";
     L.push(`<span class="${total < 0 ? "bad" : "ok"}">${T(
-      `Orange-F 价格 ${fmtNum(r.price, 1)}（${pctS(total / 100)}）：其中纯利率效应约 ${pctS(rateHit / 100)}，其余来自信用与风险厌恶。`,
-      `Orange-F at ${fmtNum(r.price, 1)} (${pctS(total / 100)}): the pure rate effect is about ${pctS(rateHit / 100)}; the rest comes from credit and risk aversion.`
+      `Orange-F ${priceTex}（${pctS(total / 100)}）：其中纯利率效应约 ${pctS(rateHit / 100)}，其余来自信用与风险厌恶。`,
+      `Orange-F: ${priceTex} (${pctS(total / 100)}). The pure rate effect is about ${pctS(rateHit / 100)}; the rest comes from credit and risk aversion.`
     )}</span>`);
     if (st.cause === "fiscal" && st.shock > 0) {
       L.push(`<span class="warn">${T("你选了“财政失信”：同样的利率上升，比特币这一环按“贬值交易”逻辑上行——但注意优先股仍然挨利率的刀，因为它的锚是国债收益率。", "You chose fiscal distrust: the same rate rise now lifts the bitcoin link through the debasement logic. Yet the preferred still takes the rate hit, because its anchor is the Treasury yield.")}</span>`);
@@ -197,7 +200,10 @@ export default function mount(root, lang) {
       L.push(`<span class="warn">${T("“央行收紧”渠道：更高的实际利率让不生息资产变贵，比特币这一环向下——这是 2026 年上半年的剧本。", "Tightening channel: higher real rates make non-yielding assets costlier to hold, so the bitcoin link points down. That was the first-half-2026 script.")}</span>`);
     }
     if (r.rating < 1.5) L.push(`<span class="bad">${T(`BTC 评级只剩 ${fmtNum(r.rating, 2)} 倍：币价离地板价 ${fmtUsd(r.floor)} 不远了，BTC Credit 飙升——这时“约 10% 的收益”补偿不了风险。`, `BTC Rating is down to ${fmtNum(r.rating, 2)}x: the price is close to the ${fmtUsd(r.floor)} floor and BTC Credit is soaring. An "about 10% yield" no longer pays for the risk.`)}</span>`);
-    else L.push(`<span class="ok">${T(`BTC 评级 ${fmtNum(r.rating, 2)} 倍，地板价固定在 ${fmtUsd(r.floor)}（= 累计索取权 ÷ 持币量），不随币价变。`, `BTC Rating ${fmtNum(r.rating, 2)}x; the floor stays at ${fmtUsd(r.floor)} (= cumulative claims ÷ coins held) whatever the price.`)}</span>`);
+    else {
+      const floorTex = tex(String.raw`\text{${T("地板价", "floor")}} = \frac{\text{${T("累计索取权", "cumulative claims")}}}{\text{${T("持币量", "coins held")}}} = \frac{\$${ORANGE.cumF / 1e6}\text{M}}{${fmtNum(ORANGE.btc, 0).replace(/,/g, "{,}")}} = \$${fmtNum(r.floor, 0).replace(/,/g, "{,}")}`);
+      L.push(`<span class="ok">${T(`BTC 评级 ${fmtNum(r.rating, 2)} 倍，地板价固定：${floorTex}，不随币价变。`, `BTC Rating ${fmtNum(r.rating, 2)}x; the floor is fixed whatever the price: ${floorTex}.`)}</span>`);
+    }
     L.push(`<span>${T(
       `普通股每股净储备变化 ${pctS(chg(nrps0, nrps))}，比特币变化 ${pctS(r.btcMove)}——约 ${fmtNum(amplificationStrategy(1e9, ORANGE.conv, ORANGE.pref, ORANGE.usd), 2)} 倍的基准放大。`,
       `Net Reserve per common share moves ${pctS(chg(nrps0, nrps))} against bitcoin's ${pctS(r.btcMove)}: roughly the baseline ${fmtNum(amplificationStrategy(1e9, ORANGE.conv, ORANGE.pref, ORANGE.usd), 2)}x amplification.`

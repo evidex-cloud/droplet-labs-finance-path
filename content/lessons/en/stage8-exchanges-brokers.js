@@ -28,7 +28,7 @@ Then there's a puzzle: your broker charged no commission, so how does it get pai
 
 Finally, "filled" doesn't mean "yours." The trade is only an agreement. Actually swapping the cash for the shares and recording them in your name takes another business day — the clearing and settlement story of Stage 8.2.
 
-This lesson rests on **Idea ③ Liquidity & trust (the plumbing)**. Exchanges, brokers and market makers are the stretch of financial plumbing closest to you — used every day and almost never seen. It also touches **Idea ④ Risk & leverage**: liquidity itself is a risk that evaporates in a crisis. The liquidation cascades in Stage 7.5 happened precisely because the order book was thin, so each wave of forced selling could punch the price through several levels and trigger the next wave. Looking ahead, Stage 13.3 shows how DeFi replaces the order book and the market maker with a single formula (x·y=k); Stage 14.3 asks whether stocks will move on-chain and trade around the clock; and when a company like Strategy sells new shares into the market "a little at a time" through an at-the-market program (Stage 17.1), it relies on exactly the order books and market makers described here.
+This lesson rests on **Idea ③ Liquidity & trust (the plumbing)**. Exchanges, brokers and market makers are the stretch of financial plumbing closest to you — used every day and almost never seen. It also touches **Idea ④ Risk & leverage**: liquidity itself is a risk that evaporates in a crisis. The liquidation cascades in Stage 7.5 happened precisely because the order book was thin, so each wave of forced selling could punch the price through several levels and trigger the next wave. Looking ahead, Stage 13.3 shows how DeFi replaces the order book and the market maker with a single formula (\\(x \\cdot y = k\\)); Stage 14.3 asks whether stocks will move on-chain and trade around the clock; and when a company like Strategy sells new shares into the market "a little at a time" through an at-the-market program (Stage 17.1), it relies on exactly the order books and market makers described here.
 
 **In this lesson we break it into five pieces:**
 
@@ -54,8 +54,8 @@ Buy orders are ranked from the highest price down, sell orders from the lowest p
 Work through the numbers in the figure. A **market buy for 1,000 shares** eats, in order, the 300 shares at 100.02, the 600 at 100.03 and 100 of the shares at 100.05. It costs **$100,029**, an average of **$100.029**. At the midpoint of 100.00 the theoretical cost would have been $100,000; the extra $29 is your **transaction cost** — partly half the spread (2 cents a share) and partly the **price impact** of walking deeper into the book.
 
 $$
-Execution cost (bp) = (average fill − midpoint) ÷ midpoint × 10,000
-= (100.029 − 100.00) ÷ 100 × 10,000 ≈ 2.9 bp
+\\text{Execution cost (bp)} = \\frac{\\text{average fill} - \\text{midpoint}}{\\text{midpoint}} \\times 10{,}000
+= \\frac{100.029 - 100.00}{100} \\times 10{,}000 \\approx 2.9\\ \\text{bp}
 $$
 
 Three conclusions:
@@ -70,7 +70,7 @@ Stage 7.5's liquidation cascade is the extreme version of the second point. Forc
 
 Limit orders sit and wait for someone to trade against them — so where do all those resting orders come from? Some come from ordinary investors, but most come from **market makers**, which post a bid and an ask at the same time, say 99.98 to buy and 100.02 to sell, and take whoever shows up.
 
-A market maker's ledger is simple. If a seller hits its bid for 100 shares at 99.98 and a few seconds later a buyer lifts its offer for 100 shares at 100.02, it has made **4 cents × 100 = $4**. Repeat that millions of times a day and you have a big business. But the spread isn't free money. Economists split it into three costs:
+A market maker's ledger is simple. If a seller hits its bid for 100 shares at 99.98 and a few seconds later a buyer lifts its offer for 100 shares at 100.02, it has made **\\(4\\ \\text{cents} \\times 100 = \\$4\\)**. Repeat that millions of times a day and you have a big business. But the spread isn't free money. Economists split it into three costs:
 
 - **Order-processing costs**: systems, exchange and clearing fees, staff.
 - **Inventory risk**: it just bought 100 shares and hasn't sold them yet, and the price could drop in the meantime.
@@ -180,7 +180,7 @@ Finally, the booth hands you a receipt, and the actual banknotes are delivered t
         "About 100.029",
       ],
       answer: 3,
-      explain: "300×100.02 + 600×100.03 + 100×100.05 = $100,029, an average of **100.029**. A large order has to walk through several levels — that's price impact.",
+      explain: "\\(300 \\times 100.02 + 600 \\times 100.03 + 100 \\times 100.05 = \\$100{,}029\\),an average of **100.029**. A large order has to walk through several levels — that's price impact.",
     },
     {
       q: "According to classic market-microstructure theory, which component of the spread matters most and best explains why spreads widen in a panic?",

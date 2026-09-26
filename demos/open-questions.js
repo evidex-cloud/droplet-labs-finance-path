@@ -1,8 +1,11 @@
 // 交互演示：五个未解问题的“辩论沙盘”——每个问题一个真实计算的小模型（BTC 信用利差、mNAV 赚回年数、
 // 代币化国债复利、稳定币与银行存款、AI 与长端利率），外加“你的倾向 + 信号”记录卡。
 // 数据锚：_research/macro-facts.md、dat-facts.md（2026 年 9 月快照）；橙子公司见 AUTHORING §0.2。仅讲机制，不构成投资建议。
-import { btcRiskProb, btcCredit, btcFloorPrice, issueAndBuy, fv, bondPrice, perpetuity, fmtPct, fmtNum, fmtUsd, fmtBig, clamp } from "./_fin.js";
+import { btcRiskProb, btcCredit, btcFloorPrice, issueAndBuy, fv, bondPrice, perpetuity, fmtPct, fmtNum, fmtUsd, fmtBig, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位逗号 → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -119,7 +122,7 @@ export default function mount(root, lang) {
       stat(T("跌破 1 倍的概率（BTC Risk）", "Chance of falling below 1x (BTC Risk)"), fmtPct(risk, 1), risk > 0.2 ? "neg" : "") +
       stat(T("模型所需利差（BTC Credit）", "Model-required spread (BTC Credit)"), bp(need), "acc") +
       stat(T("市场实际利差", "Actual market spread"), bp(mktSpr)) +
-      stat(T("市场 ÷ 模型", "Market ÷ model"), isFinite(ratio) ? fmtNum(ratio, 1) + "x" : "∞", ratio > 3 ? "pos" : ratio < 1 ? "neg" : "") +
+      stat(tex(String.raw`\text{${T("市场", "market")}} \div \text{${T("模型", "model")}}`),isFinite(ratio) ? fmtNum(ratio, 1) + "x" : "∞", ratio > 3 ? "pos" : ratio < 1 ? "neg" : "") +
       stat(T("BTC 地板价（按 $84,100）", "BTC floor price (at $84,100)"), fmtUsd(btcFloorPrice(84100, r), 0));
     const res = lineChart({
       fns: [{ f: (v) => btcCredit(btcRiskProb(r, mu, v / 100, T0), T0) * 100, cls: "line5" }, { f: () => mktSpr * 100, cls: "line2" }],
@@ -127,6 +130,7 @@ export default function mount(root, lang) {
     });
     q("#oq-credit-chart").innerHTML = `<div class="demo-label">${T("所需利差对波动率假设有多敏感（%）", "How sensitive the required spread is to the volatility assumption (%)")}</div>` +
       chartBlock(res, [["var(--btc)", T("模型所需利差", "model-required spread")], ["var(--blue)", T("市场实际利差", "actual market spread")]]);
+    L.push(tex(String.raw`\text{BTC Credit} = \frac{-\ln\left(1 - \text{BTC Risk}\right)}{\text{${T("久期", "duration")}}} = \frac{-\ln\left(1 - ${texv(fmtPct(risk, 1))}\right)}{${texv(fmtNum(T0, 1))}} \approx ${texv(fmtPct(need, 2))}`, true));
     if (ratio > 3) L.push(`<span class="ok">${T("市场给的补偿是模型的", "The market pays")} ${fmtNum(ratio, 1)}${T(" 倍。支持方读作“新资产类别溢价，会收窄”；反对方读作“模型漏掉了尾部与‘坏事一起发生’的风险”。", "x what the model needs. Bulls read this as a new-asset-class premium that will shrink; bears read it as the model missing tail risk and bad things happening together.")}</span>`);
     else if (ratio >= 1) L.push(`<span class="warn">${T("在这组假设下，市场利差只比模型略宽——缺口大部分被“更悲观的假设”解释掉了。", "Under these assumptions the market spread is only a little wider than the model's: pessimistic assumptions explain most of the gap.")}</span>`);
     else L.push(`<span class="bad">${T("在这组假设下，模型要的利差比市场给的还多：按这个模型，这张证券的补偿不够。", "Under these assumptions the model demands more spread than the market pays: by this model, the security is under-compensated.")}</span>`);
@@ -144,14 +148,15 @@ export default function mount(root, lang) {
       stat(T("增发价", "Issue price"), fmtUsd(px, 2)) +
       stat(T("每股比特币年增速 g", "BTC-per-share growth g"), fmtPct(g, 2), g > 0 ? "pos" : g < 0 ? "neg" : "") +
       stat(T("赚回溢价年数", "Years to earn back premium"), st.mnav <= 1 ? T("无溢价", "no premium") : isFinite(years) ? fmtNum(years, 1) : T("永远", "never"), "acc") +
-      stat(T("5 年后每股比特币（期初 = 1）", "BTC per share after 5 yrs (start = 1)"), fmtNum(bps5, 3));
+      stat(T(`5 年后每股比特币（${tex(String.raw`\text{期初} = 1`)}）`, `BTC per share after 5 yrs (${tex(String.raw`\text{start} = 1`)})`), fmtNum(bps5, 3));
     const res = lineChart({
       fns: [{ f: (m) => { const c = issueAndBuy({ btc, shares, btcPrice: px0, px: m * navps, newShares: shares * Math.max(st.iss, 1) / 100 }).change; return c > 0 && m > 1 ? clamp(Math.log(m) / Math.log(1 + c), 0, 40) : NaN; }, cls: "line" }],
       lo: 1.05, hi: 3, samples: 80, forceZero: true, xlabel: "mNAV", markerX: st.mnav, markerLabel: T("当前", "now"), uid: "oqp",
     });
     q("#oq-prem-chart").innerHTML = `<div class="demo-label">${T("赚回溢价所需年数 vs mNAV（按当前增发比例，封顶 40 年）", "Years to earn back the premium vs mNAV (at the current issuance rate, capped at 40)")}</div>` + chartBlock(res, [["var(--orange)", T("年数", "years")]]);
-    if (st.mnav < 1) L.push(`<span class="bad">${T("mNAV < 1：按市价增发会稀释每股比特币（g 为负）。飞轮反转，公司只能靠回购、卖币或发优先股（后者增加更高级的索取权）。", "mNAV below 1: issuing at market dilutes bitcoin per share (g is negative). The flywheel reverses, leaving buybacks, bitcoin sales, or preferred issuance (which adds more senior claims).")}</span>`);
+    if (st.mnav < 1) L.push(`<span class="bad">${T(`${tex(String.raw`\mathrm{mNAV} < 1`)}：按市价增发会稀释每股比特币（g 为负）。飞轮反转，公司只能靠回购、卖币或发优先股（后者增加更高级的索取权）。`, "mNAV below 1: issuing at market dilutes bitcoin per share (g is negative). The flywheel reverses, leaving buybacks, bitcoin sales, or preferred issuance (which adds more senior claims).")}</span>`);
     else L.push(`${T("溢价", "A premium of")} ${fmtPct(st.mnav - 1, 0)} ${T("配上每年", "plus annual issuance of")} ${st.iss}% ${T("的增发，每股比特币每年增长约", "grows bitcoin per share by about")} ${fmtPct(g, 2)}${T("。争论的实质是：这个 g 能在熊市里维持吗？", " a year. The real argument: can that g survive a bear market?")}`);
+    if (st.mnav > 1 && g > 0) L.push(tex(String.raw`\text{${T("赚回溢价的年数", "years to earn back the premium")}} \approx \frac{\ln(m)}{\ln(1 + g)} = \frac{\ln(${texv(fmtNum(st.mnav, 2))})}{\ln(1 + ${texv(fmtPct(g, 2))})} \approx ${texv(fmtNum(years, 1))}`, true));
     L.push(`${T("反身性：g 依赖 mNAV，mNAV 又依赖市场对 g 的预期（阶段 10.4）。2026 年 9 月，最大的 20 家 DAT 中 16 家低于 1 倍。", "Reflexivity: g depends on mNAV, and mNAV depends on what the market expects g to be (Stage 10.4). In September 2026, 16 of the 20 largest DATs traded below 1x.")}`);
   };
 
@@ -194,7 +199,8 @@ export default function mount(root, lang) {
       stat(T("相对 5.49% 基准", "vs the 5.49% base"), fmtPct(b1 / b0 - 1, 1), b1 < b0 ? "neg" : "pos") +
       stat(T("10% 永续优先股价格", "Price of a 10% perpetual preferred"), fmtNum(p1, 1), "acc") +
       stat(T("优先股价格变化", "Preferred price change"), fmtPct(p1 / p0 - 1, 1), p1 < p0 ? "neg" : "pos");
-    L.push(`${T("基准：2026-09-25 的 30 年期美债约 5.49%。AI 推高中性利率 + 期限溢价上升 →", "Base: the 30-year yielded about 5.49% on 2026-09-25. AI lifting the neutral rate plus a higher term premium →")} ${fmtPct(y, 2)}${T("。同一个利率变化同时打到国债、优先股和 DAT 的融资成本上。", ". The same rate move hits Treasuries, preferreds and DATs' cost of capital all at once.")}`);
+    const sg = (v) => (v < 0 ? "-" : "+") + " " + fmtNum(Math.abs(v), 1) + String.raw`\%`;
+    L.push(`${T("基准：2026-09-25 的 30 年期美债约 5.49%。加上 AI 对中性利率与期限溢价的影响：", "Base: the 30-year yielded about 5.49% on 2026-09-25. Add AI's effect on the neutral rate and the term premium:")} ${tex(String.raw`y = 5.49\% + \Delta r^{*} + \Delta\,\text{${T("期限溢价", "term premium")}} = 5.49\% ${sg(st.rstar)} ${sg(st.tp)} = ${texv(fmtPct(y, 2))}`)}${T("。同一个利率变化同时打到国债、优先股和 DAT 的融资成本上。", ". The same rate move hits Treasuries, preferreds and DATs' cost of capital all at once.")}`);
     if (st.rstar + st.tp > 0) L.push(`<span class="warn">${T("“AI 让利率更高”的世界里，比特币信用要么价格下跌，要么要求更高的股息率——数字信用与国债之间的利差更难维持。", "In an \"AI means higher rates\" world, bitcoin credit either falls in price or must pay a higher dividend, and the spread between Digital Credit and Treasuries gets harder to sustain.")}</span>`);
     else if (st.rstar + st.tp < 0) L.push(`<span class="ok">${T("“AI 通缩”的世界里，长端利率下降，永续优先股与长债同时受益（观念①）。", "In an \"AI deflation\" world, long rates fall and perpetual preferreds rally along with long bonds (Idea ①).")}</span>`);
   };

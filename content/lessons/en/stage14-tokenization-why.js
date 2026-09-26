@@ -141,7 +141,7 @@ Do not lose sight of the key point, though. **A receipt is worth something only 
       q: "A firm keeps $2 million of idle cash as a weekend margin buffer. With short-term Treasury yields near 4.24%, switching to a tokenized Treasury fund that can be moved 24/7 lets it cut the buffer to $500,000. Roughly how much opportunity cost does it save per year?",
       options: ["About $64,000", "About $21,000", "About $85,000", "About $1.5 million"],
       answer: 0,
-      explain: "**($2.0M − $0.5M) × 4.24% ≈ $64,000 a year.** The old buffer cost about $85,000 in forgone interest, the new one about $21,000; the difference is about $64,000. The saving is interest on money that used to wait for the plumbing to open.",
+      explain: "**\\((\\$2.0\\text{M} - \\$0.5\\text{M}) \\times 4.24\\% \\approx \\$64{,}000\\) a year.** The old buffer cost about $85,000 in forgone interest, the new one about $21,000; the difference is about $64,000. The saving is interest on money that used to wait for the plumbing to open.",
     },
     {
       q: "Which situation best matches the warning that \"a token is only a receipt\"?",

@@ -1,6 +1,6 @@
 // 交互演示：四观念眼镜——选一条新闻，看观念①②③④各亮几分、由哪些阶段解开；
 // 每条新闻配一个“冲击”滑块，用共享引擎真算：债券价格、永续优先股、国债利息、橙子公司覆盖倍数与飞轮等。
-import { bondPrice, perpetuity, btcRating, amplification, issueAndBuy, fmtPct, fmtUsd, fmtNum, fmtBig, clamp } from "./_fin.js";
+import { bondPrice, perpetuity, btcRating, amplification, issueAndBuy, fmtPct, fmtUsd, fmtNum, fmtBig, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -155,7 +155,7 @@ export default function mount(root, lang) {
     },
     {
       k: "mnav", lin: false,
-      t: T("一家比特币财库公司的股价跌破持币价值（mNAV < 1）", "A bitcoin treasury company's stock falls below the value of its bitcoin (mNAV < 1)"),
+      t: T("一家比特币财库公司的股价跌破持币价值（", "A bitcoin treasury company's stock falls below the value of its bitcoin (") + tex(String.raw`\mathrm{mNAV} < 1`) + T("）", ")"),
       w: [1, 3, 2, 3],
       why: [
         T("资金成本上升，市场对未来的折现更狠。", "Funding costs rise; markets discount the future harder."),
@@ -164,7 +164,7 @@ export default function mount(root, lang) {
         T("反身性：飞轮倒转。", "Reflexivity: the flywheel runs in reverse."),
       ],
       st: T("阶段 10.4 · 阶段 16.2 · 阶段 16.7 · 阶段 18.3", "Stage 10.4 · Stage 16.2 · Stage 16.7 · Stage 18.3"),
-      shock: { label: T("市值口径 mNAV（股价 ÷ 每股比特币净值）", "Basic mNAV (share price ÷ BTC NAV per share)"), min: 0.5, max: 2.5, step: 0.05, val: 1.5, x: true },
+      shock: { label: T("市值口径 mNAV（", "Basic mNAV (") + tex(T(String.raw`\text{股价} \div \text{每股比特币净值}`, String.raw`\text{share price} \div \text{BTC NAV per share}`)) + T("）", ")"), min: 0.5, max: 2.5, step: 0.05, val: 1.5, x: true },
       calc: (v) => {
         const px = 10 * v, r = issueAndBuy({ btc: OC.btc, shares: OC.shares, btcPrice: 100000, px, newShares: 1e7 });
         return {
@@ -172,7 +172,7 @@ export default function mount(root, lang) {
                   [T("增发 1,000 万股全部买币后，每股比特币变化", "Change in BTC per share after issuing 10M shares to buy BTC"), (r.change >= 0 ? "+" : "") + fmtPct(r.change, 2), r.change >= 0 ? "pos" : "neg"],
                   [T("新的每股聪数", "New sats per share"), fmtNum(r.bps1 * 1e8, 0), ""]],
           note: r.change >= 0
-            ? T("mNAV 高于 1：增发买币提高每股比特币——飞轮在正转。mNAV = 1.5 时约 +4.5%。", "mNAV above 1: issuing to buy bitcoin raises BTC per share — the flywheel spins forward. At 1.5 it's about +4.5%.")
+            ? T("mNAV 高于 1：增发买币提高每股比特币——飞轮在正转。", "mNAV above 1: issuing to buy bitcoin raises BTC per share — the flywheel spins forward. At ") + tex(String.raw`\mathrm{mNAV} = 1.5`) + T(" 时约 +4.5%。", " it's about +4.5%.")
             : T("mNAV 低于 1：增发买币反而稀释每股比特币——飞轮倒转，公司要考虑回购、暂停或其他工具（阶段 18.3）。", "mNAV below 1: issuing to buy bitcoin dilutes BTC per share — the flywheel reverses, and the company must weigh buybacks, pausing or other tools (Stage 18.3)."),
         };
       },

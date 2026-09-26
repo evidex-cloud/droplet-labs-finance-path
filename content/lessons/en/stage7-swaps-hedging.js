@@ -63,7 +63,7 @@ The effect:
 
 ### ② Valuing a swap: two bonds in disguise, and DV01
 
-A swap looks complicated, but valuing it rests on one elegant trick: **pay-fixed / receive-floating = short a fixed-rate bond + long a floating-rate bond.**
+A swap looks complicated, but valuing it rests on one elegant trick: **pay-fixed / receive-floating is the same as short a fixed-rate bond + long a floating-rate bond.**
 
 - A floating-rate bond resets its coupon to the market every period, so its price keeps returning to about par — it has almost no rate risk.
 - A fixed-rate bond's price swings like a seesaw as rates move (Stage 4.2).
@@ -73,9 +73,10 @@ So the payer's gain or loss is roughly the price change of a fixed-rate bond, wi
 Back to our company: shortly after signing, the five-year swap rate rises from 4% to 5%. A five-year 4% bond priced at a 5% yield is worth about **95.62%** of par, so:
 
 $$
-Value of the pay-fixed swap ≈ notional × (1 − price of the fixed leg at the new rate)
-= $100M × (1 − 0.9562) ≈ +$4.38M
-DV01 ≈ modified duration × notional × 0.0001 ≈ 4.49 × $100M × 0.0001 ≈ $45,000 per basis point
+\\text{pay-fixed swap value} \\approx \\text{notional} \\times (1 - \\text{fixed-leg price at the new rate})
+\\text{swap value} \\approx \\$100\\text{M} \\times (1 - 0.9562) \\approx +\\$4.38\\text{M}
+\\mathrm{DV01} \\approx \\text{modified duration} \\times \\text{notional} \\times 0.0001
+\\mathrm{DV01} \\approx 4.49 \\times \\$100\\text{M} \\times 0.0001 \\approx \\$45{,}000\\ \\text{per basis point}
 $$
 
 **DV01** (Stage 4.4) is the ruler traders use to manage swaps: how much the book gains or loses for every one-basis-point move in rates. What a big bank's rates desk does all day is add up the DV01 of thousands of swaps, bonds and futures and keep the total inside its limits.
@@ -97,7 +98,7 @@ The U.K. LDI crisis of September 2022 exposed hedging's dark side. The governmen
 
 ### ④ Swap spreads: when swap rates fall below Treasury yields
 
-**Swap spread** = the swap rate − the Treasury yield of the same maturity.
+**Swap spread**: \\(\\text{swap spread} = \\text{swap rate} - \\text{Treasury yield of the same maturity}\\).
 
 By the textbook it should be **positive**: Treasuries are risk-free, while the floating leg of a swap used to reference LIBOR, which carried bank credit risk — so swap rates should sit above Treasury yields. For a long time they did.
 
@@ -144,7 +145,7 @@ The **basis trade** is a clever neighbor who notices that prepaid electricity ca
 `,
 
   misconceptions: [
-    "**\"Swaps have hundreds of trillions of dollars of notional, so they carry hundreds of trillions of risk.\"** — Notional is only used to compute interest; it's never exchanged. The real risks are mark-to-market changes as rates move (DV01 × basis points) and counterparty default, which are far smaller than notional. Still, large concentrated margin needs can create liquidity shocks in a crisis.",
+    "**\"Swaps have hundreds of trillions of dollars of notional, so they carry hundreds of trillions of risk.\"** — Notional is only used to compute interest; it's never exchanged. The real risks are mark-to-market changes as rates move (\\(\\mathrm{DV01} \\times \\text{basis points}\\)) and counterparty default, which are far smaller than notional. Still, large concentrated margin needs can create liquidity shocks in a crisis.",
     "**\"Once I'm hedged, rate moves don't concern me.\"** — Hedged economically isn't the same as hedged in cash. Swaps exchange margin daily at market value, while the hedged asset or liability may not turn into cash for decades. The U.K. LDI crisis is the proof: the economics were right, the cash came due too fast.",
     "**\"Swap rates below Treasury yields are an obvious arbitrage; the market is irrational.\"** — Negative swap spreads reflect the balance-sheet cost of holding Treasuries, enormous Treasury supply and heavy demand to receive fixed. Arbitrage needs balance sheet, and balance sheet is scarce and has a price.",
     "**\"The basis trade is riskless arbitrage.\"** — The basis does go to zero at expiry, but on the way it can widen against you and financing can tighten overnight. At dozens-times leverage, a small move is enough to force an unwind. Only the destination is riskless, not the road to it.",
@@ -161,7 +162,7 @@ The **basis trade** is a clever neighbor who notices that prepaid electricity ca
         "SOFR − 2.5%",
       ],
       answer: 1,
-      explain: "(SOFR + 1.5%) − SOFR + 4% = **a fixed 5.5%**. The floating pieces cancel and the floating loan has been \"turned into\" a fixed one.",
+      explain: "\\((\\mathrm{SOFR} + 1.5\\%) - \\mathrm{SOFR} + 4\\% = \\mathbf{5.5\\%}\\), **fixed**. The floating pieces cancel and the floating loan has been \"turned into\" a fixed one.",
     },
     {
       q: "After signing, the five-year swap rate rises from 4% to 5%. What happens to the market value of the swap for the party paying fixed 4%?",
@@ -172,7 +173,7 @@ The **basis trade** is a clever neighbor who notices that prepaid electricity ca
         "It depends on today's SOFR level; impossible to say",
       ],
       answer: 2,
-      explain: "Paying fixed ≈ being short a fixed-rate bond. When rates rise, fixed-rate bonds lose value and the short gains: $100M × (1 − 0.9562) ≈ **+$4.38M**.",
+      explain: "Paying fixed is like being short a fixed-rate bond. When rates rise, fixed-rate bonds lose value and the short gains: \\(\\$100\\text{M} \\times (1 - 0.9562) \\approx \\mathbf{+\\$4.38\\text{M}}\\).",
     },
     {
       q: "The 30-year dollar swap spread (swap rate − Treasury yield) has been mostly negative since 2008. Which of these is **not** a common explanation?",
@@ -194,7 +195,7 @@ The **basis trade** is a clever neighbor who notices that prepaid electricity ca
         "The futures exchange makes up the difference",
       ],
       answer: 0,
-      explain: "$1B × (5% − 2%) = **$30M**. That's the mechanism behind the mass basis-trade unwind of March 2020: the destination didn't change, but the financing road collapsed.",
+      explain: "\\(\\$1\\text{B} \\times (5\\% - 2\\%) = \\mathbf{\\$30\\text{M}}\\). That's the mechanism behind the mass basis-trade unwind of March 2020: the destination didn't change, but the financing road collapsed.",
     },
     {
       q: "In the U.K. LDI crisis of September 2022, why did pension funds' hedges become the problem?",

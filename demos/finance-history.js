@@ -1,6 +1,6 @@
 // 交互演示：五千年金融创新时间线——按时代筛选、点选事件，看“谁来记账、凭什么信”、点亮哪个观念、之后的狂热/危机与对应阶段；
 // 再用共享引擎做一个“跨越历史的复利”实验：从该事件起按某利率复利到 2026 年会变成多少，说明复利为何不可能永远持续。
-import { fv, rule72, fmtNum, fmtPct, clamp } from "./_fin.js";
+import { fv, rule72, fmtNum, fmtPct, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -31,7 +31,7 @@ export default function mount(root, lang) {
     { y: 1024, when: T("11 世纪 20 年代", "1020s"), era: "anc", tr: "s", ideas: "②", t: T("北宋官方发行交子纸币", "Song China issues official jiaozi paper money"),
       d: T("纸本身不值钱，值钱的是发行者的承诺——钱是负债。", "The paper is worthless; the issuer's promise is what counts — money as a liability."), st: T("阶段 1.1 · 阶段 1.5", "Stage 1.1 · Stage 1.5") },
     { y: 1494, when: "1494", era: "mer", tr: "b", ideas: "②", t: T("帕乔利系统写下复式记账法", "Pacioli sets out double-entry bookkeeping"),
-      d: T("有借必有贷，资产 = 负债 + 权益。外人第一次能核对一家企业的账。", "Every debit has a credit; assets = liabilities + equity. Outsiders can finally check a firm's books."), st: T("阶段 5.2", "Stage 5.2") },
+      d: T("有借必有贷，", "Every debit has a credit; ") + tex(T(String.raw`\text{资产} = \text{负债} + \text{权益}`, String.raw`\text{assets} = \text{liabilities} + \text{equity}`)) + T("。外人第一次能核对一家企业的账。", ". Outsiders can finally check a firm's books."), st: T("阶段 5.2", "Stage 5.2") },
     { y: 1602, when: "1602", era: "mer", tr: "b", ideas: "②④", t: T("荷兰东印度公司（VOC）发行可转让股份", "The Dutch East India Company (VOC) issues transferable shares"),
       d: T("有限责任、公众募股、阿姆斯特丹常设交易——普通股的原型。", "Limited liability, public share sales, continuous trading in Amsterdam — the prototype of common stock."), st: T("阶段 5.1", "Stage 5.1"), crisis: T("1630 年代郁金香热", "Tulip mania, 1630s") },
     { y: 1694, when: "1694", era: "mer", tr: "s", ideas: "①②", t: T("英格兰银行成立，借钱给政府", "The Bank of England is founded to lend to the government"),
@@ -115,7 +115,7 @@ export default function mount(root, lang) {
     const e = EV[sel];
     $("#fh-title").textContent = e.t;
     $("#fh-meta").innerHTML = e.when + T(" · 点亮观念 ", " · Ideas lit: ") + "<b>" + e.ideas + "</b>";
-    $("#fh-desc").textContent = e.d;
+    $("#fh-desc").innerHTML = e.d;
     $("#fh-strip").innerHTML = TRUST.map((t) => `<div class="strip-cell" style="${t.k === e.tr ? "background:" + (t.k === "c" ? "var(--btc-soft)" : "var(--orange-soft)") + ";font-weight:700" : "opacity:.5"}">${t.name}</div>`).join("");
     const lines = [`<div>${T("信任来源", "Source of trust")}${T("：", ": ")}<b>${TRUST.find((t) => t.k === e.tr).name}</b></div>`,
       `<div>${T("哪一节讲透它", "Where the course unpacks it")}${T("：", ": ")}<b>${e.st}</b></div>`];
@@ -133,8 +133,8 @@ export default function mount(root, lang) {
     $("#fh-dbl").textContent = fmtNum(dbl, 1) + T(" 年", " yrs");
     $("#fh-nd").textContent = fmtNum(n / dbl, 1);
     const val = fv(1, r, n), exp10 = n * Math.log10(1 + r);
-    const shown = isFinite(val) && val < 1e15 ? fmtNum(val, val < 100 ? 2 : 0) : "10^" + fmtNum(exp10, 0);
-    $("#fh-fv").textContent = shown;
+    const shown = isFinite(val) && val < 1e15 ? fmtNum(val, val < 100 ? 2 : 0) : tex(String.raw`10^{${fmtNum(exp10, 0).replace(/,/g, "{,}")}}`);
+    $("#fh-fv").innerHTML = shown;
     const lines = [];
     if (exp10 > 12) lines.push(`<div class="bad">${T("这个数字比人类历史上所有财富加起来还大得多。复利在纸面上可以无限延伸，现实中的索取权却会被违约、战争、通胀与货币改革一次次清零。", "That number dwarfs all the wealth in human history combined. On paper compounding runs forever; in reality claims keep getting wiped out by default, war, inflation and currency reform.")}</div>`);
     else if (exp10 > 3) lines.push(`<div class="warn">${T("几百年的复利就能把 1 变成成千上万。这是时间的价格（观念①）的威力，也解释了为什么长期利率的一点点差别都很要紧。", "A few centuries of compounding turn 1 into thousands or more. That's the power of the price of time (Idea ①) — and why small differences in long-term rates matter.")}</div>`);

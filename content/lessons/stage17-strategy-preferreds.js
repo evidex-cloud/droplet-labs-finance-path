@@ -54,13 +54,13 @@ Strategy 从 2025 年 2 月起，接连推出了五只永续优先股，公司�
 
 ### ② 总条款表：五只优先股逐行对照
 
-以下据 Strategy 2025 财年 10-K 的优先股条款表与各系列募集文件整理；“在外名义”据 2026-08-23 投资者简报（FWP，2026-08-24 提交）及 2026-08-07 简报页。“名义” = 股数 × 100 美元（或 100 欧元）名义金额。
+以下据 Strategy 2025 财年 10-K 的优先股条款表与各系列募集文件整理；“在外名义”据 2026-08-23 投资者简报（FWP，2026-08-24 提交）及 2026-08-07 简报页。\\(\\text{名义} = \\text{股数} \\times 100\\ \\text{美元}\\)（或 100 欧元）名义金额。
 
 <table class="pm">
 <tr><th>条款</th><th>STRF “Strife”</th><th>STRC “Stretch”</th><th>STRE “Stream”</th><th>STRK “Strike”</th><th>STRD “Stride”</th></tr>
 <tr><td>全称</td><td>10.00% Series A Perpetual Strife Preferred</td><td>Variable Rate Series A Perpetual Stretch Preferred</td><td>10.00% Series A Perpetual Stream Preferred</td><td>8.00% Series A Perpetual Strike Preferred</td><td>10.00% Series A Perpetual Stride Preferred</td></tr>
 <tr><td>首发日</td><td>2025-03-25</td><td>2025-07-29</td><td>2025-11-13</td><td>2025-02-05</td><td>2025-06-10</td></tr>
-<tr><td>IPO 股数 × 价格</td><td>850 万 × 85 美元</td><td>28,011,111 × 90 美元</td><td>775 万 × 80 欧元</td><td>730 万 × 80 美元</td><td>11,764,700 × 85 美元</td></tr>
+<tr><td>\\(\\text{IPO 股数} \\times \\text{价格}\\)</td><td>\\(850\\ \\text{万} \\times 85\\ \\text{美元}\\)</td><td>\\(28{,}011{,}111 \\times 90\\ \\text{美元}\\)</td><td>\\(775\\ \\text{万} \\times 80\\ \\text{欧元}\\)</td><td>\\(730\\ \\text{万} \\times 80\\ \\text{美元}\\)</td><td>\\(11{,}764{,}700 \\times 85\\ \\text{美元}\\)</td></tr>
 <tr><td>IPO 净收入</td><td>7.109 亿美元</td><td>24.738 亿美元</td><td>6.087 亿欧元（约 7.07 亿美元）</td><td>5.632 亿美元</td><td>9.795 亿美元</td></tr>
 <tr><td>名义金额</td><td>100 美元</td><td>100 美元</td><td>100 欧元</td><td>无（清算优先权 100 美元）</td><td>100 美元</td></tr>
 <tr><td>股息率</td><td>10% 固定</td><td>可变，按月设定；2026-07-01 起 <b>12.00%</b></td><td>10% 固定</td><td>8% 固定</td><td>10% 固定</td></tr>
@@ -81,14 +81,22 @@ Strategy 从 2025 年 2 月起，接连推出了五只永续优先股，公司�
 官方的清偿顺序（清算与股息都适用）：
 
 $$
-债务与子公司负债 > STRF > STRC > STRE、STRK、STRD（次级优先股）> MSTR 普通股
+\\text{债务与子公司负债} > \\text{STRF} > \\text{STRC}
+\\text{STRC} > \\text{STRE、STRK、STRD（次级优先股）} > \\text{MSTR 普通股}
 $$
 
 依据：Strategy 2026 年 8 月的简报写明 STRC “排在债务、子公司负债与 STRF 之后，但在 STRE、STRK、STRD 与普通股之前”；STRE 的定价公告（及媒体报道）称它次于 STRF 与 STRC、高于 STRK、STRD 与普通股。**STRK 与 STRD 两者之间谁先谁后，我们没有在一手文件里找到明文**——文件把三只都称为“次级优先股”；2025 年 12 月的公司简报按 STRE、STRK、STRD 的顺序累加名义金额来算各自的 BTC 评级，暗示了这个顺序，但**这一点仍属未经核实**。下面把三只次级优先股画在同一层，内部顺序用虚线表示。
 
-<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Strategy 的资本结构楼层图（2026-08-23，BTC 储备约 647 亿美元）</text><text x="140" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">层（从最优先到最劣后）</text><text x="400" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">名义金额</text><text x="560" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">BTC 评级*</text><rect x="30" y="50" width="330" height="36" rx="5" fill="var(--surface-2)" stroke="var(--line)"/><text x="44" y="73" font-size="12" font-weight="700" fill="var(--ink)">债务（可转债等，高级无担保）</text><text x="400" y="73" text-anchor="middle" font-size="12" fill="var(--ink)">67.5 亿</text><text x="560" y="73" text-anchor="middle" font-size="11" fill="var(--muted)">美元资产可全额覆盖</text><rect x="30" y="92" width="330" height="36" rx="5" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="44" y="115" font-size="12" font-weight="700" fill="var(--orange-ink)">STRF · 10% 累积</text><text x="400" y="115" text-anchor="middle" font-size="12" fill="var(--ink)">12.8 亿</text><text x="560" y="115" text-anchor="middle" font-size="11" fill="var(--ink)">很高（约 50 倍）</text><rect x="30" y="134" width="330" height="46" rx="5" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="44" y="157" font-size="12" font-weight="700" fill="var(--ink)">STRC · 可变利率（12%）累积</text><text x="44" y="172" font-size="10" fill="var(--muted)">规模最大的一层</text><text x="400" y="162" text-anchor="middle" font-size="12" fill="var(--ink)">99.7 亿</text><text x="560" y="162" text-anchor="middle" font-size="12" font-weight="700" fill="var(--blue)">5.7 倍（官方）</text><rect x="30" y="186" width="330" height="54" rx="5" fill="var(--btc-soft)" stroke="var(--btc)"/><line x1="140" y1="186" x2="140" y2="240" stroke="var(--btc)" stroke-dasharray="3 3"/><line x1="250" y1="186" x2="250" y2="240" stroke="var(--btc)" stroke-dasharray="3 3"/><text x="85" y="208" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">STRE 10%</text><text x="85" y="224" text-anchor="middle" font-size="10" fill="var(--muted)">欧元 · 累积</text><text x="195" y="208" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">STRK 8%</text><text x="195" y="224" text-anchor="middle" font-size="10" fill="var(--muted)">可转换 · 累积</text><text x="305" y="208" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">STRD 10%</text><text x="305" y="224" text-anchor="middle" font-size="10" fill="var(--red)">非累积</text><text x="400" y="217" text-anchor="middle" font-size="12" fill="var(--ink)">约 37.1 亿</text><text x="560" y="210" text-anchor="middle" font-size="11" fill="var(--ink)">约 4.3 倍（三只合并</text><text x="560" y="224" text-anchor="middle" font-size="11" fill="var(--ink)">按同级推算）</text><text x="195" y="252" text-anchor="middle" font-size="10" fill="var(--btc)">三只之间的相对顺序：未经核实</text><rect x="30" y="262" width="330" height="34" rx="5" fill="var(--surface-2)" stroke="var(--line)" stroke-dasharray="4 3"/><text x="44" y="284" font-size="12" font-weight="700" fill="var(--muted)">MSTR 普通股（剩余索取权）</text><text x="400" y="284" text-anchor="middle" font-size="11" fill="var(--muted)">剩下的一切</text><text x="560" y="284" text-anchor="middle" font-size="10" fill="var(--muted)">*按 Strategy 口径：先用美元资产抵债</text></svg><figcaption>优先股合计约 149.7 亿美元（2026-08-23）。BTC 评级按 Strategy 的方法 = BTC 储备 ÷（本层 + 所有更优先层的名义，美元资产 66.9 亿先抵减债务）；STRC 的 5.7 倍为公司公布值，其余为据同一方法推算。</figcaption></figure>
+<figure><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Strategy 的资本结构楼层图（2026-08-23，BTC 储备约 647 亿美元）</text><text x="140" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">层（从最优先到最劣后）</text><text x="400" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">名义金额</text><text x="560" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">BTC 评级*</text><rect x="30" y="50" width="330" height="36" rx="5" fill="var(--surface-2)" stroke="var(--line)"/><text x="44" y="73" font-size="12" font-weight="700" fill="var(--ink)">债务（可转债等，高级无担保）</text><text x="400" y="73" text-anchor="middle" font-size="12" fill="var(--ink)">67.5 亿</text><text x="560" y="73" text-anchor="middle" font-size="11" fill="var(--muted)">美元资产可全额覆盖</text><rect x="30" y="92" width="330" height="36" rx="5" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="44" y="115" font-size="12" font-weight="700" fill="var(--orange-ink)">STRF · 10% 累积</text><text x="400" y="115" text-anchor="middle" font-size="12" fill="var(--ink)">12.8 亿</text><text x="560" y="115" text-anchor="middle" font-size="11" fill="var(--ink)">很高（约 50 倍）</text><rect x="30" y="134" width="330" height="46" rx="5" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="44" y="157" font-size="12" font-weight="700" fill="var(--ink)">STRC · 可变利率（12%）累积</text><text x="44" y="172" font-size="10" fill="var(--muted)">规模最大的一层</text><text x="400" y="162" text-anchor="middle" font-size="12" fill="var(--ink)">99.7 亿</text><text x="560" y="162" text-anchor="middle" font-size="12" font-weight="700" fill="var(--blue)">5.7 倍（官方）</text><rect x="30" y="186" width="330" height="54" rx="5" fill="var(--btc-soft)" stroke="var(--btc)"/><line x1="140" y1="186" x2="140" y2="240" stroke="var(--btc)" stroke-dasharray="3 3"/><line x1="250" y1="186" x2="250" y2="240" stroke="var(--btc)" stroke-dasharray="3 3"/><text x="85" y="208" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">STRE 10%</text><text x="85" y="224" text-anchor="middle" font-size="10" fill="var(--muted)">欧元 · 累积</text><text x="195" y="208" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">STRK 8%</text><text x="195" y="224" text-anchor="middle" font-size="10" fill="var(--muted)">可转换 · 累积</text><text x="305" y="208" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">STRD 10%</text><text x="305" y="224" text-anchor="middle" font-size="10" fill="var(--red)">非累积</text><text x="400" y="217" text-anchor="middle" font-size="12" fill="var(--ink)">约 37.1 亿</text><text x="560" y="210" text-anchor="middle" font-size="11" fill="var(--ink)">约 4.3 倍（三只合并</text><text x="560" y="224" text-anchor="middle" font-size="11" fill="var(--ink)">按同级推算）</text><text x="195" y="252" text-anchor="middle" font-size="10" fill="var(--btc)">三只之间的相对顺序：未经核实</text><rect x="30" y="262" width="330" height="34" rx="5" fill="var(--surface-2)" stroke="var(--line)" stroke-dasharray="4 3"/><text x="44" y="284" font-size="12" font-weight="700" fill="var(--muted)">MSTR 普通股（剩余索取权）</text><text x="400" y="284" text-anchor="middle" font-size="11" fill="var(--muted)">剩下的一切</text><text x="560" y="284" text-anchor="middle" font-size="10" fill="var(--muted)">*按 Strategy 口径：先用美元资产抵债</text></svg><figcaption>优先股合计约 149.7 亿美元（2026-08-23）。BTC 评级按 Strategy 的方法为 \\(\\text{BTC 评级} = \\dfrac{\\text{BTC 储备}}{\\text{本层} + \\text{所有更优先层的名义}}\\)（美元资产 66.9 亿先抵减债务）；STRC 的 5.7 倍为公司公布值，其余为据同一方法推算。</figcaption></figure>
 
-BTC 评级是阶段 16.5 的核心指标：**BTC 储备 ÷（本层名义 + 所有排在它前面的名义）**。Strategy 的桥接表把 66.9 亿美元的美元资产（美元储备 + USD Cash）先抵减 67.14 亿美元债务，于是 STRC 的分母 ≈ 0.24 + 12.84 + 99.72 ≈ 112.8 亿美元，BTC 评级 = 647.18 ÷ 112.8 ≈ **5.7 倍**，对应的“BTC 地板价”约 **13,400 美元**（比特币跌到这里，STRC 的覆盖恰好 = 1 倍）。
+BTC 评级是阶段 16.5 的核心指标：**\\(\\text{BTC 评级} = \\dfrac{\\text{BTC 储备}}{\\text{本层名义} + \\text{所有排在它前面的名义}}\\)**。Strategy 的桥接表把 66.9 亿美元的美元资产（美元储备 + USD Cash）先抵减 67.14 亿美元债务，于是 STRC 的分母与评级是：
+
+$$
+\\text{分母} \\approx 0.24 + 12.84 + 99.72 \\approx 112.8\\ \\text{亿美元}
+\\text{BTC 评级} = \\frac{647.18}{112.8} \\approx \\mathbf{5.7\\times}
+$$
+
+对应的“BTC 地板价”约 **13,400 美元**（比特币跌到这里，STRC 的覆盖恰好是 1 倍）。
 
 不抵减美元资产时（更保守）：STRC 约 3.6 倍、三只次级优先股合并约 3.0 倍。**同一个评级，口径不同就差很多——看评级先看分母。** 公司也提醒：BTC 评级“并非任何评级机构的评级”。标普给 Strategy 的**发行人**信用评级是 B-（2025-10-27 授予，2025 年 12 月确认，展望稳定）；优先股本身的标普评级我们没有找到。
 
@@ -96,7 +104,7 @@ BTC 评级是阶段 16.5 的核心指标：**BTC 储备 ÷（本层名义 + 所�
 
 ### ④ 逐只拆解：每一只的“那个关键开关”
 
-**STRF——最靠前的座位。** 10% 固定、累积、季度付息。它的牙齿最多：漏付股息时，未付部分按“股息率 + 1 个百分点”复利，每期再加 1 个百分点，最高 18%；连续漏付还可以选董事。它是优先股里最像“高级债”的一只——但仍是永续权益，跳过股息不构成违约。
+**STRF——最靠前的座位。** 10% 固定、累积、季度付息。它的牙齿最多：漏付股息时，未付部分按 \\(\\text{股息率} + 1\\ \\text{个百分点}\\) 复利，每期再加 1 个百分点，最高 18%；连续漏付还可以选董事。它是优先股里最像“高级债”的一只——但仍是永续权益，跳过股息不构成违约。
 
 **STRC——“类现金”的尝试。** 利率每月可调，公司用它把价格锚在 100 美元附近；从 9.00%（2025 年 7 月）一路调到 **12.00%**（2026-07-01 起），2026-06-30 起改为每月付息两次，公司还提议改为每日。它是规模最大的一层，也是 Strategy 融资的主力管子（阶段 17.1）。机制细节留给阶段 17.4。
 
@@ -109,7 +117,7 @@ BTC 评级是阶段 16.5 的核心指标：**BTC 储备 ÷（本层名义 + 所�
 ### ⑤ 共同条款：清算优先权、赎回、回售与每日股息提案
 
 - **清算优先权**：STRF、STRC、STRE、STRD 的清算优先权“大致等于交易价格与 100 美元（或 100 欧元）中的较高者”。2025-12-31，STRF 的清算优先权是 **106.17 美元**。这意味着交易价高于面值时，优先股的索取权会“水涨船高”——计算覆盖倍数时应注意用的是名义还是清算优先权（2026-06-30 优先股合计清算优先权 154.62 亿美元，高于按名义算的数字）。
-- **未付股息的复利**：STRF 与 STRE 为“股息率 + 100 个基点、逐期再加 100 个基点、最高 18%”；STRC 按适用股息率复利；STRK 的细节未经核实。
+- **未付股息的复利**：STRF 与 STRE 为“\\(\\text{股息率} + 100\\ \\text{个基点}\\)、逐期再加 100 个基点、最高 18%”；STRC 按适用股息率复利；STRK 的细节未经核实。
 - **公司赎回**：所有系列都有“清理式赎回”（剩余股数少于原发行量的 25% 时）和税务事件赎回；**STRC 另外可在任何时候以 101 美元（或更高）加应计股息赎回**，部分赎回后须至少留 2.5 亿美元在外——这给 STRC 的价格加了一个大约 101 美元的“天花板”（阶段 6.3 的负凸性）。
 - **根本性变更回售**：五只都有，保护持有人不被“换成另一个发行人”。
 - **每日股息提案**：2026-09-24/25，董事会提议把 STRF、STRC、STRK、STRD 的股息登记日改为**每日**，特别股东大会定于 **2026-10-28**；若通过，STRC 预计 2026-11-02 首次按日支付，STRF/STRK/STRD 预计 2027-01-04 开始。结果以投票为准。
@@ -119,7 +127,7 @@ BTC 评级是阶段 16.5 的核心指标：**BTC 储备 ÷（本层名义 + 所�
 
 规模：2026-08-23 优先股名义合计 **149.66 亿美元**，其中 STRC 99.72 亿美元占三分之二；9 月的 STRC 回购之后，合计约 **143 亿美元**（据 8-K 推算）。每年利息与优先股股息合计 **17.03 亿美元**（2026-08-23），其中 STRC 11.97 亿美元；9 月回购后约 16.2 亿美元（推算）。截至 2026-07-26，优先股累计已付股息 10.6 亿美元，公司称自首只优先股发行以来全部按时足额支付，并预期这些分配在税务上属于“资本返还”（阶段 17.7）。
 
-用阶段 16.6 的尺子：2026-09-20 美元储备 50.4 亿美元，按每年约 16.2 亿美元计，约可覆盖 **37 个月**（推算）。
+用阶段 16.6 的尺子：2026-09-20 美元储备 50.4 亿美元，按每年约 16.2 亿美元计，约可覆盖 \\(\\dfrac{50.4}{16.2} \\times 12 \\approx \\mathbf{37}\\) 个月（推算）。
 
 **最强的支持论证**：五只优先股让 Strategy 以不需要还本、没有保证金、没有比特币质押的形式，筹到约 150 亿美元；分层设计让不同买家各取所需；层层之上都有数倍的比特币覆盖，外加数年的美元储备。对买家而言，这是一种新的“比特币支撑信用”，收益率明显高于同期国债（2026-09-25 三个月国债约 4.24%、30 年期约 5.49%）。
 
@@ -180,7 +188,7 @@ BTC 评级是阶段 16.5 的核心指标：**BTC 储备 ÷（本层名义 + 所�
         "STRC 名义 + 所有排在它前面的名义（债务、STRF），且先用美元资产抵减债务",
       ],
       answer: 3,
-      explain: "647.18 ÷（67.14 − 66.9 + 12.84 + 99.72）≈ 5.7 倍。**看评级先看分母**：不抵减美元资产时，STRC 约 3.6 倍。",
+      explain: "\\(\\dfrac{647.18}{67.14 - 66.9 + 12.84 + 99.72} \\approx 5.7\\times\\)。**看评级先看分母**：不抵减美元资产时，STRC 约 3.6 倍。",
     },
     {
       q: "STRK 的股息率为什么只有 8%，低于 STRF 的 10%？",

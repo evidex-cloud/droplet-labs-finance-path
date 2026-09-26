@@ -7,7 +7,7 @@ export default {
   prereqs: ["time-value"],
 
   oneLiner:
-    "Leave $1,000 at 7% for 30 years. If only the original principal earns interest (simple interest) you end with $3,100; if the interest earns interest too (compounding) you end with **$7,612** — the extra $4,500 is all interest on interest. Compounding is the **exponential form** of the price of time: it snowballs savings, it snowballs credit-card debt, and it turns a DAT's \"BTC per share\" into a compounding scoreboard. The **Rule of 72** lets you do it in your head: 72 ÷ the rate ≈ years to double.",
+    "Leave $1,000 at 7% for 30 years. If only the original principal earns interest (simple interest) you end with $3,100; if the interest earns interest too (compounding) you end with **$7,612** — the extra $4,500 is all interest on interest. Compounding is the **exponential form** of the price of time: it snowballs savings, it snowballs credit-card debt, and it turns a DAT's \"BTC per share\" into a compounding scoreboard. The **Rule of 72** lets you do it in your head: \\(\\dfrac{72}{\\text{rate}} \\approx \\text{years to double}\\).",
 
   intuition: `
 Stage 2.1 established that an interest rate is the price of waiting a year: $100 today at 5% becomes $105 next year. So what happens in year two?
@@ -24,7 +24,7 @@ That is the personality of compounding: **dull at first, explosive later.** Grow
 
 How do you get a feel for compounding without a calculator? Use the **Rule of 72**: divide 72 by the annual rate (as a whole number) and you get roughly the number of years it takes to double.
 
-- 6% a year → 72 ÷ 6 = 12 years to double.
+- 6% a year → \\(72 \\div 6 = 12\\) years to double.
 - 9% a year → 8 years to double.
 - 3% inflation → prices double in about 24 years, which is to say the cash in your pocket loses half its purchasing power in about 24 years.
 
@@ -47,8 +47,8 @@ This lesson still stands on **Idea ① — the price of time**, just with a long
 Two formulas. The only difference is whether interest is added back to the principal:
 
 $$
-Simple: FV = P × (1 + r × n)
-Compound: FV = P × (1 + r)^n
+\\text{Simple: } \\mathrm{FV} = P \\times (1 + r \\times n)
+\\text{Compound: } \\mathrm{FV} = P \\times (1 + r)^{n}
 $$
 
 Simple interest is a straight line: you add the same amount every year. Compound interest is an exponential curve: you **multiply** by the same factor every year. With $1,000 at 7%:
@@ -68,29 +68,29 @@ The same "12% a year" gives different results depending on how often interest is
 <table class="pm"><tr><th>Credited</th><th>$100 after one year</th><th>Effective annual rate</th></tr><tr><td>Once a year</td><td>112.00</td><td>12.00%</td></tr><tr><td>Twice a year</td><td>112.36</td><td>12.36%</td></tr><tr><td>Quarterly</td><td>112.55</td><td>12.55%</td></tr><tr><td>Monthly</td><td>112.68</td><td>12.68%</td></tr><tr><td>Daily</td><td>112.747</td><td>12.747%</td></tr><tr><td>Continuously</td><td>112.750</td><td>12.750%</td></tr></table>
 
 $$
-Effective annual rate EAR = (1 + r ÷ m)^m − 1
-Continuous compounding: FV = P × e^(r × n)
+\\text{Effective annual rate } \\mathrm{EAR} = \\left(1 + \\frac{r}{m}\\right)^{m} - 1
+\\text{Continuous compounding: } \\mathrm{FV} = P \\times e^{r \\times n}
 $$
 
-Here m is the number of times a year interest is credited. The more often it is credited, the sooner interest starts earning interest and the higher the effective rate — but each step adds less than the one before, and the sequence converges to a limit. That limit is where the mathematical constant **e ≈ 2.71828** comes from: the Swiss mathematician Jacob Bernoulli stumbled onto it in 1683 while working on exactly this compound-interest problem.
+Here \\(m\\) is the number of times a year interest is credited. The more often it is credited, the sooner interest starts earning interest and the higher the effective rate — but each step adds less than the one before, and the sequence converges to a limit. That limit is where the mathematical constant **\\(e \\approx 2.71828\\)** comes from: the Swiss mathematician Jacob Bernoulli stumbled onto it in 1683 while working on exactly this compound-interest problem.
 
 The practical point of that table: **the quoted "annual rate" is not necessarily the rate you actually earn or pay.**
 
 - Loans and credit cards usually quote an **APR** (annual percentage rate — a nominal rate with compounding left out).
 - Savings products usually quote an **APY** (annual percentage yield — with compounding built in).
 
-A card with a 22% APR compounded monthly really costs (1 + 0.22 ÷ 12)^12 − 1 ≈ **24.4%** a year. Lenders like to quote the lower-looking APR; deposit-takers like to quote the higher-looking APY. **Before comparing two products, convert them to the same basis.**
+A card with a 22% APR compounded monthly really costs **\\(\\left(1 + \\dfrac{0.22}{12}\\right)^{12} - 1 \\approx 24.4\\%\\)** a year. Lenders like to quote the lower-looking APR; deposit-takers like to quote the higher-looking APY. **Before comparing two products, convert them to the same basis.**
 
 ### ③ The Rule of 72: doubling time in your head
 
 The exact doubling time is:
 
 $$
-(1 + r)^n = 2 → n = ln 2 ÷ ln(1 + r) ≈ 0.693 ÷ r
-Rule of 72: n ≈ 72 ÷ (r × 100)
+(1 + r)^{n} = 2 \\Rightarrow n = \\frac{\\ln 2}{\\ln(1 + r)} \\approx \\frac{0.693}{r}
+\\text{Rule of 72: } n \\approx \\frac{72}{r \\times 100}
 $$
 
-Because ln(1 + r) ≈ r when r is small, doubling time is about 69.3 divided by the rate in percent. So why 72 rather than 69.3? Two reasons: 72 divides cleanly by 2, 3, 4, 6, 8, 9 and 12, which makes mental arithmetic easy; and in the common 6%–10% range, the slightly larger numerator happens to offset the fact that ln(1 + r) is a bit smaller than r. The rule is old: the Italian mathematician Luca Pacioli mentions it in his 1494 *Summa de arithmetica* — the same book that made double-entry bookkeeping famous (Stage 0.3).
+Because \\(\\ln(1 + r) \\approx r\\) when \\(r\\) is small, doubling time is about 69.3 divided by the rate in percent. So why 72 rather than 69.3? Two reasons: 72 divides cleanly by 2, 3, 4, 6, 8, 9 and 12, which makes mental arithmetic easy; and in the common 6%–10% range, the slightly larger numerator happens to offset the fact that \\(\\ln(1 + r)\\) is a bit smaller than \\(r\\). The rule is old: the Italian mathematician Luca Pacioli mentions it in his 1494 *Summa de arithmetica* — the same book that made double-entry bookkeeping famous (Stage 0.3).
 
 <table class="pm"><tr><th>Annual rate</th><th>Rule of 72</th><th>Exact</th></tr><tr><td>2%</td><td>36.0 yrs</td><td>35.0 yrs</td></tr><tr><td>4%</td><td>18.0 yrs</td><td>17.7 yrs</td></tr><tr><td>6%</td><td>12.0 yrs</td><td>11.9 yrs</td></tr><tr><td>8%</td><td>9.0 yrs</td><td>9.0 yrs</td></tr><tr><td>10%</td><td>7.2 yrs</td><td>7.3 yrs</td></tr><tr><td>24%</td><td>3.0 yrs</td><td>3.2 yrs</td></tr></table>
 
@@ -108,10 +108,10 @@ Compounding works on borrowers too, and usually harder, because borrowing rates 
 
 **Fees.** Fees compound against you as well. Suppose a fund earns 7% before fees and charges 1% a year, so you net 6%. $1,000 over 30 years grows to $7,612 at 7% but only **$5,743** at 6%. **A fee that looks like "just 1%" ends up taking about a quarter of your final wealth.** That arithmetic is a big reason low-cost index funds took over (Stage 5.6).
 
-**Volatility drag.** This is the least intuitive one. An investment rises 50% in year one and falls 50% in year two. Its average return is 0%, but your $100 has become 100 × 1.5 × 0.5 = **$75**. **Compounding runs on the geometric average, not the arithmetic average:**
+**Volatility drag.** This is the least intuitive one. An investment rises 50% in year one and falls 50% in year two. Its average return is 0%, but your $100 has become **\\(100 \\times 1.5 \\times 0.5 = \\$75\\)**. **Compounding runs on the geometric average, not the arithmetic average:**
 
 $$
-Geometric mean ≈ arithmetic mean − volatility² ÷ 2
+\\text{Geometric mean} \\approx \\text{arithmetic mean} - \\frac{\\text{volatility}^{2}}{2}
 $$
 
 The bigger the swings, the less a given average return compounds into. In the example, the geometric return per period is about −13.4%. This matters enormously for a volatile asset like bitcoin, and even more once leverage is involved: leverage magnifies volatility, and the drag grows with the square of volatility. Stage 11.4 shows how that can drive a strategy that "makes money on average" to zero, and Stage 16.4 uses it to analyze the amplification in DAT common stock.
@@ -122,15 +122,15 @@ The bigger the swings, the less a given average return compounds into. In the ex
 
 **Bitcoin itself does not compound.** Hold one bitcoin and in ten years you still hold one (the price is another matter). It pays no interest and no dividend, so wealth measured in bitcoin does not grow on its own. That gap explains why a new kind of company exists:
 
-**The core pitch of a digital asset treasury company (DAT) is to make "BTC per share" compound.** Recall the course's standard toy company, Orange Corp: 10,000 BTC and 100 million shares, so 0.0001 BTC per share = **10,000 sats per share**. When its share price sits above the bitcoin value per share (mNAV = 1.5), it can sell 10 million new shares at $15, use all $150 million to buy 1,500 BTC, and lift BTC per share from 10,000 sats to about 10,455 — **up 4.5%**. Companies call this "BTC Yield."
+**The core pitch of a digital asset treasury company (DAT) is to make "BTC per share" compound.** Recall the course's standard toy company, Orange Corp: 10,000 BTC and 100 million shares, so **\\(0.0001\\ \\text{BTC} = 10{,}000\\ \\text{sats}\\)** per share. When its share price sits above the bitcoin value per share (\\(\\mathrm{mNAV} = 1.5\\)), it can sell 10 million new shares at $15, use all $150 million to buy 1,500 BTC, and lift BTC per share from 10,000 sats to about 10,455 — **up 4.5%**. Companies call this "BTC Yield."
 
-If that could be done at 10% a year, the Rule of 72 says BTC per share would double in about 7.2 years; after ten years it would be 10,000 × 1.1^10 ≈ **25,937 sats per share**. That is the "compounding machine" DAT supporters have in mind.
+If that could be done at 10% a year, the Rule of 72 says BTC per share would double in about 7.2 years; after ten years it would be **\\(10{,}000 \\times 1.1^{10} \\approx 25{,}937\\) sats per share**. That is the "compounding machine" DAT supporters have in mind.
 
 But compounding requires that **every year repeats**: issuance must happen at a premium (mNAV above 1), and the market must keep buying. If the premium disappears, issuing shares dilutes BTC per share instead, and the compounding stops or runs backward. Stage 16.1 introduces the scoreboard, Stage 16.7 does the flywheel math, and Stage 18.3 covers what happens when it reverses. **Any compounding story should be met with one question first: for how many years can this rate really last?**
 
 **On-chain yield.** DeFi vaults often reinvest rewards automatically ("auto-compounding") and advertise the result as an APY. A pool flashing "APY 1,000%" is usually paying out newly minted reward tokens — tokens that are themselves inflating, so what compounds is an ever-larger pile of tokens that may be worth ever less. Stage 13.5 teaches you to ask where a yield actually comes from.
 
-In one line: **compounding = the price of time × the length of time × sustainability.** Take away any one of the three and the snowball never gets rolling.
+In one line: **\\(\\text{compounding} = \\text{price of time} \\times \\text{length of time} \\times \\text{sustainability}\\).** Take away any one of the three and the snowball never gets rolling.
 `,
 
   demo: "compounding",
@@ -158,31 +158,31 @@ Remember also that **the slope runs both ways.** A debtor is rolling a snowball 
       q: "$1,000 compounded at 7% for 30 years grows to about $7,612. What would simple interest give?",
       options: ["$2,100", "$3,100", "$7,000", "$7,612"],
       answer: 1,
-      explain: "**Simple interest = 1,000 × (1 + 7% × 30) = $3,100.** The $4,512 difference is entirely interest on interest.",
+      explain: "**\\(\\text{Simple interest} = 1{,}000 \\times (1 + 7\\% \\times 30) = \\$3{,}100\\).** The $4,512 difference is entirely interest on interest.",
     },
     {
       q: "By the Rule of 72, roughly how long does money take to double at 9% a year?",
       options: ["6 years", "9 years", "12 years", "8 years"],
       answer: 3,
-      explain: "**72 ÷ 9 = 8 years.** The exact figure is ln 2 ÷ ln 1.09 ≈ 8.04 years; in this range the rule is almost perfect.",
+      explain: "**\\(72 \\div 9 = 8\\) years.** The exact figure is \\(\\dfrac{\\ln 2}{\\ln 1.09} \\approx 8.04\\) years; in this range the rule is almost perfect.",
     },
     {
       q: "An investment rises 50% in year one and falls 50% in year two. What has $100 become?",
       options: ["$75", "$100", "$125", "$50"],
       answer: 0,
-      explain: "**100 × 1.5 × 0.5 = $75.** The arithmetic average return is 0%, but compounding follows the geometric average, and the swings themselves ate 25%. That is volatility drag.",
+      explain: "**\\(100 \\times 1.5 \\times 0.5 = \\$75\\).** The arithmetic average return is 0%, but compounding follows the geometric average, and the swings themselves ate 25%. That is volatility drag.",
     },
     {
       q: "A credit card has a 22% APR, compounded monthly. What is its effective annual rate, roughly?",
       options: ["22.0%", "18.3%", "24.4%", "26.4%"],
       answer: 2,
-      explain: "**(1 + 0.22 ÷ 12)^12 − 1 ≈ 24.4%.** The more often interest is charged, the sooner it starts compounding and the further the effective rate rises above the quoted APR.",
+      explain: "**\\(\\left(1 + \\dfrac{0.22}{12}\\right)^{12} - 1 \\approx 24.4\\%\\).** The more often interest is charged, the sooner it starts compounding and the further the effective rate rises above the quoted APR.",
     },
     {
       q: "Orange Corp has 10,000 sats per share. If BTC per share grew 10% a year for 10 years, where would it end up?",
       options: ["11,000 sats", "20,000 sats", "About 25,937 sats", "100,000 sats"],
       answer: 2,
-      explain: "**10,000 × 1.1^10 ≈ 25,937 sats.** Rule of 72: it doubles in about 7.2 years. The catch is that every year must include issuance at a premium — whether that can last is the subject of Stage 16.7 and Stage 18.3.",
+      explain: "**\\(10{,}000 \\times 1.1^{10} \\approx 25{,}937\\) sats.** Rule of 72: it doubles in about 7.2 years. The catch is that every year must include issuance at a premium — whether that can last is the subject of Stage 16.7 and Stage 18.3.",
     },
   ],
 

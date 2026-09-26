@@ -25,7 +25,7 @@ export default {
 - **发行人**：借钱的一方——美国财政部、一家公司、一个城市。
 - **合同条款**：谁先谁后、有没有抵押、能不能提前赎回。
 
-把这 10 年的钱数一数：20 次 × 25 美元 = 500 美元利息，加上最后还回来的 1,000 美元本金，一共 **1,500 美元**。你付出 1,000 美元，换回 1,500 美元，只是要等 10 年。
+把这 10 年的钱数一数：\\(20\\ \\text{次} \\times 25\\ \\text{美元} = 500\\ \\text{美元}\\) 利息，加上最后还回来的 1,000 美元本金，一共 **1,500 美元**。你付出 1,000 美元，换回 1,500 美元，只是要等 10 年。
 
 它和借给朋友的最大不同在于：**这张借条可以卖**。第三年你急用钱，可以把它卖给别人；买家接手你的位置，以后的票息和本金都付给买家。正因为能卖，债券就有了**价格**——而这个价格每天都在变。为什么变、变多少，是阶段 4.2 的主题。
 
@@ -51,7 +51,7 @@ export default {
 一份债券合同（美国叫 indenture，发行说明书里会完整写出）有很多条款，但决定它“值多少钱”的核心零件只有五个：
 
 - **面值（face value / par）**：到期偿还的金额，也是计算票息的基数。美国国债与公司债的标准面值是 1,000 美元（最小交易单位可以更小，国债在 TreasuryDirect 上 100 美元就能买）。
-- **票面利率（coupon rate）**：每年按面值付多少利息。票息 5% × 面值 1,000 = 每年 50 美元。**票面利率在发行时写死，之后不再变**——这一点是阶段 4.2 那个“跷跷板”的根源。
+- **票面利率（coupon rate）**：每年按面值付多少利息。\\(\\text{票息 } 5\\% \\times \\text{面值 } 1{,}000 = \\text{每年 } 50\\ \\text{美元}\\)。**票面利率在发行时写死，之后不再变**——这一点是阶段 4.2 那个“跷跷板”的根源。
 - **付息频率**：美国国债、多数美国公司债每半年付一次；很多欧洲债券每年一次；房贷支持证券每月一次。
 - **到期日（maturity）**：还本的日子。剩余期限越长，未来越不确定，价格对利率越敏感（阶段 4.4 会量化）。
 - **发行人与条款**：谁欠你钱、欠钱的“位置”在哪里——有没有抵押、排在谁前面、发行人能不能提前还钱（可赎回债）、你能不能要求提前拿回钱（可回售债）、能不能换成股票（可转债，阶段 6.4）。
@@ -67,19 +67,20 @@ export default {
 
 全课反复使用的标准例子：**面值 1,000 美元、票息 5%、10 年期、每半年付息**。把它的一生画在时间轴上：
 
-<figure><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">标准债券的一生：面值 1,000 美元 · 票息 5% · 10 年</text><line x1="36" y1="160" x2="612" y2="160" stroke="var(--line)" stroke-width="1.5"/><rect x="42" y="160" width="20" height="70" rx="3" fill="var(--red)" opacity=".85"/><text x="52" y="246" text-anchor="middle" font-size="11" fill="var(--red)" font-weight="600">−1,000</text><text x="52" y="260" text-anchor="middle" font-size="10" fill="var(--muted)">今天买入</text><g fill="var(--blue)"><rect x="98" y="146" width="16" height="14" rx="2"/><rect x="152" y="146" width="16" height="14" rx="2"/><rect x="206" y="146" width="16" height="14" rx="2"/><rect x="260" y="146" width="16" height="14" rx="2"/><rect x="314" y="146" width="16" height="14" rx="2"/><rect x="368" y="146" width="16" height="14" rx="2"/><rect x="422" y="146" width="16" height="14" rx="2"/><rect x="476" y="146" width="16" height="14" rx="2"/><rect x="530" y="146" width="16" height="14" rx="2"/><rect x="580" y="46" width="20" height="14" rx="2"/></g><rect x="580" y="60" width="20" height="100" rx="2" fill="var(--orange)"/><g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="106" y="140">+50</text><text x="160" y="140">+50</text><text x="214" y="140">+50</text><text x="268" y="140">+50</text><text x="322" y="140">+50</text><text x="376" y="140">+50</text><text x="430" y="140">+50</text><text x="484" y="140">+50</text><text x="538" y="140">+50</text><text x="52" y="176">0</text><text x="106" y="176">1</text><text x="160" y="176">2</text><text x="214" y="176">3</text><text x="268" y="176">4</text><text x="322" y="176">5</text><text x="376" y="176">6</text><text x="430" y="176">7</text><text x="484" y="176">8</text><text x="538" y="176">9</text><text x="590" y="176">10 年</text></g><text x="590" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">+1,050</text><text x="540" y="96" text-anchor="end" font-size="11" fill="var(--orange-ink)">本金 1,000 到期归还</text><text x="540" y="110" text-anchor="end" font-size="10" fill="var(--muted)">+ 最后一年的票息 50</text><text x="320" y="210" text-anchor="middle" font-size="11" fill="var(--ink)">每年票息 50 美元（实际每半年付 25）· 合计收到 500 利息 + 1,000 本金 = 1,500</text><text x="320" y="226" text-anchor="middle" font-size="10" fill="var(--muted)">柱高仅示意（票息柱按比例会小到看不见）</text></svg><figcaption>债券的全部现金流在发行那天就写明了：一次付出、一串票息、一次还本。它的价值 = 这串现金流按市场利率折现的总和。</figcaption></figure>
+<figure><svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">标准债券的一生：面值 1,000 美元 · 票息 5% · 10 年</text><line x1="36" y1="160" x2="612" y2="160" stroke="var(--line)" stroke-width="1.5"/><rect x="42" y="160" width="20" height="70" rx="3" fill="var(--red)" opacity=".85"/><text x="52" y="246" text-anchor="middle" font-size="11" fill="var(--red)" font-weight="600">−1,000</text><text x="52" y="260" text-anchor="middle" font-size="10" fill="var(--muted)">今天买入</text><g fill="var(--blue)"><rect x="98" y="146" width="16" height="14" rx="2"/><rect x="152" y="146" width="16" height="14" rx="2"/><rect x="206" y="146" width="16" height="14" rx="2"/><rect x="260" y="146" width="16" height="14" rx="2"/><rect x="314" y="146" width="16" height="14" rx="2"/><rect x="368" y="146" width="16" height="14" rx="2"/><rect x="422" y="146" width="16" height="14" rx="2"/><rect x="476" y="146" width="16" height="14" rx="2"/><rect x="530" y="146" width="16" height="14" rx="2"/><rect x="580" y="46" width="20" height="14" rx="2"/></g><rect x="580" y="60" width="20" height="100" rx="2" fill="var(--orange)"/><g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="106" y="140">+50</text><text x="160" y="140">+50</text><text x="214" y="140">+50</text><text x="268" y="140">+50</text><text x="322" y="140">+50</text><text x="376" y="140">+50</text><text x="430" y="140">+50</text><text x="484" y="140">+50</text><text x="538" y="140">+50</text><text x="52" y="176">0</text><text x="106" y="176">1</text><text x="160" y="176">2</text><text x="214" y="176">3</text><text x="268" y="176">4</text><text x="322" y="176">5</text><text x="376" y="176">6</text><text x="430" y="176">7</text><text x="484" y="176">8</text><text x="538" y="176">9</text><text x="590" y="176">10 年</text></g><text x="590" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">+1,050</text><text x="540" y="96" text-anchor="end" font-size="11" fill="var(--orange-ink)">本金 1,000 到期归还</text><text x="540" y="110" text-anchor="end" font-size="10" fill="var(--muted)">+ 最后一年的票息 50</text><text x="320" y="210" text-anchor="middle" font-size="11" fill="var(--ink)">每年票息 50 美元（实际每半年付 25）· 合计收到 500 利息 + 1,000 本金 = 1,500</text><text x="320" y="226" text-anchor="middle" font-size="10" fill="var(--muted)">柱高仅示意（票息柱按比例会小到看不见）</text></svg><figcaption>债券的全部现金流在发行那天就写明了：一次付出、一串票息、一次还本。它的价值就是这串现金流按市场利率折现的总和。</figcaption></figure>
 
 这张图就是阶段 2.3 的“现金流时间线”，只不过每一笔都由合同保证。于是债券的价值公式可以直接写出来：
 
 $$
-价格 = Σ 每期票息 ÷ (1 + y/2)^k  +  面值 ÷ (1 + y/2)^n
-k = 1, 2, …, n（n = 年数 × 2，每半年一期）；y = 市场要求的年收益率
+\\text{价格} = \\sum_{k=1}^{n} \\frac{\\text{每期票息}}{\\left(1 + \\frac{y}{2}\\right)^{k}} + \\frac{\\text{面值}}{\\left(1 + \\frac{y}{2}\\right)^{n}}
 $$
+
+其中 \\(k = 1, 2, \\ldots, n\\)，\\(n = \\text{年数} \\times 2\\)（每半年一期）；\\(y\\) 是市场要求的年收益率。
 
 用这只标准债券验算：
 
-- 如果市场要求的收益率恰好是 5%，价格 = **1,000.00 美元**（票息刚好补偿时间，价格等于面值，叫“平价”）。
-- 如果市场要求 6%，价格 = **925.61 美元**；如果只要求 4%，价格 = **1,081.76 美元**（全部由 _fin.js 的 bondPrice 算得）。
+- 如果市场要求的收益率恰好是 5%，\\(\\text{价格} = 1{,}000.00\\ \\text{美元}\\)（票息刚好补偿时间，价格等于面值，叫“平价”）。
+- 如果市场要求 6%，\\(\\text{价格} = 925.61\\ \\text{美元}\\)；如果只要求 4%，\\(\\text{价格} = 1{,}081.76\\ \\text{美元}\\)（全部由 _fin.js 的 bondPrice 算得）。
 
 后两个数字就是阶段 4.2 的全部秘密：**合同写死了现金流，唯一能变的是价格**。
 
@@ -89,7 +90,7 @@ $$
 
 同样的五个零件，放到不同发行人身上，风险就完全不同：
 
-<table><tr><th>发行人</th><th>例子</th><th>主要风险</th><th>对投资者的特点</th></tr><tr><td>美国财政部（国债）</td><td>国库券、10 年期、30 年期国债</td><td>利率风险、通胀风险；违约风险极低</td><td>全球定价之锚（阶段 2.4）；流动性最好</td></tr><tr><td>政府支持机构</td><td>房利美、房地美发行的债券与房贷支持证券</td><td>利率风险、提前还款风险</td><td>收益率略高于国债</td></tr><tr><td>公司</td><td>苹果、银行、航空公司、比特币财库公司的可转债</td><td>信用风险（可能违约）+ 利率风险</td><td>收益率 = 国债 + 信用利差（阶段 4.6）</td></tr><tr><td>州与地方政府（市政债）</td><td>学校、供水、机场</td><td>地方财政风险</td><td>利息通常免联邦所得税</td></tr><tr><td>外国政府</td><td>日本国债、英国国债、德国国债</td><td>利率风险 + 汇率风险</td><td>2025–2026 年全球长端一起抛售（阶段 4.5）</td></tr></table>
+<table><tr><th>发行人</th><th>例子</th><th>主要风险</th><th>对投资者的特点</th></tr><tr><td>美国财政部（国债）</td><td>国库券、10 年期、30 年期国债</td><td>利率风险、通胀风险；违约风险极低</td><td>全球定价之锚（阶段 2.4）；流动性最好</td></tr><tr><td>政府支持机构</td><td>房利美、房地美发行的债券与房贷支持证券</td><td>利率风险、提前还款风险</td><td>收益率略高于国债</td></tr><tr><td>公司</td><td>苹果、银行、航空公司、比特币财库公司的可转债</td><td>信用风险（可能违约）+ 利率风险</td><td>\\(\\text{收益率} = \\text{国债收益率} + \\text{信用利差}\\)（阶段 4.6）</td></tr><tr><td>州与地方政府（市政债）</td><td>学校、供水、机场</td><td>地方财政风险</td><td>利息通常免联邦所得税</td></tr><tr><td>外国政府</td><td>日本国债、英国国债、德国国债</td><td>利率风险 + 汇率风险</td><td>2025–2026 年全球长端一起抛售（阶段 4.5）</td></tr></table>
 
 规模感：美国联邦政府的**公众持有债务约 32.36 万亿美元**（截至 2026 年 9 月 24 日，美国财政部 Debt to the Penny；加上政府内部信托基金持有的部分，总债务约 40.07 万亿美元）。阶段 3.3 讲过这些钱为什么借、借给了谁。按多数统计口径，全球债券存量与全球股市总市值是同一个量级——**债券市场并不是股市的配角**，只是它上新闻的方式更安静。
 
@@ -104,7 +105,7 @@ $$
 - **长期国债（T-bond）**：20 年与 30 年期。**30 年期**是期限最长的美国国债，也是阶段 0.1 那条新闻的主角——阶段 4.5 专门讲它。
 - 另有**通胀保值国债（TIPS）**，本金随 CPI 调整（阶段 2.5 的实际利率就从它读出），以及 2 年期**浮动利率票据（FRN）**，票息跟着短期国库券利率走。
 
-**零息债**把“没有票息”推到底：只在到期日付一笔面值。10 年期零息债在 5% 的市场收益率下（按半年复利），价格 = 1,000 ÷ 1.025^20 ≈ **610.27 美元**。你付 610 美元，10 年后拿 1,000 美元，中间什么也没有。
+**零息债**把“没有票息”推到底：只在到期日付一笔面值。10 年期零息债在 5% 的市场收益率下（按半年复利），\\(\\text{价格} = \\dfrac{1{,}000}{1.025^{20}} \\approx 610.27\\ \\text{美元}\\)。你付 610 美元，10 年后拿 1,000 美元，中间什么也没有。
 
 零息债很有用，因为它是**最纯粹的“时间价格”**：它只有一笔现金流，所以它的收益率就是那一个期限的折现率。华尔街把普通国债的每一笔票息和本金拆开，单独当作零息债卖（这种产品叫 STRIPS），就是在把一只附息债拆成一串零息债。反过来，**任何附息债券都可以看成一篮子零息债的组合**——这是阶段 4.3 收益率曲线和阶段 4.4 久期背后的底层视角。
 
@@ -162,7 +163,7 @@ $$
         "500 美元",
       ],
       answer: 1,
-      explain: "**20 次 × 25 美元 = 500 美元利息，加上到期归还的 1,000 美元本金 = 1,500 美元。** 1,628.89 是把 1,000 美元按 5% 复利 10 年的结果，不是债券的现金流。",
+      explain: "**\\(20 \\times 25 = 500\\) 美元利息，加上到期归还的 1,000 美元本金：\\(500 + 1{,}000 = 1{,}500\\) 美元。** 1,628.89 是把 1,000 美元按 5% 复利 10 年的结果，不是债券的现金流。",
     },
     {
       q: "关于美国国库券（T-bill），哪一项是正确的？",

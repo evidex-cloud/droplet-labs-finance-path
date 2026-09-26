@@ -7,7 +7,7 @@ export default {
   prereqs: ["real-vs-nominal"],
 
   oneLiner:
-    "Every day the news talks about \"growth\" and \"recession risk\" — but what is actually being measured? **GDP is the total value of all final goods and services a country produces in a year**, and it breaks down into **C + I + G + NX** (consumption, investment, government purchases, net exports). It never rises in a straight line; it swings around a long-run trend, and those swings are the **business cycle**. Learn to read this heartbeat and you will see why rates, jobs, stocks and even Bitcoin all move to the same rhythm.",
+    "Every day the news talks about \"growth\" and \"recession risk\" — but what is actually being measured? **GDP is the total value of all final goods and services a country produces in a year**, and it breaks down into **\\(C + I + G + \\mathrm{NX}\\)** (consumption, investment, government purchases, net exports). It never rises in a straight line; it swings around a long-run trend, and those swings are the **business cycle**. Learn to read this heartbeat and you will see why rates, jobs, stocks and even Bitcoin all move to the same rhythm.",
 
   intuition: `
 Picture a tiny island with three households: a baker, a fisher and a carpenter. This year the baker bakes $10,000 of bread, the fisher lands $20,000 of fish, and the carpenter builds the baker a new oven house worth $30,000. What is the island's **GDP (gross domestic product)** this year?
@@ -35,7 +35,7 @@ As of September 2026 the US sits in an unusual spot. The yield curve was inverte
 
 **In this lesson we break it into five pieces:**
 
-- **① How GDP is counted: C + I + G + NX**
+- **① How GDP is counted: \\(C + I + G + \\mathrm{NX}\\)**
 - **② Nominal vs real: deflators and how to read growth rates**
 - **③ The four phases of the cycle and the output gap**
 - **④ What drives the cycle: credit, inventories, rates and shocks**
@@ -43,45 +43,45 @@ As of September 2026 the US sits in an unusual spot. The yield curve was inverte
 `,
 
   mechanics: `
-### ① How GDP is counted: C + I + G + NX
+### ① How GDP is counted: \\(C + I + G + \\mathrm{NX}\\)
 
 The statisticians (in the US, the Bureau of Economic Analysis, BEA) use the **expenditure approach**, which splits GDP into four parts:
 
 $$
-GDP = C + I + G + (X − M)
+\\mathrm{GDP} = C + I + G + (X - M)
 $$
 
 - **C, consumption**: what households buy — food, rent, health care, phones, travel. In the US this is by far the largest piece, **more than two-thirds of GDP**. The US is, to a large degree, a consumer economy.
 - **I, investment**: firms buying equipment, building plants, writing software and building data centers, plus **new residential construction**, plus **changes in inventories**. Careful: "investment" here means newly produced capital goods. **Buying shares is not I** — it is just an existing asset changing hands.
 - **G, government purchases**: goods and services the government buys — defense, roads, public employees' salaries. **Transfers such as Social Security or unemployment benefits are not G**, because the government is not buying any product; that money shows up in C when households spend it.
-- **NX, net exports (X − M)**: exports minus imports. Imports are **subtracted** because C, I and G already include spending on imported goods, and those goods were not produced at home.
+- **\\(\\mathrm{NX}\\), net exports (\\(X - M\\))**: exports minus imports. Imports are **subtracted** because C, I and G already include spending on imported goods, and those goods were not produced at home.
 
 A numerical example to lock the rules in: in one year an economy has household consumption of 700, business investment of 180, government purchases of 170, exports of 110 and imports of 160.
 
 $$
-GDP = 700 + 180 + 170 + (110 − 160) = 1,000
+\\mathrm{GDP} = 700 + 180 + 170 + (110 - 160) = 1{,}000
 $$
 
 The 160 of imports is **not simply "a drag on the economy"**. It is subtracted only to cancel the foreign-made goods already counted inside C, I and G. A common misreading goes: "tariffs cut imports, so GDP must go up." If households simply buy fewer imported goods and nothing domestic replaces them, C falls by the same amount and GDP does not magically rise.
 
-There are two other ways to measure GDP that should, in principle, give the same answer: the **income approach** (wages + profits + interest + rent + indirect taxes, etc.) and the **production approach** (the sum of value added across industries). The fact that all three add up to the same number tells you something deep: **one person's spending is another person's income.** That is also why recessions feed on themselves — when you spend less, somebody else earns less.
+There are two other ways to measure GDP that should, in principle, give the same answer: the **income approach** (\\(\\text{wages} + \\text{profits} + \\text{interest} + \\text{rent} + \\text{indirect taxes, etc.}\\)) and the **production approach** (the sum of value added across industries). The fact that all three add up to the same number tells you something deep: **one person's spending is another person's income.** That is also why recessions feed on themselves — when you spend less, somebody else earns less.
 
 **The new-era angle**: the data centers, chips and power infrastructure behind AI are recorded in **I**. The facts file cites estimates of global AI and data-center capital spending in the trillions of dollars over 2025–2028 (Stage 19.2 digs in). When one category of investment gets that large, it can carry an expansion on its own — one reason US stocks sat near record highs in 2026 despite high interest rates.
 
 ### ② Nominal vs real: deflators and how to read growth rates
 
-Nominal GDP is "quantities × this year's prices"; real GDP is "quantities × the prices of some base year." The ratio between them is the **GDP deflator**, a price index that covers everything the economy produces:
+Nominal GDP is \\(\\text{quantities} \\times \\text{this year's prices}\\); real GDP is \\(\\text{quantities} \\times \\text{base-year prices}\\). The ratio between them is the **GDP deflator**, a price index that covers everything the economy produces:
 
 $$
-Real GDP = Nominal GDP ÷ Deflator
-Real growth ≈ Nominal growth − Inflation
+\\text{Real GDP} = \\frac{\\text{Nominal GDP}}{\\text{Deflator}}
+\\text{Real growth} \\approx \\text{Nominal growth} - \\text{Inflation}
 $$
 
-Example: nominal GDP rises from 1,000 to 1,060 (+6%) while the deflator rises from 100 to 104 (+4%). Real GDP = 1,060 ÷ 1.04 ≈ 1,019.2, so **real growth is about 1.9%**, not 6%. This is exactly the Fisher relation from Stage 2.5: (1.06 ÷ 1.04) − 1 ≈ 1.92%.
+Example: nominal GDP rises from 1,000 to 1,060 (+6%) while the deflator rises from 100 to 104 (+4%). \\(\\text{Real GDP} = 1{,}060 \\div 1.04 \\approx 1{,}019.2\\), so **real growth is about 1.9%**, not 6%. This is exactly the Fisher relation from Stage 2.5: \\(\\dfrac{1.06}{1.04} - 1 \\approx 1.92\\%\\).
 
 Three pieces of jargon you need to read US data correctly:
 
-- **Annualized**: US quarterly GDP is reported as "the growth rate we'd get if this quarter's pace continued for a full year." A quarter with 0.5% growth over the previous quarter is reported as (1.005)⁴ − 1 ≈ **2.0%**. Many European countries publish the plain quarter-on-quarter number, so a naive comparison is off by a factor of four.
+- **Annualized**: US quarterly GDP is reported as "the growth rate we'd get if this quarter's pace continued for a full year." A quarter with 0.5% growth over the previous quarter is reported as \\((1.005)^{4} - 1 \\approx\\) **2.0%**. Many European countries publish the plain quarter-on-quarter number, so a naive comparison is off by a factor of four.
 - **Advance, second and third estimates**: the BEA publishes an "advance" estimate first, revises it in each of the next two months, and revises again in annual updates years later. **First prints are often changed**, and a market's reaction to the first number sometimes reverses once the revisions come in.
 - **Nominal GDP matters more for debt**: debt and interest are fixed in nominal dollars. When inflation is high, nominal GDP grows fast, and **debt as a share of GDP can actually fall**. That idea is central to the debt-sustainability discussion in Stage 3.3 and Stage 9.4.
 
@@ -92,7 +92,7 @@ Three pieces of jargon you need to read US data correctly:
 The dashed line is **potential output**: how much the economy can produce using its labor and capital fully without inflation accelerating. The distance between actual real GDP and that line is the **output gap**:
 
 $$
-Output gap = (Actual GDP − Potential GDP) ÷ Potential GDP
+\\text{Output gap} = \\frac{\\text{Actual GDP} - \\text{Potential GDP}}{\\text{Potential GDP}}
 $$
 
 - A **positive** gap (say +2%): the economy is running faster than its comfortable speed. Factories are at full tilt, employers can't find workers, wages and prices rise — the central bank wants to hike.
@@ -168,7 +168,7 @@ Every spike and dip on the heart monitor **matches one of the coach's shouts**, 
       q: "An economy has consumption 700, investment 180, government purchases 170, exports 110 and imports 160. What is GDP?",
       options: ["1,160", "1,320", "1,000", "1,050"],
       answer: 2,
-      explain: "**GDP = C + I + G + (X − M)** = 700 + 180 + 170 + (110 − 160) = **1,000**. Imports are subtracted because C, I and G already include spending on foreign-made goods.",
+      explain: "**\\(\\mathrm{GDP} = C + I + G + (X - M)\\)**, so \\(700 + 180 + 170 + (110 - 160) = 1{,}000\\). Imports are subtracted because C, I and G already include spending on foreign-made goods.",
     },
     {
       q: "Which of these counts as \"investment (I)\" in GDP?",
@@ -185,13 +185,13 @@ Every spike and dip on the heart monitor **matches one of the coach's shouts**, 
       q: "Nominal GDP grows 6% and the GDP deflator rises 4%. Roughly how fast did real GDP grow?",
       options: ["About 1.9%", "10%", "About 6%", "About 4%"],
       answer: 0,
-      explain: "**Real growth = (1 + nominal) ÷ (1 + inflation) − 1** = 1.06 ÷ 1.04 − 1 ≈ **1.9%** — the same Fisher logic as Stage 2.5.",
+      explain: "**\\(\\text{Real growth} = \\dfrac{1 + \\text{nominal}}{1 + \\text{inflation}} - 1\\)**, so \\(\\dfrac{1.06}{1.04} - 1 \\approx 1.9\\%\\) — the same Fisher logic as Stage 2.5.",
     },
     {
       q: "US real GDP grows 0.5% over the previous quarter. What annualized growth rate will the headlines report?",
       options: ["0.5%", "1.0%", "6.2%", "About 2.0%"],
       answer: 3,
-      explain: "The US reports annualized rates: (1.005)⁴ − 1 ≈ **2.0%**. When comparing countries, watch out: many publish plain quarter-on-quarter growth.",
+      explain: "The US reports annualized rates: \\((1.005)^{4} - 1 \\approx 2.0\\%\\). When comparing countries, watch out: many publish plain quarter-on-quarter growth.",
     },
     {
       q: "The economy has a positive output gap (actual GDP above potential). What is the central bank most likely to do, and what does that mean for long-term Treasury prices?",

@@ -21,12 +21,12 @@ Options markets work exactly the same way. An option is insurance on a price (St
 
 Once you see that an option's price is essentially the price of volatility, a new world opens: **you can stop caring whether the price goes up or down and care only about how far it moves.**
 
-- If you think the future will be bumpier than the market expects (realized > implied), you **buy volatility**: buy options, hedge away the directional risk with the underlying, and what's left is a pure bet on movement.
-- If you think the market is over-frightened and premiums are too rich (implied > realized), you **sell volatility**: write options and collect premiums like an insurer.
+- If you think the future will be bumpier than the market expects (\\(\\text{realized} > \\text{implied}\\)), you **buy volatility**: buy options, hedge away the directional risk with the underlying, and what's left is a pure bet on movement.
+- If you think the market is over-frightened and premiums are too rich (\\(\\text{implied} > \\text{realized}\\)), you **sell volatility**: write options and collect premiums like an insurer.
 
 Historically, implied volatility has on average run a little above the realized volatility that followed. Insurance buyers pay a bit extra for peace of mind, just as insurers are profitable over the long run. That gap is the **volatility risk premium**, and it has fed countless vol-selling funds. But its payoff has a treacherous shape: **small steady gains most of the time, and once in a while a loss that erases years of profit.** Stage 7.5 shows what happens when that shape meets leverage.
 
-This lesson rests on **Idea ④ Risk & leverage**, and on its most striking sentence: **volatility itself can be bought and sold.** It also links forward to the DAT focus tier. Bitcoin is an extremely volatile asset, and a company like Strategy has, in effect, found a way to package that volatility and sell it — selling the options embedded in its convertible bonds to convertible-arbitrage funds (Stage 6.4 established that a convertible = a bond + a call) in exchange for near-zero-interest money to buy more bitcoin. Some have described it as a "volatility factory." Stage 15.3 revisits this from the angle of why DATs exist; Stage 17.2 takes the actual terms apart. **This lesson covers mechanics and analytical frameworks only; it is not investment advice.**
+This lesson rests on **Idea ④ Risk & leverage**, and on its most striking sentence: **volatility itself can be bought and sold.** It also links forward to the DAT focus tier. Bitcoin is an extremely volatile asset, and a company like Strategy has, in effect, found a way to package that volatility and sell it — selling the options embedded in its convertible bonds to convertible-arbitrage funds (Stage 6.4 established that a convertible is a bond plus a call) in exchange for near-zero-interest money to buy more bitcoin. Some have described it as a "volatility factory." Stage 15.3 revisits this from the angle of why DATs exist; Stage 17.2 takes the actual terms apart. **This lesson covers mechanics and analytical frameworks only; it is not investment advice.**
 
 **In this lesson we break it into five pieces:**
 
@@ -40,22 +40,23 @@ This lesson rests on **Idea ④ Risk & leverage**, and on its most striking sent
   mechanics: `
 ### ① Two volatilities: realized and implied
 
-How do you compute **realized volatility**? Line up the daily returns (usually log returns, ln(today/yesterday)), take their standard deviation, then **annualize**:
+How do you compute **realized volatility**? Line up the daily returns (usually log returns, \\(\\ln(\\text{today} / \\text{yesterday})\\)), take their standard deviation, then **annualize**:
 
 $$
-Daily vol = standard deviation of daily returns
-Annualized vol = daily vol × √(trading days per year)
-Stocks: × √252 ≈ × 15.9;  Bitcoin (trades every day): × √365 ≈ × 19.1
+\\text{daily vol} = \\text{standard deviation of daily returns}
+\\text{annualized vol} = \\text{daily vol} \\times \\sqrt{\\text{trading days per year}}
+\\text{Stocks:}\\quad \\times \\sqrt{252} \\approx \\times 15.9
+\\text{Bitcoin (trades every day):}\\quad \\times \\sqrt{365} \\approx \\times 19.1
 $$
 
 Why a square root? Because independent random shocks have **variances that add**, so the standard deviation grows with the square root of time. That is the single most important rule in the world of volatility. Two reference points:
 
-- A stock that moves about 1% on a typical day: annualized roughly 1% × 15.9 ≈ **16%**, about the long-run norm for the broad U.S. index.
-- Bitcoin moving about 3% on a typical day: annualized roughly 3% × 19.1 ≈ **57%**. Bitcoin's realized volatility has often run above 50% annualized, higher around bull–bear turns, and has trended down overall in recent years (Stage 12.4 covers this).
+- A stock that moves about 1% on a typical day: annualized roughly \\(1\\% \\times 15.9 \\approx \\mathbf{16\\%}\\), about the long-run norm for the broad U.S. index.
+- Bitcoin moving about 3% on a typical day: annualized roughly \\(3\\% \\times 19.1 \\approx \\mathbf{57\\%}\\). Bitcoin's realized volatility has often run above 50% annualized, higher around bull–bear turns, and has trended down overall in recent years (Stage 12.4 covers this).
 
-Traders have a mental shortcut called the **"rule of 16"**: annualized vol ÷ 16 ≈ the size of a typical day's move. A VIX of 32 means the market expects the S&P 500 to move about 2% a day.
+Traders have a mental shortcut called the **"rule of 16"**: \\(\\dfrac{\\text{annualized vol}}{16} \\approx \\text{the size of a typical day's move}\\). A VIX of 32 means the market expects the S&P 500 to move about 2% a day.
 
-**Implied volatility** runs the other way. Plug an option's market price into Black–Scholes (Stage 7.2), where the other four inputs are known, and solve for the σ that makes the formula match the price. It's a **forward-looking** number, voted on with real money. The most famous implied-vol index is Cboe's **VIX**, built from S&P 500 options to measure expected volatility over the next 30 days — the "fear gauge." Crypto has its equivalents, such as Deribit's DVOL index for bitcoin.
+**Implied volatility** runs the other way. Plug an option's market price into Black–Scholes (Stage 7.2), where the other four inputs are known, and solve for the \\(\\sigma\\) that makes the formula match the price. It's a **forward-looking** number, voted on with real money. The most famous implied-vol index is Cboe's **VIX**, built from S&P 500 options to measure expected volatility over the next 30 days — the "fear gauge." Crypto has its equivalents, such as Deribit's DVOL index for bitcoin.
 
 The relationship: implied vol is the **price**; realized vol is the **bill that arrives later**. You buy insurance at implied vol and settle up, in the end, at realized vol.
 
@@ -63,9 +64,9 @@ The relationship: implied vol is the **price**; realized vol is the **bill that 
 
 Because an option's price rises steadily with volatility, traders simply quote options in vol. "That option is trading at 55 vol" says far more than "it costs $10.40," because it strips out differences in price, strike and maturity and lets you compare richness across products.
 
-An option's sensitivity to volatility is **vega**. For a one-year at-the-money call (S = K = 100, rate 4%), raising implied vol from 30% to 31% lifts the price from about 13.75 to 14.13: **vega ≈ $0.38 per vol point**. Long-dated at-the-money options have the most vega — they are the "purest" volatility.
+An option's sensitivity to volatility is **vega**. For a one-year at-the-money call (\\(S = K = 100\\), rate 4%), raising implied vol from 30% to 31% lifts the price from about 13.75 to 14.13: **\\(\\text{vega} \\approx 14.13 - 13.75 = \\$0.38\\) per vol point**. Long-dated at-the-money options have the most vega — they are the "purest" volatility.
 
-Now a three-month at-the-money call (S = K = 100): at 30% implied vol it's worth about **6.46**; at 50%, about **10.40**; at 70%, about **14.33**. **Same contract — change the market's view of bumpiness and the price more than doubles.**
+Now a three-month at-the-money call (\\(S = K = 100\\)): at 30% implied vol it's worth about **6.46**; at 50%, about **10.40**; at 70%, about **14.33**. **Same contract — change the market's view of bumpiness and the price more than doubles.**
 
 Plot implied vol for one underlying across all strikes and maturities and you get an undulating landscape called the **volatility surface**. It is almost never flat:
 
@@ -99,12 +100,12 @@ But delta changes as the price moves — and the speed of that change is **gamma
 That money isn't free. A long option bleeds time value every day (theta), and the size of that theta is set precisely by **the implied volatility you paid**. So the whole trade's P&L fits in one line:
 
 $$
-Gamma-trading P&L ≈ Σ ½ · Γ · S² · (realized variance − implied variance) · Δt
-Realized > implied → the option buyer (long vol) wins
-Realized < implied → the option seller (short vol) wins
+\\text{gamma-trading P\\&L} \\approx \\sum \\tfrac{1}{2}\\, \\Gamma\\, S^{2} \\left(\\text{realized variance} - \\text{implied variance}\\right) \\Delta t
+\\text{realized} > \\text{implied} \\Rightarrow \\text{the option buyer (long vol) wins}
+\\text{realized} < \\text{implied} \\Rightarrow \\text{the option seller (short vol) wins}
 $$
 
-Put numbers on it. Take a three-month at-the-money call, underlying at 100, implied vol 50%, gamma about 0.0157. If the underlying moves $3 in a day, the hedge earns about ½ × 0.0157 × 3² ≈ **0.071**; at 50% implied vol, the day's time decay is about **0.078**. **The break-even daily move is about 50% ÷ 15.9 ≈ 3.15%.** Move more than that on a day and you win; less and you lose. That's what the rule of 16 really means inside a trade.
+Put numbers on it. Take a three-month at-the-money call, underlying at 100, implied vol 50%, gamma about 0.0157. If the underlying moves $3 in a day, the hedge earns about \\(\\tfrac{1}{2} \\times 0.0157 \\times 3^{2} \\approx \\mathbf{0.071}\\); at 50% implied vol, the day's time decay is about **0.078**. **The break-even daily move is about \\(\\dfrac{50\\%}{15.9} \\approx 3.15\\%\\).** Move more than that on a day and you win; less and you lose. That's what the rule of 16 really means inside a trade.
 
 **Convertible arbitrage** is this logic industrialized (Stage 6.4). Arb funds buy a convertible (in effect buying a long-dated call), short the issuer's stock to hedge delta, and gamma-trade day after day. They make money when **the stock's realized volatility is large enough relative to the implied volatility they effectively paid for the option.**
 
@@ -114,7 +115,7 @@ Now connect all of this to bitcoin and DATs.
 
 **First, bitcoin's high volatility makes options on it unusually valuable.** Stage 7.2 showed an out-of-the-money call roughly tripling in price when volatility went from 25% to 50%. The stock of a company built on bitcoin (DAT common) is usually even more volatile than bitcoin itself, because debt and preferreds sit beneath it in the capital stack — the "amplification" of Stage 16.4.
 
-**Second, high volatility + low-coupon convertibles = selling volatility to arbitrage funds.** Suppose a DAT issues a five-year, 0% coupon convertible with a conversion price 35% above today's share price. A rough Black–Scholes estimate for a five-year call struck at 135 with the stock at 100 gives about **$47** at 60% volatility and about **$61** at 80% (a simplified calculation that ignores credit risk and call provisions). **Investors "pay" for that option with the interest they forgo**, and the company gets almost interest-free money to buy bitcoin. Who buys the bonds? Mostly convertible-arbitrage funds, which buy the bond, short the stock and gamma-trade — harvesting exactly that high volatility.
+**Second, high volatility + low-coupon convertibles amount to selling volatility to arbitrage funds.** Suppose a DAT issues a five-year, 0% coupon convertible with a conversion price 35% above today's share price. A rough Black–Scholes estimate for a five-year call struck at 135 with the stock at 100 gives about **$47** at 60% volatility and about **$61** at 80% (a simplified calculation that ignores credit risk and call provisions). **Investors "pay" for that option with the interest they forgo**, and the company gets almost interest-free money to buy bitcoin. Who buys the bonds? Mostly convertible-arbitrage funds, which buy the bond, short the stock and gamma-trade — harvesting exactly that high volatility.
 
 **Third, that's what people mean when they call Strategy a "volatility factory":** its raw material is bitcoin's volatility; its product is option value embedded in its convertibles — and in the common stock itself; its customers are the hedge funds and traders who need volatility. Reportedly, Strategy's stock options were at times among the most actively traded single-stock options in the U.S. during 2024–2025.
 
@@ -156,11 +157,11 @@ Bitcoin lives in a city of **wildly erratic weather**, where umbrella rent is na
       options: [
         "About 57%",
         "About 3%",
-        "About 1,095% (3% × 365)",
+        "About 1,095% (\\(3\\% \\times 365\\))",
         "About 16%",
       ],
       answer: 0,
-      explain: "Volatility scales with the **square root of time**: 3% × √365 ≈ 3% × 19.1 ≈ 57%. Variances add; standard deviations don't. That's a typical level for bitcoin.",
+      explain: "Volatility scales with the **square root of time**: \\(3\\% \\times \\sqrt{365} \\approx 3\\% \\times 19.1 \\approx 57\\%\\). Variances add; standard deviations don't. That's a typical level for bitcoin.",
     },
     {
       q: "You buy an option and delta-hedge it daily. In which case are you most likely to make money?",
@@ -171,7 +172,7 @@ Bitcoin lives in a city of **wildly erratic weather**, where umbrella rent is na
         "The volatility that actually occurs is clearly lower than the implied volatility you paid",
       ],
       answer: 2,
-      explain: "With direction hedged away, P&L ≈ Σ ½ΓS² (**realized variance − implied variance**) Δt. If the bumps are bigger than the \"rent\" you paid, you win.",
+      explain: "With direction hedged away, \\(\\text{P\\&L} \\approx \\sum \\tfrac{1}{2}\\Gamma S^{2} \\left(\\text{realized variance} - \\text{implied variance}\\right) \\Delta t\\). If the bumps are bigger than the \"rent\" you paid, you win.",
     },
     {
       q: "What does the typical return profile of a \"short volatility\" strategy look like?",
@@ -193,7 +194,7 @@ Bitcoin lives in a city of **wildly erratic weather**, where umbrella rent is na
         "Because the stock is highly volatile, the embedded call is valuable, and investors \"pay\" for it by giving up interest",
       ],
       answer: 3,
-      explain: "**Convertible = bond + call option**; the more volatile the underlying, the more the option is worth. Arb funds buy the bond, short the stock and gamma-trade that volatility — the meaning of \"volatility factory.\"",
+      explain: "**A convertible is a bond plus a call option**; the more volatile the underlying, the more the option is worth. Arb funds buy the bond, short the stock and gamma-trade that volatility — the meaning of \"volatility factory.\"",
     },
     {
       q: "The VIX is at 32. By the rule of 16, roughly how much does the market expect the S&P 500 to move on a typical day?",
@@ -204,7 +205,7 @@ Bitcoin lives in a city of **wildly erratic weather**, where umbrella rent is na
         "About 16%",
       ],
       answer: 2,
-      explain: "√252 ≈ 16, so annualized vol ÷ 16 ≈ daily move: 32 ÷ 16 = **2%**. It's also how a gamma trader checks whether today's moves are big enough to pay the rent.",
+      explain: "\\(\\sqrt{252} \\approx 16\\), so \\(\\dfrac{\\text{annualized vol}}{16} \\approx \\text{daily move}\\): \\(32\\% \\div 16 = \\mathbf{2\\%}\\). It's also how a gamma trader checks whether today's moves are big enough to pay the rent.",
     },
   ],
 

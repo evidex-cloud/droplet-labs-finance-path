@@ -91,7 +91,7 @@ Put the bar chart next to reported net income:
 
 How to read it:
 
-- **Net income ≈ unrealized result ± tax ± everything else.** The gap between the unrealized result and net income is mostly the income-tax effect (deferred taxes) plus operating, interest and other items. The net loss for the first half of 2026 totaled **$20.76 billion.**
+- **\\(\\text{Net income} \\approx \\text{unrealized result} \\pm \\text{tax} \\pm \\text{everything else}\\).** The gap between the unrealized result and net income is mostly the income-tax effect (deferred taxes) plus operating, interest and other items. The net loss for the first half of 2026 totaled **$20.76 billion.**
 - **Carrying value versus cost**: at June 30, 2026 the bitcoin's carrying (fair) value was **$49.67 billion** against a cost of **$63.94 billion** — at quarter-end prices the whole position was under water. That is the transparency fair value brings; under the impairment model you never saw cost and market value side by side.
 - **Earnings per share carries almost no information.** What it tells you, essentially, is whether bitcoin rose or fell that quarter. To judge a DAT's operating performance, look at bitcoin per share (Stage 16.1) and BTC Yield (Stage 16.3).
 - **But net income bites in the real world**: S&P 500 eligibility requires positive GAAP earnings summed over the last four quarters and in the latest quarter. Strategy's large losses from Q4 2025 through Q2 2026 fail that test (our inference from the rule; as of late September 2026 it was not an S&P 500 member; Stage 18.4).

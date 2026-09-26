@@ -18,7 +18,7 @@ export default {
 
 > A：现在就拿 100 元。 B：一年后拿 X 元。X 要多大，你才会改选 B？
 
-有人说 103，有人说 110，也有人说“给我 200 我都不等”。**你报出的那个 X，就是你给“一年时间”开的价**。如果你说 106，那你心里的利率就是 6%：今天的 100 元 = 一年后的 106 元，两者在你眼里“等值”。
+有人说 103，有人说 110，也有人说“给我 200 我都不等”。**你报出的那个 X，就是你给“一年时间”开的价**。如果你说 106，那你心里的利率就是 6%：\\(\\text{今天的 } 100\\ \\text{元} = \\text{一年后的 } 106\\ \\text{元}\\)，两者在你眼里“等值”。
 
 这就是**货币的时间价值**：钱不只有面额，还有“在什么时候到手”。同样是 100 元，越早到手越值钱，越晚到手越不值钱。**利率，就是现在的钱和未来的钱之间的“汇率”**——就像人民币和美元之间有汇率一样，“今年的元”和“明年的元”之间也有一个换算比例。
 
@@ -50,11 +50,11 @@ export default {
 把开头的选择题写成等式。如果你觉得“今天 100 元”和“一年后 106 元”一样好，那么：
 
 $$
-今天的 100 元 = 一年后的 100 × (1 + r) 元
-100 × (1 + r) = 106 → r = 6%
+\\text{今天的 } 100\\ \\text{元} = \\text{一年后的 } 100 \\times (1 + r)\\ \\text{元}
+100 \\times (1 + r) = 106 \\Rightarrow r = 6\\%
 $$
 
-这个 r 有很多名字：利率、回报率、**折现率**、资金成本、必要回报率。名字不同，是因为站的角度不同——存钱的人叫它“利息”，借钱的人叫它“成本”，给资产估值的人叫它“折现率”——**但它们是同一个东西：一年时间的价格**。
+这个 \\(r\\) 有很多名字：利率、回报率、**折现率**、资金成本、必要回报率。名字不同，是因为站的角度不同——存钱的人叫它“利息”，借钱的人叫它“成本”，给资产估值的人叫它“折现率”——**但它们是同一个东西：一年时间的价格**。
 
 为什么说是“价格”？因为它和任何价格一样，是供给和需求碰出来的：
 
@@ -74,8 +74,8 @@ $$
 严格来说，这几层不是简单相加，而是相乘。假设你的纯时间偏好是 2%、预期通胀 3%、对方有 1% 的概率赖账：
 
 $$
-1 + r = (1 + 2%) × (1 + 3%) ÷ (1 − 1%)
-r ≈ 6.12%
+1 + r = \\frac{(1 + 2\\%) \\times (1 + 3\\%)}{1 - 1\\%}
+r \\approx 6.12\\%
 $$
 
 相加得 6%，相乘得 6.12%——利率不高时两者差别很小，所以日常说“把各项加起来”也不算错；但利率很高（比如高通胀国家）时，必须用乘法。阶段 2.5 会专门讲把通胀剥掉的**费雪方程**，阶段 2.4 会把“风险”这一层继续拆成信用、期限、股权、流动性几块。
@@ -96,18 +96,18 @@ $$
 - **往前搬（算现值）**：未来的钱，今天值多少？
 
 $$
-终值 FV = PV × (1 + r)^n
-现值 PV = FV ÷ (1 + r)^n
+\\text{终值 } \\mathrm{FV} = \\mathrm{PV} \\times (1 + r)^{n}
+\\text{现值 } \\mathrm{PV} = \\frac{\\mathrm{FV}}{(1 + r)^{n}}
 $$
 
-n 是年数。以 5% 为例：
+\\(n\\) 是年数。以 5% 为例：
 
-- 今天的 100 元，1 年后是 105，2 年后是 110.25，10 年后是 **162.89**（每年在上一年的基础上再乘 1.05——这就是阶段 2.2 的复利）。
+- 今天的 100 元，1 年后是 105，2 年后是 110.25，10 年后是 **162.89**（每年在上一年的基础上再乘 \\(1.05\\)——这就是阶段 2.2 的复利）。
 - 反过来，10 年后的 1,000 元，按 5% 折回今天只值 **613.91** 元。30 年后的 1,000 元，今天只值 **231.38** 元。
 
 <figure><svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">同一笔钱在时间轴上的两个方向（利率 5%）</text><line x1="50" y1="130" x2="600" y2="130" stroke="var(--line)" stroke-width="2"/><g font-size="11" fill="var(--muted)" text-anchor="middle"><text x="60" y="150">今天</text><text x="115" y="150">1</text><text x="170" y="150">2</text><text x="280" y="150">4</text><text x="390" y="150">6</text><text x="500" y="150">8</text><text x="580" y="150">10 年</text></g><g fill="var(--orange)"><circle cx="60" cy="130" r="5"/><circle cx="115" cy="130" r="4"/><circle cx="170" cy="130" r="4"/><circle cx="280" cy="130" r="4"/><circle cx="390" cy="130" r="4"/><circle cx="500" cy="130" r="4"/><circle cx="580" cy="130" r="5"/></g><rect x="62" y="98" width="30" height="24" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="77" y="92" text-anchor="middle" font-size="11" fill="var(--ink)">100</text><rect x="100" y="96" width="30" height="26" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="115" y="90" text-anchor="middle" font-size="10" fill="var(--muted)">105</text><rect x="155" y="94" width="30" height="28" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="170" y="88" text-anchor="middle" font-size="10" fill="var(--muted)">110.25</text><rect x="265" y="88" width="30" height="34" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="280" y="82" text-anchor="middle" font-size="10" fill="var(--muted)">121.55</text><rect x="375" y="81" width="30" height="41" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="390" y="75" text-anchor="middle" font-size="10" fill="var(--muted)">134.01</text><rect x="485" y="72" width="30" height="50" rx="3" fill="var(--orange-soft)" stroke="var(--orange-line)"/><text x="500" y="66" text-anchor="middle" font-size="10" fill="var(--muted)">147.75</text><rect x="565" y="62" width="30" height="60" rx="3" fill="var(--orange)"/><text x="580" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="var(--orange-ink)">162.89</text><path d="M 95 44 Q 330 20 560 44" fill="none" stroke="var(--orange)" stroke-width="2" marker-end="url(#tvA)"/><text x="330" y="44" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">复利：往后搬 × 1.05 每年</text><rect x="565" y="160" width="30" height="60" rx="3" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="580" y="236" text-anchor="middle" font-size="11" fill="var(--ink)">1,000</text><rect x="45" y="183" width="30" height="37" rx="3" fill="var(--blue)"/><text x="60" y="236" text-anchor="middle" font-size="11" font-weight="700" fill="var(--blue)">613.91</text><path d="M 555 195 Q 320 225 85 200" fill="none" stroke="var(--blue)" stroke-width="2" marker-end="url(#tvB)"/><text x="320" y="205" text-anchor="middle" font-size="11" fill="var(--blue)" font-weight="600">折现：往前搬 ÷ 1.05 每年</text><defs><marker id="tvA" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--orange)"/></marker><marker id="tvB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--blue)"/></marker></defs></svg><figcaption>上方：今天 100 元按 5% 每年往后滚，10 年后 162.89 元。下方：10 年后的 1,000 元按 5% 折回今天，只值 613.91 元。两个方向用的是同一个“时间汇率”。</figcaption></figure>
 
-这张图藏着整门课最重要的一句话：**只有换算到同一个时间点，钱才能相加、比较**。“今天 100 + 十年后 1,000 = 1,100”是错的，就像“100 元人民币 + 1,000 日元 = 1,100”是错的一样。
+这张图藏着整门课最重要的一句话：**只有换算到同一个时间点，钱才能相加、比较**。“\\(\\text{今天 } 100 + \\text{十年后 } 1{,}000 = 1{,}100\\)”是错的，就像“\\(100\\ \\text{元人民币} + 1{,}000\\ \\text{日元} = 1{,}100\\)”是错的一样。
 
 用标准债券预热一下：一张面值 1,000 美元、票息 5%、10 年期的债券（阶段 4.1 的主角），第 10 年还本的那 1,000 美元，按 5% 折现只值 613.91 美元；剩下的 386 美元左右的价值，来自每年 50 美元的利息。**把每一笔都折回今天再加总，正好是 1,000 美元**——这就是阶段 2.3 要讲的现值公式，也是阶段 4.2 “利率一涨债券就跌”的全部秘密。
 
@@ -122,7 +122,7 @@ n 是年数。以 5% 为例：
 算一下眼前那一周的“开价”有多夸张：一周要 10% 的补偿，按年复利是
 
 $$
-1.10^52 ≈ 142 倍 → 年化约 14,000%
+1.10^{52} \\approx 142\\times \\Rightarrow \\text{年化约 } 14{,}000\\%
 $$
 
 没有人会承认自己要 14,000% 的年回报，但冲动消费时，我们的行为恰恰就是这样。
@@ -153,7 +153,7 @@ $$
   analogy: `
 把“今天的钱”和“明年的钱”想成**两种不同的货币**：今年元和明年元。
 
-你站在一个换汇柜台前。柜台挂着牌价：**1 今年元 = 1.05 明年元**。这个 1.05，就是 5% 的利率。
+你站在一个换汇柜台前。柜台挂着牌价：**\\(1\\ \\text{今年元} = 1.05\\ \\text{明年元}\\)**。这个 1.05，就是 5% 的利率。
 
 - 你**存钱**，就是把今年元卖给柜台，换成更多的明年元；
 - 你**借钱**，就是用明年元（你将来要还的钱）买今年元；
@@ -177,13 +177,13 @@ $$
       q: "你觉得“今天 100 元”和“一年后 108 元”一样好。你的个人年折现率是多少？",
       options: ["0.8%", "8%", "18%", "108%"],
       answer: 1,
-      explain: "**100 × (1 + r) = 108 → r = 8%**。你愿意为等待一年要求 8% 的补偿，这就是你给一年时间开的价格。",
+      explain: "**\\(100 \\times (1 + r) = 108 \\Rightarrow r = 8\\%\\)**。你愿意为等待一年要求 8% 的补偿，这就是你给一年时间开的价格。",
     },
     {
       q: "按 5% 的利率，10 年后到手的 1,000 元，今天值多少？",
       options: ["1,628.89 元", "950 元", "500 元", "613.91 元"],
       answer: 3,
-      explain: "**现值 = 1,000 ÷ 1.05^10 ≈ 613.91**。往前折现要除以每年的“时间汇率”；1,628.89 是今天 1,000 元往后滚 10 年的终值，方向反了。",
+      explain: "**\\(\\text{现值} = \\dfrac{1{,}000}{1.05^{10}} \\approx 613.91\\)**。往前折现要除以每年的“时间汇率”；1,628.89 是今天 1,000 元往后滚 10 年的终值，方向反了。",
     },
     {
       q: "下面哪一项不是“今天的钱比未来的钱更值钱”的理由？",

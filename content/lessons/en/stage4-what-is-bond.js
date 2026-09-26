@@ -25,7 +25,7 @@ That piece of paper is a bond. Real bonds simply standardize every detail:
 - **Issuer**: the borrower. The US Treasury, a company, a city.
 - **Terms**: who gets paid first, whether there is collateral, whether the issuer can repay early.
 
-Now add up the ten years of cash: 20 payments × $25 = $500 of interest, plus the $1,000 principal returned at the end, for **$1,500** in total. You hand over $1,000 and get $1,500 back. The catch is that you wait ten years for it.
+Now add up the ten years of cash: \\(20\\ \\text{payments} \\times \\$25 = \\$500\\) of interest, plus the $1,000 principal returned at the end, for **$1,500** in total. You hand over $1,000 and get $1,500 back. The catch is that you wait ten years for it.
 
 The big difference from lending to a friend: **this IOU can be sold**. Need cash in year three? Sell the bond to someone else. The buyer steps into your shoes, and every future coupon and the principal now go to them. Because it can be sold, a bond has a **price**, and that price changes every day. Why it changes, and by how much, is the subject of Stage 4.2.
 
@@ -51,7 +51,7 @@ Why does the TradFi toolkit start with bonds? Because **bonds are the anchor tha
 A bond contract (the indenture, summarized in the offering documents) runs to many pages, but only five parts decide what the bond is worth:
 
 - **Face value (par)**: the amount repaid at maturity and the base the coupon is calculated on. The standard face value for US Treasuries and corporates is $1,000, though you can buy Treasuries in $100 increments on TreasuryDirect.
-- **Coupon rate**: how much interest is paid per year as a share of face value. A 5% coupon on $1,000 is $50 a year. **The coupon rate is fixed at issue and never changes afterward.** That single fact is the root of the seesaw in Stage 4.2.
+- **Coupon rate**: how much interest is paid per year as a share of face value. A 5% coupon on $1,000 is \\(5\\% \\times \\$1{,}000 = \\$50\\) a year. **The coupon rate is fixed at issue and never changes afterward.** That single fact is the root of the seesaw in Stage 4.2.
 - **Payment frequency**: Treasuries and most US corporates pay twice a year; many European bonds pay annually; mortgage-backed securities pay monthly.
 - **Maturity**: the repayment date. The longer the remaining life, the more uncertain the future and the more the price reacts to interest rates. Stage 4.4 puts a number on that.
 - **Issuer and terms**: who owes you, and where you stand in line. Is there collateral? Who ranks ahead of you? Can the issuer repay early (a callable bond)? Can you demand early repayment (a putable bond)? Can you swap it into shares (a convertible, Stage 6.4)?
@@ -72,14 +72,15 @@ The course's standard example is a **$1,000 face, 5% coupon, 10-year bond paying
 This is the cash-flow timeline from Stage 2.3, except that every payment is guaranteed by contract. So the value of a bond can be written down directly:
 
 $$
-Price = Σ coupon per period ÷ (1 + y/2)^k  +  face ÷ (1 + y/2)^n
-k = 1, 2, …, n  (n = years × 2, one period every six months);  y = the annual yield the market demands
+\\text{Price} = \\sum_{k=1}^{n} \\frac{\\text{coupon per period}}{\\left(1 + \\frac{y}{2}\\right)^{k}} + \\frac{\\text{face}}{\\left(1 + \\frac{y}{2}\\right)^{n}}
 $$
+
+Here \\(k = 1, 2, \\ldots, n\\), with \\(n = \\text{years} \\times 2\\) (one period every six months), and \\(y\\) is the annual yield the market demands.
 
 Check it on the standard bond:
 
-- If the market demands exactly 5%, the price is **$1,000.00**. The coupon exactly compensates for time, so the bond trades at face value, or “at par.”
-- If the market demands 6%, the price is **$925.61**. If it demands only 4%, the price is **$1,081.76**. (All three come from bondPrice in _fin.js.)
+- If the market demands exactly 5%, \\(\\text{price} = \\$1{,}000.00\\). The coupon exactly compensates for time, so the bond trades at face value, or “at par.”
+- If the market demands 6%, \\(\\text{price} = \\$925.61\\). If it demands only 4%, \\(\\text{price} = \\$1{,}081.76\\). (All three come from bondPrice in _fin.js.)
 
 Those last two numbers are the entire secret of Stage 4.2: **the contract fixes the cash flows, so the only thing left to move is the price.**
 
@@ -89,7 +90,7 @@ One often-missed detail: **accrued interest**. If you buy between coupon dates, 
 
 Put the same five parts on different issuers and the risk changes completely:
 
-<table><tr><th>Issuer</th><th>Examples</th><th>Main risks</th><th>What it means for the investor</th></tr><tr><td>US Treasury</td><td>T-bills, the 10-year note, the 30-year bond</td><td>Interest-rate and inflation risk; default risk very low</td><td>The global pricing anchor (Stage 2.4); the most liquid market</td></tr><tr><td>Government-sponsored agencies</td><td>Fannie Mae and Freddie Mac debt and mortgage-backed securities</td><td>Rate risk, prepayment risk</td><td>Yields a little above Treasuries</td></tr><tr><td>Corporations</td><td>Apple, banks, airlines, a bitcoin treasury company's convertible notes</td><td>Credit risk (default) plus rate risk</td><td>Yield = Treasury + credit spread (Stage 4.6)</td></tr><tr><td>States and cities (munis)</td><td>Schools, water systems, airports</td><td>Local fiscal risk</td><td>Interest usually exempt from federal income tax</td></tr><tr><td>Foreign governments</td><td>Japanese JGBs, UK gilts, German Bunds</td><td>Rate risk plus currency risk</td><td>Long ends sold off together in 2025–2026 (Stage 4.5)</td></tr></table>
+<table><tr><th>Issuer</th><th>Examples</th><th>Main risks</th><th>What it means for the investor</th></tr><tr><td>US Treasury</td><td>T-bills, the 10-year note, the 30-year bond</td><td>Interest-rate and inflation risk; default risk very low</td><td>The global pricing anchor (Stage 2.4); the most liquid market</td></tr><tr><td>Government-sponsored agencies</td><td>Fannie Mae and Freddie Mac debt and mortgage-backed securities</td><td>Rate risk, prepayment risk</td><td>Yields a little above Treasuries</td></tr><tr><td>Corporations</td><td>Apple, banks, airlines, a bitcoin treasury company's convertible notes</td><td>Credit risk (default) plus rate risk</td><td>\\(\\text{Yield} = \\text{Treasury yield} + \\text{credit spread}\\) (Stage 4.6)</td></tr><tr><td>States and cities (munis)</td><td>Schools, water systems, airports</td><td>Local fiscal risk</td><td>Interest usually exempt from federal income tax</td></tr><tr><td>Foreign governments</td><td>Japanese JGBs, UK gilts, German Bunds</td><td>Rate risk plus currency risk</td><td>Long ends sold off together in 2025–2026 (Stage 4.5)</td></tr></table>
 
 For a sense of scale: **debt held by the public is about $32.36 trillion** (as of September 24, 2026, Treasury's Debt to the Penny; add the trust funds' intragovernmental holdings and total federal debt is about $40.07 trillion). Stage 3.3 covered why that money was borrowed and who lent it. On most measures, the global stock of bonds is in the same league as, or larger than, the world's entire stock market. **The bond market is not the stock market's sidekick.** It just makes the news more quietly.
 
@@ -104,7 +105,7 @@ The Treasury sorts its debt by maturity, and the names are worth knowing because
 - **Treasury bonds**: 20 and 30 years. **The 30-year** is the longest US government debt and the star of that Stage 0.1 headline. Stage 4.5 is devoted to it.
 - There are also **TIPS** (Treasury Inflation-Protected Securities), whose principal is adjusted for CPI (Stage 2.5 reads real yields off them), and 2-year **floating-rate notes (FRNs)**, whose coupon tracks the T-bill rate.
 
-A **zero-coupon bond** takes “no coupon” to the limit: it pays a single amount, the face value, at maturity. A 10-year zero at a 5% market yield (semiannual compounding) costs 1,000 ÷ 1.025^20 ≈ **$610.27**. You pay $610 now, collect $1,000 in ten years, and receive nothing in between.
+A **zero-coupon bond** takes “no coupon” to the limit: it pays a single amount, the face value, at maturity. A 10-year zero at a 5% market yield (semiannual compounding) costs \\(\\dfrac{\\$1{,}000}{1.025^{20}} \\approx \\$610.27\\). You pay $610 now, collect $1,000 in ten years, and receive nothing in between.
 
 Zeros matter because they are **the purest price of time**. With only one cash flow, a zero's yield is simply the discount rate for that one horizon. Wall Street strips the individual coupons and principal off ordinary Treasuries and sells each piece separately as a zero (the product is literally called STRIPS), turning one coupon bond into a string of zeros. Run it the other way and **every coupon bond is just a bundle of zero-coupon bonds**. That is the underlying view behind the yield curve in Stage 4.3 and duration in Stage 4.4.
 
@@ -162,7 +163,7 @@ And a zero-coupon bond? That is a lease with no monthly rent, settled in one pay
         "$500",
       ],
       answer: 1,
-      explain: "**20 payments × $25 = $500 of interest, plus the $1,000 principal repaid at maturity = $1,500.** $1,628.89 is what $1,000 grows to at 5% compounded for ten years, which is not the bond's cash flow.",
+      explain: "**\\(20 \\times \\$25 = \\$500\\) of interest, plus the $1,000 principal repaid at maturity: \\(\\$500 + \\$1{,}000 = \\$1{,}500\\).** $1,628.89 is what $1,000 grows to at 5% compounded for ten years, which is not the bond's cash flow.",
     },
     {
       q: "Which statement about US Treasury bills is correct?",

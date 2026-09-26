@@ -1,11 +1,12 @@
 // 交互演示：购买力侵蚀计算器——设定通胀率、年数、存款利率与房贷利率，
 // 看现金、存款、固定利率债务与一张 1,000 美元 5% 10 年期债券在通胀下各自是赢是输。
-import { fv, pv, realRate, rule72, npv, fmtPct, fmtUsd, fmtNum } from "./_fin.js";
+import { fv, pv, realRate, rule72, npv, fmtPct, fmtUsd, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  const P = (x, d) => fmtPct(x, d).replace("%", String.raw`\%`); // 公式里的百分数
 
   let st = { amt: 10000, pi: 0.03, n: 10, s: 0.04, m: 0.03 };
   const PRESETS = [
@@ -100,16 +101,17 @@ export default function mount(root, lang) {
     const princReal = pv(1000, pi, 10);
     $("#inf-bond").innerHTML = `${T("名义收益率", "Nominal yield")} <b>5.00%</b> → ${T("实际收益率", "real yield")} <b style="color:${bondReal < 0 ? "var(--red)" : "var(--green)"}">${fmtPct(bondReal, 2)}</b><br>
       ${T("10 年后拿回的 1,000 美元本金，按今天购买力只值", "The $1,000 principal returned in 10 years is worth only")} <b>${fmtUsd(princReal)}</b><br>
-      ${T("每年 50 美元利息中，被通胀吃掉约", "Of each $50 coupon, inflation eats roughly")} <b>${fmtUsd(Math.min(50, 1000 * pi))}</b>${T("（按本金 × 通胀率粗算）", " (principal × inflation, rough)")}`;
+      ${T("每年 50 美元利息中，被通胀吃掉约", "Of each $50 coupon, inflation eats roughly")} <b>${fmtUsd(Math.min(50, 1000 * pi))}</b>${T("（按 ", " (")}${tex(String.raw`\text{${T("本金", "principal")}} \times \text{${T("通胀率", "inflation")}}`)}${T(" 粗算）", ", rough)")}`;
 
     const lines = [];
     if (Math.abs(rr) < 0.0005) lines.push(`<span class="warn">${T("实际利率约为零：存款刚好跟上通胀，购买力不增不减。", "Real rate is about zero: savings just keep pace with inflation.")}</span>`);
-    else if (rr < 0) lines.push(`<span class="bad">${T("实际利率为负：", "Negative real rate: ")}${fmtPct(s, 1)} − ${fmtPct(pi, 1)} ≈ ${fmtPct(rr, 2)}${T("。存款的数字在涨，购买力在跌——这就是“看不见的税”（阶段 2.5）。", ". The balance grows while purchasing power shrinks — the “invisible tax” (Stage 2.5).")}</span>`);
+    else if (rr < 0) lines.push(`<span class="bad">${T("实际利率为负：", "Negative real rate: ")}${tex(String.raw`${P(s, 1)} - ${P(pi, 1)} \approx ${P(rr, 2)}`)}${T("。存款的数字在涨，购买力在跌——这就是“看不见的税”（阶段 2.5）。", ". The balance grows while purchasing power shrinks — the “invisible tax” (Stage 2.5).")}</span>`);
     else lines.push(`<span class="ok">${T("实际利率为正：", "Positive real rate: ")}${fmtPct(rr, 2)}${T("，存款跑赢了通胀。", " — savings are beating inflation.")}</span>`);
-    const lost = `<b>${fmtPct(1 - cashReal / amt, 0)}</b>`, halfY = pi > 0 ? fmtNum(rule72(pi), 1) : "∞";
+    const lost = `<b>${fmtPct(1 - cashReal / amt, 0)}</b>`, halfY = pi > 0 ? fmtNum(rule72(pi), 1) : String.raw`\infty`;
+    const r72 = tex(String.raw`72 \div ${fmtNum(pi * 100, 1)} \approx ${halfY}`);
     lines.push(en
-      ? `Over ${n} years the ${fmtUsd(amt)} in the drawer loses ${lost} of its purchasing power; Rule of 72: 72 ÷ ${fmtNum(pi * 100, 1)} ≈ ${halfY} years to halve.`
-      : `抽屉里的 ${fmtUsd(amt)} 在 ${n} 年里损失了 ${lost} 的购买力；72 法则：72 ÷ ${fmtNum(pi * 100, 1)} ≈ ${halfY} 年减半。`);
+      ? `Over ${n} years the ${fmtUsd(amt)} in the drawer loses ${lost} of its purchasing power; Rule of 72: ${r72} years to halve.`
+      : `抽屉里的 ${fmtUsd(amt)} 在 ${n} 年里损失了 ${lost} 的购买力；72 法则：${r72} 年减半。`);
     if (pi >= 0.09) lines.push(`<span class="warn">${T("在这样的通胀下，固定利率借款人（和政府）是大赢家，现金与债券持有人是大输家。", "At inflation like this, fixed-rate borrowers (and governments) are big winners; holders of cash and bonds are big losers.")}</span>`);
     $("#inf-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };

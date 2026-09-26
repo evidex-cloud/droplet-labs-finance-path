@@ -40,21 +40,21 @@ You've already met the parts of this machine: daily settlement and margin calls 
 
 The definitions, all at once:
 
-- **Initial margin**: the money you must put up yourself to open a position. Initial margin ratio = 1 / leverage. 10x leverage = 10% margin.
+- **Initial margin**: the money you must put up yourself to open a position. \\(\\text{initial margin ratio} = \\dfrac{1}{\\text{leverage}}\\), so 10x leverage means \\(\\dfrac{1}{10} = 10\\%\\) margin.
 - **Maintenance margin**: the threshold (as a share of position value) that your account equity may not fall below. Breach it and you get a **margin call** or an immediate liquidation.
-- **Account equity** = position value − borrowing.
+- **Account equity**: \\(\\text{account equity} = \\text{position value} - \\text{borrowing}\\).
 
 For a long position you can compute the liquidation price directly:
 
 $$
-Liquidation price = entry price × (1 − 1/leverage) ÷ (1 − maintenance margin ratio)
-Rule of thumb: drop to liquidation ≈ 1/leverage − maintenance margin ratio
+\\text{liquidation price} = \\text{entry price} \\times \\frac{1 - \\dfrac{1}{\\text{leverage}}}{1 - \\text{maintenance margin ratio}}
+\\text{drop to liquidation} \\approx \\frac{1}{\\text{leverage}} - \\text{maintenance margin ratio} \\quad \\text{(rule of thumb)}
 $$
 
 Assume a 0.5% maintenance margin (a common order of magnitude on crypto perpetuals) and an entry price of $100,000:
 
 <table>
-<tr><th>Leverage</th><th>Initial margin</th><th>Liquidation price ≈</th><th>Drop that liquidates you</th></tr>
+<tr><th>Leverage</th><th>Initial margin</th><th>Approx. liquidation price</th><th>Drop that liquidates you</th></tr>
 <tr><td>2x</td><td>50%</td><td>50,250</td><td>about −49.7%</td></tr>
 <tr><td>5x</td><td>20%</td><td>80,400</td><td>about −19.6%</td></tr>
 <tr><td>10x</td><td>10%</td><td>90,450</td><td>about −9.5%</td></tr>
@@ -64,7 +64,7 @@ Assume a 0.5% maintenance margin (a common order of magnitude on crypto perpetua
 
 Bitcoin's daily moves are often 2–4% (Stage 7.3). So **at 20x or more, ordinary noise can flush you out within a single day**; at 100x, a few minutes of randomness will do it.
 
-Stock markets are more forgiving, but the principle is identical. U.S. Regulation T requires at least 50% initial margin to buy stock on credit, and brokers typically require at least 25% maintenance margin. Buy $100,000 of stock with $50,000 of your own money and $50,000 borrowed: when the stock falls to about **$66,667** (a drop of about 33%), your equity is $16,667 ÷ $66,667 = 25%, and the margin call arrives. A stockbroker will usually give you a day or two to wire money; a crypto perpetual liquidates you **in real time, automatically, without a phone call.**
+Stock markets are more forgiving, but the principle is identical. U.S. Regulation T requires at least 50% initial margin to buy stock on credit, and brokers typically require at least 25% maintenance margin. Buy $100,000 of stock with $50,000 of your own money and $50,000 borrowed: when the stock falls to about **$66,667** (a drop of about 33%), your equity is \\(\\dfrac{\\$16{,}667}{\\$66{,}667} = 25\\%\\), and the margin call arrives. A stockbroker will usually give you a day or two to wire money; a crypto perpetual liquidates you **in real time, automatically, without a phone call.**
 
 There's a subtler number than the liquidation price: **the path.** Stage 11.4 shows that leverage on a volatile asset creates "volatility drag" — even if the price ends where it started, one deep dip along the way can knock you out. **Leverage turns "was I right in the end?" into "was I never too wrong at any moment?"**
 
@@ -160,7 +160,7 @@ And what does a sensible winter swimmer do? They don't carry a heavy pack — or
         "About −20%",
       ],
       answer: 1,
-      explain: "Liquidation price = 100,000 × (1 − 1/10) ÷ (1 − 0.005) ≈ 90,450, about **−9.5%**. With bitcoin often moving 2–4% a day, that's not far away.",
+      explain: "\\(\\text{Liquidation price} = 100{,}000 \\times \\dfrac{1 - 1/10}{1 - 0.005} \\approx 90{,}450\\), about **−9.5%**. With bitcoin often moving 2–4% a day, that's not far away.",
     },
     {
       q: "Which of these best explains why a liquidation cascade accelerates itself?",

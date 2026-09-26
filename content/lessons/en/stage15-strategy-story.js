@@ -54,7 +54,7 @@ Note what kind of move this was: **it used the company's own money.** On the bal
 
 On December 9, 2020 the company priced its first convertible: **$550 million of 0.750% convertible senior notes due December 15, 2025**, plus a $100 million option for the underwriters. (The full $650 million is widely reported, but our fact sheet could not confirm from filings that the option was exercised in full.) Every dollar went into bitcoin.
 
-Why convertibles? Back to Stage 6.4: a convertible is a bond floor plus a call option. **Bitcoin's high volatility makes that option very valuable** (Stage 7.3), so buyers accept a tiny coupon, or none. Who buys? Mostly **convertible-arbitrage funds**, which buy the convert and short some of the common, harvesting volatility rather than betting on the company's credit — Stage 17.2 dissects that trade. For the company, this amounts to **selling the volatility of its own stock at a good price** and using nearly interest-free money to buy bitcoin.
+Why convertibles? Back to Stage 6.4: \\(\\text{convertible} = \\text{bond floor} + \\text{call option}\\). **Bitcoin's high volatility makes that option very valuable** (Stage 7.3), so buyers accept a tiny coupon, or none. Who buys? Mostly **convertible-arbitrage funds**, which buy the convert and short some of the common, harvesting volatility rather than betting on the company's credit — Stage 17.2 dissects that trade. For the company, this amounts to **selling the volatility of its own stock at a good price** and using nearly interest-free money to buy bitcoin.
 
 For the next few years the refrain was **convertibles plus at-the-market (ATM) sales of common stock.** In the 2022 bear market a subsidiary had a bank loan collateralized by bitcoin, and the market watched its margin-call level closely; the loan was repaid early in 2023, and from then on the company's financing moved almost entirely to **unsecured instruments with no margin calls** (Stage 6.5). On August 7, 2024 the company did a 10-for-1 stock split.
 
@@ -83,7 +83,7 @@ On October 30, 2024 the company announced the **“21/21 Plan”**: raise **$42 
 
 The company markets its preferreds collectively as **“Digital Credit.”** Why a family rather than one security? Back to Stage 6.3: cumulative or not, fixed or floating, convertible or not, dollars or euros — **each series targets a different kind of investor**, slicing the buyer base by risk appetite (Stage 17.3 goes through the terms series by series). The official ranking: debt > STRF > STRC > STRE, STRK, STRD (the junior preferreds) > common.
 
-Two “changes of ruler” that year deserve a note. One is the 2025 target: set at a BTC Yield of at least 15% in February, raised to 30% at the end of October (assuming bitcoin at $150,000 by year-end), then cut in December — **the targets hinged on a bitcoin price assumption.** The other is mNAV, which compressed from its mid-year highs to **1.2x** on November 28 (on the 2025 enterprise-value definition). The USD Reserve arrived right then: **a thinner premium makes paying dividends with new share sales ever more expensive, so bank the cash first.** Full-year BTC Yield was 22.8%, and year-end holdings were about 672,500 BTC.
+Two “changes of ruler” that year deserve a note. One is the 2025 target: set at \\(\\text{BTC Yield} \\ge 15\\%\\) in February, raised to 30% at the end of October (assuming bitcoin at $150,000 by year-end), then cut in December — **the targets hinged on a bitcoin price assumption.** The other is mNAV, which compressed from its mid-year highs to **1.2x** on November 28 (on the 2025 enterprise-value definition). The USD Reserve arrived right then: **a thinner premium makes paying dividends with new share sales ever more expensive, so bank the cash first.** Full-year BTC Yield was 22.8%, and year-end holdings were about 672,500 BTC.
 
 ### ④ 2026: a bear-market year — selling, reserves and buying again
 
@@ -140,7 +140,7 @@ Then winter came. The goods lost half their value, and outsiders stopped paying 
     "**“Strategy borrowed to buy bitcoin from day one.”** — The first purchase (August 2020, 21,454 BTC) used the company's own cash, a simple asset swap. Borrowing to buy began with the first convertible in December 2020 — the step that turned a company holding bitcoin into a DAT.",
     "**“Such low convertible coupons prove the market sees Strategy as an excellent credit.”** — The low coupons mainly reflect a valuable embedded call option (bitcoin's volatility makes it pricier), and many buyers are volatility-arbitrage hedge funds rather than credit investors. S&P's issuer rating is 'B-', speculative grade.",
     "**“Strategy never sells bitcoin.”** — In late May 2026 it sold bitcoin for the first time since 2022, and it sold about 6,948 BTC over the year to fund dividends, bolster its reserve and buy back STRC — then resumed buying in late August. “Never sell” is a slogan, not a contractual term.",
-    "**“The mNAVs reported in 2025 and 2026 can be compared directly.”** — 2025 used the enterprise-value definition; 2026 switched to price ÷ net bitcoin per share. Convert to one definition before comparing across years (the four mNAVs of Stage 15.1).",
+    "**“The mNAVs reported in 2025 and 2026 can be compared directly.”** — 2025 used the enterprise-value definition; 2026 switched to \\(\\text{price} \\div \\text{net bitcoin per share}\\). Convert to one definition before comparing across years (the four mNAVs of Stage 15.1).",
     "**“More bitcoin means a more successful company.”** — What matters to common shareholders is bitcoin per share — and how much of it is spoken for by senior claims — not total holdings. Selling stock below NAV to buy bitcoin raises total holdings while lowering bitcoin per share.",
   ],
 
@@ -165,7 +165,7 @@ Then winter came. The goods lost half their value, and outsiders stopped paying 
         "Because the convertibles are collateralized by bitcoin",
       ],
       answer: 2,
-      explain: "A convertible = bond floor + call option (Stage 6.4). **The higher the volatility, the more the option is worth** (Stage 7.3), and the lower the coupon can go. The notes are unsecured, and S&P's issuer rating is B-.",
+      explain: "\\(\\text{Convertible} = \\text{bond floor} + \\text{call option}\\) (Stage 6.4). **The higher the volatility, the more the option is worth** (Stage 7.3), and the lower the coupon can go. The notes are unsecured, and S&P's issuer rating is B-.",
     },
     {
       q: "Which ordering matches Strategy's official seniority, first to last?",

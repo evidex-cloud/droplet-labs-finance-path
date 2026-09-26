@@ -46,9 +46,11 @@ This lesson rests mainly on **Ideas ①, ② and ④**, and it strings together 
 Apply the formula from Stage 4.3 to the far right of the curve:
 
 $$
-30-year yield ≈ average expected short rate over the next 30 years + term premium
-             ≈ real rate + expected-inflation compensation + term premium  (another way to slice it)
+\\text{30-year yield} \\approx \\text{average expected short rate over the next 30 years} + \\text{term premium}
+\\text{30-year yield} \\approx \\text{real rate} + \\text{expected-inflation compensation} + \\text{term premium}
 $$
+
+The second line is another way to slice it.
 
 Each piece can rise:
 
@@ -109,13 +111,13 @@ Three recent real-world episodes:
 
 The same income now supports a much smaller house. People holding 3% mortgages don't want to sell and move (the “lock-in effect”), and home sales freeze up.
 
-**Stock valuations.** Stage 5.3 shows that a stock is worth its future cash flows discounted at a rate equal to the risk-free rate plus an equity risk premium. A rough Gordon-model sketch (illustrative numbers): with the 10-year at about 5.2%, an equity risk premium of 3% and long-run growth of 4%, a fair P/E is about 1 ÷ (8.2% − 4%) ≈ **23.8**. Raise the risk-free rate by another point and it drops to about **19.2**, roughly −19%. On September 25, 2026 the S&P 500 stood at about 7,743 and the Shiller CAPE at about 41.5 (the record is 44.2, just before 2000). On one common framing, stocks' earnings yield (about 2.4%) is well below the 10-year Treasury yield (about 5.2%), **putting the equity risk premium in one of its thinnest zones since the early 2000s** (the exact figure depends on the model). The higher the long end goes, the thinner that cushion.
+**Stock valuations.** Stage 5.3 shows that a stock is worth its future cash flows discounted at a rate equal to the risk-free rate plus an equity risk premium. A rough Gordon-model sketch (illustrative numbers): with the 10-year at about 5.2%, an equity risk premium of 3% and long-run growth of 4%, a fair P/E is about \\(\\dfrac{1}{8.2\\% - 4\\%} \\approx 23.8\\). Raise the risk-free rate by another point and it drops to about **19.2**, roughly −19%. On September 25, 2026 the S&P 500 stood at about 7,743 and the Shiller CAPE at about 41.5 (the record is 44.2, just before 2000). On one common framing, stocks' earnings yield (about 2.4%) is well below the 10-year Treasury yield (about 5.2%), **putting the equity risk premium in one of its thinnest zones since the early 2000s** (the exact figure depends on the model). The higher the long end goes, the thinner that cushion.
 
 **Financial balance sheets.** Stage 4.4 worked it out: a 30-year bond with a 5% coupon loses about 13.8% for a 1-point rise in yield. Going from 1.65% at end-2020 to about 5.5% in September 2026, the same bond's price is roughly **cut in half**.
 
 - **Banks** hold lots of long bonds and fixed-rate loans. Unrealized losses eat into capital, and if deposits walk out and the bank is forced to sell, paper losses become real ones. That was Silicon Valley Bank's script in March 2023 (Stage 10.3).
 - **Insurers and pension funds** have long liabilities too, so higher yields aren't necessarily bad for a well-matched institution (the present value of what it owes falls as well). The danger lies where **leverage has amplified duration**, like UK LDI in 2022.
-- **Companies** borrow at the Treasury yield plus a credit spread (Stage 4.6). Move the anchor up and everyone's long-term funding cost moves up with it; heavily indebted firms that rely on rolling over cheap debt are hit first.
+- **Companies** borrow at \\(\\text{Treasury yield} + \\text{credit spread}\\) (Stage 4.6). Move the anchor up and everyone's long-term funding cost moves up with it; heavily indebted firms that rely on rolling over cheap debt are hit first.
 
 ### ⑤ Why it's worrying, part 2: the government's self-reinforcing interest bill
 
@@ -235,7 +237,7 @@ Elsewhere in town, people holding fixed-income contracts (preferreds) find that 
         "About $50",
       ],
       answer: 0,
-      explain: "**Required yield 10% → 11%, perpetuity price = 10 ÷ 11% ≈ $90.91.** If the spread also widens by 0.5 points, the price is about $86.96. This is the most direct path from a rising long end to bitcoin treasury companies' preferreds (Stage 18.1).",
+      explain: "**Required yield 10% → 11%, \\(\\text{perpetuity price} = \\dfrac{\\$10}{11\\%} \\approx \\$90.91\\).** If the spread also widens by 0.5 points, the price is about $86.96. This is the most direct path from a rising long end to bitcoin treasury companies' preferreds (Stage 18.1).",
     },
   ],
 

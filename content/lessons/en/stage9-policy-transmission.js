@@ -47,7 +47,7 @@ This matters for what's ahead. Stage 9.3 explains why Bitcoin tracks “liquidit
 This is the most direct pipe, and the formula from Stage 4.3 is the star:
 
 $$
-n-year yield ≈ average expected short rate over n years + term premium
+n\\text{-year yield} \\approx \\text{average expected short rate over } n \\text{ years} + \\text{term premium}
 $$
 
 So what a policy decision does to the long end depends on two things: **how much it changes expectations about the future**, and **how much compensation investors demand for bearing long-term risk.** On September 25, 2026 the 2-year yield was about 4.81%, nearly a full point above the effective fed funds rate of about 3.88%. Markets had already written “more hikes” into the price. That's why the bond market often shrugs on the day the Fed actually moves: **prices change when expectations form, not when the decision lands.**
@@ -70,12 +70,12 @@ The market's thermometer for this channel is the **credit spread** (Stage 4.6): 
 The Gordon model from Stage 5.3 is the fastest way into this pipe:
 
 $$
-stock value = next year's dividend ÷ (discount rate − growth rate)
+\\text{stock value} = \\frac{\\text{next year's dividend}}{\\text{discount rate} - \\text{growth rate}}
 $$
 
-Say next year's dividend is $5, growth is 4% and the discount rate is 8%: value = 5 ÷ 4% = **$125**. Nudge the discount rate to 9% and value becomes 5 ÷ 5% = **$100 — a 20% drop.** One point on the discount rate, twenty percent off the price: that's an asset with a “duration” of roughly 20–25 years, more rate-sensitive than a 10-year Treasury. Growth stocks, whose cash flows sit further in the future, are more sensitive still, which is why the Nasdaq fell much harder than the Dow during the 2022 hikes.
+Say next year's dividend is $5, growth is 4% and the discount rate is 8%: value \\(= \\dfrac{\\$5}{8\\% - 4\\%} = \\dfrac{\\$5}{4\\%} = \\$125\\). Nudge the discount rate to 9% and value becomes \\(\\dfrac{\\$5}{9\\% - 4\\%} = \\dfrac{\\$5}{5\\%} = \\$100\\) — **a 20% drop.** One point on the discount rate, twenty percent off the price: that's an asset with a “duration” of roughly 20–25 years, more rate-sensitive than a 10-year Treasury. Growth stocks, whose cash flows sit further in the future, are more sensitive still, which is why the Nasdaq fell much harder than the Dow during the 2022 hikes.
 
-2026 supplied a counterexample. The 10-year climbed to about 5.2%, yet the S&P 500 closed around 7,743 on September 25, not far from its August record. The numerator moved too: markets expected S&P 500 earnings to grow about 32% in 2026, as the AI investment boom raised the growth rate enough to offset the higher discount rate. The price was a thinner valuation cushion. At a forward P/E of about 19.2, the earnings yield is about 5.2% — almost exactly the 10-year Treasury yield — so on the simple “Fed model,” **the equity risk premium over Treasuries is close to zero** (a rough, model-dependent calculation, not an official figure).
+2026 supplied a counterexample. The 10-year climbed to about 5.2%, yet the S&P 500 closed around 7,743 on September 25, not far from its August record. The numerator moved too: markets expected S&P 500 earnings to grow about 32% in 2026, as the AI investment boom raised the growth rate enough to offset the higher discount rate. The price was a thinner valuation cushion. At a forward P/E of about 19.2, the earnings yield is about \\(\\dfrac{1}{19.2} \\approx 5.2\\%\\) — almost exactly the 10-year Treasury yield — so on the simple “Fed model,” **the equity risk premium over Treasuries is close to zero** (a rough, model-dependent calculation, not an official figure).
 
 When asset prices move, behavior follows: the **wealth effect.** When stocks and homes rise, people feel richer and spend more; when they fall, the reverse.
 
@@ -134,7 +134,7 @@ Worse, there are other forces at sea. A current (huge government deficits) pushe
         "Nothing — the two are unrelated and the gap is noise",
       ],
       answer: 0,
-      explain: "An n-year yield ≈ the average expected short rate plus a term premium. A 2-year well above today's policy rate means **markets were pricing hikes in advance** — prices move when expectations form.",
+      explain: "\\(n\\text{-year yield} \\approx \\text{average expected short rate} + \\text{term premium}\\). A 2-year well above today's policy rate means **markets were pricing hikes in advance** — prices move when expectations form.",
     },
     {
       q: "Next year's dividend is $5 and growth is 4%. If the discount rate rises from 8% to 9%, what happens to the stock's Gordon-model value?",
@@ -145,7 +145,7 @@ Worse, there are other forces at sea. A current (huge government deficits) pushe
         "Nothing, because the dividend hasn't changed",
       ],
       answer: 2,
-      explain: "5 ÷ (8% − 4%) = 125; 5 ÷ (9% − 4%) = 100. **The denominator goes from 4% to 5% and value drops 20%** — a stock behaves like a long-duration asset, very sensitive to the discount rate.",
+      explain: "\\(\\dfrac{5}{8\\% - 4\\%} = 125\\); \\(\\dfrac{5}{9\\% - 4\\%} = 100\\). **The denominator goes from 4% to 5% and value drops 20%** — a stock behaves like a long-duration asset, very sensitive to the discount rate.",
     },
     {
       q: "Which best explains why US rate hikes hit existing household mortgages less than UK hikes do?",
@@ -178,7 +178,7 @@ Worse, there are other forces at sea. A current (huge government deficits) pushe
         "It falls from $100 to about $50",
       ],
       answer: 1,
-      explain: "Perpetuity value = dividend ÷ yield: 10 ÷ 10% = 100, 10 ÷ 11% ≈ 90.9. **When long rates move, fixed-income assets with no maturity take the hit first** (Stage 18.1).",
+      explain: "\\(\\text{perpetuity value} = \\dfrac{\\text{dividend}}{\\text{yield}}\\): \\(\\dfrac{10}{10\\%} = 100\\), \\(\\dfrac{10}{11\\%} \\approx 90.9\\). **When long rates move, fixed-income assets with no maturity take the hit first** (Stage 18.1).",
     },
   ],
 

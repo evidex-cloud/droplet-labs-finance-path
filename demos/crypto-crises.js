@@ -1,7 +1,7 @@
 // 交互演示：加密危机实验室——两种模式。
 // ① Terra 螺旋：UST 赎回 → 增发 LUNA → 市场接不住 → LUNA 跌 → “支撑”缩水 → UST 进一步脱锚；可开关 8 万 BTC 储备护盘（护盘本身会砸比特币价格）。
 // ② 交易所挤兑（FTX 式）：客户存款 100，资产 = 可用币 + 自家代币 + 借给关联方的不流动资产；逐日提币，看哪天暂停提币、剩下的人能拿回多少。
-import { fmtPct, fmtNum, fmtUsd, clamp } from "./_fin.js";
+import { fmtPct, fmtNum, fmtUsd, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -40,7 +40,7 @@ export default function mount(root, lang) {
         </div>
         <div id="ccx-chart"></div>
         <div class="demo-log" id="ccx-tlog"></div>
-        <div class="demo-meta">${T("示意模型：起点 UST 180 亿美元、LUNA 3.5 亿枚 × 80 美元、储备 8 万 BTC × 3.5 万美元。UST 价格 = min(1, (LUNA 市值 + 储备) ÷ UST 流通量 ÷ 1.5)；脱锚越深，赎回越多；新增 LUNA 与原有持有人的恐慌抛售按“市场深度”压低价格；每轮链上赎回上限约 5 亿美元；储备只在脱锚后才出手；每卖出 10 亿美元 BTC，币价约跌 2%。", "Stylized model: starts with $18bn of UST, 350m LUNA at $80, and 80,000 BTC at $35,000 in reserve. UST price = min(1, (LUNA market cap + reserve) ÷ UST supply ÷ 1.5); the deeper the depeg, the more redemptions; selling of new LUNA and panic selling by existing holders push its price down according to market depth; on-chain redemptions are capped at about $0.5bn per round; the reserve only steps in once the peg breaks; every $1bn of BTC sold knocks about 2% off bitcoin.")}</div>
+        <div class="demo-meta">${T(`示意模型：起点 UST 180 亿美元、${tex(String.raw`\text{LUNA}\ 3.5\ \text{亿枚} \times 80\ \text{美元}`)}、储备 ${tex(String.raw`8\ \text{万 BTC} \times 3.5\ \text{万美元}`)}。${tex(String.raw`\text{UST 价格} = \min\left(1,\ \frac{\text{LUNA 市值} + \text{储备}}{\text{UST 流通量} \times 1.5}\right)`, true)}脱锚越深，赎回越多；新增 LUNA 与原有持有人的恐慌抛售按“市场深度”压低价格；每轮链上赎回上限约 5 亿美元；储备只在脱锚后才出手；每卖出 10 亿美元 BTC，币价约跌 2%。`, `Stylized model: starts with $18bn of UST, ${tex(String.raw`350\text{m LUNA} \times \$80`)}, and ${tex(String.raw`80{,}000\ \text{BTC} \times \$35{,}000`)} in reserve.${tex(String.raw`\text{UST price} = \min\left(1,\ \frac{\text{LUNA market cap} + \text{reserve}}{\text{UST supply} \times 1.5}\right)`, true)}The deeper the depeg, the more redemptions; selling of new LUNA and panic selling by existing holders push its price down according to market depth; on-chain redemptions are capped at about $0.5bn per round; the reserve only steps in once the peg breaks; every $1bn of BTC sold knocks about 2% off bitcoin.`)}</div>
       </div>
       <div id="ccx-ex">
         <div class="demo-grid">
@@ -111,7 +111,7 @@ export default function mount(root, lang) {
     const lines = [];
     const firstDepeg = rows.find((r) => r.u < 0.98);
     const resOut = rows.find((r) => TR.reserve && r.res < 1);
-    if (firstDepeg) lines.push(`<span class="bad">${T(`第 ${firstDepeg.t} 轮 UST 跌破 0.98 美元：LUNA 市值加储备已不足以让市场相信“1 UST = 1 美元”。`, `Round ${firstDepeg.t}: UST falls below $0.98 — LUNA's market cap plus the reserve no longer convinces the market that 1 UST = $1.`)}</span>`);
+    if (firstDepeg) lines.push(`<span class="bad">${T(`第 ${firstDepeg.t} 轮 UST 跌破 0.98 美元：LUNA 市值加储备已不足以让市场相信“${tex(String.raw`1\ \text{UST} = 1\ \text{美元}`)}”。`, `Round ${firstDepeg.t}: UST falls below $0.98 — LUNA's market cap plus the reserve no longer convinces the market that ${tex(String.raw`1\ \text{UST} = \$1`)}.`)}</span>`);
     else lines.push(`<span class="ok">${T("在这组参数下 UST 守住了锚定：赎回被 LUNA 的市场深度吸收。", "With these settings UST holds its peg: the market is deep enough to absorb the LUNA.")}</span>`);
     if (resOut) lines.push(T(`第 ${resOut.t} 轮储备比特币耗尽；护盘期间比特币价格被压到 ${fmtUsd(resOut.btc)}。`, `The bitcoin reserve runs out in round ${resOut.t}; the defense pushed bitcoin down to ${fmtUsd(resOut.btc)}.`));
     lines.push(T(`LUNA 供应量从 3.5 亿枚变为 ${fmtNum(last.L * 1000, 0)} 百万枚（${fmtNum(last.L / 0.35, 1)} 倍），价格从 80 美元变为 ${last.p >= 0.01 ? "$" + fmtNum(last.p, 2) : "不足 1 美分"}。`,

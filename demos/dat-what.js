@@ -2,8 +2,13 @@
 // 同时看四种 mNAV 口径、两种放大倍数、Strive 放大比率、两种每股聪数、各层 BTC 评级与地板价。
 import {
   btcNav, mnavBasic, mnavDiluted, mnavEV, mnavNetBps, netReserve, amplification, amplificationStrategy,
-  striveAmpRatio, coverageByLayer, btcFloorPrice, breakevenArr, monthsCovered, btcPerShare, fmtNum, fmtPct, fmtUsd, fmtBig,
+  striveAmpRatio, coverageByLayer, btcFloorPrice, breakevenArr, monthsCovered, btcPerShare, fmtNum, fmtPct, fmtUsd, fmtBig, tex,
 } from "./_fin.js";
+
+// LaTeX 里的数字：大数缩写放进 \text{}，千分位写成 {,}，百分号转义
+const tb = (x, d) => String.raw`\text{${fmtBig(x, d)}}`;
+const tn = (x, d) => fmtNum(x, d).replace(/,/g, "{,}");
+const tp = (x, d) => fmtPct(x, d).replace("%", "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -77,7 +82,7 @@ export default function mount(root, lang) {
       basic: T("市值口径", "Basic"),
       diluted: T("稀释市值口径", "Diluted"),
       ev: T("企业价值口径（2025）", "EV (2025)"),
-      net: T("股价 ÷ 每股净比特币（2026）", "Price ÷ net BTC/share (2026)"),
+      net: tex(String.raw`\text{${T("股价", "Price")}} \div \text{${T("每股净比特币", "net BTC/share")}}`) + T("（2026）", " (2026)"),
     };
     q("#dw-mnav").innerHTML = Object.keys(m).map((k) => {
       const v = m[k];
@@ -116,7 +121,10 @@ export default function mount(root, lang) {
     const under0 = nav + CASH - (CONV + PREF_F + PREF_D);
     const under1 = nav * 1.1 + CASH - (CONV + PREF_F + PREF_D);
     const lines = [];
-    lines.push(`${T("净储备", "Net Reserve")} = ${fmtBig(nav, 2)} − ${T("价外可转债", "OTM converts")} ${fmtBig(otmDebt, 2)} − ${T("优先股", "preferred")} ${fmtBig(PREF_F + PREF_D, 2)} + ${T("美元资产", "USD assets")} ${fmtBig(CASH, 2)} = <b>${fmtBig(nr, 2)}</b>${T("；", "; ")}${T("完全稀释股数", "fully diluted shares")} ${fmtBig(fdShares, 0)} → ${T("每股净比特币", "net BTC per share")} <b>${fmtUsd(nr / fdShares, 2)}</b>`);
+    const nbps = nr / fdShares;
+    lines.push(tex(String.raw`\text{${T("净储备", "Net Reserve")}} = ${tb(nav, 2)} - \text{${T("价外可转债 ", "OTM converts ")}${fmtBig(otmDebt, 2)}} - \text{${T("优先股 ", "preferred ")}${fmtBig(PREF_F + PREF_D, 2)}} + \text{${T("美元资产 ", "USD assets ")}${fmtBig(CASH, 2)}} = \textbf{${fmtBig(nr, 2)}}`)
+      + T("；", "; ")
+      + tex(String.raw`\text{${T("每股净比特币", "net BTC per share")}} = \dfrac{${tb(nr, 2)}}{${tb(fdShares, 0)}\ \text{${T("股", "shares")}}} = \mathbf{${nbps < 0 ? "-" : ""}\$${tn(Math.abs(nbps), 2)}}`));
     lines.push(itm
       ? `<span class="warn">${T("股价 ≥ 25 美元：可转债是价内的。2026 口径把它当作将来的股票（+600 万股），不再当作要扣掉的债务。", "Share price ≥ $25: the converts are in the money. The 2026 definition treats them as future shares (+6M) instead of debt to subtract.")}</span>`
       : `${T("股价 < 25 美元：可转债是价外的，2026 口径把 1.5 亿当作债务从储备里扣掉，股数仍按 1 亿股。", "Share price < $25: the converts are out of the money, so the 2026 definition subtracts the $150M as debt and keeps 100M shares.")}`);
@@ -125,7 +133,7 @@ export default function mount(root, lang) {
     } else {
       lines.push(`<span class="bad">${T("比特币净值加现金已经不够覆盖全部优先索取权：普通股的“底子”为负，只剩期权价值。", "Bitcoin NAV plus cash no longer covers all senior claims: the common's underlying value is negative — only option value remains.")}</span>`);
     }
-    lines.push(`${T("年度优先股股息 ", "Annual preferred dividends ")}${fmtUsd(DIVS / 1e6)}M → BTC Breakeven ARR = <b>${fmtPct(breakevenArr(DIVS, nav), 2)}</b>${T("；", "; ")}${T("现金覆盖 ", "cash covers ")}<b>${fmtNum(monthsCovered(CASH, DIVS), 0)} ${T("个月", "months")}</b>`);
+    lines.push(`${T("年度优先股股息 ", "Annual preferred dividends ")}${fmtUsd(DIVS / 1e6)}M → ${tex(String.raw`\text{BTC Breakeven ARR} = \dfrac{${tb(DIVS, 0)}}{${tb(nav, 2)}} = \mathbf{${tp(breakevenArr(DIVS, nav), 2)}}`)}${T("；", "; ")}${T("现金覆盖 ", "cash covers ")}<b>${fmtNum(monthsCovered(CASH, DIVS), 0)} ${T("个月", "months")}</b>`);
     const mv = m[st.def];
     lines.push(`${T("你选的口径：", "Your chosen definition: ")}${names[st.def]} = <b>${isFinite(mv) && mv > 0 ? fmtNum(mv, 2) + "x" : "–"}</b> → ${isFinite(mv) && mv > 1 ? `<span class="ok">${T("溢价：按这个口径，增发买币会增厚每股比特币（阶段 16.7）", "premium: on this definition, issuing to buy bitcoin is accretive (Stage 16.7)")}</span>` : `<span class="bad">${T("折价：按这个口径，增发买币会稀释（阶段 18.3）", "discount: on this definition, issuing to buy bitcoin dilutes (Stage 18.3)")}</span>`}`);
     q("#dw-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

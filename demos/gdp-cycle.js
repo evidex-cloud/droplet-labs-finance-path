@@ -1,7 +1,7 @@
 // 交互演示：经济的心电图。上半部分：用 C + I + G + (X − M) 拼出 GDP，并用平减指数把名义增长换算成实际增长（_fin.js realRate）；
 // 下半部分：一个示意的经济周期——趋势增长（_fin.js fv 复利）+ 周期波动 + 可选的油价冲击，拖动“你在这里”看产出缺口、周期阶段、
 // 央行倾向与市场“天气”。所有数字都是教学示意，不是预测。
-import { fv, realRate, fmtPct, fmtNum } from "./_fin.js";
+import { fv, realRate, fmtPct, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -21,7 +21,7 @@ export default function mount(root, lang) {
     <div class="demo">
       <div class="demo-head">${T("💓 经济的心电图：拼出 GDP，再看周期怎么跳", "💓 The economy's heartbeat: build GDP, then watch the cycle beat")}</div>
 
-      <div class="demo-label">${T("第一步 · 用 C + I + G + (X − M) 拼出今年的名义 GDP（去年 = 1,000，去年平减指数 = 100）", "Step 1 · Build this year's nominal GDP from C + I + G + (X − M) (last year = 1,000, last year's deflator = 100)")}</div>
+      <div class="demo-label">${T("第一步 · 用 ", "Step 1 · Build this year's nominal GDP from ")}${tex(String.raw`C + I + G + (X - M)`)}${T(" 拼出今年的名义 GDP（去年 GDP 为 1,000，去年平减指数为 100）", " (last year's GDP: 1,000; last year's deflator: 100)")}</div>
       <div class="demo-grid" id="gc-parts">
         ${PARTS.map(([k, lab, lo, hi, v]) => `<div><label class="demo-label">${lab}${T("：", ": ")}<b id="gc-${k}-v"></b></label><input class="demo-slider" type="range" id="gc-${k}" min="${lo}" max="${hi}" step="5" value="${v}"></div>`).join("")}
         <div><label class="demo-label">${T("今年平减指数（物价水平）", "This year's deflator (price level)")}${T("：", ": ")}<b id="gc-def-v"></b></label><input class="demo-slider" type="range" id="gc-def" min="95" max="115" step="0.5" value="104"></div>
@@ -30,7 +30,7 @@ export default function mount(root, lang) {
       <div class="stat-row" id="gc-stats1"></div>
       <div class="demo-log" id="gc-log1"></div>
 
-      <div class="demo-label" style="margin-top:18px">${T("第二步 · 一个示意的经济周期（实际 GDP 指数，第 0 年 = 100）", "Step 2 · An illustrative business cycle (real GDP index, year 0 = 100)")}</div>
+      <div class="demo-label" style="margin-top:18px">${T("第二步 · 一个示意的经济周期（实际 GDP 指数，第 0 年记为 100）", "Step 2 · An illustrative business cycle (real GDP index, year 0 set to 100)")}</div>
       <div class="demo-grid">
         <div><label class="demo-label">${T("长期趋势增长（潜在增速）", "Long-run trend growth (potential)")}${T("：", ": ")}<b id="gc-tg-v"></b></label><input class="demo-slider" type="range" id="gc-tg" min="0" max="4" step="0.25" value="2"></div>
         <div><label class="demo-label">${T("周期振幅（产出缺口最大值）", "Cycle amplitude (max output gap)")}${T("：", ": ")}<b id="gc-amp-v"></b></label><input class="demo-slider" type="range" id="gc-amp" min="0" max="5" step="0.25" value="2.5"></div>
@@ -83,8 +83,8 @@ export default function mount(root, lang) {
       <div class="stat"><div class="k">${T("实际增长", "Real growth")}</div><div class="v ${realG >= 0 ? "pos" : "neg"}">${fmtPct(realG, 2)}</div></div>`;
 
     const lines = [];
-    lines.push(`GDP = ${fmtNum(v.c, 0)} + ${fmtNum(v.i, 0)} + ${fmtNum(v.g, 0)} + (${fmtNum(v.x, 0)} − ${fmtNum(v.m, 0)}) = <b>${fmtNum(gdp, 0)}</b>`);
-    lines.push(`${T("消费占比", "Consumption share")}${C(fmtPct(v.c / gdp, 1))}${T("；净出口", "; net exports")} ${nx >= 0 ? "+" : "−"}${fmtNum(Math.abs(nx), 0)}${nx < 0 ? T("（贸易逆差）", " (trade deficit)") : T("（贸易顺差）", " (trade surplus)")}`);
+    const n0 = (x) => fmtNum(x, 0).replace(/,/g, "{,}");
+    lines.push(tex(String.raw`\mathrm{GDP} = ${n0(v.c)} + ${n0(v.i)} + ${n0(v.g)} + (${n0(v.x)} - ${n0(v.m)}) = \mathbf{${n0(gdp)}}`));    lines.push(`${T("消费占比", "Consumption share")}${C(fmtPct(v.c / gdp, 1))}${T("；净出口", "; net exports")} ${nx >= 0 ? "+" : "−"}${fmtNum(Math.abs(nx), 0)}${nx < 0 ? T("（贸易逆差）", " (trade deficit)") : T("（贸易顺差）", " (trade surplus)")}`);
     if (Math.abs(nomG - realG) > 0.03) lines.push(`<span class="warn">${T("名义增长与实际增长差了", "Nominal and real growth differ by")} ${fmtPct(nomG - realG, 1)}${T("——大部分“增长”只是物价上涨。", " — much of the \"growth\" is just higher prices.")}</span>`);
     if (realG < 0) lines.push(`<span class="bad">${T("实际 GDP 下降：产出真的变少了。连续多个季度、并且在就业、收入等指标上广泛出现，NBER 才可能认定衰退。", "Real GDP fell: output really shrank. Only a broad, sustained decline across jobs, income and more would lead the NBER to call a recession.")}</span>`);
     else lines.push(`<span class="ok">${T("实际增长为正：扣掉物价后，经济多生产了东西。", "Real growth is positive: after stripping out prices, the economy produced more.")}</span>`);

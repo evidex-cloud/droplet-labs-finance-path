@@ -1,6 +1,6 @@
 // 交互演示：T 型账户模拟器——青橙银行（百万美元）。放贷、付款到别家银行、还贷、存现、加息、坏账、挤兑，
 // 实时看资产 = 负债 + 权益、货币总量怎么变、资本率与流动性怎么变，以及期限错配在挤兑时怎么把浮亏变成实亏。
-import { bondPrice, fmtNum, fmtPct, clamp } from "./_fin.js";
+import { bondPrice, fmtNum, fmtPct, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -86,7 +86,7 @@ export default function mount(root, lang) {
     $("#bcm-yv").textContent = fmtPct(y, 2);
     $("#bcm-bond").innerHTML = `${T("每 100 面值债券市价", "Price per 100 of face")}: <b>${fmtNum(px * 100, 1)}</b> · ${T("浮动盈亏", "Unrealized gain/loss")}: <b style="color:${px < 1 ? "var(--red)" : "var(--green)"}">${fmtNum(s.Bface * (px - 1), 1)}</b>`;
     $("#bcm-rv").textContent = runPct + "%";
-    $("#bcm-log").innerHTML = log.length ? log.map((l) => `<div>${l}</div>`).join("") : `<div>${T("点上面的按钮开始经营。资产 = 负债 + 权益，这条等式永远成立。", "Click a button above to start. Assets = liabilities + equity, always.")}</div>`;
+    $("#bcm-log").innerHTML = log.length ? log.map((l) => `<div>${l}</div>`).join("") : `<div>${T("点上面的按钮开始经营。", "Click a button above to start. ")}${tex(String.raw`\text{${T("资产", "Assets")}} = \text{${T("负债", "liabilities")}} + \text{${T("权益", "equity")}}`)}${T("，这条等式永远成立。", ", always.")}</div>`;
   };
 
   const act = (a) => {

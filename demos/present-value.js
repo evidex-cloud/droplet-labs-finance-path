@@ -1,18 +1,20 @@
 // 交互演示：现金流时间线构建器。选一种资产（标准债券 / 永续优先股 / 增长股息 / 投资项目 / 自定义），
 // 拖动折现率，看每一笔现金流的名义值（虚线框）与现值（实心柱）；总价值用 _fin.js 的 npv / perpetuity / gordon 计算，
 // 同时给出 ±1% 利率冲击、IRR 与“远期现金流占比”。
-import { npv, perpetuity, gordon, fmtPct, fmtUsd, fmtNum } from "./_fin.js";
+import { npv, perpetuity, gordon, fmtPct, fmtUsd, fmtNum, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  // 把格式化好的数字（"$1,000.00" / "10.00%"）转成可放进 LaTeX 的写法
+  const tx = (s) => String(s).replace(/,/g, "{,}").replace(/%/g, String.raw`\%`).replace(/\$/g, String.raw`\$`);
 
   const HORIZON = 30;
   const KINDS = {
     bond: { name: T("标准债券 1,000 / 5% / 10 年", "Standard bond $1,000 / 5% / 10y"), r: 5 },
     perp: { name: T("永续优先股 Orange-F（年付 $10）", "Perpetual preferred Orange-F ($10/yr)"), r: 10 },
     gordon: { name: T("增长股息（戈登）", "Growing dividend (Gordon)"), r: 9 },
-    project: { name: T("投资项目 −1,000 / +300×5", "Project −1,000 / +300×5"), r: 8 },
+    project: { name: `${T("投资项目", "Project")} ${tex(String.raw`-1{,}000\ /\ {+300}\times 5`)}`, r: 8 },
     custom: { name: T("自定义", "Custom"), r: 5 },
   };
   let kind = "bond";
@@ -44,8 +46,8 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-log" id="pv-log" style="margin-top:12px"></div>
       <p class="demo-tip">${T(
-        "拖动折现率，盯住两样东西：<strong>越靠右（越远）的柱子缩得越厉害</strong>；而“利率 ±1%”的价格变化，永续优先股和增长股息远大于 10 年期债券——价值越集中在远方，对时间价格越敏感。把戈登模型的 g 拖近 r，看估值怎么爆炸。",
-        "Drag the discount rate and watch two things: <strong>bars further to the right (further away) shrink the most</strong>, and the ±1% price moves are far larger for the perpetual preferred and the growing dividend than for the 10-year bond — the more of an asset's value sits far away, the more it cares about the price of time. In the Gordon case, drag g toward r and watch the valuation blow up."
+        `拖动折现率，盯住两样东西：<strong>越靠右（越远）的柱子缩得越厉害</strong>；而“利率 ±1%”的价格变化，永续优先股和增长股息远大于 10 年期债券——价值越集中在远方，对时间价格越敏感。把戈登模型的 ${tex("g")} 拖近 ${tex("r")}，看估值怎么爆炸。`,
+        `Drag the discount rate and watch two things: <strong>bars further to the right (further away) shrink the most</strong>, and the ±1% price moves are far larger for the perpetual preferred and the growing dividend than for the 10-year bond — the more of an asset's value sits far away, the more it cares about the price of time. In the Gordon case, drag ${tex("g")} toward ${tex("r")} and watch the valuation blow up.`
       )}</p>
     </div>`;
 
@@ -124,7 +126,7 @@ export default function mount(root, lang) {
       lines.push(V >= 0
         ? `<span class="ok">${T("NPV 为正：按", "NPV is positive: at")} ${fmtPct(r, 2)} ${T("的资金成本，这笔投资创造价值。", "cost of capital, this investment creates value.")}</span>`
         : `<span class="bad">${T("NPV 为负：资金成本", "NPV is negative: a cost of capital of")} ${fmtPct(r, 2)} ${T("高于这笔投资的回报，它在毁掉价值。", "exceeds what this investment earns — it destroys value.")}</span>`);
-      if (ir != null) lines.push(`${T("IRR = 让 NPV 恰好为 0 的折现率。资金成本低于", "IRR is the rate that makes NPV exactly zero. Any cost of capital below")} ${fmtPct(ir, 2)} ${T("时就值得做。债券的到期收益率就是同一个概念（阶段 4.2）。", "makes it worth doing. A bond's yield to maturity is the same idea (Stage 4.2).")}`);
+      if (ir != null) lines.push(`${T("IRR 就是让 NPV 恰好为 0 的折现率。资金成本低于", "IRR is the rate that makes NPV exactly zero. Any cost of capital below")} ${fmtPct(ir, 2)} ${T("时就值得做。债券的到期收益率就是同一个概念（阶段 4.2）。", "makes it worth doing. A bond's yield to maturity is the same idea (Stage 4.2).")}`);
     } else {
       const near = npv(flows.filter((f) => f.t <= 10), r);
       const farShare = isFinite(V) && V > 0 ? 1 - near / V : 1;
@@ -136,14 +138,14 @@ export default function mount(root, lang) {
         lines.push(`${T("本金那一笔（第 10 年 1,000）今天只值", "The principal alone ($1,000 in year 10) is worth only")} <b>${fmtUsd(1000 / Math.pow(1 + r, 10), 2)}</b>${T("。", " today.")}`);
       }
       if (kind === "perp") {
-        lines.push(`${T("永续年金：价值 = 10 ÷", "Perpetuity: value = 10 ÷")} ${fmtPct(r, 2)} = <b>${fmtUsd(V, 2)}</b>${T("。图里只画了前 30 年，第 31 年到永远还贡献", ". The chart shows only 30 years; years 31 to forever still add")} ${fmtUsd(V - npv(flows, r), 2)}${T("。", ".")}`);
-        lines.push(`${T("反过来读：若它的市价是 80 美元，市场要求的收益率就是", "Read it backward: if it trades at $80, the market's required yield is")} ${fmtPct(10 / 80, 1)}${T("（阶段 18.1）。修正久期约 1 ÷ r ≈", " (Stage 18.1). Modified duration ≈ 1 ÷ r ≈")} ${fmtNum(1 / r, 1)} ${T("年。", "years.")}`);
+        lines.push(`${T("永续年金：", "Perpetuity: ")}${tex(String.raw`\text{${T("价值", "value")}} = \frac{10}{${tx(fmtPct(r, 2))}} = \mathbf{${tx(fmtUsd(V, 2))}}`)}${T("。图里只画了前 30 年，第 31 年到永远还贡献", ". The chart shows only 30 years; years 31 to forever still add")} ${fmtUsd(V - npv(flows, r), 2)}${T("。", ".")}`);
+        lines.push(`${T("反过来读：若它的市价是 80 美元，市场要求的收益率就是", "Read it backward: if it trades at $80, the market's required yield is")} ${fmtPct(10 / 80, 1)}${T("（阶段 18.1）。修正久期约 ", " (Stage 18.1). Modified duration ")}${tex(String.raw`\approx \frac{1}{r} \approx ${tx(fmtNum(1 / r, 1))}`)} ${T("年。", "years.")}`);
       }
       if (kind === "gordon") {
-        if (!isFinite(V)) lines.push(`<span class="bad">${T("g ≥ r：公式失效——“永远比折现率增长更快”在数学上等于无穷大，在现实里不可能。", "g ≥ r: the formula breaks — “growing faster than the discount rate forever” is infinite on paper and impossible in reality.")}</span>`);
+        if (!isFinite(V)) lines.push(`<span class="bad">${tex(String.raw`g \ge r`)}${T("：公式失效——“永远比折现率增长更快”在数学上等于无穷大，在现实里不可能。", ": the formula breaks — “growing faster than the discount rate forever” is infinite on paper and impossible in reality.")}</span>`);
         else {
-          lines.push(`${T("戈登：5 ÷ (", "Gordon: 5 ÷ (")}${fmtPct(r, 2)} − ${fmtPct(g, 2)}) = <b>${fmtUsd(V, 2)}</b>${T("。隐含股息率", ". Implied dividend yield")} ${fmtPct(5 / V, 2)} + ${T("增长", "growth")} ${fmtPct(g, 2)} = ${T("要求回报", "required return")} ${fmtPct(r, 2)}${T("。", ".")}`);
-          if (r - g < 0.025) lines.push(`<span class="warn">${T("r − g 只剩", "r − g is only")} ${fmtPct(r - g, 2)}${T("：分母太小，估值对任何假设的微小变化都极端敏感。", ": with a denominator this small, the valuation is hypersensitive to every assumption.")}</span>`);
+          lines.push(`${T("戈登：", "Gordon: ")}${tex(String.raw`\frac{5}{${tx(fmtPct(r, 2))} - ${tx(fmtPct(g, 2))}} = \mathbf{${tx(fmtUsd(V, 2))}}`)}${T("。", ". ")}${tex(String.raw`\text{${T("隐含股息率", "Implied dividend yield")}}\ ${tx(fmtPct(5 / V, 2))} + \text{${T("增长", "growth")}}\ ${tx(fmtPct(g, 2))} = \text{${T("要求回报", "required return")}}\ ${tx(fmtPct(r, 2))}`)}${T("。", ".")}`);
+          if (r - g < 0.025) lines.push(`<span class="warn">${tex(String.raw`r - g`)} ${T("只剩", "is only")} ${fmtPct(r - g, 2)}${T("：分母太小，估值对任何假设的微小变化都极端敏感。", ": with a denominator this small, the valuation is hypersensitive to every assumption.")}</span>`);
         }
       }
     }

@@ -174,7 +174,7 @@ The rest of this course walks you through the map region by region on foot — a
         "The two have nothing to do with each other",
       ],
       answer: 0,
-      explain: "$15 billion ÷ $7.3 trillion ≈ **0.2%**. The new plumbing is growing quickly but is still orders of magnitude smaller than the traditional market — keep that sense of proportion when reading headlines (Stage 14.2).",
+      explain: "\\(\\dfrac{\\$15\\ \\text{billion}}{\\$7.3\\ \\text{trillion}} \\approx 0.2\\%\\) — only about **0.2%**. The new plumbing is growing quickly but is still orders of magnitude smaller than the traditional market — keep that sense of proportion when reading headlines (Stage 14.2).",
     },
     {
       q: "If bitcoin falls by half from its peak, across which bridges does the risk reach investors in traditional finance?",

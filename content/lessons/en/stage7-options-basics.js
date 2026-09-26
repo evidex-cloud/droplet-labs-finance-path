@@ -32,7 +32,7 @@ The third point is the least intuitive and the most important: **the more volati
 
 This lesson rests on **Idea ④ Risk & leverage**: an option lets you **slice risk in half and sell only one half**, and it comes with built-in leverage — $30,000 controls a million-dollar house. It also touches **Idea ① The price of time**: options lose value as time passes, which means time itself has a price.
 
-In the new era options are everywhere. Bitcoin options have traded on crypto venues such as Deribit for years; since November 2024, U.S. spot bitcoin ETFs have had listed options too; and every convertible bond Strategy issues carries an embedded call option on its own stock (Stage 6.4 showed that a convertible = a bond + a call; Stage 17.2 dissects Strategy's actual deals). **This lesson covers mechanics and analytical frameworks only; it is not investment advice.**
+In the new era options are everywhere. Bitcoin options have traded on crypto venues such as Deribit for years; since November 2024, U.S. spot bitcoin ETFs have had listed options too; and every convertible bond Strategy issues carries an embedded call option on its own stock (Stage 6.4 showed that a convertible is a bond plus a call; Stage 17.2 dissects Strategy's actual deals). **This lesson covers mechanics and analytical frameworks only; it is not investment advice.**
 
 **In this lesson we break it into five pieces:**
 
@@ -50,8 +50,8 @@ Every option contract has five elements:
 
 - **Underlying**: a stock, an index, bitcoin, an ETF, a future…
 - **Type**: a call (right to buy) or a put (right to sell).
-- **Strike K**: the agreed transaction price.
-- **Expiry T**: when the right lapses. A **European** option can be exercised only at expiry; an **American** option can be exercised any time before (most U.S. single-stock options are American).
+- **Strike \\(K\\)**: the agreed transaction price.
+- **Expiry \\(T\\)**: when the right lapses. A **European** option can be exercised only at expiry; an **American** option can be exercised any time before (most U.S. single-stock options are American).
 - **Premium**: what the buyer pays the seller.
 
 The obligations on the two sides are completely lopsided. The **buyer (long)** pays the premium and gets the right. The **seller (short, or "writer")** collects the premium and takes on the obligation: if the buyer exercises, the writer must sell at the strike (call) or buy at the strike (put). A U.S. equity option contract usually covers **100 shares**.
@@ -60,8 +60,8 @@ That gives four basic roles. Keep this table in your head:
 
 <table>
 <tr><th></th><th>Call</th><th>Put</th></tr>
-<tr><td><b>Buy (long)</b></td><td>Bet on a rise; max loss = premium; unlimited upside</td><td>Bet on a fall / buy insurance; max loss = premium; max gain = K − premium</td></tr>
-<tr><td><b>Sell (short)</b></td><td>Collect "rent"; max gain = premium; <b>loss unlimited as the price rises</b></td><td>Collect an insurance premium; max gain = premium; max loss = K − premium</td></tr>
+<tr><td><b>Buy (long)</b></td><td>Bet on a rise; \\(\\text{max loss} = \\text{premium}\\); unlimited upside</td><td>Bet on a fall / buy insurance; \\(\\text{max loss} = \\text{premium}\\); \\(\\text{max gain} = K - \\text{premium}\\)</td></tr>
+<tr><td><b>Sell (short)</b></td><td>Collect "rent"; \\(\\text{max gain} = \\text{premium}\\); <b>loss unlimited as the price rises</b></td><td>Collect an insurance premium; \\(\\text{max gain} = \\text{premium}\\); \\(\\text{max loss} = K - \\text{premium}\\)</td></tr>
 </table>
 
 **An option writer is an insurance company.** Most of the time it calmly collects premiums; occasionally a catastrophe forces a big payout. Stage 7.3 shows that "selling options" is an enormous business on Wall Street — and the source of many historic blow-ups.
@@ -76,8 +76,8 @@ A standard example: a stock at $100, with one-year options struck at $100 (volat
 
 Reading the diagrams with numbers (at expiry):
 
-- **Long call**: stock at 130 → exercise value 30, minus the 13.75 premium, **profit 16.25**; stock at 80 → don't exercise, **loss 13.75**. Breakeven = K + premium = **113.75**.
-- **Long put**: stock at 70 → exercise value 30, minus 9.83, **profit 20.17**; stock at 120 → don't exercise, **loss 9.83**. Breakeven = K − premium = **90.17**.
+- **Long call**: stock at 130 → exercise value 30, minus the 13.75 premium, **profit 16.25**; stock at 80 → don't exercise, **loss 13.75**. \\(\\text{Breakeven} = K + \\text{premium} = 100 + 13.75 = \\mathbf{113.75}\\).
+- **Long put**: stock at 70 → exercise value 30, minus 9.83, **profit 20.17**; stock at 120 → don't exercise, **loss 9.83**. \\(\\text{Breakeven} = K - \\text{premium} = 100 - 9.83 = \\mathbf{90.17}\\).
 - **Short call / short put**: flip those diagrams upside down. The call writer loses 16.25 with the stock at 130 and 86.25 with the stock at 200 — **the upside never ends, so neither does the writer's loss.**
 
 Compare the future in Stage 7.1: a long future's payoff is a **straight line**; an option's is a **bent line** — the hockey stick. That kink is the option's entire soul.
@@ -86,16 +86,16 @@ Compare the future in Stage 7.1: a long future's payoff is a **straight line**; 
 
 **Moneyness** answers the question "if the option expired right now, would it be worth anything?"
 
-- **In the money (ITM)**: exercising now pays. Call: S > K. Put: S < K.
-- **At the money (ATM)**: S ≈ K.
-- **Out of the money (OTM)**: exercising now is pointless. Call: S < K. Put: S > K.
+- **In the money (ITM)**: exercising now pays. Call: \\(S > K\\). Put: \\(S < K\\).
+- **At the money (ATM)**: \\(S \\approx K\\).
+- **Out of the money (OTM)**: exercising now is pointless. Call: \\(S < K\\). Put: \\(S > K\\).
 
 The option price therefore splits into two parts:
 
 $$
-Option price = intrinsic value + time value
-Call intrinsic value = max(S − K, 0)
-Put intrinsic value = max(K − S, 0)
+\\text{option price} = \\text{intrinsic value} + \\text{time value}
+\\text{call intrinsic value} = \\max(S - K,\\ 0)
+\\text{put intrinsic value} = \\max(K - S,\\ 0)
 $$
 
 **Intrinsic value** is what you'd get by exercising now; **time value** is the hope that things improve before expiry. Example: with the stock at 100, a three-month call struck at 110 (volatility 30%) is worth about **$2.77** in theory. Its intrinsic value is zero (it's out of the money), so **the whole $2.77 is time value** — you're paying purely for the chance of a move above 110 within three months.
@@ -114,11 +114,11 @@ The core idea matters more than the formula: **an option can be replicated at ev
 
 <table>
 <tr><th>Input</th><th>When it rises, a call…</th><th>a put…</th><th>Intuition</th></tr>
-<tr><td>Underlying price S</td><td>↑</td><td>↓</td><td>Closer to / further from paying off</td></tr>
-<tr><td>Strike K</td><td>↓</td><td>↑</td><td>Higher price to buy / higher price to sell</td></tr>
-<tr><td>Time to expiry T</td><td>↑</td><td>↑ (usually)</td><td>More time = more possibilities</td></tr>
-<tr><td><b>Volatility σ</b></td><td><b>↑</b></td><td><b>↑</b></td><td><b>You keep the good outcomes and skip the bad, so more uncertainty = more value</b></td></tr>
-<tr><td>Interest rate r</td><td>↑</td><td>↓</td><td>Paying the strike later lets that cash earn interest (Idea ①)</td></tr>
+<tr><td>Underlying price \\(S\\)</td><td>↑</td><td>↓</td><td>Closer to / further from paying off</td></tr>
+<tr><td>Strike \\(K\\)</td><td>↓</td><td>↑</td><td>Higher price to buy / higher price to sell</td></tr>
+<tr><td>Time to expiry \\(T\\)</td><td>↑</td><td>↑ (usually)</td><td>More time, more possibilities</td></tr>
+<tr><td><b>Volatility \\(\\sigma\\)</b></td><td><b>↑</b></td><td><b>↑</b></td><td><b>You keep the good outcomes and skip the bad, so more uncertainty means more value</b></td></tr>
+<tr><td>Interest rate \\(r\\)</td><td>↑</td><td>↓</td><td>Paying the strike later lets that cash earn interest (Idea ①)</td></tr>
 </table>
 
 (Dividend-paying stocks add a sixth input: dividends push calls down and puts up.)
@@ -126,33 +126,35 @@ The core idea matters more than the formula: **an option can be replicated at ev
 Here is the formula. Don't worry if it looks like hieroglyphics — the point is that it packs those five inputs into one expression:
 
 $$
-C = S·N(d₁) − K·e^(−rT)·N(d₂)
-d₁ = [ln(S/K) + (r + σ²/2)·T] / (σ·√T),  d₂ = d₁ − σ·√T
-N(·) is the cumulative standard normal distribution
+C = S\\,N(d_{1}) - K e^{-rT} N(d_{2})
+d_{1} = \\frac{\\ln(S/K) + \\left(r + \\frac{\\sigma^{2}}{2}\\right) T}{\\sigma \\sqrt{T}}
+d_{2} = d_{1} - \\sigma \\sqrt{T}
 $$
 
-Of the five inputs, **only volatility σ can't be observed directly.** Price, strike, time and rate are on the screen; σ is "how bumpy the future will be." So in practice people run the formula backwards: they take market option prices and solve for the σ that fits. That is **implied volatility**, and traders simply quote options in it ("that option is trading at 55 vol"). That's where Stage 7.3 begins.
+Here \\(N(\\cdot)\\) is the cumulative standard normal distribution.
 
-Feel how powerful σ is. The same one-year at-the-money call (S = K = 100) is worth about **8.03** at 15% volatility, **13.75** at 30%, and **25.13** at 60%. Out-of-the-money options react even more violently: with bitcoin at $100,000, a one-year call struck at $120,000 is worth about **$4,739** at 25% volatility and about **$14,439** at 50%. **Double the volatility and the price roughly triples.**
+Of the five inputs, **only volatility \\(\\sigma\\) can't be observed directly.** Price, strike, time and rate are on the screen; \\(\\sigma\\) is "how bumpy the future will be." So in practice people run the formula backwards: they take market option prices and solve for the \\(\\sigma\\) that fits. That is **implied volatility**, and traders simply quote options in it ("that option is trading at 55 vol"). That's where Stage 7.3 begins.
+
+Feel how powerful \\(\\sigma\\) is. The same one-year at-the-money call (\\(S = K = 100\\)) is worth about **8.03** at 15% volatility, **13.75** at 30%, and **25.13** at 60%. Out-of-the-money options react even more violently: with bitcoin at $100,000, a one-year call struck at $120,000 is worth about **$4,739** at 25% volatility and about **$14,439** at 50%. **Double the volatility and the price roughly triples.**
 
 There is also one iron law that needs no model at all — **put–call parity**:
 
 $$
-Call price − put price = S − K·e^(−rT)
+\\text{call price} - \\text{put price} = S - K e^{-rT}
 $$
 
-In our example 13.75 − 9.83 = 3.92, and 100 − 100 × e^(−0.04) ≈ 3.92. A perfect match. What it says is: **"long a call + short a put" is the same thing as a long forward.** Options, forwards and futures (Stage 7.1) are building blocks from one family.
+In our example \\(13.75 - 9.83 = 3.92\\), and \\(100 - 100 \\times e^{-0.04} \\approx 3.92\\). A perfect match. What it says is: **"long a call + short a put" is the same thing as a long forward.** Options, forwards and futures (Stage 7.1) are building blocks from one family.
 
 ### ⑤ Building blocks: insurance, income and convertibles
 
 Combine options with the underlying and you can tailor almost any shape of risk:
 
-- **Protective put**: own the stock + buy a put = insure the stock. Losses below the strike are paid by the put; the cost is the premium.
-- **Covered call**: own the stock + sell a call = sell away the chance of a big rally in exchange for cash income ("collecting rent"). Gains are capped if the stock soars. Many "high-income" funds and ETFs work exactly like this — **a large part of their "yield" is premium earned by selling away upside.**
+- **Protective put**: own the stock + buy a put, and you have insured the stock. Losses below the strike are paid by the put; the cost is the premium.
+- **Covered call**: own the stock + sell a call, which sells away the chance of a big rally in exchange for cash income ("collecting rent"). Gains are capped if the stock soars. Many "high-income" funds and ETFs work exactly like this — **a large part of their "yield" is premium earned by selling away upside.**
 - **Collar**: own the stock + buy a put + sell a call, using the call premium to pay for the put and locking the result inside a band.
 - **Straddle**: buy a call and a put at the same strike — no bet on direction, **only on movement**. A big move either way pays; a price that sits still loses both premiums. It is the purest form of "buying volatility."
 
-Finally, back to Stage 6.4: **a convertible bond = an ordinary bond + a call option.** Investors accept a very low or even zero coupon because they are also getting a call on the issuer's stock. By the rules above, **the more volatile the stock, the more that call is worth, and the less interest the issuer has to pay.** That is the core reason Strategy has been able to issue convertibles at coupons near zero: its stock sits on top of bitcoin, it is extremely volatile, and the embedded call is therefore valuable. Stage 7.3 explains who buys that volatility; Stage 17.2 dissects the terms of Strategy's convertibles.
+Finally, back to Stage 6.4: **a convertible bond is an ordinary bond plus a call option.** Investors accept a very low or even zero coupon because they are also getting a call on the issuer's stock. By the rules above, **the more volatile the stock, the more that call is worth, and the less interest the issuer has to pay.** That is the core reason Strategy has been able to issue convertibles at coupons near zero: its stock sits on top of bitcoin, it is extremely volatile, and the embedded call is therefore valuable. Stage 7.3 explains who buys that volatility; Stage 17.2 dissects the terms of Strategy's convertibles.
 
 The lesson in one sentence: **an option is an asymmetry bought for a premium; its price is set by the underlying price, the strike, time, the interest rate and volatility — and volatility is the least visible and most important of them.** The next lesson is devoted to it: how volatility becomes an asset you can buy and sell.
 `,
@@ -192,7 +194,7 @@ And a **convertible bond** is a savings card the theater sells you *with a vouch
         "A gain of 33.75",
       ],
       answer: 2,
-      explain: "Intrinsic value = max(120 − 100, 0) = 20, minus the 13.75 premium, **a net gain of 6.25**. Breakeven is K + premium = 113.75.",
+      explain: "\\(\\text{Intrinsic value} = \\max(120 - 100,\\ 0) = 20\\); minus the 13.75 premium, **a net gain of \\(20 - 13.75 = 6.25\\)**. Breakeven is \\(K + \\text{premium} = 113.75\\).",
     },
     {
       q: "Holding everything else constant, the underlying's volatility rises from 30% to 60%. What happens to call and put prices?",
@@ -214,7 +216,7 @@ And a **convertible bond** is a savings card the theater sells you *with a vouch
         "Intrinsic 0, time value 2.77",
       ],
       answer: 3,
-      explain: "Call intrinsic value = max(S − K, 0) = max(100 − 110, 0) = 0; the option is **out of the money**. All 2.77 pays for the chance of rising above 110 within three months — pure time value.",
+      explain: "\\(\\text{Call intrinsic value} = \\max(S - K,\\ 0) = \\max(100 - 110,\\ 0) = 0\\); the option is **out of the money**. All 2.77 pays for the chance of rising above 110 within three months — pure time value.",
     },
     {
       q: "Why do convertible bonds from highly volatile companies usually carry very low coupons?",
@@ -225,7 +227,7 @@ And a **convertible bond** is a savings card the theater sells you *with a vouch
         "Because convertibles have no maturity date",
       ],
       answer: 1,
-      explain: "**Convertible = bond + call option** (Stage 6.4). Higher volatility makes the embedded option more valuable, and investors \"pay\" its premium by giving up interest.",
+      explain: "**A convertible is a bond plus a call option** (Stage 6.4). Higher volatility makes the embedded option more valuable, and investors \"pay\" its premium by giving up interest.",
     },
     {
       q: "What is the combination \"own the stock + sell a call\" called, and what's its defining feature?",

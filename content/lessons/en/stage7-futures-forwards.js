@@ -44,7 +44,7 @@ In the new era this old tool wears new clothes. CME has listed bitcoin futures s
 
 A forward is a private agreement between two parties to buy or sell a set quantity of an asset on a future date T at a price K fixed today (the **delivery price**). At signing, no money changes hands — the contract starts with a value of zero. That is what "fair" means here: if one side were obviously ahead on day one, the other would not sign.
 
-At expiry, the **buyer (long)** earns spot at expiry minus the delivery price; the **seller (short)** earns the delivery price minus spot. The two always sum to zero. **A derivative is zero-sum in itself** — it only redistributes the swings of the underlying price between two people.
+At expiry, the **buyer (long)** earns \\(\\text{spot at expiry} - \\text{delivery price}\\); the **seller (short)** earns \\(\\text{delivery price} - \\text{spot at expiry}\\). The two always sum to zero. **A derivative is zero-sum in itself** — it only redistributes the swings of the underlying price between two people.
 
 Joe's numbers: delivery price $6.10, 50,000 bushels.
 
@@ -69,13 +69,13 @@ Futures repair the forward's three weaknesses one by one:
 
 Walk through the numbers. You buy one CME bitcoin future at $100,000 (5 BTC, $500,000 notional) and assume initial margin of 20% of notional, or $100,000 (**illustrative**; exchanges set margins by volatility, and bitcoin futures carry far higher margin rates than equity-index futures).
 
-- Day 1 settles at $96,000: you lose 5 × $4,000 = $20,000; the account shows $80,000.
-- Day 2 settles at $99,000: you gain 5 × $3,000 = $15,000; the account is back to $95,000.
+- Day 1 settles at $96,000: you lose \\(5 \\times \\$4{,}000 = \\$20{,}000\\); the account shows $80,000.
+- Day 2 settles at $99,000: you gain \\(5 \\times \\$3{,}000 = \\$15{,}000\\); the account is back to $95,000.
 - If one day it settles at $88,000: cumulative loss $60,000, account $40,000. With a $75,000 maintenance level, you must wire $60,000 **that day** to get back to initial margin, or the position gets cut.
 
 The design has a deep logic: **daily marking turns one big bill due at expiry into a series of small bills settled every night.** The worst a default can cost the system is roughly one day's price move. The price you pay is this: **you can be right about direction and still be forced out because you couldn't meet a margin call along the way.** That is the core drama of Stage 7.5 — and exactly the trap British pension funds fell into in September 2022 (Stage 10.3).
 
-<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The futures curve: contango, backwardation and convergence</text><line x1="60" y1="240" x2="600" y2="240" stroke="var(--line)" stroke-width="1.5"/><line x1="60" y1="40" x2="60" y2="240" stroke="var(--line)" stroke-width="1.5"/><text x="60" y="258" text-anchor="middle" font-size="11" fill="var(--muted)">Today</text><text x="560" y="258" text-anchor="middle" font-size="11" fill="var(--muted)">Expiry</text><text x="330" y="274" text-anchor="middle" font-size="11" fill="var(--muted)">Time to expiry runs down →</text><line x1="60" y1="150" x2="560" y2="150" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/><text x="66" y="165" font-size="11" fill="var(--muted)">Spot price S (held constant)</text><path d="M60 80 C 200 95, 380 120, 560 150" fill="none" stroke="var(--orange)" stroke-width="2.5"/><text x="150" y="78" font-size="12" font-weight="600" fill="var(--orange-ink)">Contango: F &gt; S</text><text x="150" y="94" font-size="10.5" fill="var(--muted)">Positive carry: financing + storage &gt; income from holding</text><path d="M60 215 C 200 205, 380 180, 560 150" fill="none" stroke="var(--blue)" stroke-width="2.5"/><text x="150" y="226" font-size="12" font-weight="600" fill="var(--blue)">Backwardation: F &lt; S</text><text x="150" y="212" font-size="10.5" fill="var(--muted)">Scarce spot or high income: having it now is worth more</text><circle cx="560" cy="150" r="6" fill="var(--orange)"/><text x="552" y="136" text-anchor="end" font-size="11" font-weight="600" fill="var(--ink)">At expiry F = S</text><line x1="96" y1="84" x2="96" y2="146" stroke="var(--orange-line)" stroke-width="1.5"/><text x="100" y="124" font-size="10.5" fill="var(--orange-ink)">Basis</text></svg><figcaption>The gap between the futures price F and the spot price S is the basis. It shrinks as expiry approaches and must be zero on the last day — otherwise there is riskless arbitrage.</figcaption></figure>
+<figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The futures curve: contango, backwardation and convergence</text><line x1="60" y1="240" x2="600" y2="240" stroke="var(--line)" stroke-width="1.5"/><line x1="60" y1="40" x2="60" y2="240" stroke="var(--line)" stroke-width="1.5"/><text x="60" y="258" text-anchor="middle" font-size="11" fill="var(--muted)">Today</text><text x="560" y="258" text-anchor="middle" font-size="11" fill="var(--muted)">Expiry</text><text x="330" y="274" text-anchor="middle" font-size="11" fill="var(--muted)">Time to expiry runs down →</text><line x1="60" y1="150" x2="560" y2="150" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/><text x="66" y="165" font-size="11" fill="var(--muted)">Spot price S (held constant)</text><path d="M60 80 C 200 95, 380 120, 560 150" fill="none" stroke="var(--orange)" stroke-width="2.5"/><text x="150" y="78" font-size="12" font-weight="600" fill="var(--orange-ink)">Contango: F &gt; S</text><text x="150" y="94" font-size="10.5" fill="var(--muted)">Positive carry: financing + storage &gt; income from holding</text><path d="M60 215 C 200 205, 380 180, 560 150" fill="none" stroke="var(--blue)" stroke-width="2.5"/><text x="150" y="226" font-size="12" font-weight="600" fill="var(--blue)">Backwardation: F &lt; S</text><text x="150" y="212" font-size="10.5" fill="var(--muted)">Scarce spot or high income: having it now is worth more</text><circle cx="560" cy="150" r="6" fill="var(--orange)"/><text x="552" y="136" text-anchor="end" font-size="11" font-weight="600" fill="var(--ink)">At expiry F = S</text><line x1="96" y1="84" x2="96" y2="146" stroke="var(--orange-line)" stroke-width="1.5"/><text x="100" y="124" font-size="10.5" fill="var(--orange-ink)">Basis</text></svg><figcaption>The gap between the futures price \\(F\\) and the spot price \\(S\\) is the basis. It shrinks as expiry approaches and must be zero on the last day — otherwise there is riskless arbitrage.</figcaption></figure>
 
 ### ③ How futures are priced: cost of carry, basis, contango and backwardation
 
@@ -83,26 +83,26 @@ Why doesn't a three-month bitcoin future simply trade at today's spot price? One
 
 Say bitcoin spot is $100,000, the interest rate is 4% a year, and the future expires in three months. There are two ways to own 1 BTC in three months:
 
-- **Route A:** borrow $100,000 today, buy spot and hold it. In three months you owe the bank 100,000 × 1.04^0.25 ≈ **$100,985**.
-- **Route B:** buy a three-month future today and pay the futures price F at expiry.
+- **Route A:** borrow $100,000 today, buy spot and hold it. In three months you owe the bank \\(\\$100{,}000 \\times 1.04^{0.25} \\approx \\mathbf{\\$100{,}985}\\).
+- **Route B:** buy a three-month future today and pay the futures price \\(F\\) at expiry.
 
-Both routes end in the same place — one bitcoin in three months — so they must cost the same: **F ≈ $100,985**. If the future traded at $102,000, you would borrow, buy spot, sell the future and pocket about $1,015 at expiry, risk-free. That is a **cash-and-carry** trade. If it traded at $99,500, you would do the reverse. Arbitrageurs' buying and selling drags the futures price back to its cost of carry.
+Both routes end in the same place — one bitcoin in three months — so they must cost the same: \\(F \\approx \\mathbf{\\$100{,}985}\\). If the future traded at $102,000, you would borrow, buy spot, sell the future and pocket about $1,015 at expiry, risk-free. That is a **cash-and-carry** trade. If it traded at $99,500, you would do the reverse. Arbitrageurs' buying and selling drags the futures price back to its cost of carry.
 
 $$
-F = S × (1 + r + storage − income from holding)^T
-Bitcoin (no storage, no income): F ≈ S × (1 + r)^T
-Wheat: F ≈ S × (1 + r + storage − convenience yield)^T
-Stock index: F ≈ S × (1 + r − dividend yield)^T
+F = S \\times (1 + r + \\text{storage} - \\text{income from holding})^{T}
+\\text{Bitcoin (no storage, no income):}\\quad F \\approx S \\times (1 + r)^{T}
+\\text{Wheat:}\\quad F \\approx S \\times (1 + r + \\text{storage} - \\text{convenience yield})^{T}
+\\text{Stock index:}\\quad F \\approx S \\times (1 + r - \\text{dividend yield})^{T}
 $$
 
 The vocabulary, all at once:
 
-- **Basis** = futures price − spot price (some textbooks flip the sign; always check the convention). Above, the basis is about $985, **roughly 4% annualized**, exactly the financing cost.
-- **Contango**: F > S, later months cost more than nearer ones. Typical when carry is positive — and typical for bitcoin, where the annualized basis in bull markets often runs well above the risk-free rate (at times 10–20% or more) because many more people want leveraged long exposure than there is capital willing to run the arbitrage.
-- **Backwardation**: F < S. When spot is scarce (an oil crunch, the lean weeks before harvest), "having it now" is valuable in itself. That value is the **convenience yield**, and it can push futures below spot.
-- **Convergence**: at expiry a future *is* spot, so **F must equal S**. This is the anchor of every basis trade: however the basis jumps around on the way, it goes to zero at the end.
+- **Basis**: \\(\\text{basis} = \\text{futures price} - \\text{spot price}\\) (some textbooks flip the sign; always check the convention). Above, the basis is about $985, **roughly 4% annualized**, exactly the financing cost.
+- **Contango**: \\(F > S\\), later months cost more than nearer ones. Typical when carry is positive — and typical for bitcoin, where the annualized basis in bull markets often runs well above the risk-free rate (at times 10–20% or more) because many more people want leveraged long exposure than there is capital willing to run the arbitrage.
+- **Backwardation**: \\(F < S\\). When spot is scarce (an oil crunch, the lean weeks before harvest), "having it now" is valuable in itself. That value is the **convenience yield**, and it can push futures below spot.
+- **Convergence**: at expiry a future *is* spot, so **\\(F\\) must equal \\(S\\)**. This is the anchor of every basis trade: however the basis jumps around on the way, it goes to zero at the end.
 
-Notice the r in there: **futures prices contain an interest rate.** That is where Idea ① lives inside derivatives. Change rates and the "fair" basis of every future moves too. The Treasury basis trade in Stage 7.4 and the "basis/funding yield" of Stage 13.5 both earn the thin gap between the actual basis and the cost of financing it.
+Notice the \\(r\\) in there: **futures prices contain an interest rate.** That is where Idea ① lives inside derivatives. Change rates and the "fair" basis of every future moves too. The Treasury basis trade in Stage 7.4 and the "basis/funding yield" of Stage 13.5 both earn the thin gap between the actual basis and the cost of financing it.
 
 ### ④ Hedging vs. speculation: two uses of the same contract
 
@@ -116,7 +116,7 @@ A healthy market needs all three: **without speculators, hedgers have nobody to 
 
 **A bitcoin miner's hedge.** A miner expects to produce 30 BTC next quarter at an all-in cost (power, machines) of about $60,000 per coin. At $100,000 the margin is lovely; at $55,000 the miner loses money. It sells 30 BTC of three-month futures at about $100,985:
 
-- Bitcoin falls to $70,000: selling the coins brings in $2.1 million, the short futures gain (100,985 − 70,000) × 30 ≈ $930,000 — about **$3.03 million** in total.
+- Bitcoin falls to $70,000: selling the coins brings in $2.1 million, the short futures gain \\((\\$100{,}985 - \\$70{,}000) \\times 30 \\approx \\$930{,}000\\) — about **$3.03 million** in total.
 - Bitcoin rises to $130,000: the coins bring in $3.9 million, the short futures lose about $870,000 — again about **$3.03 million**.
 
 **The miner gives up the upside and buys a certain profit.** In practice few firms hedge 100%. A common approach is to hedge part of production (a **hedge ratio** of 30–70%), trading off "sleeping at night" against keeping some upside. That trade-off is exactly what this lesson's demo lets you feel with your own hands.
@@ -144,7 +144,7 @@ A common baseline rate is 0.01% per 8 hours — three times a day, **roughly 11%
 
 Perps typically allow very high leverage (10x, 20x, even 100x), and positions that fall short are liquidated **automatically and in real time** by the exchange's risk engine — no end-of-day settlement, no grace period. That makes perps the main engine of crypto liquidation cascades, which Stage 7.5 shows accelerating themselves in a crash.
 
-The lesson in one sentence: **a future = a forward + standardization + a clearinghouse + daily settlement; its price ≈ spot + cost of carry (which contains an interest rate); it moves risk from hedgers to speculators and brings leverage and margin calls into the market along with it.** Next, Stage 7.2 turns to a far more lopsided contract: the option, which lets you buy the upside without the downside.
+The lesson in one sentence: **a future is a forward plus standardization, a clearinghouse and daily settlement; its price is roughly spot plus the cost of carry (which contains an interest rate); it moves risk from hedgers to speculators and brings leverage and margin calls into the market along with it.** Next, Stage 7.2 turns to a far more lopsided contract: the option, which lets you buy the upside without the downside.
 `,
 
   demo: "futures-forwards",
@@ -181,7 +181,7 @@ A **perpetual** is a voucher **that never expires**. With no New Year's Eve to s
         "Impossible to say; it depends on market expectations",
       ],
       answer: 1,
-      explain: "**Cost-of-carry pricing**: F ≈ S × (1 + r)^T = 100,000 × 1.04^0.25 ≈ 100,985. Stray too far and a cash-and-carry trade (borrow, buy spot, sell the future) pulls it back.",
+      explain: "**Cost-of-carry pricing**: \\(F \\approx S \\times (1 + r)^{T} = 100{,}000 \\times 1.04^{0.25} \\approx 100{,}985\\). Stray too far and a cash-and-carry trade (borrow, buy spot, sell the future) pulls it back.",
     },
     {
       q: "What is the key institutional difference between a future and a forward?",
@@ -225,7 +225,7 @@ A **perpetual** is a voucher **that never expires**. With no New Year's Eve to s
         "Every speculator is long",
       ],
       answer: 0,
-      explain: "When the income from holding (convenience yield, dividends) exceeds financing and storage costs, F < S. Oil crunches and pre-harvest shortages are classic examples.",
+      explain: "When the income from holding (convenience yield, dividends) exceeds financing and storage costs, \\(F < S\\). Oil crunches and pre-harvest shortages are classic examples.",
     },
   ],
 

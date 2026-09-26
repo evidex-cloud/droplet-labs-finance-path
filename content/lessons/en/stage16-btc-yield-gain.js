@@ -7,7 +7,7 @@ export default {
   prereqs: ["btc-per-share"],
 
   oneLiner:
-    "Strategy's three headline KPIs are one number said three ways: **BTC Yield** = the percentage change in BTC per share (on assumed diluted shares) over a period; **BTC Gain** = bitcoin held at the start × BTC Yield; **BTC $ Gain** = BTC Gain × the bitcoin price. This lesson quotes the official definitions word for word, explains the 2026 convention under which quarterly figures add up to year-to-date, works through five Orange Corp financing moves, lists Strategy's and Strive's real values — and spells out what these KPIs do **not** measure: they are not yields in the bond sense, and they ignore senior claims and the cost of capital.",
+    "Strategy's three headline KPIs are one number said three ways: **BTC Yield** is the percentage change in BTC per share (on assumed diluted shares) over a period; \\(\\text{BTC Gain} = \\text{bitcoin held at the start} \\times \\text{BTC Yield}\\); \\(\\text{BTC \\$ Gain} = \\text{BTC Gain} \\times \\text{the bitcoin price}\\). This lesson quotes the official definitions word for word, explains the 2026 convention under which quarterly figures add up to year-to-date, works through five Orange Corp financing moves, lists Strategy's and Strive's real values — and spells out what these KPIs do **not** measure: they are not yields in the bond sense, and they ignore senior claims and the cost of capital.",
 
   intuition: `
 A rancher starts the year with 100 head of cattle and a family of four, so 25 head each. By year-end the ranch has 130 head — but along the way a fifth partner bought in, so now five people share them: 26 head each.
@@ -16,12 +16,12 @@ What was the "cattle yield" this year? On the total, +30%. But each original fam
 
 **BTC Yield** is exactly that kind of number. It doesn't care how much the company's total bitcoin grew; it measures how much **BTC per share** (Stage 16.1) grew. Strategy made it its headline KPI and added two translations:
 
-- **BTC Gain** turns the percentage into a coin count: bitcoin held at the start × BTC Yield. On the ranch, 100 × 4% = 4 head — the animals the original owners effectively gained, **as if no new partner had joined**.
-- **BTC $ Gain** turns the coin count into dollars: BTC Gain × the bitcoin price.
+- **BTC Gain** turns the percentage into a coin count: \\(\\text{bitcoin held at the start} \\times \\text{BTC Yield}\\). On the ranch, \\(100 \\times 4\\% = 4\\) head — the animals the original owners effectively gained, **as if no new partner had joined**.
+- **BTC $ Gain** turns the coin count into dollars: \\(\\text{BTC Gain} \\times \\text{the bitcoin price}\\).
 
-Take Orange Corp from Stage 15.1. It sells 10 million new shares at $15 (market-cap mNAV 1.5), raises $150M and buys 1,500 BTC. Holdings go from 10,000 to 11,500 BTC, shares from 100M to 110M, and BTC per share from 10,000 sats to about 10,455: **BTC Yield ≈ +4.5%**; BTC Gain = 10,000 × 4.5% ≈ **455 BTC**; BTC $ Gain ≈ **$45.5M**.
+Take Orange Corp from Stage 15.1. It sells 10 million new shares at $15 (market-cap mNAV 1.5), raises $150M and buys 1,500 BTC. Holdings go from 10,000 to 11,500 BTC, shares from 100M to 110M, and BTC per share from 10,000 sats to about 10,455: \\(\\text{BTC Yield} \\approx \\mathbf{+4.5\\%}\\); \\(\\text{BTC Gain} = 10{,}000 \\times 4.5\\% \\approx \\mathbf{455}\\ \\text{BTC}\\); \\(\\text{BTC \\$ Gain} \\approx \\mathbf{\\$45.5\\text{M}}\\).
 
-Notice: the company bought 1,500 coins, but BTC Gain is only about 455. Where did the other 1,045 go? They belong to the new shareholders (10M ÷ 110M × 11,500 ≈ 1,045). **BTC Gain counts what the existing holders gained, not what the company bought.** That's the point of the metric, and why it is more honest than total holdings.
+Notice: the company bought 1,500 coins, but BTC Gain is only about 455. Where did the other 1,045 go? They belong to the new shareholders (\\(\\dfrac{10\\text{M}}{110\\text{M}} \\times 11{,}500 \\approx 1{,}045\\)). **BTC Gain counts what the existing holders gained, not what the company bought.** That's the point of the metric, and why it is more honest than total holdings.
 
 But this "yield" has features you must know:
 
@@ -51,9 +51,9 @@ From Strategy's Q2 2026 10-Q (quoted text in quotation marks):
 - **BTC Gain**: "the gross number of bitcoins held by the Company at the beginning of a period multiplied by the BTC Yield for such period".
 - **BTC $ Gain**: "the dollar value of the BTC Gain calculated by multiplying the BTC Gain by the market price of bitcoin as reported on the Coinbase exchange as of the applicable measurement time".
 
-$$ BTC Yield = BPS (end) ÷ BPS (start) − 1
-$$ BTC Gain = bitcoin held at start × BTC Yield
-$$ BTC $ Gain = BTC Gain × bitcoin market price (at the measurement time)
+$$ \\text{BTC Yield} = \\frac{\\mathrm{BPS}_{\\text{end}}}{\\mathrm{BPS}_{\\text{start}}} - 1
+$$ \\text{BTC Gain} = \\text{bitcoin held at start} \\times \\text{BTC Yield}
+$$ \\text{BTC \\$ Gain} = \\text{BTC Gain} \\times \\text{bitcoin market price (at the measurement time)}
 
 The intuition for BTC Gain: **holding the share count fixed, how many free coins would the company have needed to grow BTC per share by the same percentage?** That's why it multiplies by **starting** holdings — it converts per-share growth back into "coins for the existing holders".
 
@@ -66,9 +66,9 @@ From 2026, Strategy's 10-Q shows BTC Yield by quarter and makes the quarters **s
 <table class="pm">
 <tr><th>Point in time</th><th>BPS</th><th>2026 convention (vs start of year)</th><th>Traditional quarter-on-quarter</th></tr>
 <tr><td>Start of year</td><td>100</td><td>—</td><td>—</td></tr>
-<tr><td>End of Q1</td><td>110</td><td>Q1 = (110 − 100) ÷ 100 = <b>10%</b></td><td>10%</td></tr>
-<tr><td>End of Q2</td><td>125</td><td>Q2 = (125 − 110) ÷ 100 = <b>15%</b></td><td>125 ÷ 110 − 1 ≈ 13.6%</td></tr>
-<tr><td>Year to date</td><td>—</td><td>10% + 15% = <b>25%</b></td><td>1.10 × 1.136 − 1 = 25%</td></tr>
+<tr><td>End of Q1</td><td>110</td><td>\\(\\mathrm{Q1} = \\dfrac{110 - 100}{100} = \\mathbf{10\\%}\\)</td><td>10%</td></tr>
+<tr><td>End of Q2</td><td>125</td><td>\\(\\mathrm{Q2} = \\dfrac{125 - 110}{100} = \\mathbf{15\\%}\\)</td><td>\\(\\dfrac{125}{110} - 1 \\approx 13.6\\%\\)</td></tr>
+<tr><td>Year to date</td><td>—</td><td>\\(10\\% + 15\\% = \\mathbf{25\\%}\\)</td><td>\\(1.10 \\times 1.136 - 1 = 25\\%\\)</td></tr>
 </table>
 
 Both conventions give the same year-to-date result, but the quarterly numbers differ: **2026-style quarters add**, while quarter-on-quarter figures compound. When you read Strategy's 2026 quarterly BTC Yields, remember the denominator is the start-of-year BPS. On this basis Strategy reported **8.1%** for H1 2026 and **5.0%** for Q2, which implies about **3.1%** for Q1 (derived).
@@ -92,7 +92,7 @@ Starting point: 10,000 BTC, 100M shares (we use basic shares to stay consistent 
 
 A few things worth pausing on:
 
-- **The line between A and B is mNAV = 1.** Issue above the bitcoin NAV per share (mNAV > 1) and BTC Yield is positive; below it, negative. Stage 16.7 derives that line rigorously.
+- **The line between A and B is \\(\\mathrm{mNAV} = 1\\).** Issue above the bitcoin NAV per share (\\(\\mathrm{mNAV} > 1\\)) and BTC Yield is positive; below it, negative. Stage 16.7 derives that line rigorously.
 - **C's +10% looks best and deserves the most suspicion.** It's gross: the company gained 1,000 coins and also $100M of senior claims costing $10M a year. **Net** BTC per share didn't move at issuance (Stage 16.1). Strategy itself warns that because preferreds and debt rank ahead of common, this "yield" does not account for the new senior claims.
 - **E is counter-intuitive.** Issuing at a 1.5x premium still produces a negative BTC Yield, because the money didn't become bitcoin. That's why Strategy's BTC Yield was dragged down in periods when, from December 2025 on, it sold common stock to build its USD Reserve. **BTC Yield only counts bitcoin, not dollars** — even dollars set aside to protect preferred dividends (Stage 16.6).
 - **The denominator matters.** Computed on assumed diluted shares (106M → 116M), move A gives about +5.1% rather than +4.5%, because the 6M convert shares are a fixed block and new shares dilute a bigger base less. **Same trade, different denominator, different KPI.**
@@ -110,7 +110,7 @@ Strategy's reported KPIs (10-K, 10-Q and earnings releases):
 <tr><td>2026 YTD to 2026-07-26</td><td>4.5%</td><td>—</td><td>—</td></tr>
 </table>
 
-You can check the BTC Gain definition yourself. Strategy held 447,470 BTC at the end of 2024; × 22.8% ≈ 102,000, close to the reported FY2025 BTC Gain of 101,873 (the gap is rounding in BTC Yield). For H1 2026: about 672,500 BTC at end-2025 × 8.1% ≈ 54,500, matching 54,625.
+You can check the BTC Gain definition yourself. Strategy held 447,470 BTC at the end of 2024; \\(447{,}470 \\times 22.8\\% \\approx 102{,}000\\), close to the reported FY2025 BTC Gain of 101,873 (the gap is rounding in BTC Yield). For H1 2026: about 672,500 BTC at end-2025, \\(672{,}500 \\times 8.1\\% \\approx 54{,}500\\), matching 54,625.
 
 The targets tell a story too. On 2025-02-05 Strategy set a 2025 goal of at least 15% BTC Yield and $10B of BTC $ Gain; on 2025-10-30 it raised them to 30% and $20B, assuming bitcoin at $150,000 at year-end; on 2025-12-01 it revised them down. The outcome was 22.8% and $8.915B. **BTC $ Gain depends heavily on the bitcoin price** — the same BTC Gain is worth over 40% less at $87,600 than at $150,000. No 2026 KPI target was found in the Q1 or Q2 2026 releases.
 
@@ -122,7 +122,7 @@ Strive (same definitions): **11.1%** in Q1 2026, **23.9%** in Q2, **37.7%** for 
 - **It ignores senior claims.** Coins bought with preferreds and debt all count as "yield" (move C). For a company whose leverage keeps rising, gross BTC Yield systematically overstates shareholders' true growth. The better companion is growth in **Net BTC per share** (Stage 16.1).
 - **It ignores the cost of capital.** Preferred dividends and convert coupons never enter BTC Yield until the company sells coins to pay them (move D). A preferred paying 12% a year only helps shareholders if bitcoin rises more than 12% a year (Stage 16.7).
 - **It ignores price.** Issuing at 3x mNAV and at 1.2x can both produce positive BTC Yield, but shareholders give away very different amounts of value.
-- **BTC $ Gain mixes in the bitcoin price.** It is coins × the price at one moment; if the price falls, the dollar "gain" shrinks. Nor is it accounting profit (Stage 15.6).
+- **BTC $ Gain mixes in the bitcoin price.** It is \\(\\text{coins} \\times \\text{the price at one moment}\\); if the price falls, the dollar "gain" shrinks. Nor is it accounting profit (Stage 15.6).
 - **Comparability is poor.** Denominators differ, conventions change, and one acquisition at a small company can manufacture a huge BTC Yield.
 
 **How to read it:** treat BTC Yield as "the growth rate of BTC per share" and pair it with three questions. (1) What money bought the coins — common, preferred or debt? (2) At what mNAV was it issued? (3) How much new senior claim and annual dividend came with it (amplification in Stage 16.4, dividend coverage in Stage 16.6)? Only with those answers does the KPI mean something. This lesson explains mechanics and analytical frameworks only; it is not investment advice.
@@ -141,14 +141,14 @@ How that 12% arose matters enormously:
 - If the cellar borrowed from a bank to buy a batch of wine, the bottle count is up — but there's now an IOU pinned to the cellar door, with interest to pay every year.
 - If one year the cellar sells a few bottles to pay that interest, the "wine yield" turns negative.
 
-The "wine gain" (BTC Gain) turns the 12% into bottles: 1,000 bottles at the start × 12% = 120 bottles — "as if the old members had been handed 120 free bottles". The "wine dollar gain" multiplies by the price of wine. If wine prices fall, that figure shrinks, even though the bottles behind your units haven't changed.
+The "wine gain" (BTC Gain) turns the 12% into bottles: \\(1{,}000\\ \\text{bottles at the start} \\times 12\\% = 120\\ \\text{bottles}\\) — "as if the old members had been handed 120 free bottles". The "wine dollar gain" multiplies by the price of wine. If wine prices fall, that figure shrinks, even though the bottles behind your units haven't changed.
 `,
 
   misconceptions: [
     "**\"A 20% BTC Yield is like a 20% bond yield.\"** — There's no cash flow at all; it is the percentage change in BTC per share. Strategy itself says it isn't equivalent to 'yield' in the traditional financial sense.",
-    "**\"BTC Gain is the number of coins the company bought this period.\"** — BTC Gain = starting holdings × BTC Yield: what the existing holders effectively gained. Orange Corp bought 1,500 coins but its BTC Gain is only about 455; the other roughly 1,045 belong to the new shareholders.",
+    "**\"BTC Gain is the number of coins the company bought this period.\"** — \\(\\text{BTC Gain} = \\text{starting holdings} \\times \\text{BTC Yield}\\): what the existing holders effectively gained. Orange Corp bought 1,500 coins but its BTC Gain is only about 455; the other roughly 1,045 belong to the new shareholders.",
     "**\"A positive BTC Yield means shareholders are better off.\"** — Buying coins with preferreds or debt also produces positive (gross) BTC Yield while adding senior claims and annual dividends. Check the change in Net BTC per share and the cost of capital.",
-    "**\"You have to compound 2026's quarterly BTC Yields to get the year.\"** — From 2026 each of Strategy's quarters is measured against the start-of-year BPS, so quarters simply add to year-to-date (e.g. 10% + 15% = 25%).",
+    "**\"You have to compound 2026's quarterly BTC Yields to get the year.\"** — From 2026 each of Strategy's quarters is measured against the start-of-year BPS, so quarters simply add to year-to-date (e.g. \\(10\\% + 15\\% = 25\\%\\)).",
     "**\"Issuing at a premium always gives a positive BTC Yield.\"** — Only if the money buys bitcoin. Issue at a 1.5x premium and put the cash in a USD reserve and BTC Yield is negative (about −2.0% for Orange Corp).",
   ],
 
@@ -157,9 +157,9 @@ The "wine gain" (BTC Gain) turns the 12% into bottles: 1,000 bottles at the star
       q: "Under Strategy's definition, what is BTC Gain?",
       options: [
         "The number of bitcoin bought during the period",
-        "Bitcoin held at the start of the period × the period's BTC Yield",
-        "Bitcoin held at the end × the bitcoin price",
-        "Shares issued in the period × the share price",
+        "\\(\\text{Bitcoin held at the start of the period} \\times \\text{the period's BTC Yield}\\)",
+        "\\(\\text{Bitcoin held at the end} \\times \\text{the bitcoin price}\\)",
+        "\\(\\text{Shares issued in the period} \\times \\text{the share price}\\)",
       ],
       answer: 1,
       explain: "Official text: \"the gross number of bitcoins held by the Company at the beginning of a period multiplied by the BTC Yield for such period\". It measures **what existing holders effectively gained**.",
@@ -173,7 +173,7 @@ The "wine gain" (BTC Gain) turns the 12% into bottles: 1,000 bottles at the star
         "15%",
       ],
       answer: 3,
-      explain: "In 2026 every quarter is measured against the **start-of-year** BPS: (125 − 110) ÷ 100 = **15%**; 10% + 15% = 25% year to date. 13.6% is the traditional quarter-on-quarter figure.",
+      explain: "In 2026 every quarter is measured against the **start-of-year** BPS: \\(\\dfrac{125 - 110}{100} = \\mathbf{15\\%}\\); year to date \\(10\\% + 15\\% = 25\\%\\). 13.6% is the traditional quarter-on-quarter figure.",
     },
     {
       q: "Orange Corp sells 2M shares at $15 ($30M) and parks all of it in a USD reserve, buying no bitcoin. Roughly what is its BTC Yield?",
@@ -206,7 +206,7 @@ The "wine gain" (BTC Gain) turns the 12% into bottles: 1,000 bottles at the star
         "It equals the company's accounting net income",
       ],
       answer: 1,
-      explain: "BTC $ Gain = BTC Gain × price. The raised target assumed $150,000 at year-end; bitcoin closed 2025 near $87,600. **The same BTC Gain gives a very different dollar number when the price moves.**",
+      explain: "\\(\\text{BTC \\$ Gain} = \\text{BTC Gain} \\times \\text{price}\\). The raised target assumed $150,000 at year-end; bitcoin closed 2025 near $87,600. **The same BTC Gain gives a very different dollar number when the price moves.**",
     },
   ],
 

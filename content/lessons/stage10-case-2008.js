@@ -47,9 +47,9 @@ export default {
 <tr><td>权益层（Equity）</td><td>5%</td><td>最先亏：0%–5%</td><td>不评级</td></tr>
 </table>
 
-如果房贷池最终亏 3%，只有权益层受损；亏 10%，权益层全灭，夹层亏掉 (10 − 5)/15 ≈ 33%；只有亏损超过 20%，AAA 层才会受伤。这和阶段 6.1 的资本结构瀑布是同一个公式——**损失从下往上吃，现金从上往下付**。
+如果房贷池最终亏 3%，只有权益层受损；亏 10%，权益层全灭，夹层亏掉 \\(\\dfrac{10 - 5}{15} \\approx 33\\%\\)；只有亏损超过 20%，AAA 层才会受伤。这和阶段 6.1 的资本结构瀑布是同一个公式——**损失从下往上吃，现金从上往下付**。
 
-问题出在第二次打包。投行收集几十个房贷池里的 BBB 夹层，把它们放进一个新的池子，再按同样方式切成 80/15/5。新池子的高级层又被评为 AAA。可是请算一下：原来的夹层只有 15% 厚；当底层房贷池亏 10% 时，夹层已经亏了 33%——**CDO 的整个资产池亏 33%，它的“AAA”层（只有 20% 的缓冲）就要亏掉 (33 − 20)/80 ≈ 17%**。而同样的情形下，原始房贷池的 AAA 层毫发无伤。
+问题出在第二次打包。投行收集几十个房贷池里的 BBB 夹层，把它们放进一个新的池子，再按同样方式切成 80/15/5。新池子的高级层又被评为 AAA。可是请算一下：原来的夹层只有 15% 厚；当底层房贷池亏 10% 时，夹层已经亏了 33%——**CDO 的整个资产池亏 33%，它的“AAA”层（只有 20% 的缓冲）就要亏掉 \\(\\dfrac{33 - 20}{80} \\approx 17\\%\\)**。而同样的情形下，原始房贷池的 AAA 层毫发无伤。
 
 <figure><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><defs><marker id="sub-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">从房贷到“AAA”：切一次，再切一次</text><g><text x="70" y="48" text-anchor="middle" font-size="11" fill="var(--muted)">① 数千笔房贷</text><rect x="20" y="58" width="100" height="180" rx="6" fill="var(--surface-2)" stroke="var(--line)"/><text x="70" y="140" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">房贷池</text><text x="70" y="158" text-anchor="middle" font-size="10" fill="var(--muted)">含大量次贷</text></g><line x1="124" y1="148" x2="168" y2="148" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#sub-arrow)"/><g><text x="230" y="48" text-anchor="middle" font-size="11" fill="var(--muted)">② 分层（MBS）</text><rect x="175" y="58" width="110" height="144" rx="4" fill="var(--green-soft)" stroke="var(--green)"/><text x="230" y="126" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">高级 80%</text><text x="230" y="142" text-anchor="middle" font-size="10" fill="var(--muted)">AAA</text><rect x="175" y="202" width="110" height="27" rx="4" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="230" y="220" text-anchor="middle" font-size="11" fill="var(--ink)">夹层 15%</text><rect x="175" y="229" width="110" height="9" rx="2" fill="var(--red-soft)" stroke="var(--red)"/><text x="296" y="240" font-size="9.5" fill="var(--red)">权益 5%</text></g><path d="M287,215 C330,215 330,150 368,150" fill="none" stroke="var(--orange)" stroke-width="1.8" marker-end="url(#sub-arrow)"/><text x="330" y="196" text-anchor="middle" font-size="10" fill="var(--orange-ink)">收集几十个</text><text x="330" y="208" text-anchor="middle" font-size="10" fill="var(--orange-ink)">池子的夹层</text><g><text x="430" y="48" text-anchor="middle" font-size="11" fill="var(--muted)">③ 再打包（CDO）</text><rect x="375" y="58" width="110" height="180" rx="6" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="430" y="140" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">夹层之池</text><text x="430" y="158" text-anchor="middle" font-size="10" fill="var(--muted)">全是 BBB</text></g><line x1="489" y1="148" x2="523" y2="148" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#sub-arrow)"/><g><text x="580" y="48" text-anchor="middle" font-size="11" fill="var(--muted)">④ 再分层</text><rect x="530" y="58" width="100" height="144" rx="4" fill="var(--green-soft)" stroke="var(--red)" stroke-dasharray="4 3" stroke-width="2"/><text x="580" y="126" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">“AAA” 80%</text><text x="580" y="142" text-anchor="middle" font-size="10" fill="var(--red)">其实很脆</text><rect x="530" y="202" width="100" height="27" rx="4" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="580" y="220" text-anchor="middle" font-size="11" fill="var(--ink)">夹层 15%</text><rect x="530" y="229" width="100" height="9" rx="2" fill="var(--red-soft)" stroke="var(--red)"/></g><text x="320" y="266" text-anchor="middle" font-size="11" fill="var(--ink)">房贷池亏 10% → MBS 夹层亏约 33% → CDO 资产池亏约 33% → CDO 的“AAA”亏约 17%</text><text x="320" y="286" text-anchor="middle" font-size="10.5" fill="var(--muted)">损失从下往上吃；切薄的层再拼起来，就像给同一个风险又加了一次杠杆</text></svg><figcaption>分层本身不创造也不消灭风险，只是重新分配。把薄薄的夹层再拼成池子、再切出“AAA”，等于把对房价的敏感度放大了一次——而当时的评级模型假设各个房贷池不会同时出问题。</figcaption></figure>
 
@@ -155,10 +155,10 @@ export default {
         "0%，因为权益层已经吸收了损失",
         "10%，与房贷池相同",
         "100%，夹层全部亏光",
-        "约 33%，即 (10% − 5%) / 15%",
+        "约 33%，即 \\(\\dfrac{10\\% - 5\\%}{15\\%}\\)",
       ],
       answer: 3,
-      explain: "权益层先吃掉前 5%；剩下 5 个百分点的损失落在 15% 厚的夹层上，5/15 ≈ 33%。高级层要等亏损超过 20% 才受伤。**损失从下往上吃。**",
+      explain: "权益层先吃掉前 5%；剩下 5 个百分点的损失落在 15% 厚的夹层上，\\(\\dfrac{5}{15} \\approx 33\\%\\)。高级层要等亏损超过 20% 才受伤。**损失从下往上吃。**",
     },
     {
       q: "为什么由 BBB 夹层重新打包出来的 CDO“AAA”层，比原始房贷池的 AAA 层脆弱得多？",

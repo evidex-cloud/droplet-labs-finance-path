@@ -17,10 +17,10 @@ When a bank lends, its first question is **will this person repay?** It looks at
 To do that, it draws three lines (the parameters below are illustrative, in the same range as Aave's usual settings for ETH):
 
 - **Maximum loan-to-value (LTV) of 80%.** $9,000 of ETH can borrow at most $7,200. Casey borrowed only $5,000, an LTV of about 56%.
-- **A liquidation threshold of 83%.** Collateral value × 83% is the "safety line."
-- **The health factor** = collateral value × liquidation threshold ÷ debt = 9,000 × 0.83 ÷ 5,000 ≈ **1.49**.
+- **A liquidation threshold of 83%.** \\(\\text{Collateral value} \\times 83\\%\\) is the "safety line."
+- **The health factor** \\(= \\dfrac{\\text{collateral value} \\times \\text{liquidation threshold}}{\\text{debt}} = \\dfrac{9{,}000 \\times 0.83}{5{,}000} \\approx \\mathbf{1.49}\\).
 
-Above 1, all is well. **Below 1, the position can be liquidated.** How far must ETH fall to push Casey's health factor to 1? 5,000 ÷ (3 × 0.83) ≈ **$2,008**, a drop of about 33%.
+Above 1, all is well. **Below 1, the position can be liquidated.** How far must ETH fall to push Casey's health factor to 1? \\(\\dfrac{5{,}000}{3 \\times 0.83} \\approx \\mathbf{\\$2{,}008}\\), a drop of about 33%.
 
 What happens at that moment? No bank manager calls, and nobody gives you three days to top up. **Anyone** can act, usually a bot that watches health factors across the whole network, called a **liquidator**. It repays half of Casey's debt (2,500 USDC) and takes the matching ETH at a 5% discount, ETH worth $2,625. Casey's debt is halved, a slice of the collateral is gone, and Casey has paid a $125 "liquidation penalty" for the privilege. It all happens in one transaction, any hour of any day.
 
@@ -49,7 +49,7 @@ A traditional loan is protected by three things: **the borrower's willingness an
 So why would anyone lock up $9,000 to borrow $5,000? It looks like a bad deal. There are three real reasons:
 
 1. **Not wanting to sell.** Casey is bullish on ETH. Selling would give up the upside and might trigger tax. Borrowing covers the emergency and keeps the exposure. It's the same logic as wealthy people borrowing against their stock portfolios instead of selling, and it's where DATs like Strategy start from when they "borrow rather than sell the coins" (Stage 15.3).
-2. **Leverage.** Borrow USDC, buy more ETH, deposit it, borrow again, and so on. The theoretical maximum leverage is 1 ÷ (1 − LTV), about 5x at an 80% LTV. The Stage 13.1 demo does exactly this "lever up in one transaction."
+2. **Leverage.** Borrow USDC, buy more ETH, deposit it, borrow again, and so on. The theoretical \\(\\text{maximum leverage} = \\dfrac{1}{1 - \\mathrm{LTV}}\\), about 5x at an 80% LTV. The Stage 13.1 demo does exactly this "lever up in one transaction."
 3. **Shorting or carry.** Borrow ETH and sell it, and you are short. Borrow stablecoins to chase a higher yield elsewhere, and you have a carry trade (Stage 13.5).
 
 On-chain lending's main users, then, **are not people short of money but people with assets who want to keep or amplify their exposure**. That's why its size rises and falls with crypto prices. On September 26, 2026, the largest lending protocol, Aave, had about $19 billion locked and about $13 billion of loans outstanding. At its peak on October 7, 2025, it had about $45.8 billion locked (DefiLlama).
@@ -67,25 +67,25 @@ Three parameters, each with a job:
 </table>
 
 $$
-Health factor HF = Σ (collateral value × liquidation threshold) ÷ debt value
-Liquidation price = debt ÷ (collateral quantity × liquidation threshold)
+\\text{Health factor}\\ \\mathrm{HF} = \\frac{\\sum (\\text{collateral value} \\times \\text{liquidation threshold})}{\\text{debt value}}
+\\text{Liquidation price} = \\frac{\\text{debt}}{\\text{collateral quantity} \\times \\text{liquidation threshold}}
 $$
 
-Casey's numbers: HF = 9,000 × 0.83 ÷ 5,000 ≈ 1.49, and the liquidation price is about $2,008. Slide the ETH price down from 3,000 and you get a risk ruler:
+Casey's numbers: \\(\\mathrm{HF} = \\dfrac{9{,}000 \\times 0.83}{5{,}000} \\approx 1.49\\), and the liquidation price is about $2,008. Slide the ETH price down from 3,000 and you get a risk ruler:
 
 <figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Casey's loan: 3 ETH collateral, 5,000 USDC borrowed; four ETH price zones</text><rect x="60" y="50" width="130" height="150" fill="var(--green-soft)" stroke="var(--green)"/><rect x="190" y="50" width="130" height="150" fill="var(--orange-soft)" stroke="var(--orange)"/><rect x="320" y="50" width="130" height="150" fill="var(--red-soft)" stroke="var(--red)"/><rect x="450" y="50" width="130" height="150" fill="var(--surface-2)" stroke="var(--red)" stroke-width="2" stroke-dasharray="5 3"/><text x="125" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="var(--green)">Safe</text><text x="125" y="98" text-anchor="middle" font-size="11" fill="var(--ink)">ETH ≥ about 2,510</text><text x="125" y="118" text-anchor="middle" font-size="11" fill="var(--ink)">HF ≥ 1.25</text><text x="125" y="150" text-anchor="middle" font-size="10" fill="var(--muted)">HF ≈ 1.49 at 3,000</text><text x="255" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="var(--orange-ink)">Warning</text><text x="255" y="98" text-anchor="middle" font-size="11" fill="var(--ink)">2,008 – 2,510</text><text x="255" y="118" text-anchor="middle" font-size="11" fill="var(--ink)">1 ≤ HF &lt; 1.25</text><text x="255" y="150" text-anchor="middle" font-size="10" fill="var(--muted)">time to add collateral</text><text x="255" y="165" text-anchor="middle" font-size="10" fill="var(--muted)">or repay</text><text x="385" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="var(--red)">Liquidatable</text><text x="385" y="98" text-anchor="middle" font-size="11" fill="var(--ink)">1,750 – 2,008</text><text x="385" y="118" text-anchor="middle" font-size="11" fill="var(--ink)">HF &lt; 1</text><text x="385" y="150" text-anchor="middle" font-size="10" fill="var(--muted)">liquidator repays half,</text><text x="385" y="165" text-anchor="middle" font-size="10" fill="var(--muted)">takes 1.05x in ETH</text><text x="515" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="var(--red)">Bad debt</text><text x="515" y="98" text-anchor="middle" font-size="11" fill="var(--ink)">ETH &lt; about 1,750</text><text x="515" y="118" text-anchor="middle" font-size="11" fill="var(--ink)">collateral &lt; debt × 1.05</text><text x="515" y="150" text-anchor="middle" font-size="10" fill="var(--muted)">liquidating no longer pays;</text><text x="515" y="165" text-anchor="middle" font-size="10" fill="var(--muted)">losses land on depositors</text><line x1="60" y1="225" x2="580" y2="225" stroke="var(--ink)" stroke-width="1.5"/><polygon points="580,220 590,225 580,230" fill="var(--ink)"/><text x="320" y="245" text-anchor="middle" font-size="11" fill="var(--muted)">ETH price falling → (3,000 → 2,510 → 2,008 → 1,750 → …)</text><text x="320" y="275" text-anchor="middle" font-size="11" font-weight="600" fill="var(--orange-ink)">The design goal: the price must linger in the liquidatable zone long enough for liquidators to act before bad debt</text></svg><figcaption>The health factor is a ruler that slides with the price. Whether liquidation protects depositors depends on how fast the price crosses the red zone and whether liquidators act in time.</figcaption></figure>
 
-In the language of Stage 6.5, **the health factor is an asset-coverage ratio discounted by the liquidation threshold.** Casey's collateral ÷ debt = 9,000 ÷ 5,000 = 1.8x, and after the 83% haircut it's about 1.49. It belongs to the same family as the BTC Rating of Stage 16.5, since both are "assets ÷ claims." The difference is that DeFi uses **live prices** and has an **automatically executed trigger**.
+In the language of Stage 6.5, **the health factor is an asset-coverage ratio discounted by the liquidation threshold.** Casey's \\(\\dfrac{\\text{collateral}}{\\text{debt}} = \\dfrac{9{,}000}{5{,}000} = 1.8\\times\\), and after the 83% haircut it's \\(1.8 \\times 0.83 \\approx 1.49\\). It belongs to the same family as the BTC Rating of Stage 16.5, since both are \\(\\dfrac{\\text{assets}}{\\text{claims}}\\). The difference is that DeFi uses **live prices** and has an **automatically executed trigger**.
 
 ### ③ Automatic liquidation: liquidators, bonuses and close factors
 
-ETH falls to $2,000. The collateral is worth $6,000 and HF = 6,000 × 0.83 ÷ 5,000 ≈ 0.996, below 1. Liquidation begins:
+ETH falls to $2,000. The collateral is worth $6,000 and \\(\\mathrm{HF} = \\dfrac{6{,}000 \\times 0.83}{5{,}000} \\approx 0.996\\), below 1. Liquidation begins:
 
-1. A liquidation bot spots HF < 1 and sends a transaction that repays 50% of Casey's debt: **2,500 USDC**.
-2. The contract hands the liquidator ETH worth 2,500 × 1.05 = **$2,625** (about 1.31 ETH).
+1. A liquidation bot spots \\(\\mathrm{HF} < 1\\) and sends a transaction that repays 50% of Casey's debt: \\(50\\% \\times 5{,}000 = \\mathbf{2{,}500}\\ \\text{USDC}\\).
+2. The contract hands the liquidator ETH worth \\(2{,}500 \\times 1.05 = \\mathbf{\\$2{,}625}\\) (about 1.31 ETH).
 3. The liquidator usually sells the ETH on a DEX in the same transaction, locking in about $125 of profit before gas and slippage. Many liquidators even borrow the 2,500 USDC with a **flash loan**, liquidating with zero capital of their own (Stage 13.1).
 
-Afterwards Casey has about 1.69 ETH (about $3,375) against $2,500 of debt, and HF ≈ 1.12, back above the line. **Casey wasn't wiped out, but paid a $125 penalty and was forced to sell about 1.31 ETH near the lows.**
+Afterwards Casey has about 1.69 ETH (about $3,375) against $2,500 of debt, and \\(\\mathrm{HF} \\approx 1.12\\), back above the line. **Casey wasn't wiped out, but paid a $125 penalty and was forced to sell about 1.31 ETH near the lows.**
 
 Why let *anyone* liquidate? Because the protocol has no employees. It uses **profit** to hire a crowd of competing strangers, making sure someone always acts before bad debt appears. It's a textbook DeFi design, replacing an institution with an incentive. The costs:
 
@@ -94,14 +94,14 @@ Why let *anyone* liquidate? Because the protocol has no employees. It uses **pro
 
 ### ④ The rate curve: utilization sets the interest rate
 
-A bank's lending rate comes from its credit committee and the central bank's policy rate. An on-chain pool's rate is set automatically by one variable: **utilization (U) = amount borrowed ÷ total deposits**.
+A bank's lending rate comes from its credit committee and the central bank's policy rate. An on-chain pool's rate is set automatically by one variable: **utilization \\(U = \\dfrac{\\text{amount borrowed}}{\\text{total deposits}}\\)**.
 
 Take an illustrative USDC pool with parameters in the range of major protocols. The kink is at 90% utilization. Below the kink, the borrow rate rises linearly from 0 to 4%. Above it, each extra percentage point of utilization adds 6 percentage points to the borrow rate, up to 64%.
 
 $$
-U ≤ 90%:  borrow rate = 4% × U ÷ 90%
-U > 90%:  borrow rate = 4% + 60% × (U − 90%) ÷ 10%
-Supply rate = borrow rate × U × (1 − reserve factor)
+U \\le 90\\%:\\quad \\text{borrow rate} = 4\\% \\times \\frac{U}{90\\%}
+U > 90\\%:\\quad \\text{borrow rate} = 4\\% + 60\\% \\times \\frac{U - 90\\%}{10\\%}
+\\text{Supply rate} = \\text{borrow rate} \\times U \\times (1 - \\text{reserve factor})
 $$
 
 <table>
@@ -130,7 +130,7 @@ Finally, set it next to the course's focus:
 
 <table>
 <tr><th></th><th>DeFi collateralized lending</th><th>A DAT's convertibles and preferreds (Stage 17)</th></tr>
-<tr><td>Cushion metric</td><td>Health factor (assets × threshold ÷ debt)</td><td>BTC Rating / asset coverage (BTC NAV ÷ cumulative claims, Stage 16.5)</td></tr>
+<tr><td>Cushion metric</td><td>Health factor (\\(\\dfrac{\\text{assets} \\times \\text{threshold}}{\\text{debt}}\\))</td><td>BTC Rating / asset coverage (\\(\\dfrac{\\text{BTC NAV}}{\\text{cumulative claims}}\\), Stage 16.5)</td></tr>
 <tr><td>When the line is crossed</td><td>Forced liquidation: automatic, within seconds</td><td>No price-triggered forced sale; creditors wait for maturity or dividends</td></tr>
 <tr><td>Shape of the main risk</td><td>Cascading and path-dependent: one sharp drop can knock you out</td><td>Slow-burning: refinancing, dilution, dividend coverage (Stage 16.6, Stage 18.2)</td></tr>
 <tr><td>Who bears the tail</td><td>Borrowers (liquidated) + depositors (bad debt)</td><td>Common equity first, then up the stack by seniority (Stage 17.6)</td></tr>
@@ -171,7 +171,7 @@ Now picture a different kind of "pawnshop." A company keeps the gold watch in a 
         "About $2,008",
       ],
       answer: 3,
-      explain: "Liquidation price = debt ÷ (quantity × threshold) = 5,000 ÷ (3 × 0.83) ≈ **$2,008**, a fall of about 33%. $1,667 is where collateral merely equals the debt, deep inside the bad-debt zone.",
+      explain: "\\(\\text{Liquidation price} = \\dfrac{\\text{debt}}{\\text{quantity} \\times \\text{threshold}} = \\dfrac{5{,}000}{3 \\times 0.83} \\approx \\mathbf{\\$2{,}008}\\), a fall of about 33%. $1,667 is where collateral merely equals the debt, deep inside the bad-debt zone.",
     },
     {
       q: "ETH falls to $2,000 and Casey is liquidated with a 50% close factor and a 5% bonus. What does the liquidator get?",
@@ -182,7 +182,7 @@ Now picture a different kind of "pawnshop." A company keeps the gold watch in a 
         "The protocol pays the liquidator a 125 USDC fee and the ETH stays put",
       ],
       answer: 1,
-      explain: "It repays 50% × 5,000 = 2,500 and receives 2,500 × 1.05 = **$2,625** of ETH (about 1.31 ETH). Afterwards Casey's HF recovers to about 1.12.",
+      explain: "It repays \\(50\\% \\times 5{,}000 = 2{,}500\\) and receives \\(2{,}500 \\times 1.05 = \\mathbf{\\$2{,}625}\\) of ETH (about 1.31 ETH). Afterwards Casey's HF recovers to about 1.12.",
     },
     {
       q: "A USDC pool's utilization jumps from 85% to 98%, and the borrow rate leaps from about 4% to well over 30%. What is this steep curve mainly for?",
@@ -215,7 +215,7 @@ Now picture a different kind of "pawnshop." A company keeps the gold watch in a 
         "DeFi loans are liquidated automatically and instantly when prices cross a threshold; DAT preferreds have no price-triggered forced sale, so their risk shows up as slow refinancing and dividend-coverage pressure",
       ],
       answer: 3,
-      explain: "Both cushions can be measured as \"assets ÷ claims\" (the health factor vs the BTC Rating of Stage 16.5), but **whether there's a price-triggered liquidation** decides whether the risk is an instant cascade or a slow test (Stage 17.6, Stage 18.2).",
+      explain: "Both cushions can be measured as \\(\\dfrac{\\text{assets}}{\\text{claims}}\\) (the health factor vs the BTC Rating of Stage 16.5), but **whether there's a price-triggered liquidation** decides whether the risk is an instant cascade or a slow test (Stage 17.6, Stage 18.2).",
     },
   ],
 

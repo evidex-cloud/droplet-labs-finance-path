@@ -22,7 +22,7 @@ So stress doesn't hit a DAT overnight the way a liquidation does. It squeezes fr
 
 None of these is hypothetical. 2026 was a live stress test. Bitcoin fell from its all-time high of about $126,000 on October 6, 2025 to an intraday low of about $57,800 on July 1, 2026, roughly −54%. DWF Ventures counted **16 of the 20 largest DATs trading below 1x mNAV.** Strategy's mNAV on its 2026 definition was about 1.01x on August 21, and between late May and August it sold about 6,948 bitcoin, its first sales since 2022. The third shock, however, never fully arrived: Strategy still raised about $20.3 billion through ATMs in 2026 up to August 23.
 
-Remember this lesson in one line: **a DAT stress test = the asset side (coverage multiples) + the cash side (months of coverage) + the time side (the maturity wall).** You met the first two in Stage 16.5 and Stage 16.6; now we squeeze them at the same time. The third, the date on which convertible holders can put their notes back, is often the real cliff edge.
+Remember this lesson in one line: **\\(\\text{a DAT stress test} = \\text{the asset side (coverage multiples)} + \\text{the cash side (months of coverage)} + \\text{the time side (the maturity wall)}\\).** You met the first two in Stage 16.5 and Stage 16.6; now we squeeze them at the same time. The third, the date on which convertible holders can put their notes back, is often the real cliff edge.
 
 The lesson rests on **Idea ④ (risk and leverage)**: leverage amplifies not only returns but time pressure. It also rests on **Idea ② (balance sheets and claims)**, since the waterfall decides who still has something after the fall (Stage 17.6), and on **Idea ③ (liquidity and trust)**: a company that is nowhere near bankrupt can still be forced to sell assets because nobody will lend to it any more. **This lesson explains mechanisms and analytical frameworks only; it is not investment advice.**
 
@@ -68,8 +68,8 @@ After an 80% fall, a liquidation waterfall (Stage 6.6) pays the convertibles 100
 
 **Strategy's real version** (derived, as of about September 20, 2026): 846,000 BTC at about $84,100 (September 25) is a BTC Reserve of about **$71.1 billion**. Debt notional is about $6.75 billion; preferred notional is about $14.31 billion ($14.966 billion on August 23, less September's STRC buybacks). A rough calculation that does not net USD assets:
 
-- Coverage of the debt is about **10.5x**; coverage of "debt plus all preferreds" about **3.4x**.
-- If bitcoin fell another 80% (to about $16,800): about **2.1x** on the debt and about **0.68x** on all the preferreds. The most junior preferreds would be short in liquidation arithmetic.
+- Coverage of the debt is about **10.5x** (\\(71.1 \\div 6.75 \\approx 10.5\\)); coverage of "debt plus all preferreds" about **3.4x** (\\(71.1 \\div (6.75 + 14.31) \\approx 3.4\\)).
+- If bitcoin fell another 80% (to about $16,800), the BTC Reserve would be about $14.22 billion: about **2.1x** on the debt (\\(14.22 \\div 6.75\\)) and about **0.68x** on all the preferreds (\\(14.22 \\div 21.06\\)). The most junior preferreds would be short in liquidation arithmetic.
 - For comparison, Strategy's own published STRC floor price was about **$13,400** on 2026-08-23. It nets USD assets against debt, so its figure is more favorable than the rough one.
 
 Is −80% too extreme? Between November 2021 and November 2022, bitcoin fell from about $69,000 to about $15,500, roughly **−77%**. A stress test exists to test things that have already happened.
@@ -85,22 +85,22 @@ High coverage doesn't pay a dividend; bitcoin does not turn itself into dollars.
 5. **The operating business.** Strategy's software revenue was about $122 million in Q2 2026, small next to obligations of well over a billion dollars a year.
 
 $$
-Months of coverage = USD Reserve ÷ annual interest and dividends × 12
-Bitcoin to sell per year = annual interest and dividends ÷ bitcoin price
-Breakeven ARR = annual interest and dividends ÷ BTC Reserve
+\\begin{aligned} &\\text{Months of coverage} \\\\ &= \\frac{\\text{USD Reserve}}{\\text{annual interest and dividends}} \\times 12 \\end{aligned}
+\\begin{aligned} &\\text{Bitcoin to sell per year} \\\\ &= \\frac{\\text{annual interest and dividends}}{\\text{bitcoin price}} \\end{aligned}
+\\begin{aligned} &\\text{Breakeven ARR} \\\\ &= \\frac{\\text{annual interest and dividends}}{\\text{BTC Reserve}} \\end{aligned}
 $$
 
-**Orange Corp.** Dividends are $15 million a year; the USD Reserve is $30 million, so **24 months.** Once the reserve is spent, if markets are still shut it must sell each year: 150 BTC (1.5% of holdings) at $100,000, 300 BTC (3%) at $50,000, and **750 BTC (7.5%)** at $20,000. Breakeven ARR climbs from 1.5% to 7.5%. The cheaper bitcoin gets, the bigger the share of the stack that dividends consume.
+**Orange Corp.** Dividends are $15 million a year; the USD Reserve is $30 million, so **\\(\\dfrac{30}{15} \\times 12 = 24\\) months.** Once the reserve is spent, if markets are still shut it must sell \\(\\dfrac{\\$15\\text{M}}{\\text{bitcoin price}}\\) each year: 150 BTC (1.5% of holdings) at $100,000, 300 BTC (3%) at $50,000, and **750 BTC (7.5%)** at $20,000. Breakeven ARR climbs from 1.5% to 7.5%. The cheaper bitcoin gets, the bigger the share of the stack that dividends consume.
 
-**Strategy** (as of 2026-09-20, derived). Annual interest and dividends are about **$1.62 billion** after September's STRC buybacks. The USD Reserve of $5.04 billion covers about **37 months (about 3.1 years)**; adding $1.05 billion of USD Cash takes it to about 45 months. Board policy requires the reserve to cover at least **12 months.** If the reserve ran out with markets shut, it would need to sell about **19,300 BTC a year (2.3% of holdings)** at $84,100, and about **96,000 BTC a year (11.4%)** at $16,800. On 2026-08-23 Strategy reported a USD Duration of 3.9 years, a BTC Duration of 38 years and a Breakeven ARR of 2.63%.
+**Strategy** (as of 2026-09-20, derived). Annual interest and dividends are about **$1.62 billion** after September's STRC buybacks. The USD Reserve of $5.04 billion covers **\\(\\dfrac{5.04}{1.62} \\times 12 \\approx 37\\) months (about 3.1 years)**; adding $1.05 billion of USD Cash takes it to \\(\\dfrac{5.04 + 1.05}{1.62} \\times 12 \\approx 45\\) months. Board policy requires the reserve to cover at least **12 months.** If the reserve ran out with markets shut, it would need to sell about **19,300 BTC a year (2.3% of holdings)** at $84,100, and about **96,000 BTC a year (11.4%)** at $16,800. On 2026-08-23 Strategy reported a USD Duration of 3.9 years, a BTC Duration of 38 years and a Breakeven ARR of 2.63%.
 
-**Strive** (as of 2026-09-18). No debt; SATA dividends run about $145 million a year. Company policy is an **18-month dividend reserve** (12 months in cash, 6 in STRC), and the $229.6 million of cash on its dashboard covers about 19 months. Its Breakeven ARR (derived: $145.4 million ÷ about $2.22 billion of bitcoin) is about **6.6%**, far above Strategy's, because SATA pays 13% and is larger relative to the bitcoin (Strive's Amplification Ratio is 50.4%). **No debt doesn't mean no stress; all of Strive's stress sits in the dividend.**
+**Strive** (as of 2026-09-18). No debt; SATA dividends run about $145 million a year. Company policy is an **18-month dividend reserve** (12 months in cash, 6 in STRC), and the $229.6 million of cash on its dashboard covers about 19 months. Its Breakeven ARR (derived: \\(\\dfrac{\\$145.4\\text{M}}{\\text{about } \\$2.22\\text{B of bitcoin}}\\)) is about **6.6%**, far above Strategy's, because SATA pays 13% and is larger relative to the bitcoin (Strive's Amplification Ratio is 50.4%). **No debt doesn't mean no stress; all of Strive's stress sits in the dividend.**
 
 ### ④ The time side: convertible put dates are the real cliff
 
 A perpetual preferred never matures, but a convertible does, and its holders usually get an earlier **put** date on which they can demand the company redeem the notes at par in cash. If the stock is far below the conversion price, they will, because converting is worthless.
 
-**Orange Corp.** $150 million of convertibles with a $25 conversion price. Suppose the put date falls in month 24. If bitcoin is at $20,000 and the stock at $3, holders want $150 million in cash: **7,500 BTC, or 75% of the entire stack.** The USD Reserve has long since gone on dividends. **That is Orange Corp's real cliff.** Not the bitcoin price on its own, but a low price, a shut market and a put date all arriving together.
+**Orange Corp.** $150 million of convertibles with a $25 conversion price. Suppose the put date falls in month 24. If bitcoin is at $20,000 and the stock at $3, holders want $150 million in cash: **\\(\\dfrac{\\$150\\text{M}}{\\$20{,}000} = 7{,}500\\ \\text{BTC}\\), or 75% of the entire stack.** The USD Reserve has long since gone on dividends. **That is Orange Corp's real cliff.** Not the bitcoin price on its own, but a low price, a shut market and a put date all arriving together.
 
 **Strategy's put schedule** (10-Q as of 2026-06-30, unchanged through September 20):
 
@@ -124,7 +124,7 @@ Put ②, ③ and ④ together and ask: "all three shocks at once, with markets s
 <tr><th>Scenario</th><th>Orange Corp</th><th>Strategy (derived, Sep 2026)</th></tr>
 <tr><td>Bitcoin −50%</td><td>Every layer ≥ 1.67x; reserve pays 24 months, then 3% of holdings sold a year</td><td>Debt about 5.3x, all preferreds about 1.7x; reserve about 3.1 years</td></tr>
 <tr><td>Bitcoin −80%</td><td>F layer 0.8x, D layer 0.67x; the put needs 75% of holdings</td><td>Debt about 2.1x, all preferreds about 0.68x; the put wall needs about 42% of holdings</td></tr>
-<tr><td>mNAV &lt; 1</td><td>Issuing common to pay dividends = dilution</td><td>About 1.01x on the 2026 definition (Aug 21): already close to 1</td></tr>
+<tr><td>mNAV &lt; 1</td><td>Issuing common to pay dividends is dilution</td><td>About 1.01x on the 2026 definition (Aug 21): already close to 1</td></tr>
 <tr><td>Markets shut for 24 months</td><td>Reserve lasts exactly 24 months; selling starts in month 25</td><td>Reserve lasts longer, but the first put date is in month 12</td></tr>
 </table>
 
@@ -162,13 +162,13 @@ A good captain doesn't predict storms. Before leaving harbor, the captain writes
       q: "Orange Corp (10,000 BTC; $150M convertibles, $100M Orange-F, $50M Orange-D) is liquidated with bitcoin at $20,000. What share of its stated amount does Orange-F recover?",
       options: ["100%", "80%", "0%", "50%"],
       answer: 3,
-      explain: "A $200M reserve pays the $150M convertibles first, leaving $50M for Orange-F's $100M, so **50%**. 0.8x is the F layer's coverage multiple, not its recovery rate.",
+      explain: "A $200M reserve pays the $150M convertibles first, leaving $50M for Orange-F's $100M, so **\\(\\dfrac{200 - 150}{100} = 50\\%\\)**. 0.8x is the F layer's coverage multiple, not its recovery rate.",
     },
     {
       q: "As of 2026-09-20 Strategy's USD Reserve was about $5.04 billion, and its annual interest and dividends about $1.62 billion. Roughly how long does the reserve last?",
       options: ["About 12 months", "About 37 months (about 3.1 years)", "About 45 months", "About 10 years"],
       answer: 1,
-      explain: "**5.04 ÷ 1.62 × 12 ≈ 37 months.** 45 months includes the extra $1.05 billion of USD Cash; 12 months is the board's policy minimum.",
+      explain: "**\\(\\dfrac{5.04}{1.62} \\times 12 \\approx 37\\) months.** 45 months includes the extra $1.05 billion of USD Cash; 12 months is the board's policy minimum.",
     },
     {
       q: "For Orange Corp, which combination is the most dangerous?",
@@ -190,7 +190,7 @@ A good captain doesn't predict storms. Before leaving harbor, the captain writes
         "Because the preferreds convert into common stock",
       ],
       answer: 0,
-      explain: "**Bitcoin sold per year = annual obligations ÷ bitcoin price.** Orange Corp: 150 BTC (1.5%) at $100,000, 750 BTC (7.5%) at $20,000. That is also why Breakeven ARR rises as the price falls.",
+      explain: "**\\(\\text{Bitcoin sold per year} = \\dfrac{\\text{annual obligations}}{\\text{bitcoin price}}\\).** Orange Corp: 150 BTC (1.5%) at $100,000, 750 BTC (7.5%) at $20,000. That is also why Breakeven ARR rises as the price falls.",
     },
     {
       q: "In May 2026 Strategy repurchased $1.5 billion of its 2029 convertibles for $1.38 billion. From a stress-testing point of view, what did this mainly do?",

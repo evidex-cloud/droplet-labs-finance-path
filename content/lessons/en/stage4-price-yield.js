@@ -51,7 +51,7 @@ One more intuition: **the longer the bond, the longer the seesaw**. For a 2-year
 Put the opening story into arithmetic. The old bond's cash flows don't change: 20 payments of $25, plus $1,000 at the end of year ten. The market now demands 6% (3% per half-year). What is the bond worth today? Discount each cash flow at 6% and add them up:
 
 $$
-Price = 25 ÷ 1.03 + 25 ÷ 1.03² + … + 25 ÷ 1.03²⁰ + 1,000 ÷ 1.03²⁰ ≈ $925.61
+\\text{Price} = \\frac{25}{1.03} + \\frac{25}{1.03^{2}} + \\cdots + \\frac{25}{1.03^{20}} + \\frac{1{,}000}{1.03^{20}} \\approx \\$925.61
 $$
 
 Why does the market push the price to exactly that level? **Arbitrage.** If the old bond still sold for $1,000, everyone would sell old and buy new, and the old bond's price would sink. If it fell to $900, its return would beat 6%, buyers would pile in, and the price would be bid back up. Only at $925.61 are the two equally attractive, so buying and selling balance.
@@ -66,14 +66,15 @@ Keep two things in mind:
 Section ① went from yield to price. In real life you usually go the other way. The screen shows a price, and you ask, “If I buy at this price, what do I earn?” The answer is the **yield to maturity (YTM)**: **the single rate that makes the discounted value of all the bond's cash flows exactly equal to its current price.**
 
 $$
-Price = Σ C ÷ (1 + YTM/2)^k + F ÷ (1 + YTM/2)^n
-Given the price, coupon C, face F and number of periods n, solve for YTM
+\\text{Price} = \\sum_{k=1}^{n} \\frac{C}{\\left(1 + \\frac{\\mathrm{YTM}}{2}\\right)^{k}} + \\frac{F}{\\left(1 + \\frac{\\mathrm{YTM}}{2}\\right)^{n}}
 $$
+
+Given the price, the coupon per period \\(C\\), the face value \\(F\\) and the number of periods \\(n\\), solve for YTM.
 
 There is no neat formula for solving this; you **search**. Guess a rate and compute the price. If that price comes out above the market price, raise the rate; if below, lower it; repeat until they match. bondYield in _fin.js does exactly this by bisection. Examples:
 
-- The standard bond quoted at **$950** → YTM ≈ **5.66%**
-- Quoted at **$1,050** → YTM ≈ **4.38%**
+- The standard bond quoted at **$950** → \\(\\mathrm{YTM} \\approx 5.66\\%\\)
+- Quoted at **$1,050** → \\(\\mathrm{YTM} \\approx 4.38\\%\\)
 
 YTM is the bond market's common language. Treasury traders often quote yields rather than prices, and “the 10-year yield is 5.17%” (September 25, 2026) is the YTM backed out of the current 10-year note's price.
 
@@ -87,7 +88,7 @@ But YTM rests on **three assumptions**, and if any one fails, the return you act
 
 The same standard bond at three different prices:
 
-<table><tr><th>Price</th><th>Status</th><th>Coupon rate</th><th>Current yield = annual coupon ÷ price</th><th>Yield to maturity</th></tr><tr><td>$925.61</td><td>Discount</td><td>5.00%</td><td>5.40%</td><td>6.00%</td></tr><tr><td>$1,000.00</td><td>Par</td><td>5.00%</td><td>5.00%</td><td>5.00%</td></tr><tr><td>$1,081.76</td><td>Premium</td><td>5.00%</td><td>4.62%</td><td>4.00%</td></tr></table>
+<table><tr><th>Price</th><th>Status</th><th>Coupon rate</th><th>Current yield \\(= \\dfrac{\\text{annual coupon}}{\\text{price}}\\)</th><th>Yield to maturity</th></tr><tr><td>$925.61</td><td>Discount</td><td>5.00%</td><td>5.40%</td><td>6.00%</td></tr><tr><td>$1,000.00</td><td>Par</td><td>5.00%</td><td>5.00%</td><td>5.00%</td></tr><tr><td>$1,081.76</td><td>Premium</td><td>5.00%</td><td>4.62%</td><td>4.00%</td></tr></table>
 
 An easy pattern to remember:
 
@@ -107,7 +108,7 @@ Line up three bonds that all pay a 5% coupon and change only the maturity:
 
 <table><tr><th>Yield change</th><th>2-year</th><th>10-year</th><th>30-year</th></tr><tr><td>+1 point (5% → 6%)</td><td>−1.86%</td><td>−7.44%</td><td>−13.84%</td></tr><tr><td>−1 point (5% → 4%)</td><td>+1.90%</td><td>+8.18%</td><td>+17.38%</td></tr><tr><td>+2 points (5% → 7%)</td><td>−3.67%</td><td>−14.21%</td><td>−24.94%</td></tr><tr><td>−2 points (5% → 3%)</td><td>+3.85%</td><td>+17.17%</td><td>+39.38%</td></tr></table>
 
-Why are longer bonds more sensitive? Go back to the discount formula. A cash flow t years away is multiplied by 1 ÷ (1+y)^t. **Time sits in the exponent**, so a small change in y gets amplified by t. Money arriving next year barely notices; money arriving in thirty years is rewritten dramatically. Most of a long bond's value sits in those distant cash flows, so its price swings hard.
+Why are longer bonds more sensitive? Go back to the discount formula. A cash flow t years away is multiplied by \\(\\dfrac{1}{(1+y)^{t}}\\). **Time sits in the exponent**, so a small change in y gets amplified by t. Money arriving next year barely notices; money arriving in thirty years is rewritten dramatically. Most of a long bond's value sits in those distant cash flows, so its price swings hard.
 
 This gives the course's standard number: **a 30-year Treasury at about a 5% yield has a modified duration of about 15.5.** That means each 1-point move in yield moves the price roughly 15.5% the other way. The exact figures are about −13.8% for a 1-point rise (to 86.2) and about +17.4% for a 1-point fall; the gap between those and 15.5 is convexity. Stage 4.4 explains modified duration and convexity properly. Stage 4.5 explains why the 30-year yield climbing to about 5.5% in September 2026, its highest since 2004, put so many balance sheets under strain.
 
@@ -129,7 +130,7 @@ Feel it with 2026's actual market. The 10-year Treasury yield reportedly pushed 
 
 The seesaw isn't just for Treasuries. Anything that promises a fixed stream of future cash sits on the same plank:
 
-- **A perpetual preferred is the longest seesaw of all.** It never matures, so its price is Stage 2.3's perpetuity: price = annual dividend ÷ required yield. Take a preferred with $100 stated value paying $10 a year. At a 10% required yield it's worth $100; if the market demands 11%, it falls to **$90.91**; at 9%, it rises to **$111.11**. There's no maturity date to pull it back to par, which is why it's even more sensitive than a 30-year Treasury (Stage 6.2, Stage 18.1).
+- **A perpetual preferred is the longest seesaw of all.** It never matures, so its price is Stage 2.3's perpetuity: \\(\\text{price} = \\dfrac{\\text{annual dividend}}{\\text{required yield}}\\). Take a preferred with $100 stated value paying $10 a year. At a 10% required yield it's worth $100; if the market demands 11%, it falls to **$90.91**; at 9%, it rises to **$111.11**. There's no maturity date to pull it back to par, which is why it's even more sensitive than a 30-year Treasury (Stage 6.2, Stage 18.1).
 - **Preferreds issued by bitcoin treasury companies** are, at heart, long-dated fixed-income products priced as “Treasury yield plus a credit spread.” When the 30-year Treasury yield rises, their required yields get pushed up too and their prices come under pressure. Stage 4.5 and Stage 18.1 walk through that chain properly.
 - **Tokenized Treasury funds and stablecoins** barely feel the seesaw, because what they hold are T-bills that mature in weeks or months. A very short bond sits on a very short seesaw, which is how they keep their value pinned near $1 (Stage 13.2, Stage 14.2).
 - **Floating rates are a design for removing the seesaw.** Instead of letting the price move, let the coupon follow market rates. The US 2-year floating-rate note works this way, and so does the idea behind Strategy's STRC preferred, which resets its dividend rate monthly in an effort to keep its price close to $100 (Stage 17.4).
@@ -180,7 +181,7 @@ What about a “floating salary” contract that resets to the market rate every
         "The policy rate set by the central bank",
       ],
       answer: 1,
-      explain: "**YTM is the rate that makes “discounted value = price” true**, found by trial and error. “Annual coupon ÷ price” is the current yield; the contractual rate is the coupon rate.",
+      explain: "**YTM is the rate that makes the discounted value equal the price**, found by trial and error. \\(\\text{Annual coupon} \\div \\text{price}\\) is the current yield; the contractual rate is the coupon rate.",
     },
     {
       q: "Three Treasuries all pay a 5% coupon and mature in 2, 10 and 30 years. Yields rise from 5% to 6% across the board. Which falls most, and by roughly how much?",
@@ -213,7 +214,7 @@ What about a “floating salary” contract that resets to the market rate every
         "About $110, because higher rates make the dividend more valuable",
       ],
       answer: 1,
-      explain: "**Perpetuity: price = 10 ÷ 11% ≈ $90.91.** With no maturity date there is no par to converge to, which makes it the longest seesaw of all (Stage 6.2, Stage 18.1).",
+      explain: "**Perpetuity: \\(\\text{price} = 10 \\div 11\\% \\approx \\$90.91\\).** With no maturity date there is no par to converge to, which makes it the longest seesaw of all (Stage 6.2, Stage 18.1).",
     },
   ],
 

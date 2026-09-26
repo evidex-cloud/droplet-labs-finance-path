@@ -48,7 +48,7 @@ Here is Morning Coffee's balance sheet (in thousands of dollars):
 <tr><td><b>Total</b></td><td><b>10,000</b></td><td><b>Total</b></td><td><b>10,000</b></td></tr>
 </table>
 
-Shareholders' equity on the right is not a pile of money sitting somewhere. It is **a difference you calculate**: assets − liabilities = equity. That is literally what “residual” means.
+Shareholders' equity on the right is not a pile of money sitting somewhere. It is **a difference you calculate**: \\(\\text{assets} - \\text{liabilities} = \\text{equity}\\). That is literally what “residual” means.
 
 Now suppose that a few years from now the whole business is sold (or wound up). Look at what each group receives at different sale prices:
 
@@ -57,11 +57,11 @@ Now suppose that a few years from now the whole business is sold (or wound up). 
 - Sold for $7.5M: bank $5M, shareholders **$2.5M** — assets fell 25%, the owners lost 50%.
 - Sold for $4M: the bank recovers only $4M (an 80% recovery rate); shareholders get **zero**.
 
-Two patterns jump out. First, **the owners' percentage moves are twice the asset moves** — because half the money was borrowed (assets/equity = 10/5 = 2). That is leverage, and it is the prototype of the “amplification” metric in Stage 16.4. Second, **the owners' loss stops at zero**, and from there the bank starts taking the hit. Put both on one chart and you have the most important picture in this lesson:
+Two patterns jump out. First, **the owners' percentage moves are twice the asset moves** — because half the money was borrowed (\\(\\dfrac{\\text{assets}}{\\text{equity}} = \\dfrac{10}{5} = 2\\)). That is leverage, and it is the prototype of the “amplification” metric in Stage 16.4. Second, **the owners' loss stops at zero**, and from there the bank starts taking the hit. Put both on one chart and you have the most important picture in this lesson:
 
 <figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">One company, two claims: what lenders and owners receive</text><line x1="70" y1="230" x2="610" y2="230" stroke="var(--line)" stroke-width="1.5"/><line x1="70" y1="36" x2="70" y2="230" stroke="var(--line)" stroke-width="1.5"/><text x="340" y="262" text-anchor="middle" font-size="11" fill="var(--muted)">Final value of the company's assets ($M)</text><text x="24" y="135" text-anchor="middle" font-size="11" fill="var(--muted)" transform="rotate(-90 24 135)">Amount received ($M)</text><text x="70" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">0</text><text x="246.7" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">5</text><text x="423.3" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">10</text><text x="600" y="246" text-anchor="middle" font-size="10" fill="var(--muted)">15</text><line x1="246.7" y1="36" x2="246.7" y2="230" stroke="var(--line)" stroke-dasharray="4 4"/><text x="250" y="48" font-size="10" fill="var(--muted)">Debt face value $5M</text><polyline points="70,230 246.7,135 600,135" fill="none" stroke="var(--blue)" stroke-width="3"/><polyline points="70,230 246.7,230 600,40" fill="none" stroke="var(--orange)" stroke-width="3"/><circle cx="423.3" cy="135" r="5" fill="var(--ink)"/><text x="432" y="128" font-size="10" fill="var(--ink)">Today: assets 10 → debt 5 / equity 5</text><circle cx="600" cy="40" r="4" fill="var(--orange)"/><text x="596" y="58" text-anchor="end" font-size="10" fill="var(--orange-ink)">Assets +50% → equity +100%</text><circle cx="211.3" cy="154" r="4" fill="var(--blue)"/><text x="206" y="172" text-anchor="end" font-size="10" fill="var(--blue)">Assets 4: lender recovers 80%, equity 0</text><rect x="420" y="190" width="12" height="4" fill="var(--blue)"/><text x="438" y="195" font-size="11" fill="var(--ink)">Lender: capped at 5</text><rect x="420" y="208" width="12" height="4" fill="var(--orange)"/><text x="438" y="213" font-size="11" fill="var(--ink)">Owners: all the rest, floor at 0</text></svg><figcaption>The lender's payoff rises and then goes flat (at most $5M back); the owners' payoff is flat and then rises — a hockey stick. Both kinks sit at the $5M face value of the debt.</figcaption></figure>
 
-**The lender's line has a ceiling; the owners' line has a floor.** Add the two lines together and you always get the value of the assets — that is the accounting identity “assets = liabilities + equity” drawn as a payoff chart. All of Stage 6 (the capital stack) just adds more lines to this picture: a preferred share is a line that caps out after the lenders but before common (Stage 6.2); a convertible bond is a line that is flat at first and then, past the conversion price, rises alongside the owners (Stage 6.4).
+**The lender's line has a ceiling; the owners' line has a floor.** Add the two lines together and you always get the value of the assets — that is the accounting identity “\\(\\text{assets} = \\text{liabilities} + \\text{equity}\\)” drawn as a payoff chart. All of Stage 6 (the capital stack) just adds more lines to this picture: a preferred share is a line that caps out after the lenders but before common (Stage 6.2); a convertible bond is a line that is flat at first and then, past the conversion price, rises alongside the owners (Stage 6.4).
 
 ### ② Limited liability: the most you can lose is what you put in
 
@@ -91,7 +91,7 @@ One arrangement changes “one share, one vote” outright: the **dual-class str
 
 When a company makes money it has three things it can do with it: keep it and reinvest, pay a **dividend**, or **buy back** its own stock (Stage 5.5).
 
-A dividend is a board decision, not a promise. Preferred stock carries a fixed dividend rate (Stage 6.2); common stock does not — the company can raise it, cut it or stop it without being in default. On the ex-dividend date the share price should fall by roughly the amount of the dividend: money has moved from the company's pocket to yours, and **your total wealth is unchanged.** That is why “high dividend = high return” is such a common illusion.
+A dividend is a board decision, not a promise. Preferred stock carries a fixed dividend rate (Stage 6.2); common stock does not — the company can raise it, cut it or stop it without being in default. On the ex-dividend date the share price should fall by roughly the amount of the dividend: money has moved from the company's pocket to yours, and **your total wealth is unchanged.** That is why “a high dividend means a high return” is such a common illusion.
 
 Next, share counts. Several definitions get mixed up all the time:
 
@@ -106,24 +106,24 @@ Next, share counts. Several definitions get mixed up all the time:
 With a share count you can turn company-level numbers into per-share numbers:
 
 $$
-Market capitalization = share price × shares outstanding
-Earnings per share (EPS) = net income ÷ shares
-Book value per share = shareholders' equity ÷ shares
+\\text{Market capitalization} = \\text{share price} \\times \\text{shares outstanding}
+\\text{Earnings per share}\\ (\\mathrm{EPS}) = \\frac{\\text{net income}}{\\text{shares}}
+\\text{Book value per share} = \\frac{\\text{shareholders' equity}}{\\text{shares}}
 $$
 
-Morning Coffee: $5M of equity and 1M shares → book value of $5 per share. If it earns $1.2M of net income this year (Stage 5.2 builds that number line by line from the income statement), EPS = $1.20. If the shares trade at $12, market capitalization is $12M — **more than twice the $5M on the books.** That gap is not a mistake; it is the market pricing **future** profits. Book value records how much money went in over the past; the share price reflects how much is expected to come out in the future. Stage 5.3 shows how to discount that future back to today.
+Morning Coffee: $5M of equity and 1M shares → book value of \\(\\dfrac{\\$5\\text{M}}{1\\text{M}} = \\$5\\) per share. If it earns $1.2M of net income this year (Stage 5.2 builds that number line by line from the income statement), \\(\\mathrm{EPS} = \\dfrac{\\$1.2\\text{M}}{1\\text{M}} = \\$1.20\\). If the shares trade at $12, market capitalization is \\(\\$12 \\times 1\\text{M} = \\$12\\text{M}\\) — **more than twice the $5M on the books.** That gap is not a mistake; it is the market pricing **future** profits. Book value records how much money went in over the past; the share price reflects how much is expected to come out in the future. Stage 5.3 shows how to discount that future back to today.
 
-On a fully diluted count, book value per share becomes 5/1.1 ≈ $4.55 and EPS ≈ $1.09 — **change the denominator and every per-share number changes.** The first question an analyst asks is always “which share count are you using?” By Stage 16.1 (BTC per share) that question becomes a matter of life and death.
+On a fully diluted count, book value per share becomes \\(\\dfrac{5}{1.1} \\approx \\$4.55\\) and \\(\\mathrm{EPS} \\approx \\$1.09\\) — **change the denominator and every per-share number changes.** The first question an analyst asks is always “which share count are you using?” By Stage 16.1 (BTC per share) that question becomes a matter of life and death.
 
 ### ⑤ A stock is a call option: from coffee shop to Orange Corp
 
 Look once more at the payoff chart in part ①. The owners' flat-then-rising line has exactly the shape of a **call option**: the underlying is the company's assets and the strike price is the face value of the debt. In 1974 Robert Merton used precisely this view to apply the Black–Scholes option formula to the pricing of corporate debt (Stage 7.2 covers option payoff diagrams). The view yields three expert-level implications:
 
 - **Shareholders like volatility.** An option's value rises with volatility, so the more volatile the assets, the more the residual claim is worth as an option — even if the average outcome is unchanged.
-- **Lenders dislike volatility.** A lender's payoff equals “a risk-free bond minus a put option”; the more volatile the assets, the more expensive the put they have effectively sold.
+- **Lenders dislike volatility.** A lender's payoff equals “\\(\\text{risk-free bond} - \\text{put option}\\)”; the more volatile the assets, the more expensive the put they have effectively sold.
 - **The higher the leverage, the more a stock behaves like an option.** The closer the debt's face value is to the asset value, the further “out of the money” the common is, and the more violently it moves.
 
-Now swap the coffee shop for **Orange Corp**, the toy company that runs through Stages 15–18. It holds 10,000 BTC; at $100,000 per bitcoin that is $1 billion of BTC NAV. Sitting above the common are $150M of convertible notes, $100M of Series F preferred and $50M of Series D preferred — $300M of senior claims in all. Common shareholders own the residual: **$1B − $0.3B = $0.7B.** If bitcoin rises 10%, NAV rises by $100M and all of it goes to common — $0.7B becomes $0.8B, a 14.3% gain, an amplification of about **1.43x**. If bitcoin falls 70%, NAV is $300M, exactly equal to the senior claims, and the common's bitcoin residual is gone.
+Now swap the coffee shop for **Orange Corp**, the toy company that runs through Stages 15–18. It holds 10,000 BTC; at $100,000 per bitcoin that is $1 billion of BTC NAV. Sitting above the common are $150M of convertible notes, $100M of Series F preferred and $50M of Series D preferred — $300M of senior claims in all. Common shareholders own the residual: **\\(\\$1\\text{B} - \\$0.3\\text{B} = \\$0.7\\text{B}\\).** If bitcoin rises 10%, NAV rises by $100M and all of it goes to common — $0.7B becomes $0.8B, a \\(\\dfrac{0.1}{0.7} \\approx 14.3\\%\\) gain, an amplification of about **\\(\\dfrac{14.3\\%}{10\\%} \\approx 1.43\\times\\)**. If bitcoin falls 70%, NAV is $300M, exactly equal to the senior claims, and the common's bitcoin residual is gone.
 
 **Same payoff chart, same logic; the asset changed from espresso machines to bitcoin.** So when Stage 15.1 says that “a DAT's common stock behaves like levered bitcoin,” you already know why.
 
@@ -157,10 +157,10 @@ Orange Corp's tank is filled with bitcoin, with three taps above the common: the
         "+20%, in line with the assets",
         "+10%, because interest must be paid first",
         "Nothing — the gain goes to the bank",
-        "+40%, because assets/equity = 2x leverage",
+        "+40%, because \\(\\text{assets} / \\text{equity} = 2\\times\\) leverage",
       ],
       answer: 3,
-      explain: "Equity goes from $5M to $12M − $5M = $7M, **+40%**. The lender's claim is fixed at $5M, so every dollar of asset gain goes to the residual owners, amplifying the move by assets/equity = 2x.",
+      explain: "Equity goes from $5M to \\(\\$12\\text{M} - \\$5\\text{M} = \\$7\\text{M}\\), **+40%**. The lender's claim is fixed at $5M, so every dollar of asset gain goes to the residual owners, amplifying the move by \\(\\text{assets} / \\text{equity} = 2\\times\\).",
     },
     {
       q: "What is the most direct meaning of limited liability?",
@@ -178,22 +178,22 @@ Orange Corp's tank is filled with bitcoin, with three taps above the common: the
       options: [
         "Because shares can be traded on options exchanges",
         "Because shareholders can sell their shares back to the company at any time",
-        "Owners receive the larger of (assets − debt) and zero: the underlying is the company's assets, the strike is the face value of debt",
+        "Owners receive the larger of \\(\\text{assets} - \\text{debt}\\) and zero: the underlying is the company's assets, the strike is the face value of debt",
         "Because dividends are paid quarterly like option premiums",
       ],
       answer: 2,
-      explain: "Equity payoff = max(assets − debt, 0), the payoff of a call (Merton, 1974). Implication: the more volatile the assets, the more the owners' option is worth and the worse off the lenders are.",
+      explain: "\\(\\text{Equity payoff} = \\max(\\text{assets} - \\text{debt},\\ 0)\\), the payoff of a call (Merton, 1974). Implication: the more volatile the assets, the more the owners' option is worth and the worse off the lenders are.",
     },
     {
       q: "Orange Corp has $1B of BTC NAV and $300M of convertibles and preferred combined. If bitcoin falls 70%, how much bitcoin value is left for the common?",
       options: [
-        "$0.7B × 30% = $210M",
+        "\\(\\$0.7\\text{B} \\times 30\\% = \\$210\\text{M}\\)",
         "Essentially zero: NAV is $300M, just enough to cover the senior claims",
         "$300M, because the preferred converts into common first",
         "Impossible to say without the share price",
       ],
       answer: 1,
-      explain: "$1B × 30% = $300M, exactly equal to the $150M + $100M + $50M of senior claims, leaving nothing. That is the residual claim under heavy leverage: in the same drop, common runs dry first (Stage 16.5 measures each layer's cushion with the “BTC Rating”).",
+      explain: "\\(\\$1\\text{B} \\times 30\\% = \\$300\\text{M}\\), exactly equal to the \\(\\$150\\text{M} + \\$100\\text{M} + \\$50\\text{M}\\) of senior claims, leaving nothing. That is the residual claim under heavy leverage: in the same drop, common runs dry first (Stage 16.5 measures each layer's cushion with the “BTC Rating”).",
     },
     {
       q: "A company earns $1.2M and has 1M shares outstanding, plus options and convertibles that bring the fully diluted count to 1.1M. Which statement is correct?",
@@ -204,7 +204,7 @@ Orange Corp's tank is filled with bitcoin, with three taps above the common: the
         "Options that have not been exercised do not affect any per-share metric",
       ],
       answer: 1,
-      explain: "Basic EPS = 1.2/1.0 = $1.20; diluted EPS = 1.2/1.1 ≈ $1.09. **Different denominator, different per-share number** — and Stage 16.1's “BTC per share” is likewise computed on a fully diluted count.",
+      explain: "Basic \\(\\mathrm{EPS} = \\dfrac{1.2}{1.0} = \\$1.20\\); diluted \\(\\mathrm{EPS} = \\dfrac{1.2}{1.1} \\approx \\$1.09\\). **Different denominator, different per-share number** — and Stage 16.1's “BTC per share” is likewise computed on a fully diluted count.",
     },
   ],
 

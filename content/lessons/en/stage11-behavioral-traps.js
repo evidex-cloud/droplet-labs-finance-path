@@ -12,7 +12,7 @@ export default {
   intuition: `
 Picture yourself at a carnival booth. The operator says: we flip a fair coin. Heads, you win $150. Tails, you lose $100. Want to play?
 
-On expected value it's a good deal: half the time +$150, half the time −$100, an average gain of $25 per flip. Yet most people shake their heads. Research finds that the typical person needs the potential win to be **about twice** the potential loss before accepting a 50/50 bet. **The pain of losing $100 is roughly twice the pleasure of winning $100.** This is **loss aversion.** In 1979 the psychologists Daniel Kahneman and Amos Tversky built it into "prospect theory," and Kahneman later received the 2002 Nobel Prize in economics for this work.
+On expected value it's a good deal: half the time +$150, half the time −$100, an average gain of \\(0.5 \\times \\$150 - 0.5 \\times \\$100 = \\$25\\) per flip. Yet most people shake their heads. Research finds that the typical person needs the potential win to be **about twice** the potential loss before accepting a 50/50 bet. **The pain of losing $100 is roughly twice the pleasure of winning $100.** This is **loss aversion.** In 1979 the psychologists Daniel Kahneman and Amos Tversky built it into "prospect theory," and Kahneman later received the 2002 Nobel Prize in economics for this work.
 
 Loss aversion isn't a mistake in itself — it may even have helped our ancestors survive. The trouble is that combined with a few other mental "settings," it creates an **almost perfect money-losing loop** in markets:
 
@@ -40,7 +40,7 @@ This lesson sits on **Idea ④ Risk & leverage**, and it supplies the piece the 
 Traditional finance assumes people decide based on the utility of their final wealth. Prospect theory (Kahneman and Tversky, 1979; the 1992 cumulative version supplied the commonly used parameters) points to three differences:
 
 - **A reference point.** People feel **gains and losses** relative to some reference point — usually the purchase price, or "last month's high" — not total wealth.
-- **Loss aversion.** The curve is steeper on the loss side, with a commonly used coefficient λ ≈ 2.25: a loss hurts a bit more than twice as much as an equal gain pleases.
+- **Loss aversion.** The curve is steeper on the loss side, with a commonly used coefficient \\(\\lambda \\approx 2.25\\): a loss hurts a bit more than twice as much as an equal gain pleases.
 - **Diminishing sensitivity.** The difference between 0 and 100 feels much bigger than between 1,000 and 1,100. So in the gain zone people turn **cautious** (lock in the profit), and in the loss zone they turn **risk-seeking** ("one more roll and I'm back to even").
 
 <figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Prospect theory's value function: steeper for losses</text><line x1="80" y1="140" x2="560" y2="140" stroke="var(--line)"/><line x1="320" y1="36" x2="320" y2="256" stroke="var(--line)"/><text x="556" y="156" text-anchor="end" font-size="10.5" fill="var(--muted)">Gains →</text><text x="84" y="132" font-size="10.5" fill="var(--muted)">← Losses</text><text x="326" y="46" font-size="10.5" fill="var(--muted)">Felt value</text><polyline points="320,140 342,133.9 375,126.4 430,115 485,104.2 540,94" fill="none" stroke="var(--green)" stroke-width="2.6"/><polyline points="320,140 298,153.7 265,170.6 210,196.2 155,220.6 100,243.5" fill="none" stroke="var(--red)" stroke-width="2.6"/><line x1="540" y1="94" x2="540" y2="140" stroke="var(--green)" stroke-dasharray="3 3"/><line x1="100" y1="140" x2="100" y2="243.5" stroke="var(--red)" stroke-dasharray="3 3"/><text x="540" y="86" text-anchor="middle" font-size="10.5" fill="var(--green)">Joy of winning 100</text><text x="108" y="262" font-size="10.5" fill="var(--red)">Pain of losing 100 ≈ 2.25×</text><text x="455" y="176" text-anchor="middle" font-size="10.5" fill="var(--muted)">Gains: concave → cash in early</text><text x="195" y="112" text-anchor="middle" font-size="10.5" fill="var(--muted)">Losses: convex → gamble to get even</text><circle cx="320" cy="140" r="3.5" fill="var(--ink)"/><text x="330" y="160" font-size="10.5" fill="var(--ink)">Reference point (e.g. purchase price)</text></svg><figcaption>The value function is centered on a reference point: flat and concave for gains, steep and convex for losses (parameters from Tversky and Kahneman's 1992 estimates: exponent 0.88, loss-aversion coefficient 2.25). This one shape explains "take the profit, ride the loss."</figcaption></figure>
@@ -67,7 +67,7 @@ Most people think they're above-average drivers — a statistical impossibility.
 - **The illusion of control.** Constant screen-watching, chart-drawing and research make people feel they control the outcome; with more information, confidence rises much faster than accuracy.
 - **Hindsight bias.** "I knew it was going to fall." Rewriting memory after the fact makes people overrate their judgment next time.
 
-Overconfidence connects directly to Stage 11.4: **the win probability in the Kelly formula is an estimate you make.** If you overestimate your edge by a factor of two, you'll bet 2× Kelly — where long-run growth is about zero. **Mathematically, overconfidence is overbetting.** That's why rules like fractional Kelly and a per-trade risk cap are, in essence, "a discount on your own overconfidence."
+Overconfidence connects directly to Stage 11.4: **the win probability in the Kelly formula is an estimate you make.** If you overestimate your edge by a factor of two, you'll bet \\(2\\times\\) Kelly — where long-run growth is about zero. **Mathematically, overconfidence is overbetting.** That's why rules like fractional Kelly and a per-trade risk cap are, in essence, "a discount on your own overconfidence."
 
 ### ④ Narrative and confirmation bias: stories beat numbers
 
@@ -84,7 +84,7 @@ On Bitcoin and DATs, both sides have powerful narratives:
 
 ### ⑤ Leverage regret and discipline: write the rules before the panic
 
-**Leverage regret** is where all the biases above converge. Overconfidence makes you add leverage (③), FOMO makes you add it near the top (②), loss aversion keeps you from cutting it on the way down (①) — until a margin call makes the decision for you and sells near the bottom. The price rebounds later and you're not there for it. **The cruelest thing about leverage isn't that it magnifies losses; it's that it takes away your right to wait.** As Stage 11.4 showed, at 10× leverage an adverse move of about 10% gets you liquidated.
+**Leverage regret** is where all the biases above converge. Overconfidence makes you add leverage (③), FOMO makes you add it near the top (②), loss aversion keeps you from cutting it on the way down (①) — until a margin call makes the decision for you and sells near the bottom. The price rebounds later and you're not there for it. **The cruelest thing about leverage isn't that it magnifies losses; it's that it takes away your right to wait.** As Stage 11.4 showed, at \\(10\\times\\) leverage an adverse move of about 10% gets you liquidated.
 
 The psychological conclusion is clear: **people can't reliably make good decisions under stress, so good decisions have to be made before the stress arrives.** Some proven "discipline devices":
 
@@ -130,7 +130,7 @@ So experienced drivers don't try to "train the impulsive driver." Instead, **bef
         "Recency bias",
       ],
       answer: 0,
-      explain: "The expected value is +$25, but with prospect theory's λ ≈ 2.25, the \"pain\" of losing $100 outweighs the \"joy\" of winning $150. **People typically want gains about twice the size of losses before taking a 50/50 bet.**",
+      explain: "The expected value is +$25, but with prospect theory's \\(\\lambda \\approx 2.25\\), the \"pain\" of losing $100 outweighs the \"joy\" of winning $150. **People typically want gains about twice the size of losses before taking a 50/50 bet.**",
     },
     {
       q: "What behavior does the \"disposition effect\" describe?",
@@ -141,7 +141,7 @@ So experienced drivers don't try to "train the impulsive driver." Instead, **bef
         "Holding only index funds",
       ],
       answer: 1,
-      explain: "The disposition effect = cut your profits, let your losses run. It comes from loss aversion anchored on the purchase price: selling a loser means \"admitting the loss,\" so people put it off.",
+      explain: "The disposition effect is cutting your profits and letting your losses run. It comes from loss aversion anchored on the purchase price: selling a loser means \"admitting the loss,\" so people put it off.",
     },
     {
       q: "Why is overconfidence \"mathematically the same as overbetting\"?",
@@ -149,7 +149,7 @@ So experienced drivers don't try to "train the impulsive driver." Instead, **bef
         "Overconfident people never bet",
         "Overconfidence lowers trading costs",
         "Overconfidence makes people treat all assets alike",
-        "The Kelly fraction depends on the edge you estimate; overestimate your edge by a factor of two and you bet 2× Kelly, where long-run growth is about zero",
+        "The Kelly fraction depends on the edge you estimate; overestimate your edge by a factor of two and you bet \\(2\\times\\) Kelly, where long-run growth is about zero",
       ],
       answer: 3,
       explain: "Kelly's inputs are your estimated odds and payoff (Stage 11.4). **Systematically overestimating your edge → systematically betting too much → lower or even negative growth.** Fractional Kelly and per-trade risk caps are discounts on overconfidence.",

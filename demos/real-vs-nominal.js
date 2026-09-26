@@ -1,12 +1,14 @@
 // 交互演示：名义 vs 实际回报计算器。调名义利率、通胀、利息税率、年限与 TIPS 实际收益率，
 // 看费雪方程的精确值与近似值、税后实际回报、盈亏平衡通胀率，以及 10,000 美元在四种选择下的实际购买力路径。
 // 计算走 _fin.js（realRate / fv）。
-import { realRate, fv, fmtPct, fmtUsd } from "./_fin.js";
+import { realRate, fv, fmtPct, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  // 把格式化好的数字（"$1,000.00" / "10.00%"）转成可放进 LaTeX 的写法
+  const tx = (s) => String(s).replace(/,/g, "{,}").replace(/%/g, String.raw`\%`).replace(/\$/g, String.raw`\$`);
 
   const PRESETS = {
     normal: { i: 5, pi: 3, tax: 30, tips: 1.8, n: 20, name: T("常态：5% 利率 / 3% 通胀", "Normal: 5% rate / 3% inflation") },
@@ -31,7 +33,7 @@ export default function mount(root, lang) {
       </div>
       <div class="stat-row">
         <div class="stat"><div class="k">${T("实际利率（精确）", "Real rate (exact)")}</div><div class="v" id="rn-real"></div></div>
-        <div class="stat"><div class="k">${T("近似 i − π", "Approx. i − π")}</div><div class="v" id="rn-approx"></div></div>
+        <div class="stat"><div class="k">${T("近似 ", "Approx. ")}${tex(String.raw`i - \pi`)}</div><div class="v" id="rn-approx"></div></div>
         <div class="stat"><div class="k">${T("税后实际回报", "After-tax real return")}</div><div class="v" id="rn-atr"></div></div>
         <div class="stat"><div class="k">${T("盈亏平衡通胀率", "Breakeven inflation")}</div><div class="v" id="rn-be"></div></div>
       </div>
@@ -88,7 +90,7 @@ export default function mount(root, lang) {
     $("#rn-cash").textContent = fmtUsd(realCash(n));
 
     const lines = [];
-    lines.push(`${T("费雪方程：(1 +", "Fisher: (1 +")} ${fmtPct(i, 1)}) ÷ (1 + ${fmtPct(pi, 1)}) − 1 = <b>${fmtPct(r, 2)}</b>${T("；近似式误差", "; approximation error")} ${fmtPct(i - pi - r, 2)}${Math.abs(i - pi - r) > 0.005 ? `<span class="warn">${T("——通胀高时必须用精确式。", " — at high inflation, use the exact form.")}</span>` : ""}`);
+    lines.push(`${T("费雪方程：", "Fisher: ")}${tex(String.raw`r = \frac{1 + ${tx(fmtPct(i, 1))}}{1 + ${tx(fmtPct(pi, 1))}} - 1 = \mathbf{${tx(fmtPct(r, 2))}}`)}${T("；近似式误差", "; approximation error")} ${fmtPct(i - pi - r, 2)}${Math.abs(i - pi - r) > 0.005 ? `<span class="warn">${T("——通胀高时必须用精确式。", " — at high inflation, use the exact form.")}</span>` : ""}`);
     if (r < 0) lines.push(`<span class="bad">${T("负实际利率：账面从", "Negative real rate: the balance goes from")} ${fmtUsd(START)} ${T("涨到", "to")} ${fmtUsd(nomBal(n))}${T("，购买力却只剩今天的", ", yet it buys only")} ${fmtUsd(realBond(n))}${T("。差额就是“看不见的税”，流向了债务人。", " in today's money. The gap is the invisible tax, flowing to debtors.")}</span>`);
     if (tax > 0 && rTax < r) lines.push(r > 0
       ? `${T("对名义收益征税后，实际回报从", "Taxing the nominal return cuts the real return from")} ${fmtPct(r, 2)} ${T("降到", "to")} ${fmtPct(rTax, 2)}${T("。相当于对实际收益征收了", ". That is an effective tax on the real gain of")} <b>${fmtPct(1 - rTax / r, 0)}</b>${T("。", ".")}`

@@ -1,7 +1,7 @@
 // 交互演示：收益率曲线编辑器 + 形状识别器 + “预期 + 期限溢价”拼装器。
 // 编辑模式：拖动 5 个期限的收益率或套用预设/牛熊陡平冲击，自动判断形状与变化类型；
 // 拼装模式：设定当前政策利率、长期预期利率、收敛速度与期限溢价，看曲线如何由两部分叠出来（玩具模型）。
-import { bondPrice, fmtNum, fmtUsd, clamp } from "./_fin.js";
+import { bondPrice, fmtNum, fmtUsd, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -71,7 +71,7 @@ export default function mount(root, lang) {
             <input class="demo-slider" type="range" id="yc-tp" min="-1.5" max="2.5" step="0.05" />
           </div>
         </div>
-        <div class="demo-meta">${T("玩具模型：预期短端利率从“今天”按指数方式收敛到“长期”；某期限收益率 = 该期限内预期短端利率的平均 + 随期限递增的期限溢价。参考：ACM 模型的 10 年期期限溢价 2020 年 7 月约 −1.36%，2026 年 7 月约 +0.84%。", "Toy model: expected short rates glide exponentially from “today” to “long run”; a maturity's yield = the average expected short rate over that horizon + a term premium that grows with maturity. For reference, the ACM model's 10-year term premium was about −1.36% in July 2020 and about +0.84% in July 2026.")}</div>
+        <div class="demo-meta">${T("玩具模型：预期短端利率从“今天”按指数方式收敛到“长期”；", "Toy model: expected short rates glide exponentially from “today” to “long run”; ")}${tex(String.raw`\text{${T("某期限收益率", "a maturity's yield")}} = \text{${T("该期限内预期短端利率的平均", "average expected short rate over that horizon")}} + \text{${T("随期限递增的期限溢价", "a term premium that grows with maturity")}}`)}${T("。参考：ACM 模型的 10 年期期限溢价 2020 年 7 月约 −1.36%，2026 年 7 月约 +0.84%。", ". For reference, the ACM model's 10-year term premium was about −1.36% in July 2020 and about +0.84% in July 2026.")}</div>
       </div>
       <div class="stat-row" id="yc-stats"></div>
       <div id="yc-chart"></div>
@@ -137,7 +137,7 @@ export default function mount(root, lang) {
       if (st.before) { fns.unshift({ f: interp(st.before), cls: "line2" }); legend.push(["var(--blue)", T("冲击前", "Before the move")]); }
     } else {
       fns = [{ f: (x) => expPath(x), cls: "line4" }, { f: (x) => expAvg(Math.max(x, 0.05)), cls: "line2" }, { f: (x) => expAvg(Math.max(x, 0.05)) + tpOf(x), cls: "line" }];
-      legend = [["var(--green)", T("预期的政策利率路径", "Expected policy-rate path")], ["var(--blue)", T("预期部分（平均短端利率）", "Expectations part (average short rate)")], ["var(--orange)", T("收益率曲线 = 预期 + 期限溢价", "Yield curve = expectations + term premium")]];
+      legend = [["var(--green)", T("预期的政策利率路径", "Expected policy-rate path")], ["var(--blue)", T("预期部分（平均短端利率）", "Expectations part (average short rate)")], ["var(--orange)", tex(String.raw`\text{${T("收益率曲线", "Yield curve")}} = \text{${T("预期", "expectations")}} + \text{${T("期限溢价", "term premium")}}`)]];
     }
     const res = lineChart({ fns, lo: 0.25, hi: 30, xlabel: T("期限（年）", "Maturity (years)"), uid: "yc" });
     q("#yc-chart").innerHTML = chartBlock(res, legend);
@@ -145,7 +145,7 @@ export default function mount(root, lang) {
     const lines = [];
     const s210 = c[2] - c[1];
     if (shapeK === "inv") lines.push(`<span class="bad">${T("倒挂：短端高于长端。市场在押注未来降息；借短放长的银行，每做一笔 10 年贷款、用 3 个月存款融资，利差是", "Inverted: short yields above long. The market is betting on future cuts; a bank funding a 10-year loan with 3-month deposits earns a spread of")} ${bp(c[2] - c[0])}${T("。", ".")}</span>`);
-    else if (shapeK === "normal") lines.push(`<span class="ok">${T("正常：期限越长收益率越高。借短放长有利可图（10 年 − 3 个月 = ", "Normal: longer maturities pay more. Borrowing short to lend long pays (10y − 3m = ")}${bp(c[2] - c[0])}${T("）。", ").")}</span>`);
+    else if (shapeK === "normal") lines.push(`<span class="ok">${T("正常：期限越长收益率越高。借短放长有利可图（", "Normal: longer maturities pay more. Borrowing short to lend long pays (")}${tex(String.raw`y_{\text{${T("10 年", "10y")}}} - y_{\text{${T("3 个月", "3m")}}} = ${bp(c[2] - c[0]).replace("bp", "")}\ \text{bp}`)}${T("）。", ").")}</span>`);
     else if (shapeK === "flat") lines.push(`<span class="warn">${T("平坦：各期限差不多，常见于加息周期末段或方向不明的转折点。", "Flat: maturities yield about the same, typical late in a hiking cycle or at a turning point.")}</span>`);
     else if (shapeK === "hump") lines.push(`<span class="warn">${T("驼峰：中段最高。可能是“先加息、后降息”的预期，也可能是某些期限的供求特殊。", "Humped: the middle is highest. Could be “hikes first, cuts later,” or unusual supply and demand at certain maturities.")}</span>`);
     else lines.push(`<span class="warn">${T("过渡形态：部分期限倒挂、部分正常，曲线正在换挡。", "Transitional: some segments inverted, some normal; the curve is changing gear.")}</span>`);
@@ -162,7 +162,7 @@ export default function mount(root, lang) {
     }
     if (!edit) {
       const e10 = expAvg(10), t10 = tpOf(10), e2 = expAvg(2);
-      lines.push(`${T("10 年期收益率", "10-year yield")} ${fmtNum(c[2], 2)}% = ${T("预期部分", "expectations")} ${fmtNum(e10, 2)}% + ${T("期限溢价", "term premium")} ${fmtNum(t10, 2)}%${T("；2 年期收益率", "; the 2-year yield")} ${fmtNum(c[1], 2)}% = ${fmtNum(e2, 2)}% + ${fmtNum(tpOf(2), 2)}%${T("——期限越短，期限溢价越小，收益率越接近纯粹的利率预期。", ". The shorter the maturity, the smaller the term premium and the closer the yield is to a pure rate expectation.")}`);
+      lines.push(`${tex(String.raw`\text{${T("10 年期收益率", "10-year yield")}}\ ${fmtNum(c[2], 2)}\% = \text{${T("预期部分", "expectations")}}\ ${fmtNum(e10, 2)}\% + \text{${T("期限溢价", "term premium")}}\ ${fmtNum(t10, 2)}\%`)}${T("；2 年期收益率 ", "; the 2-year yield: ")}${tex(String.raw`${fmtNum(c[1], 2)}\% = ${fmtNum(e2, 2)}\% + ${fmtNum(tpOf(2), 2)}\%`)}${T("——期限越短，期限溢价越小，收益率越接近纯粹的利率预期。", ". The shorter the maturity, the smaller the term premium and the closer the yield is to a pure rate expectation.")}`);
       if (st.tp < 0 && shapeK === "inv" && st.r0 - st.rL < 1) lines.push(`<span class="warn">${T("注意：这次倒挂有相当一部分来自负的期限溢价，而不是大幅降息预期——这正是有人解释 2022–2024 年“倒挂却没衰退”的思路之一。", "Note: much of this inversion comes from a negative term premium rather than big expected cuts, one of the explanations offered for 2022–2024's “inversion without recession.”")}</span>`);
     }
     q("#yc-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

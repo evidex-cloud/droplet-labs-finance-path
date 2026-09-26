@@ -1,7 +1,7 @@
 // 交互演示：债务雪球计算器。起点接近 2026 年的量级（债务/GDP ≈ 101%、平均利率 ≈ 3.3%、名义 GDP ≈ 32.5 万亿美元），
 // 设基本赤字、名义增长 g、新发债的市场利率，以及每年有多少债务到期滚动（决定平均利率向市场利率靠拢的速度）。
 // 逐年递推 d' = d × (1 + r) ÷ (1 + g) + 基本赤字；名义 GDP 用 _fin.js fv 复利。示意模型，不是 CBO 预测。
-import { fv, fmtPct, fmtNum, fmtBig } from "./_fin.js";
+import { fv, fmtPct, fmtNum, fmtBig, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -13,20 +13,20 @@ export default function mount(root, lang) {
     base: { n: T("接近 CBO 2026 年 2 月假设", "Close to CBO's Feb 2026 assumptions"), pd: 2.5, g: 4, rm: 4.1, roll: 20 },
     mkt: { n: T("2026 年 9 月的市场利率", "September 2026 market rates"), pd: 2.5, g: 4, rm: 5.2, roll: 20 },
     aus: { n: T("财政紧缩：基本盈余 1%", "Austerity: 1% primary surplus"), pd: -1, g: 4, rm: 5.2, roll: 20 },
-    infl: { n: T("通胀路线：g 升到 7%", "Inflation route: g rises to 7%"), pd: 2.5, g: 7, rm: 5.2, roll: 20 },
+    infl: { n: T("通胀路线：", "Inflation route: ") + tex("g") + T(" 升到 7%", " rises to 7%"), pd: 2.5, g: 7, rm: 5.2, roll: 20 },
     bills: { n: T("多发短债：每年 35% 滚动", "Bill-heavy: 35% rolls each year"), pd: 2.5, g: 4, rm: 5.2, roll: 35 },
   };
   const D0 = 1.01, R0 = 0.033, GDP0 = 32.5e12, YEARS = 30;
 
   root.innerHTML = `
     <div class="demo">
-      <div class="demo-head">${T("❄️ 债务雪球计算器：r、g 与基本赤字的赛跑", "❄️ The debt snowball: r vs g vs the primary deficit")}</div>
+      <div class="demo-head">${T("❄️ 债务雪球计算器：", "❄️ The debt snowball: ")}${tex("r")}${T("、", " vs ")}${tex("g")}${T(" 与基本赤字的赛跑", " vs the primary deficit")}</div>
       <div class="demo-btns" id="dd-presets">
         ${Object.entries(PRESETS).map(([k, p]) => `<button class="demo-btn ${k === "mkt" ? "active" : ""}" data-k="${k}">${p.n}</button>`).join("")}
       </div>
       <div class="demo-grid">
-        <div><label class="demo-label">${T("基本赤字（占 GDP，负数 = 盈余）", "Primary deficit (% of GDP; negative = surplus)")}${C}<b id="dd-pd-v"></b></label><input class="demo-slider" type="range" id="dd-pd" min="-3" max="6" step="0.25" value="2.5"></div>
-        <div><label class="demo-label">${T("名义 GDP 增长 g", "Nominal GDP growth g")}${C}<b id="dd-g-v"></b></label><input class="demo-slider" type="range" id="dd-g" min="0" max="9" step="0.25" value="4"></div>
+        <div><label class="demo-label">${T("基本赤字（占 GDP，负数表示盈余）", "Primary deficit (% of GDP; negative means surplus)")}${C}<b id="dd-pd-v"></b></label><input class="demo-slider" type="range" id="dd-pd" min="-3" max="6" step="0.25" value="2.5"></div>
+        <div><label class="demo-label">${T("名义 GDP 增长 ", "Nominal GDP growth ")}${tex("g")}${C}<b id="dd-g-v"></b></label><input class="demo-slider" type="range" id="dd-g" min="0" max="9" step="0.25" value="4"></div>
         <div><label class="demo-label">${T("新发国债的市场利率", "Market rate on new debt")}${C}<b id="dd-rm-v"></b></label><input class="demo-slider" type="range" id="dd-rm" min="1" max="8" step="0.1" value="5.2"></div>
         <div><label class="demo-label">${T("每年到期滚动的债务比例", "Share of debt rolling over each year")}${C}<b id="dd-roll-v"></b></label><input class="demo-slider" type="range" id="dd-roll" min="5" max="50" step="1" value="20"></div>
       </div>
@@ -36,8 +36,8 @@ export default function mount(root, lang) {
       <div id="dd-bars"></div>
       <div class="demo-log" id="dd-log"></div>
       <p class="demo-tip">${T(
-        "先点“接近 CBO 假设”，再点“2026 年 9 月的市场利率”：基本赤字没变，只是新债利率从 4.1% 变成 5.2%，30 年后的债务率和利息负担却明显更高——<strong>债务越大，利率越重要</strong>。再试“多发短债”：滚动越快，平均利率追上市场利率越快。最后试“通胀路线”：g 变大，雪球会化，但前提是市场不因此要求更高的利率。",
-        "Click \"Close to CBO\" and then \"September 2026 market rates\": the primary deficit is unchanged, only the rate on new debt moves from 4.1% to 5.2%, yet debt and interest 30 years out are clearly higher — <strong>the bigger the debt, the more rates matter</strong>. Try \"Bill-heavy\": faster rollover means the average rate catches up with the market rate sooner. Then try the \"Inflation route\": a bigger g melts the snowball — as long as markets don't demand higher rates in response."
+        "先点“接近 CBO 假设”，再点“2026 年 9 月的市场利率”：基本赤字没变，只是新债利率从 4.1% 变成 5.2%，30 年后的债务率和利息负担却明显更高——<strong>债务越大，利率越重要</strong>。再试“多发短债”：滚动越快，平均利率追上市场利率越快。最后试“通胀路线”：" + tex("g") + " 变大，雪球会化，但前提是市场不因此要求更高的利率。",
+        "Click \"Close to CBO\" and then \"September 2026 market rates\": the primary deficit is unchanged, only the rate on new debt moves from 4.1% to 5.2%, yet debt and interest 30 years out are clearly higher — <strong>the bigger the debt, the more rates matter</strong>. Try \"Bill-heavy\": faster rollover means the average rate catches up with the market rate sooner. Then try the \"Inflation route\": a bigger " + tex("g") + " melts the snowball — as long as markets don't demand higher rates in response."
       )}</p>
     </div>`;
 
@@ -92,8 +92,9 @@ export default function mount(root, lang) {
 
     const lines = [];
     lines.push(`${T("起点", "Start")}${C}${T("债务/GDP", "debt-to-GDP")} ${fmtPct(D0, 0)}${T("，平均利率", ", average rate")} ${fmtPct(R0, 1)}${T("，名义 GDP 约", ", nominal GDP about")} $${fmtBig(GDP0)}${T("（接近 2026 年的量级）", " (close to 2026 orders of magnitude)")}`);
-    lines.push(`${T("今天的 r − g", "Today's r − g")} = ${fmtPct(R0 - g, 2)}${T("；长期的 r − g", "; long-run r − g")} = ${fmtPct(s.r[YEARS] - g, 2)} ${s.r[YEARS] > g ? `<span class="bad">${T("（r > g：雪球自己会长大）", "(r > g: the snowball grows by itself)")}</span>` : `<span class="ok">${T("（g > r：增长帮你稀释旧债）", "(g > r: growth dilutes old debt)")}</span>`}`);
-    lines.push(`${T("让债务/GDP 在 30 年后的水平稳定所需的基本余额", "Primary balance needed to stabilize debt at its year-30 level")}${C}<b>${pbStar >= 0 ? T("盈余 ", "surplus of ") : T("赤字可达 ", "deficit of up to ")}${fmtPct(Math.abs(pbStar), 2)}</b>${T(" 的 GDP（今天的起点约需", " of GDP (at today's starting point about")} ${pbNow >= 0 ? T("盈余 ", "surplus ") : T("赤字 ", "deficit ")}${fmtPct(Math.abs(pbNow), 2)}${T("）", ")")}`);
+    const tp = (x) => fmtPct(x, 2).replace("%", "\\%");
+    lines.push(`${T("今天的 ", "Today's ")}${tex(`r - g = ${tp(R0 - g)}`)}${T("；长期的 ", "; long-run ")}${tex(`r - g = ${tp(s.r[YEARS] - g)}`)} ${s.r[YEARS] > g ? `<span class="bad">${T("（", "(")}${tex("r > g")}${T("：雪球自己会长大）", ": the snowball grows by itself)")}</span>` : `<span class="ok">${T("（", "(")}${tex("g > r")}${T("：增长帮你稀释旧债）", ": growth dilutes old debt)")}</span>`}`);
+    lines.push(`${T("让债务/GDP 在 30 年后的水平稳定所需的基本余额 ", "Primary balance needed to stabilize debt at its year-30 level, ")}${tex(String.raw`\dfrac{r - g}{1 + g} \times d`)}${C}<b>${pbStar >= 0 ? T("盈余 ", "surplus of ") : T("赤字可达 ", "deficit of up to ")}${fmtPct(Math.abs(pbStar), 2)}</b>${T(" 的 GDP（今天的起点约需", " of GDP (at today's starting point about")} ${pbNow >= 0 ? T("盈余 ", "surplus ") : T("赤字 ", "deficit ")}${fmtPct(Math.abs(pbNow), 2)}${T("）", ")")}`);
     if (s.d[YEARS] > 1.5) lines.push(`<span class="warn">${T("30 年后债务超过 GDP 的 150%：利息会越来越多地挤占其他开支，这正是市场讨论“财政主导”的情景（阶段 9.4）。", "Debt above 150% of GDP after 30 years: interest crowds out ever more spending — the scenario behind talk of \"fiscal dominance\" (Stage 9.4).")}</span>`);
     if (g >= 0.065) lines.push(`<span class="warn">${T("高 g 路线靠的是通胀。如果市场预期到了，会要求更高的新债利率——试着把市场利率也调高看看。", "The high-g route relies on inflation. If markets see it coming, they demand higher rates on new debt — try raising the market rate too.")}</span>`);
     $("#dd-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

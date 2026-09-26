@@ -52,11 +52,15 @@ It is already sizable. As of August 23, 2026, Strategy's preferreds totaled abou
 - **It has already survived one bear market.** Bitcoin fell about 54% between October 2025 and July 2026, and Strategy says its preferred dividends were paid in full and on time throughout, while it built a USD Reserve of about $5 billion (as of September 20). Asset classes usually earn their reputation in their first big bear market.
 - **The model says the risk is small; the market's compensation is large.** The calculation below is the bulls' core evidence. The market's spread dwarfs what the model needs, which suggests **early buyers are collecting a "new asset class premium"** that should shrink as the product becomes familiar; supporters like to compare it with the young high-yield bond market of the 1980s.
 
+BTC Risk comes from a lognormal model with inputs \\(\\text{BTC Rating} = 5.7\\times\\), expected return \\(\\mu = 10\\%\\) a year, volatility \\(\\sigma = 40\\%\\) and a duration of 8.1 years:
+
 $$
-BTC Risk (lognormal): BTC Rating 5.7x, expected return 10%/yr, volatility 40%, duration 8.1 years → about 4.7%
-BTC Credit = −ln(1 − 4.7%) ÷ 8.1 ≈ 0.60% (Strategy reported 59bp for STRC)
-Actual market spread ≈ 12% (STRC dividend rate) − 5.2% (10-year Treasury) ≈ 6.8%
+\\text{BTC Risk} \\approx 4.7\\%
+\\text{BTC Credit} = \\frac{-\\ln\\left(1 - 4.7\\%\\right)}{8.1} \\approx 0.60\\%
+\\text{actual market spread} \\approx 12\\%\\ \\text{(STRC dividend rate)} - 5.2\\%\\ \\text{(10-year Treasury)} \\approx 6.8\\%
 $$
+
+Strategy reported a BTC Credit of 59bp for STRC.
 
 **The strongest case against:**
 - **The model's assumptions are exactly where the risk lives.** A lognormal model treats bitcoin's moves as smooth randomness, but bitcoin has had several 70% to 80% drawdowns (Stage 11.3). Raise volatility from 40% to 60% and the chance that the same 4x rating falls below 1x within about eight years jumps from roughly 9% to roughly 33%; the required spread goes from about 1.1% to about 5%. **The required spread is extremely sensitive to assumptions**, and that alone vindicates some market caution.
@@ -70,15 +74,15 @@ $$
 
 **The question.** Stage 16.2 showed that mNAV above 1 means the market pays more than a dollar for each dollar of bitcoin the company holds. Stage 16.7 showed that only above 1x does issuing common to buy bitcoin **raise** bitcoin per share. The premium is the fuel for the entire DAT flywheel. So is it **structural value** (the company can do something others can't) or **cyclical sentiment** (it appears in bull markets and vanishes in bear markets)?
 
-**Turning the premium into time.** Suppose a DAT can use premium issuance to grow bitcoin per share by g each year. How many years does it take to "earn back" an mNAV multiple of m that you pay today?
+**Turning the premium into time.** Suppose a DAT can use premium issuance to grow bitcoin per share by \\(g\\) each year. How many years does it take to "earn back" an mNAV multiple of \\(m\\) that you pay today?
 
 $$
-Years to earn back the premium ≈ ln(m) ÷ ln(1 + g)
-Orange Corp: m = 1.5, g = 10% → ln 1.5 ÷ ln 1.1 ≈ 4.3 years
-m = 2.0, g = 20% → about 3.8 years
+\\text{years to earn back the premium} \\approx \\frac{\\ln(m)}{\\ln(1 + g)}
+\\text{Orange Corp: }\\ m = 1.5,\\ g = 10\\% \\Rightarrow \\frac{\\ln(1.5)}{\\ln(1.1)} \\approx 4.3\\ \\text{years}
+m = 2.0,\\ g = 20\\% \\Rightarrow \\frac{\\ln(2.0)}{\\ln(1.2)} \\approx 3.8\\ \\text{years}
 $$
 
-That turns an abstract argument into two numbers people can actually argue about: **how high the premium m is, and how long growth in bitcoin per share, g, can last.** Note the reflexive loop (Stage 10.4): g depends on m (a bigger premium makes issuance more accretive), while m depends on what the market expects g to be.
+That turns an abstract argument into two numbers people can actually argue about: **how high the premium \\(m\\) is, and how long growth in bitcoin per share, \\(g\\), can last.** Note the reflexive loop (Stage 10.4): \\(g\\) depends on \\(m\\) (a bigger premium makes issuance more accretive), while \\(m\\) depends on what the market expects \\(g\\) to be.
 
 **The strongest case for:**
 - **Volatility is a real, saleable asset.** A DAT can sell bitcoin's volatility to convertible-arbitrage funds (Stage 17.2) and sell yield to preferred buyers (Stage 17.3). An ETF can't generate those cash flows, so DAT common deserves to trade richer than an ETF.
@@ -187,10 +191,10 @@ The two most dangerous people are the one who reads a single station and announc
       explain: "The lesson doesn't pick a side for you. The **tenfold gap** has two serious explanations that imply different futures. Your job is to write down which signposts (spreads narrowing without a rally, a rating method, more issuers, paying through a bear market) would move you which way.",
     },
     {
-      q: "A DAT trades at an mNAV of 2.0 and can grow bitcoin per share 20% a year through premium issuance. Using ln(m) ÷ ln(1+g), roughly how many years does it take to earn back the premium?",
+      q: "A DAT trades at an mNAV of 2.0 and can grow bitcoin per share 20% a year through premium issuance. Using \\(\\dfrac{\\ln(m)}{\\ln(1+g)}\\), roughly how many years does it take to earn back the premium?",
       options: ["About 1 year", "About 3.8 years", "About 10 years", "Never"],
       answer: 1,
-      explain: "ln(2) ÷ ln(1.2) ≈ 0.693 ÷ 0.182 ≈ **3.8 years**. Note that g itself depends on the premium: the closer mNAV gets to 1, the less accretive issuance becomes and the lower g falls. That's the reflexive loop.",
+      explain: "\\(\\dfrac{\\ln(2)}{\\ln(1.2)} \\approx \\dfrac{0.693}{0.182} \\approx\\) **3.8 years**. Note that \\(g\\) itself depends on the premium: the closer mNAV gets to 1, the less accretive issuance becomes and the lower \\(g\\) falls. That's the reflexive loop.",
     },
     {
       q: "What is the Kansas City Fed's core argument about stablecoins and Treasury demand?",
@@ -207,7 +211,7 @@ The two most dangerous people are the one who reads a single station and announc
       q: "If AI pushes long rates higher and the required yield on a $100, 10%-dividend perpetual preferred rises from 10% to 12%, what is its approximate price using the perpetuity formula?",
       options: ["About $120", "About $100", "About $90.90", "About $83.30"],
       answer: 3,
-      explain: "Perpetuity price = annual dividend ÷ required yield = 10 ÷ 0.12 ≈ **$83.30**. That is how the AI-and-rates question flows through to the price of bitcoin credit (Stage 18.1).",
+      explain: "\\(\\text{perpetuity price} = \\dfrac{\\text{annual dividend}}{\\text{required yield}} = \\dfrac{10}{0.12} \\approx\\) **$83.30**. That is how the AI-and-rates question flows through to the price of bitcoin credit (Stage 18.1).",
     },
     {
       q: "Which of these is a signpost this lesson lists for tokenized collateral?",

@@ -1,6 +1,6 @@
 // 交互演示：证券化实验室——房贷池 → 分层 MBS → 用夹层再打包的 CDO。
 // A. 拖房价跌幅，看每一层亏多少（瀑布公式 waterfall）；B. 调“各地房贷池的相关性”，蒙特卡洛看 MBS 的 AAA 与 CDO 的“AAA”各有多大概率亏钱。
-import { waterfall, fmtPct, clamp, rng, randn } from "./_fin.js";
+import { waterfall, fmtPct, clamp, rng, randn, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -56,7 +56,7 @@ export default function mount(root, lang) {
           <div class="stat"><div class="k">${T("CDO“AAA”平均亏损", "CDO “AAA” average loss")}</div><div class="v" id="c08-ac">–</div></div>
         </div>
         <div class="demo-log" id="c08-log"></div>
-        <div class="demo-meta">${T("每次模拟 2,000 个“年份”× 40 个地区房贷池；池子亏损 = 平均值 × 对数正态冲击，冲击由“全国因子”与“地区因子”按相关性混合。示意模型，不是历史数据。", "Each run simulates 2,000 “years” × 40 regional pools; pool loss = average × a lognormal shock that mixes a national factor and a regional factor by the correlation. A stylized model, not historical data.")}</div>
+        <div class="demo-meta">${T(`每次模拟 2,000 个“年份”，每年 40 个地区房贷池；${tex(String.raw`\text{池子亏损} = \text{平均值} \times \text{对数正态冲击}`)}，冲击由“全国因子”与“地区因子”按相关性混合。示意模型，不是历史数据。`, `Each run simulates 2,000 “years” of 40 regional pools each; ${tex(String.raw`\text{pool loss} = \text{average} \times \text{lognormal shock}`)}, where the shock mixes a national factor and a regional factor by the correlation. A stylized model, not historical data.`)}</div>
       </div>
       <p class="demo-tip">${T(
         "先在 A 里把房价跌幅拖到 20%：MBS 的 AAA 纹丝不动，CDO 的“AAA”已经开始亏。再到 B，把相关性从 10% 拉到 80%：平均亏损一点没变，CDO“AAA”的亏钱概率却从几乎为零跳到明显不可忽视——评级模型押错的正是这一个参数。",

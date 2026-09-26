@@ -35,7 +35,7 @@ This lesson rests on **Idea ① The price of time** and **Idea ④ Risk & levera
 
 - **① One day, one snapshot: how to read a yield curve**
 - **② Four shapes: normal, flat, inverted and humped**
-- **③ Long rates = expected short rates + the term premium**
+- **③ \\(\\text{Long rates} = \\text{expected short rates} + \\text{the term premium}\\)**
 - **④ Inversions and recessions: the record, the reasons, the exceptions**
 - **⑤ How the curve moves: bull and bear, steepening and flattening**
 `,
@@ -61,15 +61,15 @@ One more thing people overlook: **the left end of the curve is pinned by the Fed
 
 An example makes inversion concrete. Say you're a bank. You take 3-month deposits and pay 5% on them, and lend the money out for ten years at 4.5%. Every loan loses money. **A bank's basic business is borrowing short and lending long to earn the slope of the curve.** Invert the curve and that business gets hard, banks lend less, and the economy cools. That's one real mechanism behind inversions “predicting” recessions, not just a coincidence.
 
-### ③ Long rates = expected short rates + the term premium
+### ③ \\(\\text{Long rates} = \\text{expected short rates} + \\text{the term premium}\\)
 
 This is the formula for understanding the whole curve:
 
 $$
-Long-term yield ≈ average of expected future short-term rates + term premium
+\\text{Long-term yield} \\approx \\text{average of expected future short-term rates} + \\text{term premium}
 $$
 
-**Part one: expectations.** Suppose the 1-year rate today is 4%, and everyone expects the 1-year rate a year from now to be 6%. You have two choices: buy a 2-year bond now, or buy a 1-year bond and roll into another 1-year bond when it matures. If the two paths offered different expected returns, someone would arbitrage the gap. So the 2-year yield should be about (4% + 6%) ÷ 2 = **5%**. Extend the idea and **the 10-year yield contains the market's average expectation of the policy rate over the next ten years.**
+**Part one: expectations.** Suppose the 1-year rate today is 4%, and everyone expects the 1-year rate a year from now to be 6%. You have two choices: buy a 2-year bond now, or buy a 1-year bond and roll into another 1-year bond when it matures. If the two paths offered different expected returns, someone would arbitrage the gap. So the 2-year yield should be about \\(\\dfrac{4\\% + 6\\%}{2} = 5\\%\\). Extend the idea and **the 10-year yield contains the market's average expectation of the policy rate over the next ten years.**
 
 Read the September 2026 data this way. The 2-year yield is about 4.81%, clearly above the 3.75%–4.00% fed funds range. By the expectations formula, the market is saying: **over the next two years, the average policy rate will be higher than today's.** In other words, more hikes.
 
@@ -149,7 +149,7 @@ An experienced traveler can read the rate card and guess what the owner thinks i
 
   quiz: [
     {
-      q: "On September 25, 2026, the 2-year Treasury yield was about 4.81% while the fed funds target range was 3.75%–4.00%. Using “long rate ≈ average expected short rate + term premium,” what does this most likely say?",
+      q: "On September 25, 2026, the 2-year Treasury yield was about 4.81% while the fed funds target range was 3.75%–4.00%. Using \\(\\text{long rate} \\approx \\text{average expected short rate} + \\text{term premium}\\), what does this most likely say?",
       options: [
         "The market expects the Fed to cut sharply soon",
         "The market expects the average policy rate over the next two years to be above today's, meaning possible further hikes",

@@ -14,7 +14,7 @@ Go back to the bakery from Stage 6.1. The neighbor put in $100,000 on these term
 
 First, the ways it looks like a **bond**:
 
-- The payout is a **fixed amount**: $100,000 × 8% = $8,000. Whether the bakery earns $100,000 or $1 million, the neighbor collects $8,000.
+- The payout is a **fixed amount**: \\(\\$100{,}000 \\times 8\\% = \\$8{,}000\\). Whether the bakery earns $100,000 or $1 million, the neighbor collects $8,000.
 - It ranks **ahead of the common**: as long as this year's $8,000 hasn't been paid, the owners can't pay themselves a dividend.
 
 Now the ways it looks like **stock**:
@@ -23,9 +23,9 @@ Now the ways it looks like **stock**:
 - **Skipping the payout is not a default.** In a bad year the owners can announce "no payout this year." If they skip the bank's interest, the bank can seize the shop. If they skip the neighbor's payout, the neighbor **cannot** force the bakery into bankruptcy over it.
 - It ranks **behind all debt**. If the bakery fails, the bank, the uncle and the classmate are all paid before the neighbor sees anything.
 
-So preferred stock is a **hybrid**: its income looks like debt (fixed), while its risk looks more like equity (junior, skippable, never matures). This lesson sits on **Idea ② (balance sheets & claims)** — preferred is the floor wedged between "debt" and "common" in the capital-stack floor plan — and on **Idea ① (the price of time)**: a fixed income stream that never matures is exactly the **perpetuity** of Stage 2.3, priced as annual dividend ÷ required yield. That makes it extremely sensitive to interest rates.
+So preferred stock is a **hybrid**: its income looks like debt (fixed), while its risk looks more like equity (junior, skippable, never matures). This lesson sits on **Idea ② (balance sheets & claims)** — preferred is the floor wedged between "debt" and "common" in the capital-stack floor plan — and on **Idea ① (the price of time)**: a fixed income stream that never matures is exactly the **perpetuity** of Stage 2.3, priced as \\(\\dfrac{\\text{annual dividend}}{\\text{required yield}}\\). That makes it extremely sensitive to interest rates.
 
-Pin that down with numbers. A classic bank preferred has a $25 par value and a 6% dividend rate: $1.50 a year. When the market demands a 6% yield, it is worth $1.50 ÷ 6% = $25. If long-term rates rise and the market now demands 7%, it is worth $1.50 ÷ 7% ≈ **$21.43 — down about 14%.** That is nearly identical to Stage 4.5's "30-year Treasury yield up one percentage point, price down about 14%." **People who buy preferreds often think they're buying steady income; they are also buying a big slab of interest-rate risk.**
+Pin that down with numbers. A classic bank preferred has a $25 par value and a 6% dividend rate: $1.50 a year. When the market demands a 6% yield, it is worth \\(\\$1.50 \\div 6\\% = \\$25\\). If long-term rates rise and the market now demands 7%, it is worth \\(\\$1.50 \\div 7\\% \\approx \\mathbf{\\$21.43}\\) **— down about 14%.** That is nearly identical to Stage 4.5's "30-year Treasury yield up one percentage point, price down about 14%." **People who buy preferreds often think they're buying steady income; they are also buying a big slab of interest-rate risk.**
 
 Why would a company issue such a thing? Because for the issuer it is **a fixed cost that can't make it default**. Banks use it to build regulatory capital, utilities and real estate investment trusts (REITs) use it to raise money without adding debt, and rating agencies often count part of it as equity. The price is that it costs more than debt: the dividend isn't tax-deductible, and investors want more for standing on a lower floor.
 
@@ -46,7 +46,7 @@ Finally, this lesson cracks open the course's third headline: "Strategy issues a
 A preferred share really has only three core parameters.
 
 - **Par value / liquidation preference.** How much money it "stands for." In the US retail market it has traditionally been **$25** a share; institutional issues often use $1,000; the new generation of DAT preferreds commonly uses **$100**. In a liquidation, a preferred holder gets at most this amount (plus any dividends owed but unpaid).
-- **Dividend rate.** The annual dividend as a percentage of par. $25 at 6% → $1.50 a year, usually paid as $0.375 a quarter.
+- **Dividend rate.** The annual dividend as a percentage of par. $25 at 6% → \\(\\$25 \\times 6\\% = \\$1.50\\) a year, usually paid as $0.375 a quarter.
 - **Term.** The overwhelming majority are **perpetual**, with no maturity date; the issuer usually has the right to **redeem (call)** them at par after some years (Stage 6.3 dissects that option).
 
 Line it up against a bond and a common share:
@@ -67,11 +67,12 @@ For an issuer, the value of preferred stock fits in one sentence: **it is a fixe
 The cost is just as clear:
 
 $$
-After-tax cost of debt = interest rate × (1 − corporate tax rate): 6% × (1 − 21%) ≈ 4.74%
-Cost of preferred = dividend rate (paid from after-tax profit, not deductible): 6%
+\\text{after-tax cost of debt} = \\text{interest rate} \\times (1 - \\text{corporate tax rate})
+6\\% \\times (1 - 21\\%) \\approx 4.74\\%
+\\text{cost of preferred} = \\text{dividend rate} = 6\\%
 $$
 
-Add the extra return investors demand for standing on a lower floor, and **for a normal taxpaying company, preferred stock is usually much more expensive than debt.** So the issuers tend to be companies with a special reason: banks that need regulatory capital, utilities with leverage constraints, REITs that must pay out most of their profits — and a new kind of issuer: **DATs that have no operating cash flow but want leverage without margin-callable debt.**
+Preferred dividends are paid from after-tax profit and are not deductible, so the cost of preferred is simply its dividend rate. Add the extra return investors demand for standing on a lower floor, and **for a normal taxpaying company, preferred stock is usually much more expensive than debt.** So the issuers tend to be companies with a special reason: banks that need regulatory capital, utilities with leverage constraints, REITs that must pay out most of their profits — and a new kind of issuer: **DATs that have no operating cash flow but want leverage without margin-callable debt.**
 
 ### ③ Who issues, who buys: banks, REITs, utilities — and yields
 
@@ -86,9 +87,11 @@ Add the extra return investors demand for standing on a lower floor, and **for a
 **Where do yields sit?** Traditional investment-grade preferreds move with the rate environment and broadly land in the zone of "long-term Treasury yield plus a few percentage points"; lower-rated or unrated issuers pay more. Plug the formula from Stage 2.4 in:
 
 $$
-Required preferred yield ≈ risk-free rate + credit premium + subordination premium + liquidity / terms premium
-Example: 5% (30-year Treasury) + 1% (credit) + 0.5% (behind debt) + 0.5% (perpetual, callable) ≈ 7%
+\\text{required preferred yield} \\approx \\text{risk-free rate} + \\text{credit premium} + \\text{subordination premium} + \\text{liquidity / terms premium}
+\\underbrace{5\\%}_{\\text{30-year Treasury}} + \\underbrace{1\\%}_{\\text{credit}} + \\underbrace{0.5\\%}_{\\text{behind debt}} + \\underbrace{0.5\\%}_{\\text{perpetual, callable}} \\approx 7\\%
 $$
+
+The second line is an example.
 
 If any of the four blocks grows, the preferred's price must fall. **When the 30-year Treasury yield climbs above 5% (Stage 4.5; as of late September 2026 it was about 5.5%, the highest since 2004 — check treasury.gov for live data), traditional preferred yields are pushed up with it** — because buyers can always turn around and buy the safer long bond instead. That is the thread tying the course's first headline to its third.
 
@@ -97,18 +100,20 @@ If any of the four blocks grows, the preferred's price must fall. **When the 30-
 A preferred that never matures and pays a fixed dividend has exactly the cash flows of Stage 2.3's perpetuity:
 
 $$
-Price P = D ÷ y (D = annual dividend, y = required yield)
-Modified duration ≈ 1 ÷ y
+P = \\frac{D}{y}
+\\text{modified duration} \\approx \\frac{1}{y}
 $$
 
-More precisely, a perpetuity's Macaulay duration is (1 + y) ÷ y and its modified duration is 1 ÷ y (Stage 4.4 noted that "the duration of a perpetual is about 1/y"). Some numbers:
+Here \\(P\\) is the price, \\(D\\) the annual dividend and \\(y\\) the required yield.
+
+More precisely, a perpetuity's Macaulay duration is \\(\\dfrac{1 + y}{y}\\) and its modified duration is \\(\\dfrac{1}{y}\\) (Stage 4.4 noted that "the duration of a perpetual is about \\(1/y\\)"). Some numbers:
 
 <table class="pm">
 <tr><th>Preferred</th><th>Annual dividend</th><th>Required yield</th><th>Price</th><th>Modified duration</th><th>After yield +1 point</th></tr>
-<tr><td>Classic bank preferred ($25, 6%)</td><td>1.50</td><td>6%</td><td>25.00</td><td>≈ 16.7</td><td>21.43 (−14.3%)</td></tr>
+<tr><td>Classic bank preferred ($25, 6%)</td><td>1.50</td><td>6%</td><td>25.00</td><td>\\(\\approx 16.7\\)</td><td>21.43 (−14.3%)</td></tr>
 <tr><td>Same, but market demands 5%</td><td>1.50</td><td>5%</td><td>30.00*</td><td>20</td><td>25.00 (−16.7%)</td></tr>
 <tr><td>Orange Corp's Orange-F ($100, 10%)</td><td>10.00</td><td>10%</td><td>100.00</td><td>10</td><td>90.91 (−9.1%)</td></tr>
-<tr><td>Benchmark: 30-year Treasury (5% coupon)</td><td>5.00</td><td>5%</td><td>100.00</td><td>≈ 15.5</td><td>86.16 (−13.8%)</td></tr>
+<tr><td>Benchmark: 30-year Treasury (5% coupon)</td><td>5.00</td><td>5%</td><td>100.00</td><td>\\(\\approx 15.5\\)</td><td>86.16 (−13.8%)</td></tr>
 </table>
 
 (*In practice a callable preferred rarely trades far above par: the issuer would call it at par and reissue at a lower rate. That is "negative convexity," covered in Stage 6.3.)
@@ -157,7 +162,7 @@ A bitcoin-backed preferred swaps the storefront for **a vault whose value swings
 
   misconceptions: [
     "**\"Preferred stock is just a higher-yielding bond, and just as safe.\"** — It ranks behind all debt, its dividend can be skipped without a default, and it has no maturity date to hand your principal back. The higher yield is payment for exactly those extra risks.",
-    "**\"Preferred prices are stable because the dividend is fixed.\"** — Fixed dividend + perpetual = very long duration. A $25, 6% preferred loses about 14% when its yield rises one point, roughly like a 30-year Treasury. \"Fixed\" describes the income, not the price.",
+    "**\"Preferred prices are stable because the dividend is fixed.\"** — A fixed dividend plus no maturity means a very long duration. A $25, 6% preferred loses about 14% when its yield rises one point, roughly like a 30-year Treasury. \"Fixed\" describes the income, not the price.",
     "**\"If a company skips its preferred dividend, it has defaulted.\"** — No. Preferred dividends are declared by the board; not declaring one isn't a default, and holders can't file to put the company into bankruptcy. Cumulative arrears must be caught up before the common gets paid; non-cumulative dividends are simply lost.",
     "**\"Preferred is safer than common, so it must be the better investment.\"** — Safer isn't better. A preferred's upside is capped: when the company does brilliantly, you still get only the fixed dividend. It trades upside for downside protection; whether that suits you depends on what you want.",
     "**\"A 10% yield on a bitcoin-backed preferred means it's as dangerous as a junk bond.\"** — A yield is the price of risk, not the type of risk. Its risks (bitcoin volatility, dependence on fundraising) differ from a junk bond's (a failing business), and they have to be measured specifically — with asset coverage, reserve months and stress tests — not labeled from the number alone.",
@@ -173,7 +178,7 @@ A bitcoin-backed preferred swaps the storefront for **a vault whose value swings
         "About $12.50 — cut in half",
       ],
       answer: 1,
-      explain: "Perpetuity price = dividend ÷ yield: 1.50 ÷ 7% ≈ 21.43, down about 14%. **Modified duration ≈ 1/y ≈ 16.7**, in the same league as a 30-year Treasury.",
+      explain: "\\(\\text{perpetuity price} = \\text{dividend} \\div \\text{yield} = 1.50 \\div 7\\% \\approx 21.43\\), down about 14%. **Modified duration** \\(\\approx 1/y \\approx 16.7\\), in the same league as a 30-year Treasury.",
     },
     {
       q: "For a normal taxpaying company, why is preferred stock usually more \"expensive\" than debt?",
@@ -184,7 +189,7 @@ A bitcoin-backed preferred swaps the storefront for **a vault whose value swings
         "Because preferred holders get votes",
       ],
       answer: 2,
-      explain: "A 6% bond costs about 6% × (1 − 21%) ≈ 4.74% after tax; a 6% preferred costs the full 6%. Add the **subordination premium** and preferred is pricier — which is why issuers tend to have a special reason (regulatory capital, leverage limits, DATs with no operating profit).",
+      explain: "A 6% bond costs about \\(6\\% \\times (1 - 21\\%) \\approx 4.74\\%\\) after tax; a 6% preferred costs the full 6%. Add the **subordination premium** and preferred is pricier — which is why issuers tend to have a special reason (regulatory capital, leverage limits, DATs with no operating profit).",
     },
     {
       q: "Which feature best captures a preferred's \"equity side\"?",
@@ -206,7 +211,7 @@ A bitcoin-backed preferred swaps the storefront for **a vault whose value swings
         "For perpetuals, a higher yield means a shorter duration and less rate risk — but a high yield usually reflects more credit risk",
       ],
       answer: 3,
-      explain: "A perpetual's modified duration ≈ 1/y: 10% → 10, 6% → 16.7. **The high yield shortens duration**, but that high yield is itself compensation for credit risk (bitcoin volatility, dependence on fundraising). Rate risk and credit risk are different things.",
+      explain: "A perpetual's modified duration \\(\\approx 1/y\\): \\(1 / 10\\% = 10\\), \\(1 / 6\\% \\approx 16.7\\). **The high yield shortens duration**, but that high yield is itself compensation for credit risk (bitcoin volatility, dependence on fundraising). Rate risk and credit risk are different things.",
     },
     {
       q: "Why are big US banks the main issuers of traditional preferred stock?",

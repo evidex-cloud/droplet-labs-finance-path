@@ -92,14 +92,14 @@ export default {
 
 <table class="pm">
 <tr><th>现象</th><th>例子（来自事实表）</th></tr>
-<tr><td><b>溢价消失</b></td><td>最大 20 家 DAT 中 16 家 mNAV &lt; 1（DWF Ventures，2026 年 9 月）；Metaplanet 0.58 倍、XXI 0.68 倍；ProCap 约 40% 折价</td></tr>
+<tr><td><b>溢价消失</b></td><td>最大 20 家 DAT 中 16 家 \\(\\mathrm{mNAV} \\lt 1\\)（DWF Ventures，2026 年 9 月）；Metaplanet 0.58 倍、XXI 0.68 倍；ProCap 约 40% 折价</td></tr>
 <tr><td><b>卖币</b>（付股息、回购或还债）</td><td>Strategy 全年约 6,948 BTC；Sequans 2025 年 11 月卖 970 BTC 减半债务，2026 年 9 月 24 日完全清仓；Nakamoto；ProCap 卖约 50 BTC 回购；英国 Satsuma 卖光 669 BTC、向股东返还 3,070 万英镑并从伦交所退市</td></tr>
 <tr><td><b>回购</b></td><td>Strategy 回购 STRC；SharpLink、Upexi；Nakamoto 与 Strive 的授权</td></tr>
 <tr><td><b>并购整合</b></td><td>Strive–Semler（2026-01-16 完成）；Nakamoto–BTC Inc/UTXO；Metaplanet–Super League（Superplanet）；XXI–Strike–Elektron（放弃）；BSTR 的 SPAC（终止）</td></tr>
 <tr><td><b>破产</b></td><td>2026 年未发现知名 DAT 破产（检索并非穷尽）；退市多为主动（Satsuma）或靠反向拆股避免（Nakamoto）</td></tr>
 </table>
 
-从这张表可以读出这一层最重要的一课：**决定一家 DAT 在熊市里命运的，不是它持有多少比特币，而是它的资本结构**。有抵押贷款的（Nakamoto）被迫卖币还债；有到期债务的（Sequans）卖币减债直至清仓；没有追保、有现金储备的（Strategy、Strive）则可以回购自己的证券、甚至在低点附近恢复买入。**当 mNAV < 1 时，合理的动作从“增发买币”变成了“卖币回购”**——ProCap 以约 40% 的折价回购股票就是这种逻辑（阶段 18.3 会讲这个决策的数学）。
+从这张表可以读出这一层最重要的一课：**决定一家 DAT 在熊市里命运的，不是它持有多少比特币，而是它的资本结构**。有抵押贷款的（Nakamoto）被迫卖币还债；有到期债务的（Sequans）卖币减债直至清仓；没有追保、有现金储备的（Strategy、Strive）则可以回购自己的证券、甚至在低点附近恢复买入。**当 \\(\\mathrm{mNAV} < 1\\) 时，合理的动作从“增发买币”变成了“卖币回购”**——ProCap 以约 40% 的折价回购股票就是这种逻辑（阶段 18.3 会讲这个决策的数学）。
 
 最后提醒一个统计上的陷阱：**幸存者偏差**。排行榜只显示今天还在的公司；那些宣布转型后股价崩溃、悄悄退出的公司，不会出现在“前 20 名”里。评价这门生意时，要同时看**失败的那一半**。**本课只讲机制与分析框架，不构成投资建议。**
 `,
@@ -136,7 +136,7 @@ export default {
         "约 95%",
       ],
       answer: 2,
-      explain: "846,000 ÷ 1,272,886 ≈ **66%**。第二名 XXI 的 43,514 BTC 还不到 Strategy 的 6%。",
+      explain: "\\(846{,}000 \\div 1{,}272{,}886 \\approx\\) **66%**。第二名 XXI 的 43,514 BTC 还不到 Strategy 的 6%。",
     },
     {
       q: "Metaplanet 在同一天有 0.58 倍、0.73 倍、0.79 倍三个 mNAV，最可能的原因是？",
@@ -180,7 +180,7 @@ export default {
         "暂停所有信息披露",
       ],
       answer: 1,
-      explain: "mNAV < 1 时股票比它背后的比特币便宜：卖 1 美元比特币回购股票，能注销超过 1 美元比特币对应的股份，**每股比特币上升**。ProCap 以约 40% 折价回购就是这个逻辑；增发买币则是稀释（阶段 18.3）。",
+      explain: "\\(\\mathrm{mNAV} < 1\\) 时股票比它背后的比特币便宜：卖 1 美元比特币回购股票，能注销超过 1 美元比特币对应的股份，**每股比特币上升**。ProCap 以约 40% 折价回购就是这个逻辑；增发买币则是稀释（阶段 18.3）。",
     },
   ],
 

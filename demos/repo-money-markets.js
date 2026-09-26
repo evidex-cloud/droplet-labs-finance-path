@@ -2,7 +2,7 @@
 // 选抵押品（2/10/30 年期国债、公司债、股票），调抵押品规模、折扣、回购利率与期限，
 // 算出能借多少、要多少本金、杠杆、一夜利息与年化套息；再施加利率冲击/股价下跌与折扣上调，
 // 看追加保证金是否超过本金；最后看同一份抵押品被再抵押几次能撑起多少信用。
-import { bondPrice, bondRisk, fmtUsd, fmtBig, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { bondPrice, bondRisk, fmtUsd, fmtBig, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -67,7 +67,7 @@ export default function mount(root, lang) {
           <div class="stat"><div class="k">${T("抵押品价格变化", "Collateral price change")}</div><div class="v neg" id="rp-pc">–</div></div>
           <div class="stat"><div class="k">${T("因价格下跌追加", "Call from price drop")}</div><div class="v" id="rp-c1">–</div></div>
           <div class="stat"><div class="k">${T("再加上折扣上调", "Plus the haircut hike")}</div><div class="v" id="rp-c2">–</div></div>
-          <div class="stat"><div class="k">${T("追加总额 ÷ 本金", "Total call ÷ capital")}</div><div class="v" id="rp-ratio">–</div></div>
+          <div class="stat"><div class="k">${tex(String.raw`\text{${T("追加总额", "Total call")}} \div \text{${T("本金", "capital")}}`)}</div><div class="v" id="rp-ratio">–</div></div>
         </div>
       </div>
       <div class="demo-block">

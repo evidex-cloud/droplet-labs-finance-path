@@ -1,6 +1,9 @@
 // 交互演示：飞轮沙盘——三种动作（增发普通股买币 / 发优先股买币 / 卖币回购普通股），多轮执行，
 // 同时追踪毛口径每股比特币（issueAndBuy）与每股净比特币（净储备 ÷ 股数），并显示两条分界线。
-import { issueAndBuy, btcRating, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { issueAndBuy, btcRating, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -140,10 +143,10 @@ export default function mount(root, lang) {
     const lines = [];
     if (s.mode === "common") {
       const first = r.notes[0], last = r.notes[r.notes.length - 1];
-      lines.push(`${T("第 1 轮：股价 ", "Round 1: share price ")}${fmtUsd(first.P, 2)}${T("；毛口径分界 = 每股比特币价值 10.00 美元，净口径分界 = 每股净比特币 ", "; gross line = bitcoin value per share $10.00, net line = Net BTC per share ")}${fmtUsd(first.netLine, 2)}`);
+      lines.push(`${T("第 1 轮：股价 ", "Round 1: share price ")}${fmtUsd(first.P, 2)}${T("；毛口径分界：", "; gross line: ")}${tex(String.raw`\text{${T("每股比特币价值", "bitcoin value per share")}} = \$10.00`)}${T("，净口径分界：", ", net line: ")}${tex(String.raw`\text{${T("每股净比特币", "Net BTC per share")}} = ${texv(fmtUsd(first.netLine, 2))}`)}`);
       const zone = first.P > 10 ? `<span class="ok">${T("两者都增值", "accretive on both")}</span>` : first.P > first.netLine ? `<span class="warn">${T("毛降净升：BTC Yield 为负，但新股本在降杠杆", "gross down, net up: negative BTC Yield, but the new equity is de-levering")}</span>` : `<span class="bad">${T("两者都稀释", "dilutive on both")}</span>`;
       lines.push(`${T("所在区间：", "Zone: ")}${zone}`);
-      lines.push(`${T("单轮公式：(1 + x × m) ÷ (1 + x) − 1 = ", "One-round formula: (1 + x × m) ÷ (1 + x) − 1 = ")}(1 + ${s.frac / 100} × ${fmtNum(first.m, 2)}) ÷ ${fmtNum(1 + s.frac / 100, 2)} − 1 = <b>${fmtPct((1 + (s.frac / 100) * first.m) / (1 + s.frac / 100) - 1, 2)}</b>`);
+      lines.push(`${T("单轮公式：", "One-round formula: ")}${tex(String.raw`\frac{1 + x \times m}{1 + x} - 1 = \frac{1 + ${s.frac / 100} \times ${texv(fmtNum(first.m, 2))}}{${texv(fmtNum(1 + s.frac / 100, 2))}} - 1 = \mathbf{${texv(fmtPct((1 + (s.frac / 100) * first.m) / (1 + s.frac / 100) - 1, 2))}}`)}`);
       if (s.decay > 0) lines.push(`${T("反身性：mNAV 从 ", "Reflexivity: mNAV slides from ")}${fmtNum(first.m, 2)}x${T(" 衰减到 ", " to ")}${fmtNum(last.m, 2)}x${T("；当股价跌破净口径分界线，飞轮开始倒转。", "; once the price falls below the net line, the flywheel runs backwards.")}`);
     } else if (s.mode === "buyback") {
       const first = r.notes[0];
@@ -155,7 +158,7 @@ export default function mount(root, lang) {
       lines.push(`${T("代价：卖币让 F 层 BTC 评级从 4.00 倍降到 ", "The cost: selling coins cuts the F layer's BTC Rating from 4.00x to ")}<b>${fmtNum(ratingF, 2)}x</b>${T("——普通股的回购用的是优先股的覆盖。", " — the common's buyback is paid for with the preferreds' coverage.")}`);
     } else {
       const n1 = r.notes[0];
-      lines.push(`${T("每年发行名义 ", "Each year issues notional ")}${fmtNum(n1.X, 0)}M${T("，收款 ", ", receiving ")}${fmtNum(n1.proceeds, 0)}M${s.issuePct < 100 ? T("——低于面值发行，发行当天就少了 ", " — issuing below par loses ") + fmtNum(n1.X - n1.proceeds, 1) + T("M 净储备", "M of Net Reserve on day one") : ""}${T("。有效成本 ", ". Effective cost ")}${fmtPct((s.rate / 100) / (s.issuePct / 100), 2)}${T("，比特币年回报 ", " vs bitcoin's annual return ")}${s.g}%`);
+      lines.push(`${T("每年发行名义 ", "Each year issues notional ")}${fmtNum(n1.X, 0)}M${T("，收款 ", ", receiving ")}${fmtNum(n1.proceeds, 0)}M${s.issuePct < 100 ? T("——低于面值发行，发行当天就少了 ", " — issuing below par loses ") + fmtNum(n1.X - n1.proceeds, 1) + T("M 净储备", "M of Net Reserve on day one") : ""}${T("。有效成本 ", ". Effective cost ")}${tex(String.raw`\frac{${s.rate}\%}{${s.issuePct}\%} = ${texv(fmtPct((s.rate / 100) / (s.issuePct / 100), 2))}`)}${T("，比特币年回报 ", " vs bitcoin's annual return ")}${s.g}%`);
       lines.push(s.g / 100 > (s.rate / 100) / (s.issuePct / 100)
         ? `<span class="ok">${T("比特币跑赢成本：借来的币在增值（每股净比特币高于基线）。", "Bitcoin beats the cost: the borrowed coins add value (Net BTC per share above the baseline).")}</span>`
         : `<span class="bad">${T("比特币跑输成本：放大在减值——这就是 BTC Hurdle ARR 的含义。", "Bitcoin trails the cost: amplification is subtracting value — the meaning of the BTC Hurdle ARR.")}</span>`);

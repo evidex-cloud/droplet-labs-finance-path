@@ -1,7 +1,10 @@
 // 交互演示：清偿顺序实战——拖动比特币跌幅，把 Strategy 的真实楼层（2026 年 9 月快照，推算）
 // 或橙子公司逐层清算：waterfall 给出每层回收，btcRating 给出覆盖倍数，btcFloorPrice 给出地板价；
 // 可切换是否计入美元资产、次级优先股的内部顺序（未经核实）；再模拟“暂停优先股股息 N 个月”的拖欠与永久损失。
-import { waterfall, btcRating, btcFloorPrice, fmtPct, fmtNum, fmtUsd, fmtBig } from "./_fin.js";
+import { waterfall, btcRating, btcFloorPrice, fmtPct, fmtNum, fmtUsd, fmtBig, tex } from "./_fin.js";
+
+// 金额写进公式：$21.32B → \$21.32\text{B}
+const texBig = (x) => "\\$" + fmtBig(x, 2).replace(/([A-Z])$/, "\\text{$1}");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -64,7 +67,7 @@ export default function mount(root, lang) {
         <div class="demo-btns">${[0, 30, 50, 70, 85].map((v) => `<button class="demo-btn" data-dd="${v}">−${v}%</button>`).join("")}</div>
       </div>
       <div class="stat-row" id="sn-stats"></div>
-      <div class="demo-block"><div class="demo-label">${T("每层：条形 = 清算回收率；右侧 = BTC 评级 · 地板价", "Each floor: bar = liquidation recovery; right = BTC Rating · floor price")}</div><div class="stages" id="sn-stack"></div></div>
+      <div class="demo-block"><div class="demo-label">${T("每层：条形为清算回收率；右侧为 BTC 评级 · 地板价", "Each floor: the bar is liquidation recovery; on the right, BTC Rating · floor price")}</div><div class="stages" id="sn-stack"></div></div>
       <div class="demo-block" id="sn-div"></div>
       <div class="demo-block"><div class="demo-log" id="sn-log"></div></div>
       <p class="demo-tip">${T(
@@ -140,7 +143,10 @@ export default function mount(root, lang) {
     if (!firstHit) lines.push(`<span class="ok">${T("所有固定索取权都被全额覆盖：这一跌幅的损失全部由普通股承担（剩余", "Every fixed claim is fully covered: the whole loss at this drop falls on the common (residual")} ${fmtBig(wf.equity)}${T("）。", ").")}</span>`);
     else lines.push(`<span class="bad">${T("损失已经从底部爬到", "The loss has climbed from the bottom up to")} <b>${firstHit.name}</b>${T("（回收", " (recovery")} ${fmtPct(firstHit.recovery, 0)}${T("）；它下面的所有层与普通股都已归零。", "); every floor below it, and the common, is at zero.")}</span>`);
     const thin = rows.filter((r) => r.recovery >= 0.999 && r.rating < 1.25);
-    if (thin.length) lines.push(`<span class="warn">${T("站在边缘（覆盖 < 1.25 倍）", "On the edge (coverage < 1.25x)")}${T("：", ": ")}${thin.map((r) => r.name).join(T("、", ", "))}</span>`);
+    const last = rows[rows.length - 1], lastCum = layers.reduce((a, l) => a + l.claim, 0);
+    const lastR = !isFinite(last.rating) || last.rating >= 100 ? String.raw`> 100\times` : String.raw`\approx ${fmtNum(last.rating, 2)}\times`;
+    lines.push(`${last.name}${T("：", ": ")}${tex(String.raw`\text{${T("BTC 评级", "BTC Rating")}} = \dfrac{\text{${T("比特币价值", "bitcoin value")}}}{\text{${T("累计索取权", "cumulative claims")}}${usd ? String.raw` - \text{${T("美元资产", "USD assets")}}` : ""}} = \dfrac{${texBig(btcV)}}{${texBig(lastCum)}${usd ? " - " + texBig(usd) : ""}} ${lastR}`)}`);
+    if (thin.length) lines.push(`<span class="warn">${T("站在边缘", "On the edge")} (${tex(String.raw`\text{${T("覆盖", "coverage")}} < 1.25\times`)})${T("：", ": ")}${thin.map((r) => r.name).join(T("、", ", "))}</span>`);
     if (st.co === "mstr" && !st.usd) lines.push(`${T("提示：Strategy 自己的 BTC 评级会先用约 60.9 亿美元的美元资产抵减债务——切到“计入”看差别。", "Note: Strategy's own BTC Rating nets about $6.09B of USD assets against debt first; switch to “Included” to see the difference.")}`);
     if (st.co === "mstr" && st.jr === "deck") lines.push(`<span class="warn">${T("STRE→STRK→STRD 的顺序来自公司简报的计算方式，一手条款未明文确认。", "The STRE→STRK→STRD order comes from the calculation order in a company deck; primary terms don't state it explicitly.")}</span>`);
     lines.push(`${T("这是“此刻一次性清算”的机械计算，不是预测；真实世界里损失先以 mNAV 压缩、卖币付息、优先股跌破面值与股息暂停的形式出现。", "This is a mechanical \"liquidate everything right now\" calculation, not a forecast; in the real world losses first appear as mNAV compression, bitcoin sold for dividends, preferreds below par and dividend suspensions.")}`);

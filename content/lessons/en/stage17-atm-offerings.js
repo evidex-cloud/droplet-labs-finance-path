@@ -18,7 +18,7 @@ Suppose Orange Corp wants to raise $150 million to buy bitcoin. It has two route
 
 Picture it this way: an underwritten deal backs a dump truck up to the market and tips 10 million shares in at once; an ATM uses an eyedropper. **The eyedropper is slow, but it barely makes a splash.**
 
-For a DAT, the ATM is the engine of the flywheel from Stage 16.7. When the stock trades above the bitcoin value behind each share (mNAV above 1), every share sold brings in more bitcoin than that share represented, so **bitcoin per share rises**. Orange Corp sells 10 million shares at $15, buys 1,500 BTC, and its BTC per share climbs 4.5%. That is Stage 5.5's rule, "issuing above intrinsic value is accretive," applied directly to a DAT.
+For a DAT, the ATM is the engine of the flywheel from Stage 16.7. When the stock trades above the bitcoin value behind each share (\\(\\mathrm{mNAV} > 1\\)), every share sold brings in more bitcoin than that share represented, so **bitcoin per share rises**. Orange Corp sells 10 million shares at $15, buys 1,500 BTC, and its BTC per share climbs 4.5%. That is Stage 5.5's rule, "issuing above intrinsic value is accretive," applied directly to a DAT.
 
 But the engine has a switch, and **the switch is mNAV**. As mNAV slides toward 1, selling stock stops adding value; once commissions and market impact are counted, it can actively dilute. That is why Strategy's ATM activity tracks its mNAV: when the premium is rich it sells common hard; when the premium fades it shifts to selling preferreds, or sells common for dollars rather than for bitcoin.
 
@@ -65,7 +65,7 @@ An ATM is not free. Its cost comes in three layers:
 - **Market impact.** The more you sell each day, the deeper you eat into the order book and the lower your fills. Agents usually pace themselves with a **volume participation rate**, for example selling only 5% to 15% of each day's trading volume.
 - **Overhang.** The market knows there are still billions of dollars of unused capacity, so it expects a steady stream of supply, and that expectation alone can weigh on the price.
 
-A widely used rule of thumb is the **square-root law of market impact**: the cost of impact is roughly proportional to daily volatility × √(shares sold ÷ daily volume). A worked example: Orange Corp trades 5 million shares a day with 4% daily volatility. Selling 500,000 shares a day (a 10% participation rate) costs about 4% × √0.1 ≈ **1.3%** in impact. In a hurry, selling 1.5 million a day (30% participation), the impact is about 4% × √0.3 ≈ **2.2%**, but the 10 million shares are gone in 7 trading days rather than 20. **You can have fast or cheap, not both.**
+A widely used rule of thumb is the **square-root law of market impact**: the cost of impact is roughly proportional to \\(\\text{daily volatility} \\times \\sqrt{\\dfrac{\\text{shares sold}}{\\text{daily volume}}}\\). A worked example: Orange Corp trades 5 million shares a day with 4% daily volatility. Selling 500,000 shares a day (a 10% participation rate) costs about \\(4\\% \\times \\sqrt{0.1} \\approx \\mathbf{1.3\\%}\\) in impact. In a hurry, selling 1.5 million a day (30% participation), the impact is about \\(4\\% \\times \\sqrt{0.3} \\approx \\mathbf{2.2\\%}\\), but the 10 million shares are gone in 7 trading days rather than 20. **You can have fast or cheap, not both.**
 
 Now feed the costs back into the Stage 16.7 flywheel. Sell 10 million shares at $15 with 3% impact and a 2% commission, and the company really nets about $14.26 per share. That buys roughly 1,426 BTC instead of 1,500, and the gain in BTC per share shrinks from **+4.5%** to about **+3.9%**. Costs have eaten roughly a seventh of the accretion.
 
@@ -73,13 +73,13 @@ Now feed the costs back into the Stage 16.7 flywheel. Sell 10 million shares at 
 
 ### ③ Accretive or dilutive: mNAV is the ATM's on-off switch
 
-The core formula of Stage 16.7 turns into a simple test here. Sell at price P, with commission and impact together costing c, when the bitcoin value per share is N:
+The core formula of Stage 16.7 turns into a simple test here. Sell at price \\(P\\), with commission and impact together costing \\(c\\), when the bitcoin value per share is \\(N\\):
 
 $$
-bitcoin value each new share brings in = P × (1 − c)
-bitcoin value each new share takes a slice of = N
-accretive when P × (1 − c) > N, i.e. mNAV > 1 ÷ (1 − c)
-at a 5% cost: breakeven mNAV ≈ 1.053
+\\text{bitcoin value each new share brings in} = P \\times (1 - c)
+\\text{bitcoin value each new share takes a slice of} = N
+\\text{accretive when}\\ P \\times (1 - c) > N \\iff \\mathrm{mNAV} > \\frac{1}{1 - c}
+\\text{at a } 5\\% \\text{ cost: breakeven } \\mathrm{mNAV} = \\frac{1}{0.95} \\approx 1.053
 $$
 
 Three cases for Orange Corp (bitcoin value per share $10, selling 10 million shares, 2% total cost):
@@ -91,7 +91,7 @@ Three cases for Orange Corp (bitcoin value per share $10, selling 10 million sha
 <tr><td>$10</td><td>1.0</td><td>about −0.2%</td><td>Costs turn it dilutive</td></tr>
 </table>
 
-Always ask which mNAV. In 2025 Strategy used an **enterprise-value basis** and tied its ATM guidance to it (Q3 2025 earnings release, October 30, 2025): below 2.5x it would issue common "tactically" (mainly to pay interest and dividends), from 2.5x to 4.0x "opportunistically" to buy bitcoin, and above 4.0x "actively." In 2026 it switched to a new definition, share price ÷ **net** bitcoin per share (Stage 16.2); on that basis the figure was about **1.01x** on August 21, 2026.
+Always ask which mNAV. In 2025 Strategy used an **enterprise-value basis** and tied its ATM guidance to it (Q3 2025 earnings release, October 30, 2025): below 2.5x it would issue common "tactically" (mainly to pay interest and dividends), from 2.5x to 4.0x "opportunistically" to buy bitcoin, and above 4.0x "actively." In 2026 it switched to a new definition, \\(\\text{share price} \\div \\text{net bitcoin per share}\\) (Stage 16.2); on that basis the figure was about **1.01x** on August 21, 2026.
 
 With the premium close to 1x, Strategy still sold common, **but it sold for dollars, not bitcoin**. On December 1, 2025 it built a **$1.44 billion USD Reserve** by selling stock at an average mNAV of about 1.17x. In the week to August 23, 2026 it sold roughly $2 billion of common and set up a new $1.59 billion "USD Cash" pool. That is a different trade: **dilution in exchange for liquidity**, buying insurance for preferred dividends and debt interest (Stage 16.6). Supporters say the company is buying insurance cheaply while it still can; critics say it is "issuing stock to pay dividends," slowly thinning out bitcoin per share. Both sides are doing the same arithmetic, just from different points in time.
 
@@ -145,7 +145,7 @@ When is the stall worth running? **When passers-by will pay more for a share tha
   misconceptions: [
     "**\"The company announced a $21 billion ATM, so it's about to sell $21 billion of stock.\"** — An ATM size is the **ceiling** in a sales agreement. The company may sell a little, a lot, or nothing. Look at \"sold\" and \"capacity remaining\" in the weekly 8-K, not at the headline.",
     "**\"An ATM costs nothing because there's no underwriting discount.\"** — There are commissions, there is market impact, and there is the pressure a standing supply overhang puts on the price. The faster you sell, the bigger the impact; in the Orange Corp example, 3% impact plus a 2% commission ate about a seventh of the accretion.",
-    "**\"As long as it's selling stock to buy bitcoin, BTC per share must be rising.\"** — Only when the sale price, after costs, beats the bitcoin value per share (mNAV > 1 ÷ (1 − cost)). Near or below 1x mNAV, selling stock dilutes. And when the stock is sold for dollars (a reserve for dividends), BTC per share falls outright.",
+    "**\"As long as it's selling stock to buy bitcoin, BTC per share must be rising.\"** — Only when the sale price, after costs, beats the bitcoin value per share (\\(\\mathrm{mNAV} > \\dfrac{1}{1 - \\text{cost}}\\)). Near or below 1x mNAV, selling stock dilutes. And when the stock is sold for dollars (a reserve for dividends), BTC per share falls outright.",
     "**\"A preferred ATM doesn't dilute the common, so it doesn't affect the common.\"** — It adds no shares, but it puts a layer of fixed claims and annual dividend obligations **above** the common. The common's residual shrinks and becomes more volatile; whether that pays off depends on bitcoin outrunning the preferred's cost of capital over time.",
     "**\"DATs invented the ATM.\"** — ATMs have long been routine in US capital markets; utilities and REITs have used them for years to raise money as needed. What's distinctive about DATs is the scale, the frequency, and openly using the mNAV premium as the reason to sell.",
   ],
@@ -155,12 +155,12 @@ When is the stall worth running? **When passers-by will pay more for a share tha
       q: "Orange Corp's bitcoin value per share is $10, and ATM commission plus impact total 5%. Above what share price does selling stock to buy bitcoin stop diluting BTC per share?",
       options: [
         "$10.00",
-        "About $10.53 (mNAV ≈ 1.053)",
+        "About $10.53 (\\(\\mathrm{mNAV} \\approx 1.053\\))",
         "$15.00",
         "$9.50",
       ],
       answer: 1,
-      explain: "**Accretive when P × (1 − c) > N.** $10 ÷ 0.95 ≈ $10.53. Costs push the breakeven mNAV from 1.0 up to about 1.053.",
+      explain: "**Accretive when \\(P \\times (1 - c) > N\\).** \\(\\$10 \\div 0.95 \\approx \\$10.53\\). Costs push the breakeven mNAV from 1.0 up to about 1.053.",
     },
     {
       q: "Which statement best describes the difference between an ATM and an underwritten follow-on?",
@@ -189,11 +189,11 @@ When is the stall worth running? **When passers-by will pay more for a share tha
       options: [
         "It stays the same",
         "It triples",
-        "It rises from about 1.3% to about 2.2% (√3 ≈ 1.73x), but the days needed to finish drop from 20 to about 7",
+        "It rises from about 1.3% to about 2.2% (\\(\\sqrt{3} \\approx 1.73\\times\\)), but the days needed to finish drop from 20 to about 7",
         "It falls, because selling faster is cheaper",
       ],
       answer: 2,
-      explain: "Impact ∝ volatility × √participation: 4% × √0.1 ≈ 1.3% and 4% × √0.3 ≈ 2.2%. **You can have fast or cheap, not both.**",
+      explain: "\\(\\text{Impact} \\propto \\text{volatility} \\times \\sqrt{\\text{participation}}\\): \\(4\\% \\times \\sqrt{0.1} \\approx 1.3\\%\\) and \\(4\\% \\times \\sqrt{0.3} \\approx 2.2\\%\\). **You can have fast or cheap, not both.**",
     },
     {
       q: "What is the main effect of a preferred ATM on common shareholders?",

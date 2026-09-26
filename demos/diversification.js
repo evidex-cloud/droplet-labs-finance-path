@@ -1,6 +1,6 @@
 // 交互演示：两资产分散沙盘——调两项资产的收益、波动率、相关性与权重，
 // 实时看组合波动率、预期收益、夏普比率与各自的风险贡献；再用“N 只等权”面板看系统性风险的地板。
-import { port2Vol, sharpe, fmtPct, clamp } from "./_fin.js";
+import { port2Vol, sharpe, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -59,8 +59,8 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-log" id="dv-log"></div>
       <p class="demo-tip">${T(
-        "先点“60/40 组合 + 一小口比特币”：5% 的权重只让组合波动率上升不到 1 个百分点，但风险贡献条比资金权重条长得多——这才是你真正押的分量。再把 ρ 拖到 0.8，看午餐怎么变小；点“雨伞 + 冰淇淋”，把权重拖到 50%，波动率归零而收益不变。最后在 N 面板里把 N 拉到 100：风险停在 σ×√ρ 的地板上，再多也分不掉。",
-        "Start with “60/40 portfolio + a Bitcoin slice”: a 5% weight lifts portfolio volatility by less than one point, yet its risk-contribution bar is far longer than its dollar-weight bar — that's what you're really betting. Drag ρ up to 0.8 and watch the lunch shrink. Click “Umbrellas + ice cream” and set the weight to 50%: volatility hits zero while return stays put. Finally push N to 100 in the second panel: risk stalls at the σ×√ρ floor and no amount of extra holdings removes it."
+        `先点“60/40 组合 + 一小口比特币”：5% 的权重只让组合波动率上升不到 1 个百分点，但风险贡献条比资金权重条长得多——这才是你真正押的分量。再把 ${tex(String.raw`\rho`)} 拖到 0.8，看午餐怎么变小；点“雨伞 + 冰淇淋”，把权重拖到 50%，波动率归零而收益不变。最后在 N 面板里把 ${tex("N")} 拉到 100：风险停在 ${tex(String.raw`\sigma \times \sqrt{\rho}`)} 的地板上，再多也分不掉。`,
+        `Start with “60/40 portfolio + a Bitcoin slice”: a 5% weight lifts portfolio volatility by less than one point, yet its risk-contribution bar is far longer than its dollar-weight bar — that's what you're really betting. Drag ${tex(String.raw`\rho`)} up to 0.8 and watch the lunch shrink. Click “Umbrellas + ice cream” and set the weight to 50%: volatility hits zero while return stays put. Finally push ${tex("N")} to 100 in the second panel: risk stalls at the ${tex(String.raw`\sigma \times \sqrt{\rho}`)} floor and no amount of extra holdings removes it.`
       )}</p>
     </div>`;
 
@@ -118,12 +118,12 @@ export default function mount(root, lang) {
     const floor = sN * Math.sqrt(rN);
     const ns = [1, 2, 5, 10, 30, S.n].filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b);
     q("#dv-n").innerHTML = ns.map((n) => bar(`N = ${n}`, volN(n) / sN, n === S.n ? "var(--orange)" : "var(--blue)", fmtPct(volN(n), 1))).join("")
-      + `<div class="demo-meta">${T("地板（N → ∞）", "Floor (N → ∞)")}: σ×√ρ = ${fmtPct(floor, 1)} · ${T("已消除可分散风险的", "share of diversifiable risk removed")} ${fmtPct(sN > floor ? (sN - volN(S.n)) / (sN - floor) : 1, 0)}</div>`;
+      + `<div class="demo-meta">${T("地板", "Floor")}${T("：", ": ")}${tex(String.raw`N \to \infty:\ \sigma \times \sqrt{\rho} = ${fmtNum(sN * 100, 0)}\% \times \sqrt{${rN.toFixed(2)}} = ${fmtNum(floor * 100, 1)}\%`)} ·${T("已消除可分散风险的", "share of diversifiable risk removed")} ${fmtPct(sN > floor ? (sN - volN(S.n)) / (sN - floor) : 1, 0)}</div>`;
 
     const lines = [];
     lines.push(`${T("最低波动率组合：B 占", "Minimum-volatility mix: B at")} ${best}%${T("，波动率", ", volatility")} ${fmtPct(bestV, 2)}`);
-    if (rho >= 0.99) lines.push(`<span class="warn">${T("ρ ≈ 1：组合波动率等于加权平均，分散毫无作用。", "ρ ≈ 1: portfolio volatility equals the weighted average; diversification does nothing.")}</span>`);
-    else lines.push(`<span class="ok">${T("只要 ρ < 1，组合波动率就低于加权平均——少掉的", "Whenever ρ < 1, portfolio volatility is below the weighted average — the")} ${fmtPct(avg - vol, 2)} ${T("就是免费午餐。", "gap is the free lunch.")}</span>`);
+    if (rho >= 0.99) lines.push(`<span class="warn">${tex(String.raw`\rho \approx 1`)}${T("：组合波动率等于加权平均，分散毫无作用。", ": portfolio volatility equals the weighted average; diversification does nothing.")}</span>`);
+    else lines.push(`<span class="ok">${T("只要", "Whenever")} ${tex(String.raw`\rho < 1`)}${T("，组合波动率就低于加权平均——少掉的", ", portfolio volatility is below the weighted average — the")} ${fmtPct(avg - vol, 2)} ${T("就是免费午餐。", "gap is the free lunch.")}</span>`);
     if (isFinite(rcB) && w2 > 0 && rcB > 1.8 * w2) lines.push(`<span class="bad">${T("B 的风险贡献是其资金权重的", "B's risk contribution is")} ${(rcB / w2).toFixed(1)} ${T("倍：小仓位，大风险分量。", "× its dollar weight: small position, big share of risk.")}</span>`);
     q("#dv-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   }

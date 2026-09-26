@@ -2,11 +2,12 @@
 // 选一种产品（借贷存款、LP、质押、基差/合成美元、挖矿、代币化国债）与一种市场环境（牛市 / 平稳 / 熊市），
 // 把标称年化拆成“真实来源 + 代币补贴 − 无常损失 − 预期损失 − 成本”，再与 3 个月期国库券（4.24%）比较，
 // 并算出 1 万美元一年后的结果。
-import { fv, fmtPct, fmtUsd } from "./_fin.js";
+import { fv, fmtPct, fmtUsd, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
   const T = (zh, e) => (en ? e : zh);
+  const L = (s) => String(s).replace(/,/g, "{,}").replace(/%/g, "\\%"); // 格式化好的数字放进 LaTeX
   const C = T("：", ": ");
   const TBILL = 0.0424; // 2026 年 9 月 25 日 3 个月期国库券
 
@@ -15,7 +16,7 @@ export default function mount(root, lang) {
     lend: { name: T("借贷池存 USDC", "USDC in a lending pool"), pd: 0.01, lgd: 0.5,
       parts: (r) => [["real", T("借款人利息", "Borrower interest"), { bull: 0.09, calm: 0.05, bear: 0.025 }[r]], ["cost", T("Gas 与操作成本", "Gas & running costs"), -0.002]] },
     lp: { name: T("ETH/USDC 做 LP", "ETH/USDC liquidity provision"), pd: 0.01, lgd: 0.5, eth: true,
-      parts: (r) => [["real", T("交易手续费", "Trading fees"), { bull: 0.14, calm: 0.08, bear: 0.06 }[r]], ["il", T("无常损失（价格 ×2 / ×1.1 / ×0.5）", "Impermanent loss (price ×2 / ×1.1 / ×0.5)"), { bull: -0.0572, calm: -0.0011, bear: -0.0572 }[r]], ["cost", T("Gas 与再平衡成本", "Gas & rebalancing"), -0.005]] },
+      parts: (r) => [["real", T("交易手续费", "Trading fees"), { bull: 0.14, calm: 0.08, bear: 0.06 }[r]], ["il", T(`无常损失（价格 ${tex(String.raw`\times 2\ /\ \times 1.1\ /\ \times 0.5`)}）`, `Impermanent loss (price ${tex(String.raw`\times 2\ /\ \times 1.1\ /\ \times 0.5`)})`), { bull: -0.0572, calm: -0.0011, bear: -0.0572 }[r]], ["cost", T("Gas 与再平衡成本", "Gas & rebalancing"), -0.005]] },
     stake: { name: T("质押 ETH", "Staking ETH"), pd: 0.005, lgd: 0.3, eth: true,
       parts: () => [["real", T("质押奖励（新发 ETH + 交易费）", "Staking rewards (new ETH + fees)"), 0.03], ["cost", T("服务商佣金", "Operator commission"), -0.003]] },
     basis: { name: T("基差交易 / 合成美元", "Basis trade / synthetic dollar"), pd: 0.02, lgd: 0.4,
@@ -76,7 +77,7 @@ export default function mount(root, lang) {
     const p = P[prod];
     const parts = p.parts(regime);
     const el = pd * lgd;
-    const rows = [...parts, ["el", T("预期损失（概率 × 损失）", "Expected loss (probability × loss)"), -el]];
+    const rows = [...parts, ["el", T(`预期损失（${tex(String.raw`\text{概率} \times \text{损失}`)}）`, `Expected loss (${tex(String.raw`\text{probability} \times \text{loss}`)})`), -el]];
     const headline = parts.filter(([t]) => t === "real" || t === "sub").reduce((s, [, , v, nom]) => s + (nom ?? v), 0);
     const net = rows.reduce((s, [, , v]) => s + v, 0);
     const realSum = parts.filter(([t]) => t === "real").reduce((s, [, , v]) => s + v, 0);
@@ -98,6 +99,7 @@ export default function mount(root, lang) {
     q("#dy-fv").textContent = fmtUsd(fv(10000, net, 1));
 
     const lines = [];
+    lines.push(tex(String.raw`\text{${T("预期损失", "Expected loss")}} = ${L(fmtPct(pd, 1))} \times ${L(fmtPct(lgd, 0))} = ${L(fmtPct(el, 2))}`));
     const subNom = parts.filter(([t]) => t === "sub").reduce((s, [, , , nom]) => s + (nom || 0), 0);
     if (subNom > 0) lines.push(`<span class="warn">${T("看板上的 ", "Of the ")}${fmtPct(headline, 0)}${T(" 里有 ", " on the dashboard, ")}${fmtPct(subNom, 0)}${T(" 是代币补贴；按年末币价折算只剩 ", " is token subsidy; at the year-end token price it is worth only ")}${fmtPct(sub, 1)}${T("。补贴来自稀释其他持币人，币价一跌就缩水。", ". Subsidies come from diluting other holders and shrink when the token falls.")}</span>`);
     if (realSum < 0) lines.push(`<span class="bad">${T("真实来源为负：熊市里资金费率转负，空头反过来要付钱给多头。", "The real source is negative: in a bear market funding flips and shorts must pay longs.")}</span>`);

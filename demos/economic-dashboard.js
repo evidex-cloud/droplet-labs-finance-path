@@ -2,7 +2,7 @@
 // 演示按“标准化意外 × 经验敏感度”估算 2 年期 / 10 年期收益率的变动（示意的经验法则），用 _fin.js bondPrice
 // 换算标准例子（面值 1,000、票息 5%、10 年期）的价格变化；并按“环境”（通胀担忧 / 衰退担忧）给出股票与比特币的方向。
 // 游戏模式：先猜 2 年期收益率和股票的方向，再揭晓。所有系数均为教学示意，不是交易模型。
-import { bondPrice, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { bondPrice, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -92,7 +92,7 @@ export default function mount(root, lang) {
     const sgn = (x, d = 1) => (x > 0 ? "+" : x < 0 ? "−" : "") + fmtNum(Math.abs(x), d);
 
     $("#ed-stats").innerHTML = `
-      <div class="stat"><div class="k">${T("意外（实际 − 共识）", "Surprise (actual − consensus)")}</div><div class="v acc">${sgn(act - cons, ind.dec)}${ind.unit === "k" ? "k" : ind.unit}</div></div>
+      <div class="stat"><div class="k">${T("意外", "Surprise")} ${tex(String.raw`= \text{${T("实际", "actual")}} - \text{${T("共识", "consensus")}}`)}</div><div class="v acc">${sgn(act - cons, ind.dec)}${ind.unit === "k" ? "k" : ind.unit}</div></div>
       <div class="stat"><div class="k">${T("标准化意外（“热”为正）", "Standardized surprise (hot = +)")}</div><div class="v ${r.z > 0.5 ? "neg" : r.z < -0.5 ? "pos" : ""}">${sgn(r.z, 1)}σ</div></div>
       <div class="stat"><div class="k">${T("通常预测误差", "Typical forecast error")}</div><div class="v">${fmtV(ind, ind.sd)}</div></div>`;
 

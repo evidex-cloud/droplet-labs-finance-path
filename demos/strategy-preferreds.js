@@ -2,7 +2,9 @@
 // 在不同比特币价格下的 BTC 评级与地板价（可切换“Strategy 口径：先用美元资产抵债”与“不抵减”），
 // 次级优先股的内部顺序（未经核实）可切换“同级”或“简报顺序 STRE→STRK→STRD”；再用价格滑块算当前收益率。
 // 数据：2026-08-23 投资者简报（FWP）；次级系列名义为近似值，合计与 149.66 亿美元一致。
-import { btcRating, btcFloorPrice, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { btcRating, btcFloorPrice, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -123,13 +125,17 @@ export default function mount(root, lang) {
     const convVal = 0.1 * st.mstr;
     q("#sp-stats").innerHTML = `
       <div class="stat"><div class="k">${T("BTC 评级", "BTC Rating")}</div><div class="v ${sel.rating >= 2 ? "pos" : sel.rating >= 1 ? "acc" : "neg"}">${fmtR(sel.rating)}</div></div>
-      <div class="stat"><div class="k">${T("BTC 地板价（评级 = 1 倍）", "BTC floor price (rating = 1x)")}</div><div class="v">${isFinite(sel.rating) ? fmtUsd(btcFloorPrice(st.btcP, sel.rating), 0) : "$0"}</div></div>
+      <div class="stat"><div class="k">${T("BTC 地板价（评级为 1 倍）", "BTC floor price (rating at 1x)")}</div><div class="v">${isFinite(sel.rating) ? fmtUsd(btcFloorPrice(st.btcP, sel.rating), 0) : "$0"}</div></div>
       <div class="stat"><div class="k">${T("当前收益率", "Current yield")}</div><div class="v acc">${fmtPct(cy, 2)}</div></div>
       <div class="stat"><div class="k">${T("每次派息 / 股", "Per payment / share")}</div><div class="v">${S[st.pick].cur === "€" ? "€" : "$"}${fmtNum(perPay, 4)}</div></div>
-      ${st.pick === "STRK" ? `<div class="stat"><div class="k">${T("转股价值（0.1 × MSTR）", "Conversion value (0.1 × MSTR)")}</div><div class="v">${fmtUsd(convVal, 2)}</div></div>` : ""}`;
+      ${st.pick === "STRK" ? `<div class="stat"><div class="k">${T("转股价值", "Conversion value")} (${tex(String.raw`0.1 \times \text{MSTR}`)})</div><div class="v">${fmtUsd(convVal, 2)}</div></div>` : ""}`;
 
     const lines = [];
-    lines.push(`${T("BTC 储备", "BTC Reserve")} = 840,447 × ${fmtUsd(st.btcP, 0)} ≈ <b>${fmtUsd(reserve, 1)}B</b>${T("；", "; ")}${st.pick} ${T("的分母 = 本层 + 所有更优先层", "denominator = this layer + every senior layer")} ${fmtUsd(sel.cum, 2)}B${st.method === "net" ? T(" − 美元资产 66.9 亿", " − $6.69B of USD assets") : ""}${T("。", ".")}`);
+    const net = st.method === "net";
+    const denomTex = String.raw`${texv(fmtUsd(sel.cum, 2))}\text{B}` + (net ? String.raw` - \$6.69\text{B}` : "");
+    const ratingTex = !isFinite(sel.rating) || sel.rating > 100 ? String.raw`> 100\times` : String.raw`\approx \mathbf{${texv(fmtNum(sel.rating, 2))}\times}`;
+    lines.push(tex(String.raw`\text{${T("BTC 储备", "BTC Reserve")}} = 840{,}447 \times ${texv(fmtUsd(st.btcP, 0))} \approx \mathbf{${texv(fmtUsd(reserve, 1))}\text{B}}`));
+    lines.push(`${st.pick}${T("：", ": ")}${tex(String.raw`\text{${T("BTC 评级", "BTC Rating")}} = \dfrac{\text{${T("BTC 储备", "BTC Reserve")}}}{\text{${T("本层", "this layer")}} + \text{${T("所有更优先层", "every senior layer")}}${net ? String.raw` - \text{${T("美元资产", "USD assets")}}` : ""}} = \dfrac{${texv(fmtUsd(reserve, 1))}\text{B}}{${denomTex}} ${ratingTex}`)}`);
     if (sel.rating < 1) lines.push(`<span class="bad">${T("评级低于 1 倍：若此刻按比特币价值清算，这一层拿不满名义金额。", "Rating below 1x: if liquidated at today's bitcoin value, this layer would not be paid its full notional.")}</span>`);
     else if (sel.rating < 2) lines.push(`<span class="warn">${T("评级在 1–2 倍之间：覆盖变薄，比特币再跌", "Rating between 1x and 2x: coverage is thin; another")} ${fmtPct(1 - 1 / sel.rating, 0)} ${T("就会跌破 1 倍。", "fall in bitcoin takes it below 1x.")}</span>`);
     else lines.push(`<span class="ok">${T("覆盖充足：比特币要再跌", "Well covered: bitcoin would need to fall another")} ${fmtPct(1 - 1 / sel.rating, 0)} ${T("这一层的评级才会跌到 1 倍。", "before this layer's rating hits 1x.")}</span>`);

@@ -1,7 +1,10 @@
 // 交互演示：放大倍数——(1) 一次比特币变动对净储备的放大，以及放大倍数本身怎么变；
 // (2) 路径模拟：固定索取权（不调仓）vs 每月调仓维持初始放大倍数，看波动率拖累与股息拖累。
-import { amplificationStrategy, amplification, striveAmpRatio, netReserve, rng, randn, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { amplificationStrategy, amplification, striveAmpRatio, netReserve, rng, randn, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -86,8 +89,9 @@ export default function mount(root, lang) {
 
     const floorMove = st.v > 0 ? (claims - st.cash) / st.v - 1 : -1;
     const lines = [];
-    lines.push(`${T("净储备", "Net Reserve")} = ${fmtNum(st.v, 0)} − ${fmtNum(claims, 0)} + ${fmtNum(st.cash, 0)} = <b>${fmtNum(n0, 0)}</b> → ${fmtNum(v1, 0)} − ${fmtNum(claims, 0)} + ${fmtNum(st.cash, 0)} = <b>${fmtNum(n1, 0)}</b>${T("（百万美元）", " ($M)")}`);
-    lines.push(`${T("检验：", "Check: ")}${fmtNum(a0, 3)} × ${s.move}% = ${fmtPct((a0 * s.move) / 100, 1)}${T("，与净储备变动一致——对单次变动，放大是线性的；但变动后的放大倍数已经变成 ", ", matching the change in Net Reserve — for a single move amplification is linear; but afterwards it has become ")}${n1 > 0 ? fmtNum(a1, 2) + "x" : "∞"}${T("。", ".")}`);
+    lines.push(`${tex(String.raw`\text{${T("净储备", "Net Reserve")}} = ${texv(fmtNum(st.v, 0))} - ${texv(fmtNum(claims, 0))} + ${texv(fmtNum(st.cash, 0))} = \mathbf{${texv(fmtNum(n0, 0))}}`)} → ${tex(String.raw`${texv(fmtNum(v1, 0))} - ${texv(fmtNum(claims, 0))} + ${texv(fmtNum(st.cash, 0))} = \mathbf{${texv(fmtNum(n1, 0))}}`)}${T("（百万美元）", " ($M)")}`);
+    const mv = s.move < 0 ? `(${s.move}\\%)` : `${s.move}\\%`;
+    lines.push(`${T("检验：", "Check: ")}${tex(String.raw`${texv(fmtNum(a0, 3))} \times ${mv} = ${texv(fmtPct((a0 * s.move) / 100, 1))}`)}${T("，与净储备变动一致——对单次变动，放大是线性的；但变动后的放大倍数已经变成 ", ", matching the change in Net Reserve — for a single move amplification is linear; but afterwards it has become ")}${n1 > 0 ? fmtNum(a1, 2) + "x" : "∞"}${T("。", ".")}`);
     if (claims > 0) lines.push(`${T("比特币跌 ", "If bitcoin falls ")}<b>${fmtPct(-floorMove, 1)}</b>${T("，净储备归零（普通股的“地板”）。", ", Net Reserve hits zero (the common's floor).")}`);
     q("#am-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
 
@@ -116,10 +120,10 @@ export default function mount(root, lang) {
       ],
       lo: 0, hi: N, samples: N, xlabel: T("月", "months"), forceZero: true, uid: "amc",
     });
-    q("#am-chart").innerHTML = chartBlock(res, [["var(--blue)", T("比特币（起点 = 1）", "Bitcoin (start = 1)")], ["var(--btc)", T("固定索取权的净储备", "Net Reserve, fixed claims")], ["var(--red)", T("每月调仓的恒定杠杆", "Constant leverage, rebalanced monthly")]]);
+    q("#am-chart").innerHTML = chartBlock(res, [["var(--blue)", T("比特币（以起点为 1）", "Bitcoin (indexed to 1 at start)")], ["var(--btc)", T("固定索取权的净储备", "Net Reserve, fixed claims")], ["var(--red)", T("每月调仓的恒定杠杆", "Constant leverage, rebalanced monthly")]]);
     const drag = 0.5 * a0 * (a0 - 1) * sig * sig;
     const fa = netA[N] / n0, fb = netB[N] / n0;
-    q("#am-path").innerHTML = `${T("4 年后：比特币 ", "After 4 years: bitcoin ")}${fmtNum(btc[N], 2)}x${T("；固定索取权 ", "; fixed claims ")}<b>${fmtNum(fa, 2)}x</b>${T("；恒定杠杆 ", "; constant leverage ")}<b>${fmtNum(fb, 2)}x</b>${T("。理论上的调仓拖累约 ½ × L × (L − 1) × σ² = ", ". Theoretical rebalancing drag ≈ ½ × L × (L − 1) × σ² = ")}${fmtPct(drag, 1)}${T(" 每年", " a year")}${s.divs && st.div > 0 ? T("；股息另占净储备约 ", "; dividends take another ") + fmtPct(st.div / n0, 1) + T(" 每年", " of Net Reserve a year") : ""}${T("。", ".")}`;
+    q("#am-path").innerHTML = `${T("4 年后：比特币 ", "After 4 years: bitcoin ")}${fmtNum(btc[N], 2)}x${T("；固定索取权 ", "; fixed claims ")}<b>${fmtNum(fa, 2)}x</b>${T("；恒定杠杆 ", "; constant leverage ")}<b>${fmtNum(fb, 2)}x</b>${T("。理论上的调仓拖累 ",". Theoretical rebalancing drag ")}${tex(String.raw`\approx \tfrac{1}{2} \times L \times (L - 1) \times \sigma^{2} = \tfrac{1}{2} \times ${texv(fmtNum(a0, 2))} \times ${texv(fmtNum(a0 - 1, 2))} \times ${texv(fmtNum(sig, 2))}^{2} = ${texv(fmtPct(drag, 1))}`)}${T(" 每年", " a year")}${s.divs && st.div > 0 ? T("；股息另占净储备约 ", "; dividends take another ") + fmtPct(st.div / n0, 1) + T(" 每年", " of Net Reserve a year") : ""}${T("。", ".")}`;
   }
 
   paint();

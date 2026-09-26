@@ -1,6 +1,6 @@
 // 交互演示：增发 / 回购沙盘——拖动价格倍数 m（对 DAT 即 mNAV）与规模，看每股价值是增是减；
 // 切到“橙子公司”，用 issueAndBuy 计算每股比特币，并连续转动几圈飞轮。
-import { issueAndBuy, btcPerShare, fmtPct, fmtNum, fmtUsd, clamp } from "./_fin.js";
+import { issueAndBuy, btcPerShare, fmtPct, fmtNum, fmtUsd, clamp, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -56,20 +56,25 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-block"><div class="demo-log" id="db-log"></div></div>
       <p class="demo-tip">${T(
-        "把价格倍数 m 从 1.5 拖到 0.8：增发从 +4.5% 变成 −1.8%，而持股比例的摊薄一模一样——摊薄比例不说明任何问题，价格对价值才说明问题。再切到“回购”，同样拖动 m：两条线在 m = 1 处交换符号。",
-        "Drag the price multiple m from 1.5 to 0.8: issuance flips from +4.5% to −1.8%, while the drop in your ownership percentage is identical — dilution of percentage tells you nothing; price versus value tells you everything. Then switch to “Buy back” and drag m again: the two lines swap signs at m = 1."
-      )}</p>
+        "把价格倍数 m 从 1.5 拖到 0.8：增发从 +4.5% 变成 −1.8%，而持股比例的摊薄一模一样——摊薄比例不说明任何问题，价格对价值才说明问题。再切到“回购”，同样拖动 m：两条线在 ",
+        "Drag the price multiple m from 1.5 to 0.8: issuance flips from +4.5% to −1.8%, while the drop in your ownership percentage is identical — dilution of percentage tells you nothing; price versus value tells you everything. Then switch to “Buy back” and drag m again: the two lines swap signs at "
+      )}${tex("m = 1")}${T(" 处交换符号。", ".")}</p>
     </div>`;
 
   const q = (s) => root.querySelector(s);
   const yuan = (x, d = 2) => (en ? fmtUsd(x, d) : fmtNum(x, d) + " 元");
-  const mil = (x, d = 1) => (en ? fmtUsd(x, d) + "M" : fmtNum(x * 100, 0) + " 万元");
-  const milSh = (x) => (en ? fmtNum(x, 2) + "M shares" : fmtNum(x * 100, 0) + " 万股");
+  // 公式（KaTeX）里的同款格式：千分位写成 {,}，美元符号转义
+  const kc = (s) => String(s).replace(/,/g, "{,}");
+  const yuanT = (x, d = 2) => (en ? String.raw`\$${kc(fmtNum(x, d))}` : String.raw`${kc(fmtNum(x, d))}\ \text{元}`);
+  const milT = (x, d = 1) => (en ? String.raw`\$${kc(fmtNum(x, d))}\text{M}` : String.raw`${kc(fmtNum(x * 100, 0))}\ \text{万元}`);
+  const milShT = (x) => (en ? String.raw`${kc(fmtNum(x, 2))}\text{M}\ \text{shares}` : String.raw`${kc(fmtNum(x * 100, 0))}\ \text{万股}`);
   const change = (m, n, act) => (act === "issue" ? (1 + n * m) / (1 + n) - 1 : (1 - n * m) / (1 - n) - 1);
 
   const paint = () => {
     const { m, n, act, mode } = st;
-    q("#db-mlab").innerHTML = (mode === "or" ? T("股价对应的 mNAV（= m）", "mNAV implied by the share price (= m)") : T("价格倍数 m = 价格 ÷ 每股价值", "Price multiple m = price ÷ value per share")) + `${T("：", ": ")}<b>${fmtNum(m, 2)}×</b>`;
+    q("#db-mlab").innerHTML = (mode === "or"
+      ? `${T("股价对应的 mNAV（", "mNAV implied by the share price (")}${tex(String.raw`\mathrm{mNAV} = m`)}${T("）", ")")}`
+      : `${T("价格倍数 ", "Price multiple ")}${tex(String.raw`m = \text{${T("价格", "price")}} \div \text{${T("每股价值", "value per share")}}`)}`) + `${T("：", ": ")}<b>${fmtNum(m, 2)}×</b>`;
     q("#db-nv").textContent = fmtPct(n, 0);
     q("#db-mm").textContent = fmtNum(m, 2) + "×";
     const ownAfter = act === "issue" ? 0.01 / (1 + n) : 0.01 / (1 - n);
@@ -82,10 +87,12 @@ export default function mount(root, lang) {
       q("#db-k0").textContent = T("每股价值（前）", "Value per share (before)");
       q("#db-k1").textContent = T("每股价值（后）", "Value per share (after)");
       q("#db-v0").textContent = yuan(v0); q("#db-v1").textContent = yuan(v1);
-      q("#db-meta").textContent = T("公司价值 1 亿元、1,000 万股、每股价值 10 元。发行或回购价格 = m × 10 元。", "Company worth $100M, 10M shares, $10 of value per share. Issue or buyback price = m × $10.");
-      q("#db-out").innerHTML = act === "issue"
-        ? `${T("发行 ", "Issue ")}${milSh(N)} × ${yuan(P)} = ${mil(N * P)} → (${mil(CO.V, 0)} + ${mil(N * P)}) ÷ ${milSh(S1)} = <b>${yuan(v1)}</b>`
-        : `${T("回购 ", "Buy back ")}${milSh(N)} × ${yuan(P)} = ${mil(N * P)} → (${mil(CO.V, 0)} − ${mil(N * P)}) ÷ ${milSh(S1)} = <b>${yuan(v1)}</b>`;
+      q("#db-meta").innerHTML = T("公司价值 1 亿元、1,000 万股、每股价值 10 元。", "Company worth $100M, 10M shares, $10 of value per share. ") +
+        tex(String.raw`\text{${T("发行或回购价格", "Issue or buyback price")}} = m \times ${yuanT(10, 0)}`) + T("。", ".");
+      const sign = act === "issue" ? "+" : "-";
+      q("#db-out").innerHTML =
+        tex(String.raw`\text{${act === "issue" ? T("发行", "Issue") : T("回购", "Buy back")}}\ ${milShT(N)} \times ${yuanT(P)} = ${milT(N * P)}`, true) +
+        tex(String.raw`\text{${T("每股价值", "Value per share")}} = \frac{${en ? `${milT(CO.V, 0)} ${sign} ${milT(N * P)}` : String.raw`(${kc(fmtNum(CO.V * 100, 0))} ${sign} ${kc(fmtNum(N * P * 100, 0))})\ \text{万元}`}}{${milShT(S1)}} = ${yuanT(v1)}`, true);
     } else {
       const navps = (OR.btc * OR.px) / OR.shares, P = m * navps, N = n * OR.shares;
       let r;
@@ -98,10 +105,15 @@ export default function mount(root, lang) {
       q("#db-k0").textContent = T("每股比特币（前）", "BTC per share (before)");
       q("#db-k1").textContent = T("每股比特币（后）", "BTC per share (after)");
       q("#db-v0").textContent = fmtNum(r.bps0 * 1e8, 0) + T(" 聪", " sats"); q("#db-v1").textContent = fmtNum(r.bps1 * 1e8, 0) + T(" 聪", " sats");
-      q("#db-meta").textContent = T("10,000 BTC · 1 亿股 · 比特币 100,000 美元 → 每股净值 10 美元。股价 = mNAV × 10。", "10,000 BTC · 100M shares · bitcoin at $100,000 → NAV per share $10. Share price = mNAV × $10.");
-      q("#db-out").innerHTML = act === "issue"
-        ? `${T("以", "Issue")} ${fmtNum(N / 1e6, 1)}M ${T("股 × ", "shares × ")}${fmtUsd(P, 2)} = ${fmtUsd(N * P / 1e6, 1)}M → ${T("买入", "buys")} ${fmtNum(r.btc - OR.btc, 0)} BTC → ${fmtNum(r.btc, 0)} BTC ÷ ${fmtNum(r.shares / 1e6, 1)}M ${T("股", "shares")}`
-        : `${T("卖出", "Sell")} ${fmtNum(OR.btc - r.btc, 0)} BTC = ${fmtUsd(N * P / 1e6, 1)}M → ${T("以", "buy back")} ${fmtUsd(P, 2)} ${T("回购", "for")} ${fmtNum(N / 1e6, 1)}M ${T("股", "shares")} → ${fmtNum(r.btc, 0)} BTC ÷ ${fmtNum(r.shares / 1e6, 1)}M`;
+      q("#db-meta").innerHTML = T("10,000 BTC · 1 亿股 · 比特币 100,000 美元 → 每股净值 10 美元。", "10,000 BTC · 100M shares · bitcoin at $100,000 → NAV per share $10. ") +
+        tex(String.raw`\text{${T("股价", "Share price")}} = \mathrm{mNAV} \times \$10`) + T("。", ".");
+      const nM = kc(fmtNum(N / 1e6, 1)), usdM = kc(fmtNum(N * P / 1e6, 1)), pxT = kc(fmtNum(P, 2));
+      const bpsLine = tex(String.raw`\text{${T("每股比特币", "BTC per share")}} = \frac{${kc(fmtNum(r.btc, 0))}\ \text{BTC}}{${kc(fmtNum(r.shares / 1e6, 1))}\text{M}\ \text{${T("股", "shares")}}} = ${kc(fmtNum(r.bps1 * 1e8, 0))}\ \text{${T("聪", "sats")}}`, true);
+      const verb = act === "issue" ? T("发行", "Issue") : T("回购", "Buy back");
+      const btcVerb = act === "issue" ? T("买入", "Buys") : T("卖出", "Sells");
+      q("#db-out").innerHTML =
+        tex(String.raw`\text{${verb}}\ ${nM}\text{M}\ \text{${T("股", "shares")}} \times \$${pxT} = \$${usdM}\text{M}`, true) +
+        tex(String.raw`\text{${btcVerb}}\ \frac{\$${usdM}\text{M}}{\$100{,}000} = ${kc(fmtNum(Math.abs(r.btc - OR.btc), 0))}\ \text{BTC}`, true) + bpsLine;
     }
     const chEl = q("#db-ch"); chEl.textContent = (ch >= 0 ? "+" : "") + fmtPct(ch, 2); chEl.className = "v " + (ch >= 0 ? "pos" : "neg");
 
@@ -127,7 +139,7 @@ export default function mount(root, lang) {
       lines.push(`${T("连续 ", "After ")}${st.rounds}${T(" 轮后每股比特币累计 ", " rounds, cumulative BTC per share ")}<b class="${rows[rows.length - 1] >= 0 ? "ok" : "bad"}">${(rows[rows.length - 1] >= 0 ? "+" : "") + fmtPct(rows[rows.length - 1], 1)}</b>${T("——前提是溢价一直在。现实中 mNAV 会随市场情绪变化（阶段 16.7、18.3）。", " — provided the premium never goes away. In reality mNAV moves with market sentiment (Stages 16.7, 18.3).")}`);
     }
 
-    if (Math.abs(m - 1) < 0.001) lines.unshift(`<span class="warn">${T("m = 1：按每股价值成交，不增值也不稀释。", "m = 1: trading at value per share — neither accretive nor dilutive.")}</span>`);
+    if (Math.abs(m - 1) < 0.001) lines.unshift(`<span class="warn">${tex("m = 1")}${T("：按每股价值成交，不增值也不稀释。", ": trading at value per share — neither accretive nor dilutive.")}</span>`);
     else if (ch > 0) lines.unshift(`<span class="ok">${act === "issue" ? T("价格高于每股价值：新股东多付了钱，老股东每股价值上升（增值）。", "Price above value per share: newcomers overpay and existing owners gain per share (accretive).") : T("价格低于每股价值：卖出的人少拿了钱，留下来的人每股价值上升。", "Price below value per share: sellers receive less than their shares are worth, and those who stay gain per share.")}</span>`);
     else lines.unshift(`<span class="bad">${act === "issue" ? T("价格低于每股价值：贱卖股份，真正的稀释。", "Price below value per share: selling shares on the cheap — real dilution.") : T("价格高于每股价值：用留下股东的钱高价接盘。", "Price above value per share: overpaying with the remaining owners' money.")}</span>`);
     lines.push(`${T("无论价格高低，你的持股比例都从 1% 变成了 ", "Whatever the price, your ownership goes from 1% to ")}${fmtPct(ownAfter, 3)}${T("——比例本身说明不了好坏。", " — the percentage alone says nothing about good or bad.")}`);

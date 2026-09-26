@@ -65,7 +65,9 @@ What they share: **the medium got lighter while trust leaned more and more on in
 
 The rule of **double-entry bookkeeping** is simple: record every transaction twice, once as a debit and once as a credit, so the two sides always balance.
 
-$$ Assets = Liabilities + Owners' equity
+$$
+\\text{Assets} = \\text{Liabilities} + \\text{Owners' equity}
+$$
 
 That's where Stage 0.2's balance sheet comes from. Italian merchants were using it in the 13th and 14th centuries, and in 1494 the friar Luca Pacioli laid out the method systematically in his Summa de arithmetica. Its importance isn't the arithmetic; it's that **outsiders could check the books** — partners, creditors and, later, shareholders could all see what a business owned and whom it owed.
 
@@ -158,7 +160,7 @@ In 2009 someone put up a completely different kind of building on the empty land
       q: "The Code of Hammurabi capped interest on silver at about 20% a year. By the Rule of 72, roughly how long did a debt take to double at that rate?",
       options: ["About 3.6 years", "About 14 years", "About 20 years", "It would never double"],
       answer: 0,
-      explain: "72 ÷ 20 ≈ **3.6 years**. Rates that high reflected the enormous risks of the ancient world. The price of time (Idea ①) has existed as long as ledgers have (Stage 2.2 covers compounding and the Rule of 72).",
+      explain: "\\(\\dfrac{72}{20} \\approx 3.6\\), so about **3.6 years**. Rates that high reflected the enormous risks of the ancient world. The price of time (Idea ①) has existed as long as ledgers have (Stage 2.2 covers compounding and the Rule of 72).",
     },
     {
       q: "What was the Dutch East India Company's (VOC's) key financial innovation in 1602?",

@@ -1,6 +1,6 @@
 // 交互演示：通胀体制沙盘（示意模型）——设定期初的通胀预期与利率、这一年的通胀意外与增长意外、央行的反应方式，
 // 用共享引擎算出现金、10 年期国债、股票（戈登模型）、60/40 的实际回报，并给出黄金与比特币的示意反应；看股债相关性何时翻转。
-import { bondPrice, gordon, realRate, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { bondPrice, gordon, realRate, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -122,13 +122,16 @@ export default function mount(root, lang) {
     const q = st.gs >= 0 ? (st.ps <= 0 ? T("通缩式繁荣（增长↑ 通胀↓）", "Goldilocks (growth up, inflation down)") : T("过热 / 再通胀（增长↑ 通胀↑）", "Overheating / reflation (growth up, inflation up)"))
       : (st.ps > 0 ? T("滞胀（增长↓ 通胀↑）", "Stagflation (growth down, inflation up)") : T("通缩式衰退（增长↓ 通胀↓）", "Deflationary bust (growth down, inflation down)"));
     lines.push(`${T("这一年落在：", "This year lands in: ")}<b>${q}</b>`);
+    const P = (x, d = 1) => (x < 0 ? "-" : "") + fmtNum(Math.abs(x), d) + String.raw`\%`;
+    const iEnd = st.c0 + M.dS;
+    lines.push(`${T("通胀与年末实际政策利率：", "Inflation and the real policy rate at year-end: ")}${tex(String.raw`\pi = \pi^{e} + \text{${T("意外", "surprise")}} = ${P(st.pe)} ${st.ps < 0 ? "-" : "+"} ${P(Math.abs(st.ps))} = ${P(M.pi * 100)}`)}${T("；", "; ")}${tex(String.raw`r_{\text{${T("实际", "real")}}} = i - \pi = ${P(iEnd, 2)} - ${P(M.pi * 100)} = ${P(M.realPolicy * 100, 2)}`)}`);
     const infDom = Math.abs(st.ps) > Math.abs(st.gs);
     const sameDir = (M.stockR - M.cashR) * (M.bondR - M.cashR) > 0;
     if (infDom && sameDir) lines.push(`<span class="bad">${T("以通胀意外为主：股票与债券同向变动（股债正相关），债券没能对冲股票。", "The inflation surprise dominates: stocks and bonds move the same way (positive correlation), and bonds fail to hedge stocks.")}</span>`);
     else if (!sameDir) lines.push(`<span class="ok">${T("股票与债券反向变动：债券正在给股票当保险——这是锚定体制或增长冲击主导时的特征。", "Stocks and bonds move in opposite directions: bonds are insuring stocks — the signature of an anchored regime or a growth-led shock.")}</span>`);
     if (M.realPolicy < 0 && st.ps > 0) lines.push(`<span class="warn">${T("年末实际政策利率为负：央行实际上在放松，硬资产（示意）受益，长期预期容易松动——1970 年代的剧本。", "The real policy rate ends negative: the central bank is effectively easing, hard assets (illustrative) benefit, and long-run expectations can come loose — the 1970s script.")}</span>`);
     if (M.realPolicy > 0.02 && st.ps > 0) lines.push(`<span class="warn">${T("实际政策利率明显为正：现金成为赢家，不生息的黄金与比特币（示意）承压——强硬央行的体制。", "The real policy rate is clearly positive: cash wins, non-yielding gold and Bitcoin (illustrative) come under pressure — a tough central bank's regime.")}</span>`);
-    lines.push(`${T("60/40 的实际回报", "60/40 real return")} <b>${(M.p6040R >= 0 ? "+" : "") + fmtPct(M.p6040R, 1)}</b>${T("，其中股票", ", with stocks at")} ${(M.stockR >= 0 ? "+" : "") + fmtPct(M.stockR, 1)}${T("、国债", " and Treasuries at")} ${(M.bondR >= 0 ? "+" : "") + fmtPct(M.bondR, 1)}`);
+    lines.push(`${T("60/40 的实际回报：", "60/40 real return: ")}${tex(String.raw`r_{60/40} = 0.6 \times r_{\text{${T("股票", "stocks")}}} + 0.4 \times r_{\text{${T("国债", "Treasuries")}}} = 0.6 \times (${P(M.stockR * 100)}) + 0.4 \times (${P(M.bondR * 100)}) \approx ${P(M.p6040R * 100)}`)}`);
     $("#ir-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
   };
 

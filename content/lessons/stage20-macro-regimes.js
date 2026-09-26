@@ -40,7 +40,7 @@ export default {
   mechanics: `
 ### ① 两根轴加一根：增长、通胀与流动性
 
-为什么是这两根轴？回到阶段 2.3 的基本公式：**资产价格 = 未来现金流 ÷ 折现率**。
+为什么是这两根轴？回到阶段 2.3 的基本公式：**\\(\\text{资产价格} = \\dfrac{\\text{未来现金流}}{\\text{折现率}}\\)**。
 
 - **增长**主要影响分子：经济加速，企业盈利、税收、就业都上升；经济减速，违约增加、盈利下滑。
 - **通胀**主要影响分母：通胀上行，央行要加息、投资者要更高的通胀补偿与期限溢价（阶段 4.5），折现率上升；通胀下行则相反。
@@ -79,11 +79,15 @@ export default {
 <tr><td>大宗商品</td><td>中</td><td><b>好</b></td><td>好（供给冲击时）</td><td>差</td><td>通胀的来源之一</td></tr>
 </table>
 
-最重要的一条隐藏变量是**股债相关性**。60/40 组合的波动率可以用阶段 11.1 的两资产公式算：假设股票年化波动 16%、长债 7%，
+最重要的一条隐藏变量是**股债相关性**。60/40 组合的波动率可以用阶段 11.1 的两资产公式算：假设股票年化波动 \\(\\sigma_{1} = 16\\%\\)、长债 \\(\\sigma_{2} = 7\\%\\)，股票权重 \\(w = 60\\%\\)：
 
-$$ 组合波动 = √(w²σ₁² + (1−w)²σ₂² + 2w(1−w)ρσ₁σ₂)
-ρ = −0.3（金发姑娘 / 通缩式衰退常见）→ 60/40 波动约 9.2%
-ρ = +0.5（通胀主导的体制常见）→ 60/40 波动约 11.3%
+$$
+\\text{组合波动} = \\sqrt{w^{2}\\sigma_{1}^{2} + (1-w)^{2}\\sigma_{2}^{2} + 2w(1-w)\\rho\\,\\sigma_{1}\\sigma_{2}}
+\\rho = -0.3 \\;\\Rightarrow\\; \\text{60/40 波动} \\approx 9.2\\%
+\\rho = +0.5 \\;\\Rightarrow\\; \\text{60/40 波动} \\approx 11.3\\%
+$$
+
+\\(\\rho = -0.3\\) 在金发姑娘 / 通缩式衰退里常见；\\(\\rho = +0.5\\) 在通胀主导的体制里常见。
 
 **同样的持仓，只因为体制变了，风险就高出约四分之一**——而且更糟的是，在最需要对冲的时候，对冲消失了。这就是为什么 2022 年之后，“风险平价”“全天候”这类按体制分散的思路重新被讨论（阶段 11.2）。
 
@@ -96,7 +100,7 @@ $$ 组合波动 = √(w²σ₁² + (1−w)²σ₂² + 2w(1−w)ρσ₁σ₂)
 <table class="pm">
 <tr><th>资产</th><th>金发姑娘</th><th>过热</th><th>滞胀</th><th>通缩式衰退</th><th>最敏感的轴</th></tr>
 <tr><td>比特币</td><td><b>好</b></td><td>中（看央行）</td><td><b>差</b>（2022）</td><td>先暴跌，后看放水（2020）</td><td>流动性 + 实际利率</td></tr>
-<tr><td>DAT 普通股</td><td><b>最好</b>（放大 + mNAV 溢价）</td><td>中</td><td><b>最差</b>（放大 + mNAV 压缩）</td><td>差</td><td>比特币 × 放大倍数 × 资本市场是否开放</td></tr>
+<tr><td>DAT 普通股</td><td><b>最好</b>（放大 + mNAV 溢价）</td><td>中</td><td><b>最差</b>（放大 + mNAV 压缩）</td><td>差</td><td>\\(\\text{比特币} \\times \\text{放大倍数} \\times \\text{资本市场是否开放}\\)</td></tr>
 <tr><td>DAT 固定利率优先股</td><td>好（利差收窄）</td><td>差（利率上升）</td><td><b>差</b>（利率与信用双杀）</td><td>中（利率降、信用升）</td><td>长端利率 + BTC 评级</td></tr>
 <tr><td>DAT 浮动利率优先股（STRC/SATA 类）</td><td>好</td><td>中（靠调息抵消利率）</td><td>差（信用仍受伤）</td><td>中</td><td>信用 + 管理层是否及时调息</td></tr>
 <tr><td>稳定币 / 代币化国库券收益</td><td>中</td><td><b>好</b>（短端利率上升）</td><td>好</td><td>差（利率降到零）</td><td>政策利率</td></tr>
@@ -105,8 +109,8 @@ $$ 组合波动 = √(w²σ₁² + (1−w)²σ₂² + 2w(1−w)ρσ₁σ₂)
 几点解释：
 
 - **比特币**在 2020–2021 年的流动性洪水里涨了数倍，在 2022 年的滞胀加 QT 里跌掉约 77%。2026 年它又演示了一次：油价冲击推高通胀、美联储加息，比特币从 2025 年 10 月约 12.6 万美元跌到 2026 年 6 月底约 5.8 万美元。支持者会说，一旦体制从“央行收紧”转向“财政主导”（阶段 9.4），比特币会像 1970 年代的黄金；这是一个可检验的主张，而不是已被证实的事实。
-- **DAT 普通股**是“比特币 × 放大倍数 × 资本市场情绪”。金发姑娘里，mNAV 溢价让增发成为增值的飞轮（阶段 16.7）；滞胀里，币价、放大倍数与 mNAV 压缩三者同时向下（阶段 18.3）。2026 年 9 月下旬，前 20 大 DAT 中有 16 家交易在 1 倍 mNAV 以下，就是这种环境的产物。
-- **DAT 优先股**有两把刀：长端利率（永续的久期约 1 ÷ 收益率，阶段 18.1）与比特币信用（BTC 评级，阶段 16.5）。过热伤第一把，通缩式衰退伤第二把，**滞胀两把一起落**。浮动利率设计能挡第一把，挡不住第二把。
+- **DAT 普通股**是 \\(\\text{比特币} \\times \\text{放大倍数} \\times \\text{资本市场情绪}\\)。金发姑娘里，mNAV 溢价让增发成为增值的飞轮（阶段 16.7）；滞胀里，币价、放大倍数与 mNAV 压缩三者同时向下（阶段 18.3）。2026 年 9 月下旬，前 20 大 DAT 中有 16 家交易在 1 倍 mNAV 以下，就是这种环境的产物。
+- **DAT 优先股**有两把刀：长端利率（永续的久期约 \\(\\dfrac{1}{\\text{收益率}}\\)，阶段 18.1）与比特币信用（BTC 评级，阶段 16.5）。过热伤第一把，通缩式衰退伤第二把，**滞胀两把一起落**。浮动利率设计能挡第一把，挡不住第二把。
 - **链上美元收益**：稳定币本身不付息（《GENIUS 法案》），但发行人的储备收入、代币化国库券（阶段 14.2）的收益都跟着短端利率走。利率越高，“链上现金”越有吸引力，也越会与银行存款争夺资金（阶段 14.5）。
 
 <figure><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">宏观体制四格图：谁在哪一格最舒服</text><rect x="80" y="40" width="250" height="125" fill="var(--green-soft)" stroke="var(--line)"/><rect x="330" y="40" width="250" height="125" fill="var(--orange-soft)" stroke="var(--line)"/><rect x="80" y="165" width="250" height="125" fill="var(--blue-soft)" stroke="var(--line)"/><rect x="330" y="165" width="250" height="125" fill="var(--red-soft)" stroke="var(--line)"/><text x="205" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">金发姑娘</text><text x="205" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">股票 · 比特币 · DAT 普通股</text><text x="205" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">固定利率优先股（利差收窄）</text><text x="205" y="118" text-anchor="middle" font-size="10" fill="var(--muted)">例：1990 年代后半、2010 年代</text><text x="455" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">过热 / 再通胀</text><text x="455" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">大宗商品 · 现金 · 链上美元收益</text><text x="455" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">长债与固定利率优先股受压</text><text x="455" y="118" text-anchor="middle" font-size="10" fill="var(--muted)">例：2021 年</text><text x="205" y="187" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">通缩式衰退</text><text x="205" y="207" text-anchor="middle" font-size="10.5" fill="var(--muted)">长期国债最好 · 黄金中上</text><text x="205" y="223" text-anchor="middle" font-size="10.5" fill="var(--muted)">比特币先跌、后看放水</text><text x="205" y="243" text-anchor="middle" font-size="10" fill="var(--muted)">例：2008 年、2020 年 3 月</text><text x="455" y="187" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">滞胀</text><text x="455" y="207" text-anchor="middle" font-size="10.5" fill="var(--muted)">现金 · 黄金（实际利率为负时）</text><text x="455" y="223" text-anchor="middle" font-size="10.5" fill="var(--muted)">股债同跌 · DAT 普通股最差</text><text x="455" y="243" text-anchor="middle" font-size="10" fill="var(--muted)">例：1970 年代、2022 年</text><line x1="80" y1="305" x2="580" y2="305" stroke="var(--ink)" stroke-width="1.2"/><polygon points="580,301 580,309 588,305" fill="var(--ink)"/><text x="330" y="324" text-anchor="middle" font-size="11" fill="var(--muted)">通胀：低于预期 → 高于预期</text><line x1="62" y1="290" x2="62" y2="40" stroke="var(--ink)" stroke-width="1.2"/><polygon points="58,40 66,40 62,32" fill="var(--ink)"/><text x="40" y="170" text-anchor="middle" font-size="11" fill="var(--muted)" transform="rotate(-90 40 170)">增长：减速 → 加速</text><circle cx="400" cy="140" r="8" fill="var(--btc)" stroke="var(--ink)"/><text x="414" y="144" font-size="10.5" font-weight="700" fill="var(--ink)">2026 年 9 月（本课判断）</text><text x="414" y="158" font-size="10" fill="var(--muted)">靠近过热、向滞胀方向倾斜</text></svg><figcaption>两根轴画出四个格子；流动性是第三根轴（没画出来），它决定每一格里风险资产的“音量”。橙点是本课对 2026 年 9 月的判断，不是官方结论。</figcaption></figure>
@@ -169,13 +173,13 @@ $$ 组合波动 = √(w²σ₁² + (1−w)²σ₂² + 2w(1−w)ρσ₁σ₂)
       q: "哪个象限对 DAT 的固定利率优先股最不友好？",
       options: ["金发姑娘", "过热", "通缩式衰退", "滞胀"],
       answer: 3,
-      explain: "**滞胀里两把刀一起落下**：利率上升压低永续的价格（久期约 1 ÷ 收益率），经济与风险资产走弱又压低比特币与 BTC 评级，信用利差扩大。",
+      explain: "**滞胀里两把刀一起落下**：利率上升压低永续的价格（久期约 \\(\\dfrac{1}{\\text{收益率}}\\)），经济与风险资产走弱又压低比特币与 BTC 评级，信用利差扩大。",
     },
     {
       q: "10 年期名义收益率约 5.17%、通胀约 3.4%，用费雪公式算出的实际收益率约为？",
       options: ["约 1.7%", "约 8.6%", "约 −1.7%", "约 3.4%"],
       answer: 0,
-      explain: "**实际利率 =（1 + 名义）÷（1 + 通胀）− 1** =（1.0517 ÷ 1.034）− 1 ≈ 1.7%。实际利率为正且上升，是 2026 年黄金与比特币承压的原因之一。",
+      explain: "**\\(\\text{实际利率} = \\dfrac{1 + \\text{名义}}{1 + \\text{通胀}} - 1\\)** \\(= \\dfrac{1.0517}{1.034} - 1 \\approx 1.7\\%\\)。实际利率为正且上升，是 2026 年黄金与比特币承压的原因之一。",
     },
     {
       q: "关于“流动性”这第三根轴，哪种说法最准确？",

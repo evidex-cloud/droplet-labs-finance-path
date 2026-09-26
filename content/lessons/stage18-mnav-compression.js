@@ -10,7 +10,7 @@ export default {
     "mNAV 高于 1 时，发股买币让每股比特币上升；跌破 1 时，同一个动作变成稀释，飞轮倒转。但倒转不等于崩溃：**在 mNAV 低于 1 时卖币回购普通股，反而会增加每股比特币**——代价是优先股的覆盖变薄。这一节把 mNAV 压缩后公司的五个选择逐一算清，拆开“死亡螺旋”的论证链条，看结构在哪里挡住了它、又在哪里挡不住，并用 2025–2026 年的真实案例（Strategy 卖币与回购 STRC、ProCap、Sequans、Satsuma、并购潮）检验。",
 
   intuition: `
-阶段 16.7 讲过 DAT 飞轮：股价高于每股比特币净值（mNAV > 1）时增发，每卖出一股带进来的比特币比这一股原本代表的更多，每股比特币上升；每股比特币上升又支撑股价。阶段 10.4 讲过索罗斯的**反身性**：市场价格不只是反映基本面，还会反过来改变基本面。DAT 飞轮就是一个教科书式的反身循环——而反身循环两个方向都转。
+阶段 16.7 讲过 DAT 飞轮：股价高于每股比特币净值（\\(\\mathrm{mNAV} > 1\\)）时增发，每卖出一股带进来的比特币比这一股原本代表的更多，每股比特币上升；每股比特币上升又支撑股价。阶段 10.4 讲过索罗斯的**反身性**：市场价格不只是反映基本面，还会反过来改变基本面。DAT 飞轮就是一个教科书式的反身循环——而反身循环两个方向都转。
 
 2025 年下半年到 2026 年，市场亲眼看到了反方向。比特币从约 12.6 万美元跌到约 5.8 万美元；DAT 股价跌得更多；**20 家最大的 DAT 中有 16 家交易在 1 倍 mNAV 以下**（DWF Ventures，2026 年 9 月）。Metaplanet 的市值口径 mNAV 约 0.58 倍，Twenty One（XXI）约 0.68 倍；ProCap 折价约 40%；Strategy 按它 2026 年的口径约 1.01 倍（2026-08-21）。
 
@@ -40,20 +40,20 @@ mNAV 低于 1 在说什么？**市场给公司普通股的估值，低于它手�
   mechanics: `
 ### ① mNAV 跌破 1：飞轮为什么倒转
 
-设每股比特币净值为 N、股价为 P、mNAV = P ÷ N。增发比例为 s（新股数 ÷ 旧股数），全部换成比特币：
+设每股比特币净值为 \\(N\\)、股价为 \\(P\\)、\\(\\mathrm{mNAV} = \\dfrac{P}{N}\\)。增发比例为 \\(s = \\dfrac{\\text{新股数}}{\\text{旧股数}}\\)，全部换成比特币：
 
 $$
-增发后每股比特币的变化 = (1 + s × mNAV) ÷ (1 + s) − 1
-mNAV = 1.5、s = 10%：(1 + 0.15) ÷ 1.1 − 1 = +4.5%（橙子公司标准例子）
-mNAV = 0.8、s = 10%：(1 + 0.08) ÷ 1.1 − 1 = −1.8%
+\\begin{aligned} &\\text{增发后每股比特币的变化} \\\\ &= \\frac{1 + s \\times \\mathrm{mNAV}}{1 + s} - 1 \\end{aligned}
+\\begin{aligned} &\\mathrm{mNAV} = 1.5,\\ s = 10\\%\\text{：} \\\\ &\\frac{1 + 0.15}{1.1} - 1 = +4.5\\% \\end{aligned}
+\\begin{aligned} &\\mathrm{mNAV} = 0.8,\\ s = 10\\%\\text{：} \\\\ &\\frac{1 + 0.08}{1.1} - 1 = -1.8\\% \\end{aligned}
 $$
 
-**mNAV = 1 是分水岭**（算上佣金与冲击，实际分水岭还要高一点，阶段 17.1）。用共享引擎 issueAndBuy 验证：橙子公司以 8 美元增发 1,000 万股 → 10,800 BTC / 1.1 亿股 → 每股比特币 0.0000982，比 0.0001 低 1.8%。
+第二行是橙子公司的标准例子。**\\(\\mathrm{mNAV} = 1\\) 是分水岭**（算上佣金与冲击，实际分水岭还要高一点，阶段 17.1）。用共享引擎 issueAndBuy 验证：橙子公司以 8 美元增发 1,000 万股 → \\(\\text{每股比特币} = \\dfrac{10{,}800\\ \\text{BTC}}{1.1\\ \\text{亿股}} \\approx 0.0000982\\)，比 0.0001 低 1.8%。
 
 **先问一句：是哪种 mNAV？** 阶段 16.2 讲过四种口径。市值口径（basic）不管优先级更高的债务与优先股；对一家加了杠杆的 DAT，市值口径 0.8 倍可能对应企业价值口径 1 倍以上。Metaplanet 在 2026-09-26 的三个数字就是例子：市值口径 **0.58 倍**、稀释口径 0.73 倍、企业价值口径 **0.79 倍**（bitcointreasuries.net）。判断“增发是否稀释”，要先说清你在乎哪一个“每股”：
 
-- 看**每股（毛）比特币**——Strategy 的 BPS 指标、本节橙子公司的例子——分水岭是**市值口径** mNAV = 1。
-- 看**每股净比特币**（先扣掉债务与优先股）——分水岭是 Strategy **2026 年口径**的 mNAV = 1。橙子公司股价 8 美元时，市值口径 0.8 倍，但每股净比特币只有 7.30 美元，2026 口径是 **1.10 倍**：以 8 美元增发，每股毛比特币降 1.8%，每股净比特币却上升。同一个动作，两种结论——**口径不是咬文嚼字，它决定了答案。**
+- 看**每股（毛）比特币**——Strategy 的 BPS 指标、本节橙子公司的例子——分水岭是**市值口径** \\(\\mathrm{mNAV} = 1\\)。
+- 看**每股净比特币**（先扣掉债务与优先股）——分水岭是 Strategy **2026 年口径**的 \\(\\mathrm{mNAV} = 1\\)。橙子公司股价 8 美元时，市值口径 0.8 倍，但每股净比特币只有 7.30 美元，2026 口径是 **\\(8 \\div 7.30 \\approx 1.10\\) 倍**：以 8 美元增发，每股毛比特币降 1.8%，每股净比特币却上升。同一个动作，两种结论——**口径不是咬文嚼字，它决定了答案。**
 
 为什么会低于 1？几种解释并存：
 
@@ -77,7 +77,7 @@ $$
 
 几条规律：
 
-- **mNAV 低于 1 时，卖币回购普通股增加每股比特币。**一般式：卖掉 x 比例的比特币、以 mNAV = m 回购，新的每股比特币 = (1 − x) ÷ (1 − x ÷ m)。x = 8%、m = 0.8：0.92 ÷ 0.90 = +2.2%。m 越低，回购越“便宜”。
+- **mNAV 低于 1 时，卖币回购普通股增加每股比特币。**一般式：卖掉 \\(x\\) 比例的比特币、以 \\(\\mathrm{mNAV} = m\\) 回购，\\(\\text{新的每股比特币} = \\dfrac{1 - x}{1 - x/m}\\)（以原来为 1）。\\(x = 8\\%\\)、\\(m = 0.8\\)：\\(\\dfrac{0.92}{0.90} - 1 \\approx +2.2\\%\\)。\\(m\\) 越低，回购越“便宜”。
 - **以低于面值回购优先股**，花 85 美元消灭 100 美元的优先索取权与每年 10 美元股息——剩下的每一层（包括剩下的 Orange-F 自己）覆盖都变厚，普通股的净储备也增加。代价是用掉了本可以付股息或买币的现金。
 - **发新优先股**在 mNAV 低于 1 时仍然能提高“每股比特币”（因为不增加股数），但 Strategy 自己提醒过：这种 BTC Yield 忽略了新增的优先索取权（阶段 16.3）。它的真正门槛是 **BTC Hurdle ARR**——Strategy 在 2026-08-23 公布为 10.74%：比特币的年化涨幅要高于这个资金成本，净每股比特币才会比比特币本身涨得快。
 
@@ -85,7 +85,7 @@ $$
 
 同一张资产负债表，不同层的人希望管理层做不同的事：
 
-<figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">每股比特币的变化：增发 10% 股份 vs 卖币回购 10% 股份</text><line x1="80" y1="150" x2="600" y2="150" stroke="var(--muted)"/><line x1="80" y1="40" x2="80" y2="255" stroke="var(--line)"/><line x1="253" y1="40" x2="253" y2="255" stroke="var(--red)" stroke-dasharray="5 4"/><text x="258" y="50" font-size="10" fill="var(--red)">mNAV = 1：分水岭</text><polyline points="80,188 167,169 253,150 340,131 427,112 513,93 600,74" fill="none" stroke="var(--btc)" stroke-width="2.5"/><polyline points="80,104 167,127 253,150 340,173 427,196 513,219 600,243" fill="none" stroke="var(--blue)" stroke-width="2.5"/><text x="596" y="68" text-anchor="end" font-size="11" font-weight="700" fill="var(--btc)">增发买币 +9.1%</text><text x="596" y="262" text-anchor="end" font-size="11" font-weight="700" fill="var(--blue)">卖币回购 −11.1%</text><text x="88" y="96" font-size="11" font-weight="700" fill="var(--blue)">卖币回购 +5.6%</text><text x="88" y="206" font-size="11" font-weight="700" fill="var(--btc)">增发买币 −4.5%</text><text x="72" y="154" text-anchor="end" font-size="10" fill="var(--muted)">0%</text><text x="80" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="253" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.0</text><text x="427" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.5</text><text x="600" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="340" y="288" text-anchor="middle" font-size="10" fill="var(--muted)">mNAV（对普通股的口径）</text><rect x="120" y="222" width="116" height="24" rx="6" fill="var(--red-soft)" stroke="var(--red)"/><text x="178" y="238" text-anchor="middle" font-size="10" fill="var(--red)">优先股覆盖变薄</text></svg><figcaption>两条线在 mNAV = 1 处交叉：溢价时增发对普通股有利，折价时卖币回购对普通股有利。但左半边的回购用的是比特币——优先股的覆盖随之下降。</figcaption></figure>
+<figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">每股比特币的变化：增发 10% 股份 vs 卖币回购 10% 股份</text><line x1="80" y1="150" x2="600" y2="150" stroke="var(--muted)"/><line x1="80" y1="40" x2="80" y2="255" stroke="var(--line)"/><line x1="253" y1="40" x2="253" y2="255" stroke="var(--red)" stroke-dasharray="5 4"/><text x="258" y="50" font-size="10" fill="var(--red)">mNAV = 1：分水岭</text><polyline points="80,188 167,169 253,150 340,131 427,112 513,93 600,74" fill="none" stroke="var(--btc)" stroke-width="2.5"/><polyline points="80,104 167,127 253,150 340,173 427,196 513,219 600,243" fill="none" stroke="var(--blue)" stroke-width="2.5"/><text x="596" y="68" text-anchor="end" font-size="11" font-weight="700" fill="var(--btc)">增发买币 +9.1%</text><text x="596" y="262" text-anchor="end" font-size="11" font-weight="700" fill="var(--blue)">卖币回购 −11.1%</text><text x="88" y="96" font-size="11" font-weight="700" fill="var(--blue)">卖币回购 +5.6%</text><text x="88" y="206" font-size="11" font-weight="700" fill="var(--btc)">增发买币 −4.5%</text><text x="72" y="154" text-anchor="end" font-size="10" fill="var(--muted)">0%</text><text x="80" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="253" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.0</text><text x="427" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.5</text><text x="600" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="340" y="288" text-anchor="middle" font-size="10" fill="var(--muted)">mNAV（对普通股的口径）</text><rect x="120" y="222" width="116" height="24" rx="6" fill="var(--red-soft)" stroke="var(--red)"/><text x="178" y="238" text-anchor="middle" font-size="10" fill="var(--red)">优先股覆盖变薄</text></svg><figcaption>两条线在 \\(\\mathrm{mNAV} = 1\\) 处交叉：溢价时增发对普通股有利，折价时卖币回购对普通股有利。但左半边的回购用的是比特币——优先股的覆盖随之下降。</figcaption></figure>
 
 - **普通股股东**：mNAV 低于 1 时希望公司卖币回购，把折价“吃掉”。ProCap 在 2026-09-03 卖出约 50 BTC、在约 40% 的折价下回购股票，就是这个逻辑。
 - **优先股持有人**：希望公司**别卖币**，最好继续增发普通股（哪怕稀释）或者囤现金——每一枚比特币都是他们的安全垫。
@@ -138,7 +138,7 @@ $$
   analogy: `
 想象一个**会员制仓库俱乐部**：仓库里存着金条（比特币），每张会员卡（股票）代表一份金条。会员卡在二手市场上自由买卖。
 
-会员卡卖得比它背后的金条还贵时（mNAV > 1），俱乐部就多印会员卡卖掉，拿钱买更多金条——每张老卡分到的金条反而变多。人人都开心，二手价更高，于是继续印。
+会员卡卖得比它背后的金条还贵时（\\(\\mathrm{mNAV} > 1\\)），俱乐部就多印会员卡卖掉，拿钱买更多金条——每张老卡分到的金条反而变多。人人都开心，二手价更高，于是继续印。
 
 有一天金价大跌，大家对俱乐部没了兴趣，会员卡在二手市场只卖到金条价值的八成（mNAV 0.8）。现在再印卡卖，就是八毛钱卖一块钱的金条——每张老卡分到的金条变少。
 
@@ -164,7 +164,7 @@ $$
       q: "橙子公司 mNAV 0.8（股价 8 美元，每股比特币净值 10 美元）。卖出 800 BTC、以 8 美元回购 1,000 万股，每股比特币怎么变？",
       options: ["下降 1.8%", "不变", "上升约 2.2%", "上升 4.5%"],
       answer: 2,
-      explain: "9,200 BTC ÷ 9,000 万股 vs 10,000 ÷ 1 亿：**(1 − 8%) ÷ (1 − 10%) − 1 ≈ +2.2%**。−1.8% 是同样 mNAV 下增发买币的结果。",
+      explain: "\\(\\dfrac{9{,}200\\ \\text{BTC}}{9{,}000\\ \\text{万股}}\\) 对比 \\(\\dfrac{10{,}000\\ \\text{BTC}}{1\\ \\text{亿股}}\\)：**\\(\\dfrac{1 - 8\\%}{1 - 10\\%} - 1 \\approx +2.2\\%\\)**。−1.8% 是同样 mNAV 下增发买币的结果。",
     },
     {
       q: "同一次卖币回购之后，Orange-F 的 BTC 评级从 4.0 倍变为多少？这说明了什么？",
@@ -175,7 +175,7 @@ $$
         "0 倍；优先股被注销",
       ],
       answer: 0,
-      explain: "BTC 储备 9.2 亿 ÷（1.5 亿 + 1 亿）= **3.68 倍**。同一个动作在层与层之间转移价值——这是 mNAV 压缩时最重要的利益冲突。",
+      explain: "**\\(\\dfrac{\\text{BTC 储备 } 9.2\\ \\text{亿}}{1.5\\ \\text{亿} + 1\\ \\text{亿}} = 3.68\\ \\text{倍}\\)**。同一个动作在层与层之间转移价值——这是 mNAV 压缩时最重要的利益冲突。",
     },
     {
       q: "以 85 美元回购面值 100 美元、股息 10% 的 Orange-F，对其余各层的影响是？",
@@ -208,7 +208,7 @@ $$
         "因为并购后 mNAV 一定变成 1",
       ],
       answer: 1,
-      explain: "收购方的股票“贵”（mNAV > 1），目标的比特币“便宜”（mNAV < 1）。用贵的换便宜的，**收购方的每股比特币上升**——这是 2026 年 DAT 并购潮背后的算术。",
+      explain: "收购方的股票“贵”（\\(\\mathrm{mNAV} > 1\\)），目标的比特币“便宜”（\\(\\mathrm{mNAV} < 1\\)）。用贵的换便宜的，**收购方的每股比特币上升**——这是 2026 年 DAT 并购潮背后的算术。",
     },
   ],
 

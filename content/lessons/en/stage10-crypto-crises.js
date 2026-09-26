@@ -179,7 +179,7 @@ So the first lesson of buying gold is to check the gold. The second, more import
         "None — it was simply unlucky",
       ],
       answer: 0,
-      explain: "On-demand liabilities + illiquid assets = the raw material of a run. Celsius had no capital rules, no deposit insurance and no lender of last resort.",
+      explain: "On-demand liabilities plus illiquid assets are the raw material of a run. Celsius had no capital rules, no deposit insurance and no lender of last resort.",
     },
     {
       q: "In the FTX collapse, what does “fake collateral” refer to?",

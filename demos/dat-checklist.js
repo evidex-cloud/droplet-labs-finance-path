@@ -1,7 +1,11 @@
 // 交互演示：DAT 分析师清单——输入任何一家 DAT 的数字（或用预设：橙子公司 / Strategy 2026-08-21/23 简报 / Strive 2026-09-18），
 // 引擎（_fin.js）算出每股比特币、两种 mNAV、两种放大、各层 BTC 评级与地板价、BTC Risk/Credit、覆盖月数、Breakeven ARR、回售缺口，
 // 十个问题逐题亮灯（阈值是本课的经验规则，不是行业标准），并生成一页可复制的分析摘要草稿。
-import { btcNav, mnavBasic, mnavNetBps, amplificationStrategy, striveAmpRatio, coverageByLayer, btcFloorPrice, btcRiskProb, btcCredit, monthsCovered, breakevenArr, fmtPct, fmtNum, fmtUsd, fmtBig } from "./_fin.js";
+import { btcNav, mnavBasic, mnavNetBps, amplificationStrategy, striveAmpRatio, coverageByLayer, btcFloorPrice, btcRiskProb, btcCredit, monthsCovered, breakevenArr, fmtPct, fmtNum, fmtUsd, fmtBig, tex } from "./_fin.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 , → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+const texBig = (x) => (x < 0 ? "-" : "") + String.raw`\$${fmtBig(Math.abs(x)).replace(/([TBMK])$/, "\\text{$1}")}`;
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -130,7 +134,7 @@ export default function mount(root, lang) {
       `${st.bpsChg > 0 ? "+" : ""}${fmtNum(st.bpsChg, 1)}%${T("；追问来源：溢价增发、优先股，还是卖币与非买币增发", "; ask where it came from: premium issuance, preferreds, or coin sales and non-bitcoin issuance")}`]);
     // 3
     Q.push([m26 >= 1.2 ? "g" : m26 >= 0.95 ? "y" : "r", T("3. mNAV 与口径", "3. mNAV and its definition"),
-      `${T("市值口径", "basic")} ${fmtNum(mB, 2)}x · ${T("2026 净口径", "2026 net")} ${isFinite(m26) && m26 > 0 ? fmtNum(m26, 2) + "x" : T("净储备为负", "negative net reserve")}${T("（净口径接近 1 = 增发不再增值）", " (net near 1 = issuance no longer accretive)")}`]);
+      `${T("市值口径", "basic")} ${fmtNum(mB, 2)}x · ${T("2026 净口径", "2026 net")} ${isFinite(m26) && m26 > 0 ? fmtNum(m26, 2) + "x" : T("净储备为负", "negative net reserve")}${T("（净口径接近 1，即增发不再增值）", " (net near 1 means issuance is no longer accretive)")}`]);
     // 4
     const a4 = !isFinite(ampS) || ampS <= 0 ? "r" : ampS <= 1.5 ? "g" : ampS <= 2.5 ? "y" : "r";
     Q.push([a4, T("4. 杠杆（两种公式）", "4. Leverage (two formulas)"),
@@ -158,7 +162,14 @@ export default function mount(root, lang) {
     Q.push([h10 === 0 ? "g" : h10 < 3 ? "y" : "r", T("10. 宏观环境", "10. Macro environment"),
       `${T("30 年期", "30-year")} ${fmtNum(st.y30, 2)}%${st.rising ? T("（上升中）", " (rising)") : ""} · ${T("比特币距高点", "bitcoin below its high by")} ${fmtNum(st.btcDD, 0)}% · ${h10} ${T("项逆风", "headwinds")}`]);
 
-    q("#chk-log").innerHTML = Q.map(([c, t, d]) => `<div><span class="${cls(c)}">${light(c)}</span> <b>${t}</b>${T("：", ": ")}${d}</div>`).join("");
+    // 公式读数（只显示在页面上，不进入纯文本摘要）
+    const netRes = nav - debt - pref + usd;
+    const F = [
+      `${tex(String.raw`\text{${T("净储备", "Net Reserve")}} = ${texBig(nav)} - ${texBig(debt)} - ${texBig(pref)} + ${texBig(usd)} = ${texBig(netRes)}`)}`,
+      netRes > 0 ? `${tex(String.raw`\mathrm{mNAV}_{2026} = \dfrac{\text{${T("股价", "share price")}}}{\text{${T("净储备", "Net Reserve")}} \div \text{${T("完全稀释股数", "fully diluted shares")}}} = \dfrac{${texv(fmtUsd(st.price, 2))}}{${texv(fmtUsd(netRes / (st.fdSh * M), 2))}} = ${texv(fmtNum(m26, 2))}\times`)}` : "",
+      st.oblig > 0 ? `${tex(String.raw`\text{${T("覆盖月数", "Months of coverage")}} = \dfrac{${texBig(st.reserve * M)}}{${texBig(st.oblig * M)}} \times 12 = ${texv(fmtNum(months, 0))}`)}${T("；", "; ")}${tex(String.raw`\text{Breakeven ARR} = \dfrac{${texBig(st.oblig * M)}}{${texBig(nav)}} = ${texv(fmtPct(be, 2))}`)}` : "",
+    ].filter(Boolean);
+    q("#chk-log").innerHTML = Q.map(([c, t, d]) => `<div><span class="${cls(c)}">${light(c)}</span> <b>${t}</b>${T("：", ": ")}${d}</div>`).join("") + F.map((f) => `<div>${f}</div>`).join("");
 
     const reds = Q.filter((x) => x[0] === "r").map((x) => x[1]);
     const greens = Q.filter((x) => x[0] === "g").map((x) => x[1]);

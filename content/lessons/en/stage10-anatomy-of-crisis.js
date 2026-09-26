@@ -74,15 +74,17 @@ The mechanism that makes this work is **sequential service** — first come, fir
 
 <figure><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><defs><marker id="aoc-ar-en" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs><text x="155" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Small-town bank balance sheet ($k)</text><text x="95" y="44" text-anchor="middle" font-size="11" fill="var(--muted)">Assets</text><text x="215" y="44" text-anchor="middle" font-size="11" fill="var(--muted)">Liabilities &amp; capital</text><rect x="40" y="52" width="110" height="20" rx="3" fill="var(--green-soft)" stroke="var(--green)"/><text x="95" y="66" text-anchor="middle" font-size="11" fill="var(--ink)">Cash 100</text><rect x="40" y="72" width="110" height="180" rx="3" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="95" y="150" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">10-yr mortgages 900</text><text x="95" y="168" text-anchor="middle" font-size="10" fill="var(--muted)">Fire sale: ~2/3 of book</text><rect x="160" y="52" width="110" height="180" rx="3" fill="var(--red-soft)" stroke="var(--red)"/><text x="215" y="130" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">Demand deposits 900</text><text x="215" y="148" text-anchor="middle" font-size="10" fill="var(--muted)">Withdrawable any time</text><rect x="160" y="232" width="110" height="20" rx="3" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="215" y="246" text-anchor="middle" font-size="11" fill="var(--ink)">Capital 100</text><text x="155" y="276" text-anchor="middle" font-size="11" fill="var(--orange-ink)" font-weight="600">1/3 of depositors run → fire-sale loss 100 → capital gone</text><text x="480" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">The self-reinforcing run loop</text><rect x="330" y="46" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="395" y="68" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">Withdrawals</text><text x="395" y="84" text-anchor="middle" font-size="10" fill="var(--muted)">First come, first served</text><rect x="500" y="46" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="565" y="68" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">Fire-sell assets</text><text x="565" y="84" text-anchor="middle" font-size="10" fill="var(--muted)">At a discount</text><rect x="500" y="176" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="565" y="198" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">Losses eat capital</text><text x="565" y="214" text-anchor="middle" font-size="10" fill="var(--muted)">Leverage amplifies</text><rect x="330" y="176" width="130" height="50" rx="8" fill="var(--surface-2)" stroke="var(--line)"/><text x="395" y="198" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">Doubt becomes fact</text><text x="395" y="214" text-anchor="middle" font-size="10" fill="var(--muted)">Longer queues</text><line x1="462" y1="71" x2="496" y2="71" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar-en)"/><line x1="565" y1="98" x2="565" y2="172" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar-en)"/><line x1="498" y1="201" x2="464" y2="201" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar-en)"/><line x1="395" y1="174" x2="395" y2="100" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#aoc-ar-en)"/><text x="480" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--red)">Self-fulfilling</text><text x="480" y="256" text-anchor="middle" font-size="10.5" fill="var(--muted)">Break the loop: a lender of last resort,</text><text x="480" y="272" text-anchor="middle" font-size="10.5" fill="var(--muted)">deposit insurance, thicker capital</text></svg><figcaption>Left: a healthy bank with short liabilities, long assets and thin capital. Right: withdrawals → fire sales → losses → doubt → more withdrawals. The loop does not need the original rumor to be true.</figcaption></figure>
 
-Now generalize the arithmetic from the intuition. Let capital be E, cash C, withdrawals W, and let a fire sale realize only a fraction p of book value (p = 2/3 above). Once W exceeds C, the bank must sell (W − C)/p of book assets and books a loss:
+Now generalize the arithmetic from the intuition. Let capital be \\(E\\), cash \\(C\\), withdrawals \\(W\\), and let a fire sale realize only a fraction \\(p\\) of book value (\\(p = \\tfrac{2}{3}\\) above). Once \\(W\\) exceeds \\(C\\), the bank must sell \\(\\dfrac{W - C}{p}\\) of book assets and books a loss:
 
 $$
-Fire-sale loss = (W − C) × (1/p − 1)
-Insolvency threshold: W* = C + E × p / (1 − p)
-Example: W* = 100 + 100 × (2/3)/(1/3) = 300 ($k), one-third of deposits
+\\text{fire-sale loss} = (W - C) \\times \\left(\\frac{1}{p} - 1\\right)
+W^{*} = C + E \\times \\frac{p}{1 - p}
+W^{*} = 100 + 100 \\times \\frac{2/3}{1/3} = 300\\ (\\$\\text{k})
 $$
 
-The formula points to exactly three ways to harden a bank: **hold more cash (C up), hold more capital (E up), hold assets that sell closer to book (p up).** It also explains the post-2008 rulebook: the Liquidity Coverage Ratio (LCR) requires a stock of high-quality liquid assets and higher capital ratios raise E — they push up C, p and E respectively.
+The second line, \\(W^{*}\\), is the insolvency threshold; the third plugs in the example: $300k, one-third of deposits.
+
+The formula points to exactly three ways to harden a bank: **hold more cash (\\(C\\uparrow\\)), hold more capital (\\(E\\uparrow\\)), hold assets that sell closer to book (\\(p\\uparrow\\)).** It also explains the post-2008 rulebook: the Liquidity Coverage Ratio (LCR) requires a stock of high-quality liquid assets and higher capital ratios raise \\(E\\) — they push up \\(C\\), \\(p\\) and \\(E\\) respectively.
 
 ### ③ Fire sales and contagion: from one firm to the whole system
 
@@ -101,7 +103,7 @@ One failed bank is a tragedy; many failing together is a crisis. Four transmissi
 
 **Deposit insurance.** The most elegant result in Diamond–Dybvig is this: **if depositors are sure their money is safe whether or not others run, the bad equilibrium disappears** — and the government usually pays nothing, because nobody runs. About 9,000 US banks failed between 1930 and 1933; the Banking Act of 1933 created the Federal Deposit Insurance Corporation (FDIC), which began insuring deposits in 1934, and classic retail runs all but vanished from the US afterward. Today coverage is $250,000 per depositor per bank (raised in 2008, made permanent in 2010).
 
-**Capital and liquidity rules.** In the formula above, thicker capital (E) and more liquid assets (C and p) directly raise the run threshold. After 2008, Basel III raised capital ratios and added the Liquidity Coverage Ratio and the Net Stable Funding Ratio.
+**Capital and liquidity rules.** In the formula above, thicker capital (\\(E\\)) and more liquid assets (\\(C\\) and \\(p\\)) directly raise the run threshold. After 2008, Basel III raised capital ratios and added the Liquidity Coverage Ratio and the Net Stable Funding Ratio.
 
 Every extinguisher has a cost:
 
@@ -122,7 +124,7 @@ Deposit insurance got rid of depositors lining up outside branches. It did not g
 
 The framework also warns that **a run can come back in another form.** A DAT relies on selling new securities to pay dividends and keep buying. If the market suddenly stops buying its stock or preferreds — mNAV falls below 1, capital markets shut — that is a run on *new funding*. The stress test in Stage 18.2 and the mNAV-compression lesson in Stage 18.3 ask the same questions layer by layer: who can demand money, how fast, and from what will it be paid?
 
-**One line to carry forward: crisis = short money + long assets + thin capital + poor visibility, meeting a signal that makes people doubt.** Learn to spot those four things in any new institution and you have learned to read crises.
+**One line to carry forward: a crisis is short money, long assets, thin capital and poor visibility, meeting a signal that makes people doubt.** Learn to spot those four things in any new institution and you have learned to read crises.
 `,
 
   demo: "anatomy-of-crisis",
@@ -163,7 +165,7 @@ From the 2008 investment banks to Silicon Valley Bank in 2023 to FTX in 2022, yo
         "$450k — half of deposits",
       ],
       answer: 2,
-      explain: "W* = C + E × p/(1 − p) = 100 + 100 × 2 = 300. The first $100k comes from cash; the next $200k requires selling $300k of loans, a $100k loss that exactly erases the capital. **The run itself knocks over a healthy bank.**",
+      explain: "\\(W^{*} = C + E \\times \\dfrac{p}{1 - p} = 100 + 100 \\times 2 = 300\\). The first $100k comes from cash; the next $200k requires selling $300k of loans, a $100k loss that exactly erases the capital. **The run itself knocks over a healthy bank.**",
     },
     {
       q: "In the Diamond–Dybvig model, what makes running the rational choice for each depositor?",

@@ -1,6 +1,10 @@
 // 交互演示：久期与凸性计算器。选一只债券（或自己调票息/期限/收益率），施加 ±bp 冲击，
 // 对比“精确重新定价”“只用久期的直线估算”“久期 + 凸性”三者；并给出 DV01、持仓美元风险与“一年票息能扛住多少基点”。
-import { bondRisk, bondPrice, priceChangeApprox, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { bondRisk, bondPrice, priceChangeApprox, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
+
+// 把格式化好的数放进 LaTeX：% → \%，$ → \$，千分位逗号 → {,}
+const pc = (s) => String(s).replace(/%/g, "\\%");
+const tx = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}");
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -48,8 +52,11 @@ export default function mount(root, lang) {
       <div id="dc-chart"></div>
       <div class="demo-log" id="dc-log"></div>
       <p class="demo-tip">${T(
-        "先点“30 年期国债”，把冲击拖到 +100bp：直线（只用久期）估 −15.5%，精确 −13.8%，加上凸性后几乎重合。再把冲击拖到 −100bp，看凸性让上涨比下跌多。然后点“近似永续优先股”：修正久期约等于 1 ÷ 10% = 10；把收益率降到 6%，久期拉长到约 16——收益率越低，跷跷板越长。",
-        "Click “30-year Treasury” and drag the shock to +100bp: the straight line (duration only) says −15.5%, the exact answer is −13.8%, and adding convexity nearly closes the gap. Drag to −100bp and watch convexity make the gain bigger than the loss. Then click “Near-perpetual preferred”: modified duration is about 1 ÷ 10% = 10. Lower the yield to 6% and duration stretches to about 16. The lower the yield, the longer the seesaw."
+        "先点“30 年期国债”，把冲击拖到 +100bp：直线（只用久期）估 −15.5%，精确 −13.8%，加上凸性后几乎重合。再把冲击拖到 −100bp，看凸性让上涨比下跌多。然后点“近似永续优先股”：修正久期约等于 ",
+        "Click “30-year Treasury” and drag the shock to +100bp: the straight line (duration only) says −15.5%, the exact answer is −13.8%, and adding convexity nearly closes the gap. Drag to −100bp and watch convexity make the gain bigger than the loss. Then click “Near-perpetual preferred”: modified duration is about "
+      )}${tex(String.raw`\dfrac{1}{10\%} = 10`)}${T(
+        "；把收益率降到 6%，久期拉长到约 16——收益率越低，跷跷板越长。",
+        ". Lower the yield to 6% and duration stretches to about 16. The lower the yield, the longer the seesaw."
       )}</p>
     </div>`;
 
@@ -103,11 +110,11 @@ export default function mount(root, lang) {
     q("#dc-chart").innerHTML = chartBlock(res, [["var(--red)", T("真实价格", "True price")], ["var(--blue)", T("久期直线", "Duration line")], ["var(--green)", T("久期 + 凸性", "Duration + convexity")]]);
 
     const lines = [];
-    lines.push(`${T("修正久期", "Modified duration")} ${fmtNum(r.modified, 2)} × ${T("冲击", "shock")} ${(st.shock / 100).toFixed(2)}% ≈ ${fmtPct(durOnly, 2)}${T("；精确重新定价", "; exact repricing gives")} ${fmtPct(exact, 2)}${T("；误差", "; error")} ${fmtPct(durOnly - exact, 2)}${T("，加上 ½ × 凸性 × Δy² 后只剩", ", and after adding ½ × convexity × Δy² only")} ${fmtPct(durConv - exact, 2)}${T("。", " remains.")}`);
-    lines.push(`${T("持仓市值", "Position value")} ${fmtUsd(posValue, 0)}${T("，冲击后盈亏约", "; P&L after the shock about")} <b>${fmtUsd(posValue * exact, 0)}</b>${T("（DV01 × 基点数 ≈ ", " (DV01 × bp ≈ ")}${fmtUsd(-dv01Pos * st.shock, 0)}${T("）。", ").")}`);
-    if (st.coupon > 0 && isFinite(beBp)) lines.push(`${T("当期收益率", "Current yield")} ${fmtPct(cy, 2)} ÷ ${T("修正久期", "modified duration")} ${fmtNum(r.modified, 2)} ≈ <b>${Math.round(beBp)}bp</b>${T("：收益率只要上升这么多，一整年的票息收入就被价格下跌抵消。久期越长，这层“垫子”越薄。", ": a yield rise of just this much wipes out a full year of coupon income through the price drop. The longer the duration, the thinner this cushion.")}`);
+    lines.push(`${tex(String.raw`-\text{${T("修正久期", "modified duration")}}\ ${fmtNum(r.modified, 2)} \times \text{${T("冲击", "shock")}}\ ${(st.shock / 100).toFixed(2)}\% \approx ${pc(fmtPct(durOnly, 2))}`)}${T("；精确重新定价", "; exact repricing gives")} ${fmtPct(exact, 2)}${T("；误差", "; error")} ${fmtPct(durOnly - exact, 2)}${T("，加上 ", ", and after adding ")}${tex(String.raw`\tfrac{1}{2} \times \text{${T("凸性", "convexity")}} \times (\Delta y)^{2}`)}${T(" 后只剩", " only")} ${fmtPct(durConv - exact, 2)}${T("。", " remains.")}`);
+    lines.push(`${T("持仓市值", "Position value")} ${fmtUsd(posValue, 0)}${T("，冲击后盈亏约", "; P&L after the shock about")} <b>${fmtUsd(posValue * exact, 0)}</b>${T("（", " (")}${tex(String.raw`-\mathrm{DV01} \times \text{${T("基点数", "bp")}} \approx ${tx(fmtUsd(-dv01Pos * st.shock, 0))}`)}${T("）。", ").")}`);
+    if (st.coupon > 0 && isFinite(beBp)) lines.push(`${tex(String.raw`\dfrac{\text{${T("当期收益率", "current yield")}}\ ${pc(fmtPct(cy, 2))}}{\text{${T("修正久期", "modified duration")}}\ ${fmtNum(r.modified, 2)}} \approx \mathbf{${Math.round(beBp)}}\ \text{bp}`)}${T("：收益率只要上升这么多，一整年的票息收入就被价格下跌抵消。久期越长，这层“垫子”越薄。", ": a yield rise of just this much wipes out a full year of coupon income through the price drop. The longer the duration, the thinner this cushion.")}`);
     else lines.push(`${T("零息债没有票息垫子：它的久期就是期限，全部回报都押在最后一天。", "A zero has no coupon cushion: its duration equals its maturity and the whole return rides on the final day.")}`);
-    if (st.years >= 60) lines.push(`<span class="warn">${T("100 年期近似永续：修正久期", "At 100 years this is nearly perpetual: modified duration")} ${fmtNum(r.modified, 2)} ${T("≈ 1 ÷ 收益率", "≈ 1 ÷ yield")} = ${fmtNum(1 / y, 2)}${T("。没有到期拉回面值的锚，这是最长的跷跷板（阶段 18.1）。", ". With no maturity to pull it back to par, this is the longest seesaw (Stage 18.1).")}</span>`);
+    if (st.years >= 60) lines.push(`<span class="warn">${T("100 年期近似永续：", "At 100 years this is nearly perpetual: ")}${tex(String.raw`\text{${T("修正久期", "modified duration")}}\ ${fmtNum(r.modified, 2)} \approx \dfrac{1}{\text{${T("收益率", "yield")}}} = ${fmtNum(1 / y, 2)}`)}${T("。没有到期拉回面值的锚，这是最长的跷跷板（阶段 18.1）。", ". With no maturity to pull it back to par, this is the longest seesaw (Stage 18.1).")}</span>`);
     if (st.shock > 0 && exact > durOnly) lines.push(`<span class="ok">${T("凸性在帮你：真实跌幅比直线估算少", "Convexity is working for you: the true loss is smaller than the straight line by")} ${fmtPct(exact - durOnly, 2)}${T("。", ".")}</span>`);
     if (st.shock < 0 && exact > durOnly) lines.push(`<span class="ok">${T("凸性在帮你：真实涨幅比直线估算多", "Convexity is working for you: the true gain beats the straight line by")} ${fmtPct(exact - durOnly, 2)}${T("。", ".")}</span>`);
     q("#dc-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");

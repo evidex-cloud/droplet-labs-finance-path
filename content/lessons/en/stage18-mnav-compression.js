@@ -10,7 +10,7 @@ export default {
     "Above 1x mNAV, issuing stock to buy bitcoin raises bitcoin per share. Below 1x, the same move dilutes, and the flywheel runs backwards. But running backwards is not collapse: **below 1x, selling bitcoin to buy back common actually increases bitcoin per share**, at the cost of thinner coverage for the preferreds. This lesson prices the five choices a company has after mNAV compresses, takes the \"death spiral\" argument apart link by link to see where structure stops it and where it doesn't, and tests it against real 2025–2026 cases: Strategy's bitcoin sales and STRC buybacks, ProCap, Sequans, Satsuma, and a wave of mergers.",
 
   intuition: `
-Stage 16.7 explained the DAT flywheel. When the stock trades above the bitcoin value behind each share (mNAV above 1), every share sold brings in more bitcoin than it represented, so bitcoin per share rises, and rising bitcoin per share supports the stock price. Stage 10.4 explained Soros's **reflexivity**: market prices don't just reflect fundamentals, they feed back and change them. The DAT flywheel is a textbook reflexive loop, and reflexive loops turn in both directions.
+Stage 16.7 explained the DAT flywheel. When the stock trades above the bitcoin value behind each share (\\(\\mathrm{mNAV} > 1\\)), every share sold brings in more bitcoin than it represented, so bitcoin per share rises, and rising bitcoin per share supports the stock price. Stage 10.4 explained Soros's **reflexivity**: market prices don't just reflect fundamentals, they feed back and change them. The DAT flywheel is a textbook reflexive loop, and reflexive loops turn in both directions.
 
 From late 2025 into 2026, the market watched the reverse turn. Bitcoin fell from about $126,000 to about $58,000; DAT stocks fell further; and **16 of the 20 largest DATs traded below 1x mNAV** (DWF Ventures, September 2026). Metaplanet's basic mNAV was about 0.58x, Twenty One (XXI) about 0.68x, ProCap sat at roughly a 40% discount, and Strategy, on its own 2026 definition, was about 1.01x on 2026-08-21.
 
@@ -40,20 +40,20 @@ The lesson rests on **Idea ④ (risk and leverage)**, meaning reflexivity, lever
   mechanics: `
 ### ① mNAV below 1: why the flywheel reverses
 
-Let N be the bitcoin value per share, P the share price, and mNAV = P ÷ N. Issue new shares equal to a fraction s of the existing count and convert all the proceeds into bitcoin:
+Let \\(N\\) be the bitcoin value per share, \\(P\\) the share price, and \\(\\mathrm{mNAV} = \\dfrac{P}{N}\\). Issue new shares equal to a fraction \\(s = \\dfrac{\\text{new shares}}{\\text{existing shares}}\\) and convert all the proceeds into bitcoin:
 
 $$
-Change in BTC per share after issuing = (1 + s × mNAV) ÷ (1 + s) − 1
-mNAV = 1.5, s = 10%: (1 + 0.15) ÷ 1.1 − 1 = +4.5% (Orange Corp's standard example)
-mNAV = 0.8, s = 10%: (1 + 0.08) ÷ 1.1 − 1 = −1.8%
+\\begin{aligned} &\\text{Change in BTC per share after issuing} \\\\ &= \\frac{1 + s \\times \\mathrm{mNAV}}{1 + s} - 1 \\end{aligned}
+\\begin{aligned} &\\mathrm{mNAV} = 1.5,\\ s = 10\\%\\text{:} \\\\ &\\frac{1 + 0.15}{1.1} - 1 = +4.5\\% \\end{aligned}
+\\begin{aligned} &\\mathrm{mNAV} = 0.8,\\ s = 10\\%\\text{:} \\\\ &\\frac{1 + 0.08}{1.1} - 1 = -1.8\\% \\end{aligned}
 $$
 
-**mNAV = 1 is the watershed** (and once commissions and market impact are counted, the real watershed sits a little higher; Stage 17.1). Check it with the shared engine's issueAndBuy: Orange Corp issues 10 million shares at $8, ending with 10,800 BTC over 110 million shares, or 0.0000982 BTC per share, 1.8% below 0.0001.
+The second line is Orange Corp's standard example. **\\(\\mathrm{mNAV} = 1\\) is the watershed** (and once commissions and market impact are counted, the real watershed sits a little higher; Stage 17.1). Check it with the shared engine's issueAndBuy: Orange Corp issues 10 million shares at $8, ending with \\(\\dfrac{10{,}800\\ \\text{BTC}}{110\\text{M shares}} \\approx 0.0000982\\) BTC per share, 1.8% below 0.0001.
 
 **First ask: which mNAV?** Stage 16.2 covered four definitions. Basic (market-cap) mNAV ignores debt and preferreds that rank ahead of the common, so for a leveraged DAT a basic mNAV of 0.8x can coexist with an enterprise-value mNAV above 1x. Metaplanet's three figures on 2026-09-26 show it: **0.58x** basic, 0.73x diluted, **0.79x** EV (bitcointreasuries.net). To decide whether issuing dilutes, first say which "per share" you care about:
 
-- For **gross bitcoin per share** (Strategy's BPS metric, and the Orange Corp examples in this lesson), the watershed is **basic** mNAV = 1.
-- For **net bitcoin per share** (after deducting debt and preferreds), the watershed is mNAV = 1 on Strategy's **2026 definition**. With Orange Corp at $8, basic mNAV is 0.8x, but net bitcoin per share is only $7.30, so the 2026-style figure is **1.10x**: issuing at $8 cuts gross bitcoin per share by 1.8% yet raises net bitcoin per share. One action, two verdicts. **The definition is not pedantry; it decides the answer.**
+- For **gross bitcoin per share** (Strategy's BPS metric, and the Orange Corp examples in this lesson), the watershed is **basic** \\(\\mathrm{mNAV} = 1\\).
+- For **net bitcoin per share** (after deducting debt and preferreds), the watershed is \\(\\mathrm{mNAV} = 1\\) on Strategy's **2026 definition**. With Orange Corp at $8, basic mNAV is 0.8x, but net bitcoin per share is only $7.30, so the 2026-style figure is **\\(8 \\div 7.30 \\approx 1.10\\times\\)**: issuing at $8 cuts gross bitcoin per share by 1.8% yet raises net bitcoin per share. One action, two verdicts. **The definition is not pedantry; it decides the answer.**
 
 Why would mNAV fall below 1? Several explanations coexist:
 
@@ -77,7 +77,7 @@ Take Orange Corp at mNAV 0.8 (a $8 share price, bitcoin at $100,000):
 
 A few regularities:
 
-- **Below 1x mNAV, selling bitcoin to buy back common increases bitcoin per share.** In general, selling a fraction x of the bitcoin and buying back stock at mNAV = m gives new BTC per share = (1 − x) ÷ (1 − x ÷ m). With x = 8% and m = 0.8: 0.92 ÷ 0.90 = +2.2%. The lower m, the "cheaper" the buyback.
+- **Below 1x mNAV, selling bitcoin to buy back common increases bitcoin per share.** In general, selling a fraction \\(x\\) of the bitcoin and buying back stock at \\(\\mathrm{mNAV} = m\\) gives \\(\\text{new BTC per share} = \\dfrac{1 - x}{1 - x/m}\\) (taking the old figure as 1). With \\(x = 8\\%\\) and \\(m = 0.8\\): \\(\\dfrac{0.92}{0.90} - 1 \\approx +2.2\\%\\). The lower \\(m\\), the "cheaper" the buyback.
 - **Buying back preferreds below par** spends $85 to extinguish a $100 senior claim and $10 a year of dividends. Every remaining layer, including the rest of Orange-F itself, gets thicker coverage, and the common's net reserve rises. The cost is cash that could have paid dividends or bought bitcoin.
 - **Issuing new preferreds** still raises "bitcoin per share" below 1x, because no shares are added. But Strategy itself has warned that this kind of BTC Yield ignores the new senior claim (Stage 16.3). The real hurdle is the **BTC Hurdle ARR**, which Strategy put at 10.74% on 2026-08-23: bitcoin must appreciate faster than this cost of capital for net bitcoin per share to outgrow bitcoin itself.
 
@@ -85,7 +85,7 @@ A few regularities:
 
 On one balance sheet, different layers want management to do different things:
 
-<figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Change in BTC per share: issue 10% more shares vs sell bitcoin to buy back 10%</text><line x1="80" y1="150" x2="600" y2="150" stroke="var(--muted)"/><line x1="80" y1="40" x2="80" y2="255" stroke="var(--line)"/><line x1="253" y1="40" x2="253" y2="255" stroke="var(--red)" stroke-dasharray="5 4"/><text x="258" y="50" font-size="10" fill="var(--red)">mNAV = 1: the watershed</text><polyline points="80,188 167,169 253,150 340,131 427,112 513,93 600,74" fill="none" stroke="var(--btc)" stroke-width="2.5"/><polyline points="80,104 167,127 253,150 340,173 427,196 513,219 600,243" fill="none" stroke="var(--blue)" stroke-width="2.5"/><text x="596" y="68" text-anchor="end" font-size="11" font-weight="700" fill="var(--btc)">issue and buy +9.1%</text><text x="596" y="262" text-anchor="end" font-size="11" font-weight="700" fill="var(--blue)">sell and buy back −11.1%</text><text x="88" y="96" font-size="11" font-weight="700" fill="var(--blue)">sell and buy back +5.6%</text><text x="88" y="206" font-size="11" font-weight="700" fill="var(--btc)">issue and buy −4.5%</text><text x="72" y="154" text-anchor="end" font-size="10" fill="var(--muted)">0%</text><text x="80" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="253" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.0</text><text x="427" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.5</text><text x="600" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="340" y="288" text-anchor="middle" font-size="10" fill="var(--muted)">mNAV (the common's definition)</text><rect x="110" y="222" width="136" height="24" rx="6" fill="var(--red-soft)" stroke="var(--red)"/><text x="178" y="238" text-anchor="middle" font-size="10" fill="var(--red)">preferred coverage thins</text></svg><figcaption>The two lines cross at mNAV = 1. At a premium, issuing helps the common; at a discount, selling bitcoin to buy back helps the common. But the buyback on the left is paid for with bitcoin, and the preferreds' coverage falls with it.</figcaption></figure>
+<figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Change in BTC per share: issue 10% more shares vs sell bitcoin to buy back 10%</text><line x1="80" y1="150" x2="600" y2="150" stroke="var(--muted)"/><line x1="80" y1="40" x2="80" y2="255" stroke="var(--line)"/><line x1="253" y1="40" x2="253" y2="255" stroke="var(--red)" stroke-dasharray="5 4"/><text x="258" y="50" font-size="10" fill="var(--red)">mNAV = 1: the watershed</text><polyline points="80,188 167,169 253,150 340,131 427,112 513,93 600,74" fill="none" stroke="var(--btc)" stroke-width="2.5"/><polyline points="80,104 167,127 253,150 340,173 427,196 513,219 600,243" fill="none" stroke="var(--blue)" stroke-width="2.5"/><text x="596" y="68" text-anchor="end" font-size="11" font-weight="700" fill="var(--btc)">issue and buy +9.1%</text><text x="596" y="262" text-anchor="end" font-size="11" font-weight="700" fill="var(--blue)">sell and buy back −11.1%</text><text x="88" y="96" font-size="11" font-weight="700" fill="var(--blue)">sell and buy back +5.6%</text><text x="88" y="206" font-size="11" font-weight="700" fill="var(--btc)">issue and buy −4.5%</text><text x="72" y="154" text-anchor="end" font-size="10" fill="var(--muted)">0%</text><text x="80" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">0.5</text><text x="253" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.0</text><text x="427" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">1.5</text><text x="600" y="275" text-anchor="middle" font-size="10" fill="var(--muted)">2.0</text><text x="340" y="288" text-anchor="middle" font-size="10" fill="var(--muted)">mNAV (the common's definition)</text><rect x="110" y="222" width="136" height="24" rx="6" fill="var(--red-soft)" stroke="var(--red)"/><text x="178" y="238" text-anchor="middle" font-size="10" fill="var(--red)">preferred coverage thins</text></svg><figcaption>The two lines cross at \\(\\mathrm{mNAV} = 1\\). At a premium, issuing helps the common; at a discount, selling bitcoin to buy back helps the common. But the buyback on the left is paid for with bitcoin, and the preferreds' coverage falls with it.</figcaption></figure>
 
 - **Common shareholders** want the company to sell bitcoin and buy back stock when mNAV is below 1, "capturing" the discount. ProCap sold about 50 BTC on 2026-09-03 to buy back stock at roughly a 40% discount; that is the logic.
 - **Preferred holders** want the company **not** to sell bitcoin. They would rather it kept issuing common (even dilutively) or hoarded cash, because every coin is part of their cushion.
@@ -138,7 +138,7 @@ Some observations:
   analogy: `
 Imagine **a members-only warehouse club.** The vault holds gold bars (bitcoin), and each membership card (a share) represents a slice of the gold. Cards trade freely on a secondhand market.
 
-When a card sells for more than the gold behind it (mNAV above 1), the club prints more cards, sells them and buys more gold, and every existing card ends up with more gold behind it. Everyone is happy, the secondhand price climbs, so the club keeps printing.
+When a card sells for more than the gold behind it (\\(\\mathrm{mNAV} > 1\\)), the club prints more cards, sells them and buys more gold, and every existing card ends up with more gold behind it. Everyone is happy, the secondhand price climbs, so the club keeps printing.
 
 Then one day gold crashes, people lose interest in the club, and cards fetch only 80% of the gold behind them (mNAV 0.8). Printing and selling cards now means selling a dollar of gold for 80 cents, and every existing card ends up with less gold.
 
@@ -164,7 +164,7 @@ As for the "death spiral," the claim that the club will be forced to sell bar af
       q: "Orange Corp is at mNAV 0.8 ($8 stock, $10 of bitcoin per share). It sells 800 BTC and buys back 10 million shares at $8. What happens to bitcoin per share?",
       options: ["It falls 1.8%", "It is unchanged", "It rises about 2.2%", "It rises 4.5%"],
       answer: 2,
-      explain: "9,200 BTC over 90 million shares versus 10,000 over 100 million: **(1 − 8%) ÷ (1 − 10%) − 1 ≈ +2.2%.** −1.8% is what issuing to buy bitcoin does at the same mNAV.",
+      explain: "\\(\\dfrac{9{,}200\\ \\text{BTC}}{90\\text{M shares}}\\) versus \\(\\dfrac{10{,}000\\ \\text{BTC}}{100\\text{M shares}}\\): **\\(\\dfrac{1 - 8\\%}{1 - 10\\%} - 1 \\approx +2.2\\%\\).** −1.8% is what issuing to buy bitcoin does at the same mNAV.",
     },
     {
       q: "After that same sale and buyback, Orange-F's BTC Rating moves from 4.0x to what, and what does that show?",
@@ -175,7 +175,7 @@ As for the "death spiral," the claim that the club will be forced to sell bar af
         "0x; the preferreds are cancelled",
       ],
       answer: 0,
-      explain: "A $920M reserve over ($150M + $100M) = **3.68x.** One action moves value between layers; that is the key conflict of interest when mNAV compresses.",
+      explain: "**\\(\\dfrac{\\$920\\text{M reserve}}{\\$150\\text{M} + \\$100\\text{M}} = 3.68\\times\\).** One action moves value between layers; that is the key conflict of interest when mNAV compresses.",
     },
     {
       q: "Buying back Orange-F (stated amount $100, 10% dividend) at $85 has what effect on the other layers?",
@@ -208,7 +208,7 @@ As for the "death spiral," the claim that the club will be forced to sell bar af
         "Because mNAV always becomes 1 after a merger",
       ],
       answer: 1,
-      explain: "The acquirer's stock is \"expensive\" (mNAV above 1) and the target's bitcoin is \"cheap\" (mNAV below 1). Swapping expensive for cheap **raises the acquirer's bitcoin per share**, and that is the arithmetic behind the 2026 wave of DAT mergers.",
+      explain: "The acquirer's stock is \"expensive\" (\\(\\mathrm{mNAV} > 1\\)) and the target's bitcoin is \"cheap\" (\\(\\mathrm{mNAV} < 1\\)). Swapping expensive for cheap **raises the acquirer's bitcoin per share**, and that is the arithmetic behind the 2026 wave of DAT mergers.",
     },
   ],
 

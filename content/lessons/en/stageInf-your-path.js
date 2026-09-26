@@ -16,7 +16,7 @@ The first twenty stages gave you a map, from the 30-year Treasury to bitcoin, fr
 
 Start with an observation. Over the past few years a distinctive kind of "bilingual" demand has appeared in the new finance. A concrete example: Strategy files an 8-K with the SEC almost every Monday. The one filed on September 21, 2026 said that as of September 20 it held 846,000 bitcoin at a total cost of about $63.8 billion, an average of about $75,416 each, and that during the week it had repurchased 1,771,238 shares of STRC for $174.0 million.
 
-Someone who only speaks crypto looks at the bitcoin count. Someone who only speaks traditional finance looks at the buyback dollars. **Someone fluent in both** works out within ten minutes that the average buyback price was $174.0 million ÷ 1.77 million shares ≈ **$98.20**. That is far above the roughly $86.50 average of the July buybacks and less than 2% below the $100 stated amount. STRC's price had clearly recovered over two months, which is exactly what management was watching when it said it wanted STRC to show "sustained, healthy trading near $100" (Stage 17.4). The fluent reader then asks the next questions: how much annual dividend obligation did the buyback retire, and how many months does the USD Reserve now cover (Stage 16.6)?
+Someone who only speaks crypto looks at the bitcoin count. Someone who only speaks traditional finance looks at the buyback dollars. **Someone fluent in both** works out within ten minutes that the average buyback price was \\(\\dfrac{\\$174.0\\ \\text{million}}{1.77\\ \\text{million shares}} \\approx\\) **$98.20**. That is far above the roughly $86.50 average of the July buybacks and less than 2% below the $100 stated amount. STRC's price had clearly recovered over two months, which is exactly what management was watching when it said it wanted STRC to show "sustained, healthy trading near $100" (Stage 17.4). The fluent reader then asks the next questions: how much annual dividend obligation did the buyback retire, and how many months does the USD Reserve now cover (Stage 16.6)?
 
 **The ability to translate a filing into a change on a balance sheet** is what this course has been training all along, and it is the scarcest skill in the new finance. It doesn't belong to any one traditional job title, yet it is useful in many of them.
 
@@ -77,7 +77,7 @@ The cheat sheet in Stage 20.4 is the syllabus for this floor.
 
 Nobody believes "familiar with DAT metrics" on a résumé. Show a tracker that updates weekly with every figure dated and defined, and people know at a glance that you can do it. The four projects below use only public data, and each maps to a group of stages in this course.
 
-**Project A: a weekly DAT tracker (Stages 15–16).** Every Monday, read Strategy's 8-K and update bitcoin holdings, the USD Reserve and the notional of each preferred; then compute mNAV on all four definitions and bitcoin per share on both share counts. The hard part is not the arithmetic but **definitions and dates**. In 2026, for example, Strategy switched its mNAV definition from "enterprise value ÷ bitcoin NAV" to "share price ÷ net bitcoin per share", so the two histories cannot simply be spliced together.
+**Project A: a weekly DAT tracker (Stages 15–16).** Every Monday, read Strategy's 8-K and update bitcoin holdings, the USD Reserve and the notional of each preferred; then compute mNAV on all four definitions and bitcoin per share on both share counts. The hard part is not the arithmetic but **definitions and dates**. In 2026, for example, Strategy switched its mNAV definition from \\(\\dfrac{\\text{enterprise value}}{\\text{bitcoin NAV}}\\) to \\(\\dfrac{\\text{share price}}{\\text{net bitcoin per share}}\\), so the two histories cannot simply be spliced together.
 
 **Project B: a bitcoin-preferreds comparison sheet (Stages 17–18).** Put STRF, STRC, STRK, STRD, STRE and Strive's SATA in one table: dividend rate, cumulative or not, seniority, payment frequency, convertibility, current yield, duration, BTC Rating. Add two benchmark rows: the 3-month bill (about 4.24% on September 25, 2026) and the 30-year Treasury (about 5.49%). **The table is itself a piece of credit research.**
 
@@ -89,7 +89,7 @@ Nobody believes "familiar with DAT metrics" on a résumé. Show a tracker that u
 
 The builder's most common mistake is making a flashier version of something old. A better question is: **which stretch of the new plumbing hasn't been laid yet?** This course points to at least four:
 
-1. **A neutral measurement standard.** Every DAT defines its own metrics. Strategy's Amplification is "BTC Reserve ÷ Net Reserve", while Strive's Amplification Ratio is "(debt + preferred) ÷ bitcoin value" (Stage 16.4); mNAV has at least four definitions (Stage 16.2). A neutral, transparent, reproducible standard is a public good that investors and rating agencies both need.
+1. **A neutral measurement standard.** Every DAT defines its own metrics. Strategy's \\(\\text{Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\), while Strive's Amplification Ratio is \\(\\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin value}}\\) (Stage 16.4); mNAV has at least four definitions (Stage 16.2). A neutral, transparent, reproducible standard is a public good that investors and rating agencies both need.
 2. **Infrastructure for bitcoin credit.** Rating methods, secondary-market liquidity, data products aimed at traditional credit buyers. These decide whether question ① of Stage ∞.1 can get a "yes".
 3. **Compliant tokenized trading venues.** The SEC's "innovation exemption" of September 17, 2026 lets qualifying "Tokenized Securities Venues" trade tokenized listed stocks, including through permissioned AMM liquidity pools, on conditions such as full shareholder rights, publicly auditable smart contracts and halts that follow the underlying. It is a door that has just opened, and behind it you need a full kit for transfer, custody, KYC and market making.
 4. **Money for AI agents.** In the 30 days to September 26, 2026, x402 handled about 75.4 million transactions worth about $24 million, averaging roughly $0.30 each (Stage 19.4). Huge counts and tiny dollars mean the demand is there but the business model has not yet taken shape.
@@ -102,12 +102,12 @@ The **lessons of failure** matter just as much. FTX taught custody and misapprop
 
 **Rule one: know which claim you own.** Four ways to be "in bitcoin" are four entirely different claims: self-custodied bitcoin, spot ETF shares, DAT common and DAT preferred (Stage 15.5). Who owes you what, where you rank, whether you can be diluted, and what's left after a 70% fall (Stage 17.6).
 
-**Rule two: size positions by volatility.** Volatility eats compounding. For an asset with 60% annual volatility, the geometric (compounded) return runs roughly σ²/2 = **18 percentage points** below the arithmetic average; add 2x leverage and volatility becomes 120%, so the drag becomes about **72 points** (Stages 16.4 and 11.4). That is why "amplified bitcoin" instruments call for smaller positions than bitcoin itself.
+**Rule two: size positions by volatility.** Volatility eats compounding. For an asset with 60% annual volatility, the geometric (compounded) return runs roughly \\(\\dfrac{\\sigma^{2}}{2} =\\) **18 percentage points** below the arithmetic average; add 2x leverage and volatility becomes 120%, so the drag becomes about **72 points** (Stages 16.4 and 11.4). That is why "amplified bitcoin" instruments call for smaller positions than bitcoin itself.
 
 $$
-Volatility drag ≈ σ² ÷ 2
-σ = 60% → 0.36 ÷ 2 = 18%
-2x leverage: σ = 120% → 1.44 ÷ 2 = 72%
+\\text{volatility drag} \\approx \\frac{\\sigma^{2}}{2}
+\\sigma = 60\\% \\Rightarrow \\frac{0.36}{2} = 18\\%
+\\text{2x leverage: }\\ \\sigma = 120\\% \\Rightarrow \\frac{1.44}{2} = 72\\%
 $$
 
 **Rule three: run the checklist before you buy.** The ten questions of Stage 18.6, plus one more: what is the time horizon of this money?
@@ -168,13 +168,13 @@ The people in highest demand **know both districts**: why the old warehouses wer
         "It can't be worked out from the 8-K",
       ],
       answer: 1,
-      explain: "$174.0M ÷ 1.77M shares ≈ **$98.20**, above July's average of about $86.50 and close to par. Translating a filing into changes in a balance sheet and a price is the bilingual skill.",
+      explain: "\\(\\dfrac{\\$174.0\\text{M}}{1.77\\text{M shares}} \\approx\\) **$98.20**, above July's average of about $86.50 and close to par. Translating a filing into changes in a balance sheet and a price is the bilingual skill.",
     },
     {
-      q: "An asset has 60% annual volatility. With 2x leverage, what is the approximate volatility drag using σ²/2?",
+      q: "An asset has 60% annual volatility. With 2x leverage, what is the approximate volatility drag using \\(\\dfrac{\\sigma^{2}}{2}\\)?",
       options: ["About 18 points", "About 36 points", "About 120 points", "About 72 points"],
       answer: 3,
-      explain: "2x leverage makes volatility 120%, so the drag ≈ 1.2² ÷ 2 = **0.72**. Leverage quadruples the drag (it scales with the square), which is why amplified instruments call for smaller positions (Stage 16.4).",
+      explain: "2x leverage makes volatility 120%, so \\(\\text{drag} \\approx \\dfrac{1.2^{2}}{2} =\\) **0.72**. Leverage quadruples the drag (it scales with the square), which is why amplified instruments call for smaller positions (Stage 16.4).",
     },
     {
       q: "Which best describes a \"missing stretch of plumbing\" identified in this lesson?",
@@ -185,7 +185,7 @@ The people in highest demand **know both districts**: why the old warehouses wer
         "Abolishing all regulation",
       ],
       answer: 0,
-      explain: "Strategy's Amplification is BTC Reserve ÷ Net Reserve; Strive's Amplification Ratio is (debt + preferred) ÷ bitcoin value; mNAV has at least four definitions. A **neutral measurement standard** is a public good investors and rating agencies both need.",
+      explain: "Strategy's \\(\\text{Amplification} = \\dfrac{\\text{BTC Reserve}}{\\text{Net Reserve}}\\); Strive's Amplification Ratio is \\(\\dfrac{\\text{debt} + \\text{preferred}}{\\text{bitcoin value}}\\); mNAV has at least four definitions. A **neutral measurement standard** is a public good investors and rating agencies both need.",
     },
     {
       q: "In this lesson's three-floor skill stack, which floor is most easily taken over by AI and so least able to stand alone as an edge?",
@@ -197,7 +197,7 @@ The people in highest demand **know both districts**: why the old warehouses wer
       q: "If you want to go deep on convertible arbitrage and volatility trading, which sister course does this lesson point to?",
       options: ["Austrian Path", "RWA Path", "Satoshi Path", "Options Path"],
       answer: 3,
-      explain: "A convertible is a bond floor plus a call option (Stage 6.4), and convertible arbitrage is buying volatility (Stage 17.2). **Options Path** is the course that goes deep on exactly that.",
+      explain: "\\(\\text{convertible} = \\text{bond floor} + \\text{call option}\\) (Stage 6.4), and convertible arbitrage is buying volatility (Stage 17.2). **Options Path** is the course that goes deep on exactly that.",
     },
   ],
 

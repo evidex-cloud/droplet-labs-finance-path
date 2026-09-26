@@ -18,9 +18,9 @@ Stage 2.1 told you which way the answer leans: future money is worth less than m
 
 Now swap the single slip for a whole string of them: a bond that pays you $50 a year for ten years and hands back $1,000 of principal at the end. What is it worth? Exactly the same procedure: discount each payment back to today on its own, then add them up. At 5%, those eleven payments are worth precisely **$1,000** together. If the market's required return rises to 6%, the very same cash flows add up to only about **$926**. That is the whole mechanism behind the seesaw of Stage 4.2: **the cash flows didn't change, the discount rate did, so the price did.**
 
-Take one more step. What if the payments **never stop** — a preferred share, say, that pays $10 a year with no maturity date? Does an infinite number of payments add up to infinity? No: the further away a payment is, the less it is worth today, and far enough out it is worth practically nothing. The math produces a beautifully simple result: **present value = annual payment ÷ discount rate.** $10 a year at 10% is worth $100. That is the first brick Stage 18.1 uses to value the perpetual preferreds issued by digital asset treasury companies.
+Take one more step. What if the payments **never stop** — a preferred share, say, that pays $10 a year with no maturity date? Does an infinite number of payments add up to infinity? No: the further away a payment is, the less it is worth today, and far enough out it is worth practically nothing. The math produces a beautifully simple result: **\\(\\text{present value} = \\dfrac{\\text{annual payment}}{\\text{discount rate}}\\).** $10 a year at 10% is worth $100. That is the first brick Stage 18.1 uses to value the perpetual preferreds issued by digital asset treasury companies.
 
-And if the payments grow? Picture a stock that will pay a $5 dividend next year, growing 4% a year after that, owned by investors who require 9%. The formula becomes **value = next year's payment ÷ (discount rate − growth rate)** = 5 ÷ 5% = $100. This is the **Gordon growth model**, the starting point of stock valuation (Stage 5.3).
+And if the payments grow? Picture a stock that will pay a $5 dividend next year, growing 4% a year after that, owned by investors who require 9%. The formula becomes **\\(\\text{value} = \\dfrac{\\text{next year's payment}}{\\text{discount rate} - \\text{growth rate}}\\)**\\(\\, = \\dfrac{5}{5\\%} = \\$100\\). This is the **Gordon growth model**, the starting point of stock valuation (Stage 5.3).
 
 This lesson is the core tool of **Idea ① — the price of time.** One sentence carries it: **any asset is worth the present value of all its future cash flows.** Assets differ only in the shape of their cash flows and in their discount rates. That is also why a move in interest rates reprices everything — every one of those formulas has the same price of time sitting in its denominator.
 
@@ -37,8 +37,8 @@ This lesson is the core tool of **Idea ① — the price of time.** One sentence
 ### ① Discounting: compounding in reverse
 
 $$
-PV = FV ÷ (1 + r)^n = FV × discount factor
-Discount factor DF(n) = 1 ÷ (1 + r)^n
+\\mathrm{PV} = \\frac{\\mathrm{FV}}{(1 + r)^{n}} = \\mathrm{FV} \\times \\text{discount factor}
+\\text{Discount factor } \\mathrm{DF}(n) = \\frac{1}{(1 + r)^{n}}
 $$
 
 A discount factor answers "what is $1 at a future date worth today?" At 5%:
@@ -54,8 +54,8 @@ Where does the discount rate come from? It is **the return on the best alternati
 Most assets pay not one amount but a series. Discount each payment separately, then add:
 
 $$
-PV = CF₁ ÷ (1 + r) + CF₂ ÷ (1 + r)² + … + CFₙ ÷ (1 + r)ⁿ
-Net present value NPV = PV of all inflows − PV of all outflows
+\\mathrm{PV} = \\frac{\\mathrm{CF}_{1}}{1 + r} + \\frac{\\mathrm{CF}_{2}}{(1 + r)^{2}} + \\cdots + \\frac{\\mathrm{CF}_{n}}{(1 + r)^{n}}
+\\text{Net present value } \\mathrm{NPV} = \\text{PV of all inflows} - \\text{PV of all outflows}
 $$
 
 Take the course's standard bond: $1,000 face value, 5% coupon, 10 years (simplified here to one coupon a year).
@@ -66,8 +66,8 @@ The same stream is worth $1,000 at 5%, $926.40 at 6% and about $1,081 at 4%. (Fr
 
 **Net present value (NPV)** answers "is this worth doing?" by treating today's investment as a negative cash flow. A project costs $1,000 today and returns $300 a year for five years:
 
-- Discounted at 8%, NPV = **+$197.81** → worth doing.
-- Discounted at 10%, NPV = +$137.24 → still worth doing, but less attractive.
+- Discounted at 8%, **\\(\\mathrm{NPV} = +\\$197.81\\)** → worth doing.
+- Discounted at 10%, \\(\\mathrm{NPV} = +\\$137.24\\) → still worth doing, but less attractive.
 - The discount rate that makes NPV exactly zero is about **15.2%** — the **internal rate of return (IRR)**. As long as your cost of capital is below 15.2%, the project creates value.
 
 **The higher the discount rate, the less future payoffs are worth, and the fewer projects pass the NPV test.** That is the micro-level mechanism by which rate hikes cut corporate investment and make long-lived public projects more expensive (the "interest-rate channel" of Stage 9.2). And a bond's **yield to maturity** is simply the IRR that makes the present value of its cash flows equal its current price (Stage 4.2).
@@ -77,41 +77,43 @@ The same stream is worth $1,000 at 5%, $926.40 at 6% and about $1,081 at 4%. (Fr
 A stream of equal payments is an **annuity** (mortgage payments, pensions and bond coupons all qualify). You don't need to discount them one by one; there is a closed form:
 
 $$
-PV of an annuity = C × [1 − (1 + r)^(−n)] ÷ r
-PV of a perpetuity = C ÷ r
+\\text{PV of an annuity} = C \\times \\frac{1 - (1 + r)^{-n}}{r}
+\\text{PV of a perpetuity} = \\frac{C}{r}
 $$
 
 Example: $1,000 a year for 30 years, discounted at 5%, has a present value of about $15,372. You collect $30,000 in total, yet today it is worth only a little over half that.
 
-Let n run to infinity, (1 + r)^(−n) goes to zero, and the annuity formula collapses into the elegant **perpetuity**: C ÷ r. History's most famous perpetual bonds were Britain's **consols**, first issued in the mid-18th century with no maturity date, paying interest only; the British government finally redeemed the last of them in 2015.
+Let \\(n \\to \\infty\\), \\((1 + r)^{-n} \\to 0\\), and the annuity formula collapses into the elegant **perpetuity**: \\(\\dfrac{C}{r}\\). History's most famous perpetual bonds were Britain's **consols**, first issued in the mid-18th century with no maturity date, paying interest only; the British government finally redeemed the last of them in 2015.
 
 **A perpetual preferred stock is a perpetuity** (Stage 6.2). Take Orange Corp's senior preferred, Orange-F: $100 stated value, 10% dividend, so $10 a year.
 
-<table class="pm"><tr><th>Market's required return</th><th>8%</th><th>10%</th><th>12%</th></tr><tr><td>Value per share = 10 ÷ r</td><td>125.00</td><td>100.00</td><td>83.33</td></tr><tr><td>Versus stated value</td><td>+25%</td><td>0%</td><td>−16.7%</td></tr></table>
+<table class="pm"><tr><th>Market's required return</th><th>8%</th><th>10%</th><th>12%</th></tr><tr><td>Value per share \\(= \\dfrac{10}{r}\\)</td><td>125.00</td><td>100.00</td><td>83.33</td></tr><tr><td>Versus stated value</td><td>+25%</td><td>0%</td><td>−16.7%</td></tr></table>
 
 Two things to remember:
 
-- **Perpetual assets are extremely rate-sensitive.** A move in the required return from 10% to 12% — just two percentage points — knocks 16.7% off the price. Its modified duration is roughly 1 ÷ r, about 10 years at 10% (Stage 4.4).
+- **Perpetual assets are extremely rate-sensitive.** A move in the required return from 10% to 12% — just two percentage points — knocks 16.7% off the price. Its modified duration is roughly \\(\\dfrac{1}{r}\\), about 10 years at 10% (Stage 4.4).
 - Run it backward and **the price tells you the market's required return**: a perpetual preferred paying $10 a year that trades at $80 is being priced to yield 12.5%. That is how Stage 18.1 reads the "yield" on DAT preferreds — and why a rising 30-year Treasury yield drags on their prices (Stage 4.5).
 
 ### ④ Growing perpetuities: the Gordon formula
 
-If the cash flow grows at a constant rate g every year (a dividend that rises 4% a year, say), the infinite sum still converges — as long as g is below r:
+If the cash flow grows at a constant rate \\(g\\) every year (a dividend that rises 4% a year, say), the infinite sum still converges — as long as \\(g\\) is below \\(r\\):
 
 $$
-P = D₁ ÷ (r − g)
-Equivalently: r = D₁ ÷ P + g (dividend yield + growth)
+P = \\frac{D_{1}}{r - g}
+r = \\underbrace{\\frac{D_{1}}{P}}_{\\text{dividend yield}} + \\underbrace{g}_{\\text{growth}}
 $$
 
-It is usually named after the American economist Myron Gordon, who developed and popularized it with co-authors in the 1950s: the **Gordon growth model.** Example: next year's dividend is $5, the required return is 9%, growth is 4%, so value = 5 ÷ (9% − 4%) = **$100**.
+Here \\(D_{1}\\) is next year's dividend; the second line is the same formula, rearranged.
 
-Its weak spot is the denominator. r − g is usually a small number, and small changes in a small number move the answer a lot:
+It is usually named after the American economist Myron Gordon, who developed and popularized it with co-authors in the 1950s: the **Gordon growth model.** Example: next year's dividend is $5, the required return is 9%, growth is 4%, so **\\(\\text{value} = \\dfrac{5}{9\\% - 4\\%} = \\$100\\)**.
 
-<table class="pm"><tr><th>Case</th><th>r</th><th>g</th><th>r − g</th><th>Value</th></tr><tr><td>Base case</td><td>9%</td><td>4%</td><td>5%</td><td>100.00</td></tr><tr><td>Required return +1%</td><td>10%</td><td>4%</td><td>6%</td><td>83.33</td></tr><tr><td>Growth expectation +1%</td><td>9%</td><td>5%</td><td>4%</td><td>125.00</td></tr></table>
+Its weak spot is the denominator. \\(r - g\\) is usually a small number, and small changes in a small number move the answer a lot:
 
-Two lessons. First, **a small rise in rates hits high-growth assets hardest**, because most of their value sits in the distant future (the "long duration" of growth stocks, Stage 5.3). Second, **as g approaches r, the valuation explodes**; at g ≥ r the formula breaks entirely. Treat any valuation that relies on "high growth forever" with suspicion.
+<table class="pm"><tr><th>Case</th><th>\\(r\\)</th><th>\\(g\\)</th><th>\\(r - g\\)</th><th>Value</th></tr><tr><td>Base case</td><td>9%</td><td>4%</td><td>5%</td><td>100.00</td></tr><tr><td>Required return +1%</td><td>10%</td><td>4%</td><td>6%</td><td>83.33</td></tr><tr><td>Growth expectation +1%</td><td>9%</td><td>5%</td><td>4%</td><td>125.00</td></tr></table>
 
-The second equation is handy on its own: dividend yield plus growth equals the return investors require. A stock yielding 2% with expected growth of 5% implies a required return of about 7%.
+Two lessons. First, **a small rise in rates hits high-growth assets hardest**, because most of their value sits in the distant future (the "long duration" of growth stocks, Stage 5.3). Second, **as \\(g\\) approaches \\(r\\), the valuation explodes**; at \\(g \\ge r\\) the formula breaks entirely. Treat any valuation that relies on "high growth forever" with suspicion.
+
+The second equation is handy on its own: \\(\\text{dividend yield} + \\text{growth} = \\text{the return investors require}\\). A stock yielding 2% with expected growth of 5% implies a required return of about 7%.
 
 ### ⑤ Everything is present value: what it explains and where it breaks
 
@@ -125,7 +127,7 @@ The limits of the method matter just as much:
 - **Assets with no cash flows**, such as gold and bitcoin, can't be valued with the formula directly — they pay no interest and no dividends. Their value comes from their monetary role: how many people want to hold them as a store of value (Stage 12.3). Rates still matter, though: the opportunity cost of holding them is the interest you forgo (Stage 2.5 explains this with real rates).
 - **Digital asset treasury companies** are a curious hybrid: their main asset is bitcoin, which produces no cash flow, yet they issue preferreds and bonds that promise fixed cash flows. Valuing the preferred uses this lesson's perpetuity formula; valuing the common requires answering a different question — where does a premium over bitcoin NAV come from (Stage 16.2)?
 
-In one line: **present value = Σ cash flow ÷ (1 + r)^t.** Learn it and you hold the key to pricing almost every financial instrument; learn its limits and it won't mislead you.
+In one line: **\\(\\text{present value} = \\sum_{t} \\dfrac{\\text{cash flow}_{t}}{(1 + r)^{t}}\\).** Learn it and you hold the key to pricing almost every financial instrument; learn its limits and it won't mislead you.
 `,
 
   demo: "present-value",
@@ -147,9 +149,9 @@ So when the news says "long-term rates are rising," picture a fog rolling in: ev
 
   misconceptions: [
     "**\"A bond paying $50 a year for ten years plus $1,000 at the end is worth $1,500.\"** — $1,500 adds money from different dates as if it were the same money. Discount each payment first: at 5% the total is exactly $1,000; at 6% it is about $926.",
-    "**\"Payments that go on forever add up to infinity, so a perpetual asset is priceless.\"** — The further away a payment, the less it is worth today, and the infinite series converges to C ÷ r. $10 a year at a 10% discount rate is worth $100, not a cent more.",
+    "**\"Payments that go on forever add up to infinity, so a perpetual asset is priceless.\"** — The further away a payment, the less it is worth today, and the infinite series converges to \\(\\dfrac{C}{r}\\). $10 a year at a 10% discount rate is worth $100, not a cent more.",
     "**\"The discount rate is a subjective input — plug in whatever you like.\"** — The discount rate should equal the market return on assets of the same risk (the opportunity cost). Too low and you overvalue everything; too high and you reject good projects. It is anchored on the risk-free rate with risk premia stacked on top (Stage 2.4).",
-    "**\"Faster-growing companies are less afraid of rate hikes.\"** — Exactly backward. High-growth companies have their value concentrated in the distant future, which makes them the most rate-sensitive; in the Gordon formula, a one-point rise in r can cut value by more than 15%.",
+    "**\"Faster-growing companies are less afraid of rate hikes.\"** — Exactly backward. High-growth companies have their value concentrated in the distant future, which makes them the most rate-sensitive; in the Gordon formula, a one-point rise in \\(r\\) can cut value by more than 15%.",
     "**\"Bitcoin has no cash flows, so it's worth zero.\"** — Present value applies to assets that produce cash flows. Gold and bitcoin derive their value from demand for them as money or a store of value, which calls for a different framework (Stage 12.3). \"No cash flows\" is accurate; \"therefore worth zero\" mistakes the edge of a tool for the edge of the world.",
   ],
 
@@ -164,13 +166,13 @@ So when the news says "long-term rates are rising," picture a fog rolling in: ev
       q: "A perpetual preferred pays a $10 annual dividend and the market requires a 12.5% return. What is it worth?",
       options: ["$125", "$100", "$12.50", "$80"],
       answer: 3,
-      explain: "**PV of a perpetuity = C ÷ r = 10 ÷ 12.5% = $80.** Read it the other way: if it trades at $80, the market is demanding 12.5%.",
+      explain: "**\\(\\text{PV of a perpetuity} = \\dfrac{C}{r} = \\dfrac{10}{12.5\\%} = \\$80\\).** Read it the other way: if it trades at $80, the market is demanding 12.5%.",
     },
     {
       q: "Next year's dividend is $5, expected growth is 4% and the required return is 9%. What does the Gordon model say the stock is worth? And if the required return rises to 10%?",
       options: ["$100; $83.33", "$55.56; $50", "$125; $100", "$100; $90.91"],
       answer: 0,
-      explain: "**P = 5 ÷ (9% − 4%) = $100**; at r = 10%, P = 5 ÷ 6% = **$83.33.** Because r − g is small, a tiny change in the denominator moves the value a lot.",
+      explain: "**\\(P = \\dfrac{5}{9\\% - 4\\%} = \\$100\\)**; at \\(r = 10\\%\\), **\\(P = \\dfrac{5}{6\\%} = \\$83.33\\).** Because \\(r - g\\) is small, a tiny change in the denominator moves the value a lot.",
     },
     {
       q: "The discount rate rises from 5% to 6%. Which cash flow's present value falls the most, in percentage terms?",

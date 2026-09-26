@@ -7,7 +7,7 @@ export default {
   prereqs: ["btc-per-share", "valuation"],
 
   oneLiner:
-    "mNAV asks: **how much is the market paying for each $1 of bitcoin inside the company?** Simple in words — but whether the numerator is market cap or enterprise value, and whether the denominator is all the bitcoin or the bitcoin left after senior claims, changes the answer a lot. The same Orange Corp is **1.50** on market cap, **1.59** diluted, **1.77** on enterprise value (Strategy's 2025 definition) and **2.05** as price ÷ Net BTC per share (Strategy's 2026 definition). This lesson covers each formula, real values and what each is for, then where premiums come from and why they vanish. **Whenever you quote mNAV, say which one.**",
+    "mNAV asks: **how much is the market paying for each $1 of bitcoin inside the company?** Simple in words — but whether the numerator is market cap or enterprise value, and whether the denominator is all the bitcoin or the bitcoin left after senior claims, changes the answer a lot. The same Orange Corp is **1.50** on market cap, **1.59** diluted, **1.77** on enterprise value (Strategy's 2025 definition) and **2.05** as \\(\\text{price} \\div \\text{Net BTC per share}\\) (Strategy's 2026 definition). This lesson covers each formula, real values and what each is for, then where premiums come from and why they vanish. **Whenever you quote mNAV, say which one.**",
 
   intuition: `
 Picture a vault holding $1 billion of bitcoin. Someone slices the vault into 100 million pieces and lists them on an exchange at $15 each, so the market values the whole vault at $1.5 billion.
@@ -24,16 +24,16 @@ The second layer is the real difficulty: **there are several ways to compute mNA
 - Is the share count **basic**, or **diluted** with convertibles assumed converted?
 - Is the denominator **all the bitcoin**, or **net** bitcoin after senior claims, with cash added back?
 
-Every combination has its users. Worse, Strategy **changed its own definition** in 2026: in 2025 its mNAV was enterprise value ÷ bitcoin NAV; from 2026 it is share price ÷ Net BTC per share. **Numbers from the two periods can't be compared directly.** Strive, meanwhile, avoids the word "mNAV" altogether and reports three related measures.
+Every combination has its users. Worse, Strategy **changed its own definition** in 2026: in 2025 its mNAV was \\(\\text{enterprise value} \\div \\text{bitcoin NAV}\\); from 2026 it is \\(\\text{share price} \\div \\text{Net BTC per share}\\). **Numbers from the two periods can't be compared directly.** Strive, meanwhile, avoids the word "mNAV" altogether and reports three related measures.
 
 The same Orange Corp (10,000 BTC at $100,000; 100M shares at $15; $150M convertibles; $150M preferreds; $30M cash):
 
-- Market-cap mNAV = $1.5B ÷ $1.0B = **1.50**
-- Diluted market-cap mNAV (convertibles assumed converted, 106M shares) = **1.59**
-- EV mNAV (Strategy 2025) = ($1.5B + $0.15B + $0.15B − $0.03B) ÷ $1.0B = **1.77**
-- Price ÷ Net BTC per share (Strategy 2026) = $15 ÷ $7.30 = **2.05**
+- Market-cap mNAV: \\(\\mathrm{mNAV}_{\\text{mkt cap}} = \\dfrac{\\$1.5\\text{B}}{\\$1.0\\text{B}} = \\mathbf{1.50}\\)
+- Diluted market-cap mNAV (convertibles assumed converted, 106M shares): \\(\\mathrm{mNAV}_{\\text{diluted}} = \\mathbf{1.59}\\)
+- EV mNAV (Strategy 2025): \\(\\mathrm{mNAV}_{\\text{EV}} = \\dfrac{\\$1.5\\text{B} + \\$0.15\\text{B} + \\$0.15\\text{B} - \\$0.03\\text{B}}{\\$1.0\\text{B}} = \\mathbf{1.77}\\)
+- Price over Net BTC per share (Strategy 2026): \\(\\mathrm{mNAV}_{2026} = \\dfrac{\\$15}{\\$7.30} = \\mathbf{2.05}\\)
 
-**One company, one day, one share price — four mNAVs from 1.50 to 2.05.** Nobody made a mistake; each version answers a different question. The goal of this lesson is that whenever you see "mNAV = x", your first reflex is: **which one?**
+**One company, one day, one share price — four mNAVs from 1.50 to 2.05.** Nobody made a mistake; each version answers a different question. The goal of this lesson is that whenever you see "\\(\\mathrm{mNAV} = x\\)", your first reflex is: **which one?**
 
 The lesson rests on **Idea ② (balance sheets and claims)** — how you slice the numerator and denominator is really a decision about which claims to count — and **Idea ④ (risk and leverage)**: the premium embeds the market's price for volatility, leverage and reflexivity. Stage 10.4 on reflexivity and Stage 18.3 on mNAV compression both start here. This lesson explains mechanics and analytical frameworks only; it is not investment advice.
 
@@ -41,7 +41,7 @@ The lesson rests on **Idea ② (balance sheets and claims)** — how you slice t
 
 - **① Market-cap and diluted market-cap mNAV**
 - **② Enterprise-value mNAV: Strategy's 2025 definition**
-- **③ Price ÷ Net BTC per share: Strategy's 2026 definition**
+- **③ \\(\\text{Price} \\div \\text{Net BTC per share}\\): Strategy's 2026 definition**
 - **④ Strive's measures and third-party versions**
 - **⑤ Where the premium comes from, and why it disappears**
 `,
@@ -51,10 +51,11 @@ The lesson rests on **Idea ② (balance sheets and claims)** — how you slice t
 
 The two simplest versions, and the ones third-party trackers use most (bitcointreasuries.net labels them "basic" and "diluted"):
 
-$$ Market-cap mNAV = common market cap ÷ bitcoin NAV (BTC NAV = coins held × BTC price)
-$$ Diluted market-cap mNAV = share price × diluted shares ÷ bitcoin NAV
+$$ \\mathrm{mNAV}_{\\text{mkt cap}} = \\frac{\\text{common market cap}}{\\text{bitcoin NAV}}
+$$ \\text{bitcoin NAV (BTC NAV)} = \\text{coins held} \\times \\text{BTC price}
+$$ \\mathrm{mNAV}_{\\text{diluted}} = \\frac{\\text{share price} \\times \\text{diluted shares}}{\\text{bitcoin NAV}}
 
-Orange Corp: market-cap mNAV = 100M × $15 ÷ $1.0B = **1.50**. Diluted, if we assume the whole $150M convertible converts ($25 conversion price → 6M shares), the count is 106M → $1.59B ÷ $1.0B = **1.59**. (Trackers define "diluted" differently; some count only in-the-money instruments. Orange Corp's converts are out of the money, so on that basis diluted mNAV would still be 1.50.)
+Orange Corp: \\(\\mathrm{mNAV}_{\\text{mkt cap}} = \\dfrac{100\\text{M} \\times \\$15}{\\$1.0\\text{B}} = \\mathbf{1.50}\\). Diluted, if we assume the whole $150M convertible converts ($25 conversion price → 6M shares), the count is 106M → \\(\\mathrm{mNAV}_{\\text{diluted}} = \\dfrac{\\$1.59\\text{B}}{\\$1.0\\text{B}} = \\mathbf{1.59}\\). (Trackers define "diluted" differently; some count only in-the-money instruments. Orange Corp's converts are out of the money, so on that basis diluted mNAV would still be 1.50.)
 
 The flaw in market-cap mNAV is that it **ignores the other half of the balance sheet**. It treats all the bitcoin as if it belonged to the common, as though the converts and preferreds didn't exist. The more levered the company, the more market-cap mNAV **understates** the common's real premium. An extreme case: a company with $1.0B of bitcoin, $900M of debt and a $200M market cap. Market-cap mNAV is 0.2 — it looks like "80% off". But the common only owns $100M of net assets, so shareholders are actually paying **2x**.
 
@@ -66,10 +67,13 @@ Strategy's official definition in 2025 (used through at least December 2025):
 
 > "mNAV represents a multiple of Bitcoin NAV, calculated by dividing Enterprise Value … by Bitcoin NAV."
 
-**Enterprise Value (EV)** = market cap of all basic shares (class B valued at the class A price) + principal of debt + notional of perpetual preferred − the most recently reported cash. **Bitcoin NAV** = BTC price × BTC held.
+**Enterprise Value (EV)** is \\(\\text{market cap of all basic shares} + \\text{principal of debt} + \\text{notional of perpetual preferred} - \\text{most recently reported cash}\\) (class B valued at the class A price). **Bitcoin NAV** is \\(\\text{BTC price} \\times \\text{BTC held}\\).
 
-$$ EV mNAV = (market cap + debt + preferred notional − cash) ÷ bitcoin NAV
-$$ Orange Corp: ($1.5B + $0.15B + $0.15B − $0.03B) ÷ $1.0B = 1.77
+$$ \\mathrm{mNAV}_{\\text{EV}} = \\frac{\\text{market cap} + \\text{debt} + \\text{preferred notional} - \\text{cash}}{\\text{bitcoin NAV}}
+
+Orange Corp:
+
+$$ \\mathrm{mNAV}_{\\text{EV}} = \\frac{\\$1.5\\text{B} + \\$0.15\\text{B} + \\$0.15\\text{B} - \\$0.03\\text{B}}{\\$1.0\\text{B}} = 1.77
 
 The EV view asks "**what would it cost to buy the whole company?**" You'd buy all the shares, take on the debt and preferreds, and get the cash. It puts the whole balance sheet in, which makes it more complete than market cap.
 
@@ -84,26 +88,33 @@ In 2025 Strategy also published common-stock issuance guidance on this definitio
 <tr><td>Above 4.0x</td><td>Issue "actively"</td></tr>
 </table>
 
-By 2025-11-28 Strategy reported EV mNAV of **1.2x**; on 2025-12-01 it built a $1.44B USD Reserve by selling common at an average of about **1.17x** mNAV (Stage 16.6). Using the figures in the 2026-08-24 briefing, "Enterprise value under Strategy methodology" of $64.635B ÷ a BTC Reserve of $64.718B ≈ **1.00x** (derived).
+By 2025-11-28 Strategy reported EV mNAV of **1.2x**; on 2025-12-01 it built a $1.44B USD Reserve by selling common at an average of about **1.17x** mNAV (Stage 16.6). Using the figures in the 2026-08-24 briefing, \\(\\dfrac{\\text{Enterprise value under Strategy methodology } \\$64.635\\text{B}}{\\text{BTC Reserve } \\$64.718\\text{B}} \\approx \\mathbf{1.00}\\times\\) (derived).
 
-### ③ Price ÷ Net BTC per share: Strategy's 2026 definition
+### ③ \\(\\text{Price} \\div \\text{Net BTC per share}\\): Strategy's 2026 definition
 
 From Q2 2026 Strategy switched to a new definition:
 
 > "the market price per share of the Company's class A common stock … divided by the Company's Net Bitcoin Per Share (in USD)."
 
-Net BTC per share = Net Reserve ÷ Fully Diluted Shares, where Net Reserve = BTC Reserve − notional of **out-of-the-money** convertibles and other debt-like instruments − preferred notional (excluding in-the-money STRK) + USD Assets. (The 2026-08-13 briefing said "+ USD Reserve"; the 2026-08-24 briefing says "USD Assets", meaning Reserve plus USD Cash.) Fully Diluted Shares count only **in-the-money** convertibles (Stage 16.1).
+\\(\\text{Net BTC per share} = \\dfrac{\\text{Net Reserve}}{\\text{Fully Diluted Shares}}\\), where \\(\\text{Net Reserve} = \\text{BTC Reserve} - \\text{notional of }\\textbf{out-of-the-money}\\text{ convertibles and other debt-like instruments} - \\text{preferred notional (excluding in-the-money STRK)} + \\text{USD Assets}\\). (The 2026-08-13 briefing said "+ USD Reserve"; the 2026-08-24 briefing says "USD Assets", meaning Reserve plus USD Cash.) Fully Diluted Shares count only **in-the-money** convertibles (Stage 16.1).
 
-$$ 2026 mNAV = share price ÷ (Net Reserve ÷ Fully Diluted Shares)
-$$ Orange Corp: Net Reserve = $1.0B − $0.15B − $0.15B + $0.03B = $730M; $7.30 per share → $15 ÷ $7.30 = 2.05
+$$ \\mathrm{mNAV}_{2026} = \\frac{\\text{share price}}{\\text{Net Reserve} \\div \\text{Fully Diluted Shares}}
 
-Real data: on 2026-08-21, Strategy's $119.25 share price ÷ $118.31 Net BTC per share = **1.01x**; on 2026-08-10 it was **1.06x**.
+Orange Corp:
+
+$$
+\\text{Net Reserve} = \\$1.0\\text{B} - \\$0.15\\text{B} - \\$0.15\\text{B} + \\$0.03\\text{B} = \\$730\\text{M}
+\\text{Net BTC per share} = \\frac{\\$730\\text{M}}{100\\text{M shares}} = \\$7.30
+\\mathrm{mNAV}_{2026} = \\frac{\\$15}{\\$7.30} = 2.05
+$$
+
+Real data: on 2026-08-21, Strategy's \\(\\dfrac{\\text{share price } \\$119.25}{\\text{Net BTC per share } \\$118.31} = \\mathbf{1.01}\\times\\); on 2026-08-10 it was **1.06x**.
 
 Three properties of this definition are worth remembering:
 
 - **It's the common shareholder's mNAV.** The denominator is what the common would actually own if the company were wound up today — a price-to-book ratio with bitcoin marked to market.
-- **It measures the same dollar premium as EV mNAV, divided by a different base.** Orange Corp's premium in dollars: market cap − Net Reserve = $1.5B − $0.73B = $770M; EV − BTC NAV = $1.77B − $1.0B = $770M — identical. EV mNAV divides $770M by $1.0B (0.77); the 2026 definition divides it by $730M (1.05). Under simplifying conditions (all debt out of the money; cash equals USD Assets) you get **(2026 mNAV − 1) = (EV mNAV − 1) × Amplification**: 0.77 × 1.37 = 1.05 (amplification is Stage 16.4).
-- **It maps directly onto "is issuing stock accretive?"** Issue common at price P and buy bitcoin with all of it: Net BTC per share rises exactly when **P > Net BTC per share** — that is, when **2026 mNAV > 1** (derived in Stage 16.7). That is plausibly why Strategy switched: under the new definition, "1.0" is the line between accretion and dilution.
+- **It measures the same dollar premium as EV mNAV, divided by a different base.** Orange Corp's premium in dollars: \\(\\text{market cap} - \\text{Net Reserve} = \\$1.5\\text{B} - \\$0.73\\text{B} = \\$770\\text{M}\\); \\(\\mathrm{EV} - \\text{BTC NAV} = \\$1.77\\text{B} - \\$1.0\\text{B} = \\$770\\text{M}\\) — identical. EV mNAV divides $770M by $1.0B (0.77); the 2026 definition divides it by $730M (1.05). Under simplifying conditions (all debt out of the money; cash equals USD Assets) you get **\\((\\mathrm{mNAV}_{2026} - 1) = (\\mathrm{mNAV}_{\\text{EV}} - 1) \\times \\text{Amplification}\\)**: \\(0.77 \\times 1.37 = 1.05\\) (amplification is Stage 16.4).
+- **It maps directly onto "is issuing stock accretive?"** Issue common at price \\(P\\) and buy bitcoin with all of it: Net BTC per share rises exactly when **\\(P > \\text{Net BTC per share}\\)** — that is, when **\\(\\mathrm{mNAV}_{2026} > 1\\)** (derived in Stage 16.7). That is plausibly why Strategy switched: under the new definition, "1.0" is the line between accretion and dilution.
 
 <figure><svg viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="320" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">One Orange Corp, four mNAVs</text><line x1="60" y1="230" x2="610" y2="230" stroke="var(--line)"/><line x1="60" y1="130" x2="610" y2="130" stroke="var(--red)" stroke-dasharray="4 3"/><text x="64" y="124" font-size="10" fill="var(--red)">1.0 = parity</text><rect x="95" y="80" width="80" height="150" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="135" y="72" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">1.50</text><rect x="225" y="71" width="80" height="159" fill="var(--orange-soft)" stroke="var(--orange)"/><text x="265" y="63" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">1.59</text><rect x="355" y="53" width="80" height="177" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="395" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">1.77</text><rect x="485" y="25" width="80" height="205" fill="var(--btc-soft)" stroke="var(--btc)" stroke-width="2"/><text x="525" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">2.05</text><text x="135" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">Market cap</text><text x="135" y="263" text-anchor="middle" font-size="10" fill="var(--muted)">1.5 ÷ 1.0</text><text x="265" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">Diluted market cap</text><text x="265" y="263" text-anchor="middle" font-size="10" fill="var(--muted)">1.59 ÷ 1.0</text><text x="395" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">EV (2025)</text><text x="395" y="263" text-anchor="middle" font-size="10" fill="var(--muted)">1.77 ÷ 1.0</text><text x="525" y="248" text-anchor="middle" font-size="11" fill="var(--ink)">Price ÷ Net BPS (2026)</text><text x="525" y="263" text-anchor="middle" font-size="10" fill="var(--muted)">15 ÷ 7.30</text><text x="320" y="284" text-anchor="middle" font-size="10" fill="var(--muted)">$ billions (last column $ per share); bar heights proportional to the multiple (1.0x = 100 px)</text></svg><figcaption>The fuller the numerator (adding debt and preferreds) and the "netter" the denominator (removing senior claims), the bigger the mNAV. The numbers differ because the questions differ: market cap asks about the stock's premium to all the bitcoin, EV about the whole company's premium to all the bitcoin, and the 2026 version about the common's premium to the net bitcoin it actually owns.</figcaption></figure>
 
@@ -113,9 +124,9 @@ Three properties of this definition are worth remembering:
 
 <table class="pm">
 <tr><th>Strive measure</th><th>Definition</th><th>Strive value</th><th>Orange Corp</th></tr>
-<tr><td><b>Common Equity Accretion Premium</b></td><td>Market cap ÷ bitcoin fair market value − 1, floored at 0%</td><td>33.0% (roughly market-cap mNAV of 1.33x)</td><td>50%</td></tr>
-<tr><td><b>EV / Treasury Asset Value</b></td><td>EV = market cap + debt + preferred <b>at market value</b> − cash − marketable securities; TAV = bitcoin + cash + marketable securities (Strive's STRC holding)</td><td>1.52x</td><td>($1.5B + $0.15B + $0.15B − $0.03B) ÷ ($1.0B + $0.03B) ≈ 1.72x (preferreds assumed at par)</td></tr>
-<tr><td><b>Multiple to Net Treasury Asset Value</b></td><td>NTAV = TAV − debt − preferred liquidation preference</td><td>2.14x (NTAV $1.38B, $13.76 per share vs an ASST price of $29.44)</td><td>$1.03B − $0.15B − $0.15B = $730M → 2.05x</td></tr>
+<tr><td><b>Common Equity Accretion Premium</b></td><td>\\(\\dfrac{\\text{market cap}}{\\text{bitcoin fair market value}} - 1\\), floored at 0%</td><td>33.0% (roughly market-cap mNAV of 1.33x)</td><td>50%</td></tr>
+<tr><td><b>EV / Treasury Asset Value</b></td><td>\\(\\mathrm{EV} = \\text{market cap} + \\text{debt} + \\text{preferred}\\ (\\textbf{at market value}) - \\text{cash} - \\text{marketable securities}\\); \\(\\mathrm{TAV} = \\text{bitcoin} + \\text{cash} + \\text{marketable securities}\\) (Strive's STRC holding)</td><td>1.52x</td><td>\\(\\dfrac{\\$1.5\\text{B} + \\$0.15\\text{B} + \\$0.15\\text{B} - \\$0.03\\text{B}}{\\$1.0\\text{B} + \\$0.03\\text{B}} \\approx 1.72\\times\\) (preferreds assumed at par)</td></tr>
+<tr><td><b>Multiple to Net Treasury Asset Value</b></td><td>\\(\\mathrm{NTAV} = \\mathrm{TAV} - \\text{debt} - \\text{preferred liquidation preference}\\)</td><td>2.14x (NTAV $1.38B, $13.76 per share vs an ASST price of $29.44)</td><td>\\(\\$1.03\\text{B} - \\$0.15\\text{B} - \\$0.15\\text{B} = \\$730\\text{M}\\) → 2.05x</td></tr>
 </table>
 
 Notice the name "accretion premium": Strive ties the premium directly to whether issuing stock is accretive, and shows 0% whenever it's negative. Third parties add their own versions: The Block showed ASST at 1.21x mNAV on 2026-09-26; bitcointreasuries.net lists basic, diluted and EV side by side. **For the same ASST you can find 1.21, 1.33, 1.52 and 2.14 depending on where you look.**
@@ -124,18 +135,18 @@ All of Orange Corp's versions in one place:
 
 <table class="pm">
 <tr><th>Definition</th><th>Formula</th><th>Orange Corp</th></tr>
-<tr><td>Market cap</td><td>Market cap ÷ BTC NAV</td><td>1.50</td></tr>
-<tr><td>Diluted market cap</td><td>Price × diluted shares ÷ BTC NAV</td><td>1.59 (all converts converted)</td></tr>
-<tr><td>EV (Strategy 2025)</td><td>(Market cap + debt + preferred − cash) ÷ BTC NAV</td><td>1.77</td></tr>
-<tr><td>Price ÷ Net BTC per share (Strategy 2026)</td><td>Price ÷ (Net Reserve ÷ fully diluted shares)</td><td>2.05</td></tr>
-<tr><td>Strive accretion premium</td><td>Market cap ÷ BTC fair value − 1 (floor 0)</td><td>50%</td></tr>
+<tr><td>Market cap</td><td>\\(\\mathrm{mNAV}_{\\text{mkt cap}} = \\dfrac{\\text{market cap}}{\\text{BTC NAV}}\\)</td><td>1.50</td></tr>
+<tr><td>Diluted market cap</td><td>\\(\\mathrm{mNAV}_{\\text{diluted}} = \\dfrac{\\text{price} \\times \\text{diluted shares}}{\\text{BTC NAV}}\\)</td><td>1.59 (all converts converted)</td></tr>
+<tr><td>EV (Strategy 2025)</td><td>\\(\\mathrm{mNAV}_{\\text{EV}} = \\dfrac{\\text{market cap} + \\text{debt} + \\text{preferred} - \\text{cash}}{\\text{BTC NAV}}\\)</td><td>1.77</td></tr>
+<tr><td>\\(\\text{Price} \\div \\text{Net BTC per share}\\) (Strategy 2026)</td><td>\\(\\mathrm{mNAV}_{2026} = \\dfrac{\\text{price}}{\\text{Net Reserve} \\div \\text{fully diluted shares}}\\)</td><td>2.05</td></tr>
+<tr><td>Strive accretion premium</td><td>\\(\\dfrac{\\text{market cap}}{\\text{BTC fair value}} - 1\\) (floor 0)</td><td>50%</td></tr>
 </table>
 
 ### ⑤ Where the premium comes from, and why it disappears
 
 The bull case for a premium:
 
-- **Growth expectations.** The market expects the company to keep raising capital at a premium and growing BTC per share. A rough thought experiment: if investors believe BTC per share will grow an extra 10% a year for five years, paying 1.1⁵ ≈ **1.61** dollars today for $1 of bitcoin isn't crazy. The premium is a **discounted** stream of future BTC Yield (Idea ①).
+- **Growth expectations.** The market expects the company to keep raising capital at a premium and growing BTC per share. A rough thought experiment: if investors believe BTC per share will grow an extra 10% a year for five years, paying \\(1.1^{5} \\approx \\mathbf{1.61}\\) dollars today for $1 of bitcoin isn't crazy. The premium is a **discounted** stream of future BTC Yield (Idea ①).
 - **Volatility value.** DAT stocks are volatile, and options and convertible buyers pay for that volatility (Stage 7.3, Stage 17.2).
 - **Access.** Many institutions can hold stocks but not coins (Stage 15.3).
 - **Leverage without margin calls.** The common is amplified bitcoin exposure with no margin calls (Stage 16.4).
@@ -169,11 +180,11 @@ Why would the shop ever sell for more than its gold? Perhaps the owner is skille
 `,
 
   misconceptions: [
-    "**\"mNAV is a single number.\"** — There are at least four: market cap, diluted market cap, enterprise value and price ÷ Net BTC per share, plus Strive's three measures and every website's own version. Orange Corp can be 1.50, 1.59, 1.77 or 2.05 on the same day. An mNAV without a definition means nothing.",
-    "**\"Strategy's 2026 mNAV can be compared with its 2025 mNAV.\"** — 2025 was EV ÷ bitcoin NAV; 2026 is price ÷ Net BTC per share. The definition changed, so the numbers aren't comparable. August 2026's roughly 1.01x on the new basis corresponds to about 1.00x on the old one (derived).",
+    "**\"mNAV is a single number.\"** — There are at least four: market cap, diluted market cap, enterprise value and \\(\\text{price} \\div \\text{Net BTC per share}\\), plus Strive's three measures and every website's own version. Orange Corp can be 1.50, 1.59, 1.77 or 2.05 on the same day. An mNAV without a definition means nothing.",
+    "**\"Strategy's 2026 mNAV can be compared with its 2025 mNAV.\"** — 2025 was \\(\\mathrm{EV} \\div \\text{bitcoin NAV}\\); 2026 is \\(\\text{price} \\div \\text{Net BTC per share}\\). The definition changed, so the numbers aren't comparable. August 2026's roughly 1.01x on the new basis corresponds to about 1.00x on the old one (derived).",
     "**\"A market-cap mNAV below 1 means the stock is cheap.\"** — Market-cap mNAV ignores debt and preferreds. A heavily levered company can show far below 1 while its common still trades at a premium to the net assets it actually owns.",
     "**\"The premium is a company asset that will always be there.\"** — It's the price the market is willing to pay, with no redemption mechanism to anchor it. In September 2026, 16 of the 20 largest DATs traded below 1x.",
-    "**\"EV mNAV and net mNAV measure different premiums.\"** — Under simplifying conditions they measure the same dollar premium (market cap − Net Reserve = EV − bitcoin NAV); one divides it by total bitcoin, the other by Net Reserve, so they differ by a factor of the amplification.",
+    "**\"EV mNAV and net mNAV measure different premiums.\"** — Under simplifying conditions they measure the same dollar premium (\\(\\text{market cap} - \\text{Net Reserve} = \\mathrm{EV} - \\text{bitcoin NAV}\\)); one divides it by total bitcoin, the other by Net Reserve, so they differ by a factor of the amplification.",
   ],
 
   quiz: [
@@ -186,29 +197,29 @@ Why would the shop ever sell for more than its gold? Perhaps the owner is skille
         "1.59",
       ],
       answer: 1,
-      explain: "EV = $1.5B + $0.15B + $0.15B − $0.03B = $1.77B; ÷ $1.0B bitcoin NAV = **1.77**. 1.50 is market cap, 1.59 is diluted market cap and 2.05 is the 2026 definition.",
+      explain: "\\(\\mathrm{EV} = \\$1.5\\text{B} + \\$0.15\\text{B} + \\$0.15\\text{B} - \\$0.03\\text{B} = \\$1.77\\text{B}\\); \\(\\mathrm{mNAV}_{\\text{EV}} = \\dfrac{\\$1.77\\text{B}}{\\$1.0\\text{B}} = \\mathbf{1.77}\\). 1.50 is market cap, 1.59 is diluted market cap and 2.05 is the 2026 definition.",
     },
     {
       q: "What is Strategy's 2026 definition of mNAV?",
       options: [
-        "Enterprise value ÷ bitcoin NAV",
-        "Market cap ÷ bitcoin NAV − 1",
-        "(Debt + preferred) ÷ bitcoin value",
-        "Class A share price ÷ Net Bitcoin Per Share (in USD)",
+        "\\(\\text{Enterprise value} \\div \\text{bitcoin NAV}\\)",
+        "\\(\\text{Market cap} \\div \\text{bitcoin NAV} - 1\\)",
+        "\\((\\text{Debt} + \\text{preferred}) \\div \\text{bitcoin value}\\)",
+        "\\(\\text{Class A share price} \\div \\text{Net Bitcoin Per Share}\\) (in USD)",
       ],
       answer: 3,
-      explain: "From 2026: share price ÷ Net BTC per share, where Net BTC per share = Net Reserve ÷ Fully Diluted Shares. On 2026-08-21: $119.25 ÷ $118.31 = **1.01x**.",
+      explain: "From 2026: \\(\\mathrm{mNAV}_{2026} = \\text{share price} \\div \\text{Net BTC per share}\\), where \\(\\text{Net BTC per share} = \\dfrac{\\text{Net Reserve}}{\\text{Fully Diluted Shares}}\\). On 2026-08-21: \\(\\dfrac{\\$119.25}{\\$118.31} = \\mathbf{1.01}\\times\\).",
     },
     {
       q: "Why is 1.0 exactly the accretion line under the 2026 definition?",
       options: [
-        "Issue stock at price P and buy bitcoin: Net BTC per share rises iff P > Net BTC per share, i.e. iff that mNAV > 1",
+        "Issue stock at price \\(P\\) and buy bitcoin: Net BTC per share rises iff \\(P > \\text{Net BTC per share}\\), i.e. iff that \\(\\mathrm{mNAV} > 1\\)",
         "Because exchanges forbid mNAV below 1",
         "Because preferred dividends equal exactly 1%",
         "Because bitcoin's volatility is 100%",
       ],
       answer: 0,
-      explain: "Issue n shares, raise nP, buy bitcoin: Net Reserve becomes N + nP over S + n shares. (N + nP)/(S + n) > N/S ⇔ **P > N/S**. This is the core of the flywheel math in Stage 16.7.",
+      explain: "Issue \\(n\\) shares, raise \\(nP\\), buy bitcoin: Net Reserve becomes \\(N + nP\\) over \\(S + n\\) shares. \\(\\dfrac{N + nP}{S + n} > \\dfrac{N}{S} \\iff P > \\dfrac{N}{S}\\). This is the core of the flywheel math in Stage 16.7.",
     },
     {
       q: "Strive reports a Common Equity Accretion Premium of 33.0%. Roughly which mNAV does that correspond to?",
@@ -219,7 +230,7 @@ Why would the shop ever sell for more than its gold? Perhaps the owner is skille
         "It has nothing to do with mNAV",
       ],
       answer: 2,
-      explain: "It's defined as market cap ÷ bitcoin fair value − 1, floored at 0%. 33.0% means market cap is about **1.33x** the bitcoin, roughly market-cap mNAV.",
+      explain: "It's defined as \\(\\dfrac{\\text{market cap}}{\\text{bitcoin fair value}} - 1\\), floored at 0%. 33.0% means market cap is about **1.33x** the bitcoin, roughly market-cap mNAV.",
     },
     {
       q: "Compared with a spot bitcoin ETF, why can a DAT's premium or discount persist for a long time?",

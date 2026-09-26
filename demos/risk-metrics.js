@@ -1,7 +1,7 @@
 // 交互演示：风险仪表盘——用可复现的随机路径（可加“尾部崩盘”与杠杆）生成价格序列，
 // 同时算出年化收益、波动率、最大回撤、水下时间、夏普、索提诺、卡玛、95% VaR 与 ES，
 // 看同一条路径在不同指标下“长什么样”，以及卖期权式策略如何骗过夏普比率。
-import { mean, stdev, sharpe, maxDrawdown, rng, randn, fmtPct, fmtNum } from "./_fin.js";
+import { mean, stdev, sharpe, maxDrawdown, rng, randn, fmtPct, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -14,7 +14,7 @@ export default function mount(root, lang) {
     { k: "stk", label: T("股票式（8% / 16%）", "Stock-like (8% / 16%)"), v: { mu: 8, sig: 16, jn: 0.1, jsz: 20, lev: 1 } },
     { k: "btc", label: T("比特币式（σ 60%，收益为假设）", "Bitcoin-like (σ 60%, return assumed)"), v: { mu: 25, sig: 60, jn: 0.2, jsz: 30, lev: 1 } },
     { k: "opt", label: T("卖期权式：平时稳赚、偶尔崩盘", "Option-seller: steady gains, rare crashes"), v: { mu: 10, sig: 3, jn: 0.1, jsz: 30, lev: 1, yrs: 10 } },
-    { k: "lev", label: T("比特币式 × 2 倍杠杆", "Bitcoin-like × 2 leverage"), v: { mu: 25, sig: 60, jn: 0.2, jsz: 30, lev: 2 } },
+    { k: "lev", label: `${T("比特币式（", "Bitcoin-like (")}${tex(String.raw`2\times`)}${T(" 杠杆）", " leverage)")}`, v: { mu: 25, sig: 60, jn: 0.2, jsz: 30, lev: 2 } },
   ];
 
   const sl = (id, label, min, max, step, unit) => `
@@ -56,8 +56,8 @@ export default function mount(root, lang) {
       <div id="rm-dd"></div>
       <div class="demo-log" id="rm-log"></div>
       <p class="demo-tip">${T(
-        "先点“卖期权式”，把崩盘次数拉到 0：夏普高得惊人。再把崩盘次数调回 0.1，多换几条路径——在没碰上崩盘的路径里，夏普依然漂亮，碰上一次，最大回撤和 ES 立刻露馅。然后点“比特币式 × 2 倍杠杆”，对比 1 倍：波动率翻倍，但复合收益并没有翻倍，回撤却深得多——这就是下一节（阶段 11.4）要讲的波动拖累。",
-        "Click “Option-seller” and set crashes to 0: the Sharpe ratio looks spectacular. Put crashes back to 0.1 and draw several paths — on paths that dodge a crash, the Sharpe still looks great; hit one and the max drawdown and ES give the game away. Then compare “Bitcoin-like × 2 leverage” with 1×: volatility doubles, but the compound return doesn't — and the drawdown gets far deeper. That's the volatility drag of the next lesson (Stage 11.4)."
+        `先点“卖期权式”，把崩盘次数拉到 0：夏普高得惊人。再把崩盘次数调回 0.1，多换几条路径——在没碰上崩盘的路径里，夏普依然漂亮，碰上一次，最大回撤和 ES 立刻露馅。然后点“比特币式（${tex(String.raw`2\times`)} 杠杆）”，对比 ${tex(String.raw`1\times`)}：波动率翻倍，但复合收益并没有翻倍，回撤却深得多——这就是下一节（阶段 11.4）要讲的波动拖累。`,
+        `Click “Option-seller” and set crashes to 0: the Sharpe ratio looks spectacular. Put crashes back to 0.1 and draw several paths — on paths that dodge a crash, the Sharpe still looks great; hit one and the max drawdown and ES give the game away. Then compare “Bitcoin-like (${tex(String.raw`2\times`)} leverage)” with ${tex(String.raw`1\times`)}: volatility doubles, but the compound return doesn't — and the drawdown gets far deeper. That's the volatility drag of the next lesson (Stage 11.4).`
       )}</p>
     </div>`;
 
@@ -118,12 +118,13 @@ export default function mount(root, lang) {
 
     const at = (arr) => (x) => arr[Math.min(arr.length - 1, Math.max(0, Math.round(x * D)))];
     const ch = lineChart({ fns: [{ f: at(px), cls: S.sig >= 40 ? "line5" : "line" }], lo: 0, hi: yrs, samples: 400, xlabel: T("年", "years"), uid: "rm1" });
-    q("#rm-chart").innerHTML = chartBlock(ch, [[S.sig >= 40 ? "var(--btc)" : "var(--orange)", T("组合价值（起点 = 1）", "portfolio value (start = 1)")]]);
+    q("#rm-chart").innerHTML = chartBlock(ch, [[S.sig >= 40 ? "var(--btc)" : "var(--orange)", T("组合价值（起点为 1）", "portfolio value (starting at 1)")]]);
     const ch2 = lineChart({ fns: [{ f: (x) => at(ddSeries)(x) * 100, cls: "line3" }], lo: 0, hi: yrs, samples: 400, forceZero: true, xlabel: T("年", "years"), uid: "rm2" });
     q("#rm-dd").innerHTML = chartBlock(ch2, [["var(--red)", T("距前高的回撤 %（水下曲线）", "drawdown from prior peak, % (underwater curve)")]]);
 
     const lines = [];
-    lines.push(`${T("本路径遭遇尾部崩盘", "Tail crashes on this path")}: ${crashes}${T(" 次。", ". ")}${T("回本所需涨幅（从最深处）", "Gain needed from the deepest point")}: ${mdd > -1 ? fmtPct(1 / (1 + mdd) - 1, 0) : "∞"}`);
+    lines.push(`${T("本路径遭遇尾部崩盘", "Tail crashes on this path")}: ${crashes}${T(" 次。", ". ")}${T("回本所需涨幅（从最深处）", "Gain needed from the deepest point")}: ${mdd > -1 ? tex(String.raw`\frac{1}{1 - ${(-mdd * 100).toFixed(1)}\%} - 1 = ${((1 / (1 + mdd) - 1) * 100).toFixed(0)}\%`) : tex(String.raw`\infty`)}`);
+    if (isFinite(sh)) lines.push(tex(String.raw`\text{${T("夏普", "Sharpe")}} = \frac{${(annMean * 100).toFixed(1)}\% - ${S.rf}\%}{${(vol * 100).toFixed(1)}\%} = ${sh.toFixed(2)}`));
     if (dead) lines.push(`<span class="bad">${T("杠杆下单日亏损超过 100%，账户归零——之后的一切上涨都与你无关。", "A single day's levered loss exceeded 100% and the account went to zero — every rally after that is irrelevant to you.")}</span>`);
     if (isFinite(sh) && sh > 1 && mdd < -0.2) lines.push(`<span class="warn">${T("夏普 > 1，但最大回撤超过 20%：高夏普并没有替你挡住尾部。", "Sharpe above 1 with a drawdown worse than 20%: a high Sharpe didn't protect you from the tail.")}</span>`);
     if (es > 1.3 * hVar) lines.push(`<span class="warn">${T("ES 明显高于 VaR：越过门槛后的亏损很深，这是肥尾的信号。", "ES is well above VaR: losses past the threshold are deep — a sign of fat tails.")}</span>`);

@@ -45,22 +45,22 @@ export default {
 <tr><td>100% 股票</td><td>8.0%</td><td>16.0%</td><td>0.31</td><td>100%</td></tr>
 <tr><td>60/40</td><td>6.8%</td><td>10.5%</td><td>0.36</td><td>约 88%</td></tr>
 <tr><td>风险平价（约 30/70）</td><td>5.9%</td><td>7.5%</td><td>0.39</td><td>50%</td></tr>
-<tr><td>风险平价 × 1.4 倍杠杆</td><td>7.1%</td><td>10.5%</td><td>0.39</td><td>50%</td></tr>
+<tr><td>风险平价（\\(1.4\\times\\) 杠杆）</td><td>7.1%</td><td>10.5%</td><td>0.39</td><td>50%</td></tr>
 </table>
 
-**风险贡献**怎么算？某资产的风险贡献 = 它的权重 × 它与整个组合的协方差 ÷ 组合方差。所有资产的风险贡献加起来正好是 100%。60/40 里股票占 88%，意思是：**组合每一次大的起伏，差不多九成要算在股票头上**。所以说 60/40 从风险角度看其实是“一个股票组合，外加一点减震”。
+**风险贡献**怎么算？某资产的 \\(\\text{风险贡献} = \\dfrac{\\text{它的权重} \\times \\text{它与整个组合的协方差}}{\\text{组合方差}}\\)。所有资产的风险贡献加起来正好是 100%。60/40 里股票占 88%，意思是：**组合每一次大的起伏，差不多九成要算在股票头上**。所以说 60/40 从风险角度看其实是“一个股票组合，外加一点减震”。
 
 <figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="190" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">资金权重 vs 风险贡献</text><text x="112" y="58" text-anchor="end" font-size="11" fill="var(--ink)">60/40 · 资金</text><rect x="120" y="44" width="120" height="22" fill="var(--orange-soft)" stroke="var(--orange)"/><rect x="240" y="44" width="80" height="22" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="180" y="59" text-anchor="middle" font-size="11" fill="var(--ink)">股票 60%</text><text x="280" y="59" text-anchor="middle" font-size="11" fill="var(--ink)">债券 40%</text><text x="112" y="90" text-anchor="end" font-size="11" fill="var(--ink)">60/40 · 风险</text><rect x="120" y="76" width="176" height="22" fill="var(--orange)" stroke="var(--orange)"/><rect x="296" y="76" width="24" height="22" fill="var(--blue)" stroke="var(--blue)"/><text x="208" y="91" text-anchor="middle" font-size="11" fill="var(--surface-2)" font-weight="600">股票约 88%</text><text x="325" y="91" font-size="10" fill="var(--muted)">12%</text><text x="112" y="140" text-anchor="end" font-size="11" fill="var(--ink)">风险平价 · 资金</text><rect x="120" y="126" width="60" height="22" fill="var(--orange-soft)" stroke="var(--orange)"/><rect x="180" y="126" width="140" height="22" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="150" y="141" text-anchor="middle" font-size="11" fill="var(--ink)">30%</text><text x="250" y="141" text-anchor="middle" font-size="11" fill="var(--ink)">债券 70%</text><text x="112" y="172" text-anchor="end" font-size="11" fill="var(--ink)">风险平价 · 风险</text><rect x="120" y="158" width="100" height="22" fill="var(--orange)" stroke="var(--orange)"/><rect x="220" y="158" width="100" height="22" fill="var(--blue)" stroke="var(--blue)"/><text x="170" y="173" text-anchor="middle" font-size="11" fill="var(--surface-2)" font-weight="600">50%</text><text x="270" y="173" text-anchor="middle" font-size="11" fill="var(--surface-2)" font-weight="600">50%</text><text x="220" y="210" text-anchor="middle" font-size="10.5" fill="var(--muted)">假设：股票 σ 16%、债券 σ 7%、相关系数 0.2</text><text x="220" y="228" text-anchor="middle" font-size="10.5" fill="var(--muted)">资金“六比四”，风险却接近“九比一”</text><text x="505" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">全天候：四种经济天气</text><rect x="400" y="40" width="105" height="90" rx="4" fill="var(--green-soft)" stroke="var(--line)"/><rect x="505" y="40" width="105" height="90" rx="4" fill="var(--btc-soft)" stroke="var(--line)"/><rect x="400" y="130" width="105" height="90" rx="4" fill="var(--blue-soft)" stroke="var(--line)"/><rect x="505" y="130" width="105" height="90" rx="4" fill="var(--red-soft)" stroke="var(--line)"/><text x="452" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">增长↑ 通胀↓</text><text x="452" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">股票</text><text x="452" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">公司信用债</text><text x="557" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">增长↑ 通胀↑</text><text x="557" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">大宗商品、黄金</text><text x="557" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">通胀挂钩债</text><text x="452" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">增长↓ 通胀↓</text><text x="452" y="172" text-anchor="middle" font-size="10.5" fill="var(--muted)">长期名义国债</text><text x="452" y="188" text-anchor="middle" font-size="10.5" fill="var(--muted)">（通缩衰退）</text><text x="557" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">增长↓ 通胀↑</text><text x="557" y="172" text-anchor="middle" font-size="10.5" fill="var(--muted)">通胀挂钩债、黄金</text><text x="557" y="188" text-anchor="middle" font-size="10.5" fill="var(--muted)">（滞胀，最难）</text><text x="505" y="240" text-anchor="middle" font-size="10.5" fill="var(--muted)">“增长”“通胀”都指相对市场预期的意外</text><text x="505" y="258" text-anchor="middle" font-size="10.5" fill="var(--muted)">每格分配相同的风险，而不是相同的钱</text></svg><figcaption>左：60/40 在资金上看似平衡，在风险上高度集中于股票；风险平价让两者贡献相同的风险。右：全天候把经济分成四种“天气”，每格放一类在那种天气下相对占优的资产。</figcaption></figure>
 
 ### ② 风险平价：按风险而不是按资金分配
 
-最简单的风险平价是**逆波动率加权**：每项资产的权重与它的波动率成反比。股票 16%、债券 7%：股票权重 = (1/16) ÷ (1/16 + 1/7) ≈ 30%，债券约 70%。在相关系数不太极端时，这已经非常接近“风险贡献各半”。
+最简单的风险平价是**逆波动率加权**：每项资产的权重与它的波动率成反比。股票 16%、债券 7%：\\(\\text{股票权重} = \\dfrac{1/16}{1/16 + 1/7} \\approx 30\\%\\)，债券约 70%。在相关系数不太极端时，这已经非常接近“风险贡献各半”。
 
 这样做的好处，是组合不再押注于单一资产的表现。上表里风险平价组合的夏普比率（0.39）略高于 60/40（0.36），因为它不再把大部分风险预算浪费在同一个来源上。但它的绝对收益（5.9%）更低，波动率也只有 7.5%。想要和 60/40 一样的风险水平，就要借钱把整个组合放大约 1.4 倍：
 
 $$
-杠杆后收益 = L × 组合收益 − (L − 1) × 借款利率
-= 1.4 × 5.9% − 0.4 × 3% ≈ 7.1%
+\\text{杠杆后收益} = L \\times \\text{组合收益} - (L - 1) \\times \\text{借款利率}
+\\text{杠杆后收益} = 1.4 \\times 5.9\\% - 0.4 \\times 3\\% \\approx 7.1\\%
 $$
 
 **风险平价的整套逻辑，押在三个假设上：**
@@ -95,14 +95,14 @@ $$
 
 所以**股债相关性不是一个常数，而是通胀体制的函数**（阶段 9.5）。这意味着：“债券是股票的保险”这句话，在通胀可控时基本成立，在通胀失控时可能失效。阶段 20.2 会把这个观察扩展到所有资产。
 
-**再平衡**是所有这些组合的共同纪律。假设 60/40 组合一年里股票涨 20%、债券持平：60 → 72、40 → 40，股票占比变成 72/112 ≈ 64.3%。不做处理，组合的风险会悄悄向股票倾斜。定期卖出涨多的、买入跌多的，把权重拉回目标，本质上是一种**逆向操作**：它强迫你“高卖低买”，也限制了单一资产的风险贡献不断膨胀。代价是交易成本、税，以及在长期单边趋势中会“卖早”。
+**再平衡**是所有这些组合的共同纪律。假设 60/40 组合一年里股票涨 20%、债券持平：\\(60 \\to 72\\)、\\(40 \\to 40\\)，股票占比变成 \\(\\dfrac{72}{112} \\approx 64.3\\%\\)。不做处理，组合的风险会悄悄向股票倾斜。定期卖出涨多的、买入跌多的，把权重拉回目标，本质上是一种**逆向操作**：它强迫你“高卖低买”，也限制了单一资产的风险贡献不断膨胀。代价是交易成本、税，以及在长期单边趋势中会“卖早”。
 
 ### ⑤ 新资产放在哪：比特币、优先股与代币化国债的框架
 
 **本课只讲机制与分析框架，不构成投资建议。**用前面的工具，可以给新资产在组合里找到“格子”，并确定一个风险预算：
 
 - **比特币**：从数据上看，它更像一个**高波动的风险资产**，对全球流动性与实际利率敏感（阶段 9.3、12.4），在 2022 年与股票一起大跌（全年约 −64%）；支持者则认为它长期可能在“货币贬值、财政主导”的格子里表现好（阶段 9.4）。框架上，把它当作一个**卫星仓位**：先定下愿意让它贡献多少组合风险（比如 10% 的风险预算），再倒推资金权重。阶段 11.1 的例子里，5% 的比特币就贡献了约 14% 的风险。
-- **优先股（包括 DAT 发行的比特币支撑优先股）**：它像**长久期的信用资产**。永续优先股的久期约等于 1/收益率（阶段 4.4），10% 收益率的永续优先股，久期约 10 年；它还带有发行人的信用风险，对 DAT 优先股来说，信用风险和比特币价格相关（阶段 16.5 的 BTC 评级）。所以它**同时落在“利率”和“风险资产”两个格子里**，在 2022 式的“通胀 + 加息 + 风险资产下跌”环境中可能两边受伤。阶段 18.1 会专门讲怎么给它定价。
+- **优先股（包括 DAT 发行的比特币支撑优先股）**：它像**长久期的信用资产**。永续优先股的久期约等于 \\(\\dfrac{1}{\\text{收益率}}\\)（阶段 4.4），10% 收益率的永续优先股，久期约 10 年；它还带有发行人的信用风险，对 DAT 优先股来说，信用风险和比特币价格相关（阶段 16.5 的 BTC 评级）。所以它**同时落在“利率”和“风险资产”两个格子里**，在 2022 式的“通胀 + 加息 + 风险资产下跌”环境中可能两边受伤。阶段 18.1 会专门讲怎么给它定价。
 - **代币化国债与货币基金份额**（阶段 14.2）：风险上等同于短期国债，属于**现金/无风险格子**。它们改变的是管道（24 小时结算、可做链上抵押品，观念③），不改变组合的风险结构。
 - **DAT 普通股**：带杠杆的比特币敞口，外加 mNAV 溢价波动（阶段 16.2）。如果组合里已有比特币，它**不增加分散，只增加同一因子上的风险**。
 
@@ -135,7 +135,7 @@ $$
 
   quiz: [
     {
-      q: "按本课假设（股票 σ 16%、债券 σ 7%、相关系数 0.2），60/40 组合中股票贡献的风险大约是多少？",
+      q: "按本课假设（股票 \\(\\sigma = 16\\%\\)、债券 \\(\\sigma = 7\\%\\)、相关系数 0.2），60/40 组合中股票贡献的风险大约是多少？",
       options: [
         "60%，和资金比例一样",
         "约 88%",
@@ -143,7 +143,7 @@ $$
         "50%，股债各半",
       ],
       answer: 1,
-      explain: "风险贡献 = 权重 × 与组合的协方差 ÷ 组合方差。股票波动大，60% 的资金贡献了约 88% 的风险。**资金“六比四”，风险接近“九比一”。**",
+      explain: "\\(\\text{风险贡献} = \\dfrac{\\text{权重} \\times \\text{与组合的协方差}}{\\text{组合方差}}\\)。股票波动大，60% 的资金贡献了约 88% 的风险。**资金“六比四”，风险接近“九比一”。**",
     },
     {
       q: "风险平价组合（约 30/70）的收益约 5.9%、波动率约 7.5%。要达到和 60/40 相同的约 10.5% 波动率，需要加多少杠杆？若借款利率 3%，杠杆后收益约是？",
@@ -154,7 +154,7 @@ $$
         "1.4 倍，约 7.1%",
       ],
       answer: 3,
-      explain: "L = 10.5% ÷ 7.5% ≈ 1.4；杠杆后收益 = 1.4 × 5.9% − 0.4 × 3% ≈ 7.1%。**别忘了扣借款成本**——利率越高，杠杆的好处越小。",
+      explain: "\\(L = 10.5\\% \\div 7.5\\% \\approx 1.4\\)；\\(\\text{杠杆后收益} = 1.4 \\times 5.9\\% - 0.4 \\times 3\\% \\approx 7.1\\%\\)。**别忘了扣借款成本**——利率越高，杠杆的好处越小。",
     },
     {
       q: "为什么 2022 年股票和债券会同时大跌？",
@@ -187,7 +187,7 @@ $$
         "它的风险和短期国债一样",
       ],
       answer: 1,
-      explain: "永续优先股久期约 1/收益率（阶段 4.4），又带发行人的信用风险；DAT 优先股的信用还和比特币价格相关。**所以它同时落在“利率”和“风险资产”两个格子里。**",
+      explain: "永续优先股久期约 \\(\\dfrac{1}{\\text{收益率}}\\)（阶段 4.4），又带发行人的信用风险；DAT 优先股的信用还和比特币价格相关。**所以它同时落在“利率”和“风险资产”两个格子里。**",
     },
   ],
 

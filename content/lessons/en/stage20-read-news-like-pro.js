@@ -52,7 +52,7 @@ Translate every adjective in a headline into three things: **a number, a date an
 - **"First" — how big?** Strategy's "first bitcoin sale" was 32 coins. "The 10-year closes above 5% for the first time" (September 15, 2026) is a meaningful threshold: it never closed at 5% in 2023–2025.
 - **Always find the denominator.** "US debt passes $40 trillion" (August 18, 2026) needs its partners: "about $32.4 trillion held by the public, roughly 100% of GDP, with about $1 trillion a year in net interest" (Stage 3.3).
 
-Also separate **fact, definition and narrative.** The fact: "Strategy's mNAV was 1.01x on August 21." The definition: "this is the 2026 'share price ÷ net BTC per share' measure, not the 2025 enterprise-value measure" (Stage 16.2). The narrative: "the premium is gone and the model is broken." **The same company can show anywhere from about 0.9x to 1.3x depending on which mNAV definition you use.** A number without its definition is not a fact.
+Also separate **fact, definition and narrative.** The fact: "Strategy's mNAV was 1.01x on August 21." The definition: "this is the 2026 \\(\\mathrm{mNAV} = \\dfrac{\\text{share price}}{\\text{net BTC per share}}\\) measure, not the 2025 enterprise-value measure" (Stage 16.2). The narrative: "the premium is gone and the model is broken." **The same company can show anywhere from about 0.9x to 1.3x depending on which mNAV definition you use.** A number without its definition is not a fact.
 
 Finally, rank your **sources**: primary documents (SEC 8-Ks, Fed statements, Treasury data) > wire services and major financial press > secondary summaries > social media. This course's fact sheets are labelled in that order, and anything marked UNVERIFIED is never used as fact here.
 
@@ -139,7 +139,7 @@ And one more thing good doctors do: **they keep notes.** Write down your five an
     "**\"If the headline says 'first' or 'record', it must be big.\"** — Size and baseline decide how big it is. Strategy's \"first bitcoin sale\" was 32 coins, about 0.004% of its holdings; the 30-year's \"high\" was the highest since 2004, not an all-time high. Turn adjectives into numbers with denominators first.",
     "**\"Good news always makes prices go up.\"** — Prices react only to surprises. Before the Fed's September 2026 hike, the 2-year yield was already above the policy rate, so the hike itself was largely priced; what moved prices was the hint about the next step.",
     "**\"Reading news just means asking whether it's good or bad for what I own.\"** — The professional question is whose balance sheet holds the risk and whether that balance sheet carries leverage or a maturity mismatch. The same drop in bitcoin means forced liquidation for a margin borrower but falling coverage for a DAT preferred with no maturity date.",
-    "**\"An mNAV of 1.01x is an objective fact.\"** — A number without its definition is an incomplete fact. Strategy's 2026 definition is share price ÷ net BTC per share; in 2025 it used an enterprise-value measure. The same company can look very different under different definitions.",
+    "**\"An mNAV of 1.01x is an objective fact.\"** — A number without its definition is an incomplete fact. Strategy's 2026 definition is \\(\\mathrm{mNAV} = \\dfrac{\\text{share price}}{\\text{net BTC per share}}\\); in 2025 it used an enterprise-value measure. The same company can look very different under different definitions.",
     "**\"After the five questions you'll know whether to buy or sell.\"** — The output is a map of what changed, whose balance sheet it lands on and what to watch next, plus testable \"if … then … unless …\" reasoning. It is an analytical method, not investment advice.",
   ],
 
@@ -153,7 +153,7 @@ And one more thing good doctors do: **they keep notes.** Write down your five an
         "It sold its entire USD reserve",
       ],
       answer: 1,
-      explain: "**Swap adjectives for numbers with denominators**: 32 ÷ about 840,000 ≈ 0.004%. The roughly 6,900 coins sold over the year came in the following months, to fund dividends, top up the reserve and buy back STRC.",
+      explain: "**Swap adjectives for numbers with denominators**: \\(\\dfrac{32}{\\text{about } 840{,}000} \\approx 0.004\\%\\). The roughly 6,900 coins sold over the year came in the following months, to fund dividends, top up the reserve and buy back STRC.",
     },
     {
       q: "Why was the Fed's September 16, 2026 hike not a big surprise in itself?",
@@ -175,7 +175,7 @@ And one more thing good doctors do: **they keep notes.** Write down your five an
         "Nobody, because Treasuries carry no default risk",
       ],
       answer: 0,
-      explain: "**Every price move lands on some balance sheet.** Long-bond holders take paper losses; the government's cost of new borrowing rises; perpetual preferreds, with a duration of about 1 ÷ yield (roughly 8–10), take the rate hit too.",
+      explain: "**Every price move lands on some balance sheet.** Long-bond holders take paper losses; the government's cost of new borrowing rises; perpetual preferreds, with a duration of about \\(\\dfrac{1}{\\text{yield}}\\) (roughly 8–10), take the rate hit too.",
     },
     {
       q: "Which sentence describes a second-order effect the way this lesson recommends?",

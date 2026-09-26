@@ -2,7 +2,9 @@
 // 输入：项目成本、芯片占比与寿命、建筑寿命、融资结构（公司债 / 私募信贷 / 股权）、利率、租期与到期残值、残值担保。
 // 计算：加权资本成本（WACC）、按年金法的年度资本回收额、直线折旧、覆盖资本成本所需年收入；
 // 租约到期不续租时，用 waterfall / coverageByLayer 算各层回收率。计算走 _fin.js。
-import { npv, waterfall, coverageByLayer, fmtPct, fmtNum, clamp } from "./_fin.js";
+import { npv, waterfall, coverageByLayer, fmtPct, fmtNum, clamp, tex } from "./_fin.js";
+
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -33,7 +35,7 @@ export default function mount(root, lang) {
         </div>
       </div>
       <div class="demo-block">
-        <div class="demo-label">${T("② 融资结构与成本（股权 = 剩余部分）", "② Funding mix and cost (equity = the rest)")}</div>
+        <div class="demo-label">${T("② 融资结构与成本（股权是剩余部分）", "② Funding mix and cost (equity is the rest)")}</div>
         <div class="demo-grid">
           ${sl("bond", "公司债 / SPV 债券占比", "Corporate / SPV bonds share", 0, 90, 5)}
           ${sl("pc", "私募信贷占比", "Private credit share", 0, 60, 5)}
@@ -74,6 +76,8 @@ export default function mount(root, lang) {
   let shock = 0;
   const annuityFactor = (r, n) => npv(Array.from({ length: n }, (_, i) => ({ t: i + 1, cf: 1 })), r);
   const B = (x) => "$" + fmtNum(x, 1) + T(" 十亿", "B");
+  const Bt = (x) => texv("$" + fmtNum(x, 1)) + T(String.raw`\ \text{十亿}`, String.raw`\text{B}`); // LaTeX 版
+  const P = (x, d) => texv(fmtPct(x, d));
 
   const paint = () => {
     const p = {};
@@ -118,7 +122,8 @@ export default function mount(root, lang) {
       bar(T("股权（发起人）", "Equity (sponsors)"), wf.equity, eqClaim, eqClaim > 0 ? Math.min(1, wf.equity / eqClaim) : 1, "");
 
     const L = [];
-    L.push(`WACC = ${fmtPct(wB, 0)} × ${fmtPct(rB, 2)} + ${fmtPct(wP, 0)} × ${fmtPct(rP, 2)} + ${fmtPct(wE, 0)} × ${fmtPct(rE, 2)} = <b>${fmtPct(wacc, 2)}</b>${T("；首年利息约 ", "; first-year interest about ")}${B(interest)}${T("。", ".")}`);
+    L.push(`${tex(String.raw`\mathrm{WACC} = ${P(wB, 0)} \times ${P(rB, 2)} + ${P(wP, 0)} \times ${P(rP, 2)} + ${P(wE, 0)} \times ${P(rE, 2)} = \mathbf{${P(wacc, 2)}}`)}${T("；首年利息约 ", "; first-year interest about ")}${B(interest)}${T("。", ".")}`);
+    L.push(`${tex(String.raw`\text{${T("所需年收入", "Revenue needed")}} = \dfrac{\text{${T("年度资本回收额", "annual capital charge")}}}{1 - \text{${T("运营成本占比", "operating-cost share")}}} = \dfrac{${Bt(charge)}}{1 - ${p.opex}\%} \approx \mathbf{${Bt(rev)}}`)}${T("。", ".")}`);
     const longer = chipCost / annuityFactor(wacc, p.chipLife + 2) + shellCost / annuityFactor(wacc, p.shellLife);
     L.push(`${T("把芯片年限从", "Stretching chip life from")} ${p.chipLife} ${T("年延长到", "to")} ${p.chipLife + 2} ${T("年，账面上每年资本回收额从", "years cuts the annual capital charge on paper from")} ${B(charge)} ${T("降到", "to")} ${B(longer)}${T("——但如果芯片真的", " — but if the chips really are obsolete in")} ${p.chipLife} ${T("年就过时，这只是把成本推后。", "years, this only pushes cost into the future.")}`);
     if (shock > 0) L.push(`<span class="warn">${T("利率冲击 +", "Rate shock +")}${shock}00bp${T("：债务成本整体上移，所需年收入随之上升。AI 抬高长期利率，也抬高了 AI 自己的融资成本。", ": every layer of debt costs more, so the revenue needed rises. AI lifts long-term rates, and that raises AI's own cost of funding.")}</span>`);

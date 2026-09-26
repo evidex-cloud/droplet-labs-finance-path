@@ -144,7 +144,7 @@ Once someone has doubts, ticket holders **queue up to cash out first**. The earl
         "The issuer earns about $4 billion; holders receive zero",
       ],
       answer: 0,
-      explain: "$10 billion × 4% = **$400 million**, all to the issuer; the GENIUS Act bars paying holders interest. That's the narrow-bank spread business, and it shows how rate-sensitive issuer profits are.",
+      explain: "\\(\\$10\\ \\text{billion} \\times 4\\% = \\mathbf{\\$400\\ \\textbf{million}}\\), all to the issuer; the GENIUS Act bars paying holders interest. That's the narrow-bank spread business, and it shows how rate-sensitive issuer profits are.",
     },
     {
       q: "Which of these is **not** an allowed reserve asset under the GENIUS Act?",

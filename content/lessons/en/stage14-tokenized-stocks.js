@@ -9,7 +9,7 @@ export default {
   oneLiner: `The US stock market is open for regular trading during only about 19% of the hours in a year; bitcoin never closes. **Tokenized stocks** aim to bring equities into that always-on world. But "Apple on-chain" can mean three very different things: a **natively tokenized share** that the issuer recognizes and that is fully interchangeable with ordinary stock; a **wrapped token** issued by a third party that holds the real shares; or **synthetic exposure** with no shares behind it at all. Through 2025 and 2026 the US framework fell into place piece by piece: DTC's tokenization pilot, SEC approval for Nasdaq to trade tokenized securities, and the September 2026 "innovation exemption." This lesson covers what you are actually buying, why 24/7 trading is harder than it sounds, and whether a DAT's preferred stock might one day trade on-chain.`,
 
   intuition: `
-Start by counting the stock market's opening hours. Regular trading in US stocks runs from 9:30 a.m. to 4:00 p.m. Eastern: 6.5 hours a day, about 252 trading days a year, or roughly **1,640 hours**. A year has 8,760 hours. **So the market is open for regular trading about 19% of the time.** For the other 81%, news keeps happening, but prices cannot react until the next open.
+Start by counting the stock market's opening hours. Regular trading in US stocks runs from 9:30 a.m. to 4:00 p.m. Eastern: 6.5 hours a day, about 252 trading days a year, or roughly **\\(6.5 \\times 252 \\approx 1{,}640\\) hours**. A year has 8,760 hours. **So the market is open for regular trading about \\(\\dfrac{1{,}640}{8{,}760} \\approx 19\\%\\) of the time.** For the other 81%, news keeps happening, but prices cannot react until the next open.
 
 Crypto markets do not have this problem. As Stage 8.1 showed, bitcoin, stablecoins and DeFi protocols run 24/7. Big news at 2 a.m. on a Saturday moves the price immediately. Which raises an obvious question: **could stocks join that never-closing market too?**
 
@@ -138,7 +138,7 @@ One more thing: a convenience store at midnight has few customers and thin shelv
       q: "Regular US stock trading runs 6.5 hours a day on about 252 trading days a year. Roughly what share of all the hours in a year is that?",
       options: ["About 50%", "About 35%", "About 10%", "About 19%"],
       answer: 3,
-      explain: "6.5 × 252 ≈ **1,640 hours** out of 8,760, or about **19%**. During the other 81% news keeps coming but prices wait for the next open, which is where the demand for 24/7 trading comes from.",
+      explain: "\\(6.5 \\times 252 \\approx\\) **1,640 hours** out of 8,760, or about **\\(\\dfrac{1{,}640}{8{,}760} \\approx 19\\%\\)**. During the other 81% news keeps coming but prices wait for the next open, which is where the demand for 24/7 trading comes from.",
     },
     {
       q: "An investor buys an on-chain \"stock token\" from a company that holds real shares and mints tokens one for one. What is the investor's most direct extra risk?",

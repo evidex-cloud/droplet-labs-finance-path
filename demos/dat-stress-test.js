@@ -1,8 +1,12 @@
 // 交互演示：DAT 压力测试仪表盘——比特币冲击 × mNAV × 市场关门月数 × 回售日，逐月模拟 36 个月：
 // 谁来付股息（增发 / 美元储备 / 卖币 / 跳过）、回售日要多少现金、卖掉多少比特币、各层覆盖还剩几倍。
 // 预设：橙子公司（AUTHORING §0.2）与 Strategy（2026-09-20 前后数据，部分为派生值，见 _research/dat-facts.md §1.3–1.6）。
-import { coverageByLayer, waterfall, monthsCovered, breakevenArr, btcNav, fmtPct, fmtNum, fmtUsd, fmtBig } from "./_fin.js";
+import { coverageByLayer, waterfall, monthsCovered, breakevenArr, btcNav, fmtPct, fmtNum, fmtUsd, fmtBig, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：$ → \$，千分位 , → {,}，% → \%
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
+const texBig = (x) => String.raw`\$${fmtBig(x).replace(/([TBMK])$/, "\\text{$1}")}`;
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -39,7 +43,7 @@ export default function mount(root, lang) {
           <input class="demo-slider" id="dst-shock" type="range" min="-90" max="50" step="5" value="-50" />
           <label class="demo-label">${T("资本市场关门（月）", "Capital markets shut (months)")}${T("：", ": ")}<b id="dst-shut-v"></b></label>
           <input class="demo-slider" id="dst-shut" type="range" min="0" max="36" step="1" value="24" />
-          <label class="demo-label">${T("mNAV（开门时低于 1 = 增发即稀释，不用）", "mNAV (below 1, issuing is dilutive and not used)")}${T("：", ": ")}<b id="dst-mnav-v"></b></label>
+          <label class="demo-label">${T("mNAV（开门时低于 1，增发即稀释，不用）","mNAV (below 1, issuing is dilutive and not used)")}${T("：", ": ")}<b id="dst-mnav-v"></b></label>
           <input class="demo-slider" id="dst-mnav" type="range" min="0.5" max="3" step="0.05" value="1.5" />
         </div>
         <div class="demo-block">
@@ -150,6 +154,8 @@ export default function mount(root, lang) {
       chartBlock(res, [["var(--btc)", T("比特币持仓", "bitcoin holdings")], ["var(--blue)", T("美元储备", "USD reserve")]]);
 
     const L = [];
+    const resTot = c.reserve + (st.useCash ? c.cash : 0);
+    L.push(`${tex(String.raw`\text{${T("覆盖月数", "Months of coverage")}} = \dfrac{${texBig(resTot)}}{${texBig(c.oblig)}} \times 12 = ${texv(fmtNum(months, 0))}`)}${T("；", "; ")}${tex(String.raw`\text{Breakeven ARR} = \dfrac{${texBig(c.oblig)}}{${texBig(nav0)}} = ${texv(fmtPct(breakevenArr(c.oblig, nav0), 2))}`)}${T("。", ".")}`);
     if (sim.reserveOutAt) L.push(`<span class="warn">${T("第 " + sim.reserveOutAt + " 个月储备耗尽。", "Month " + sim.reserveOutAt + ": the reserve runs out.")}</span>`);
     else L.push(`<span class="ok">${T("36 个月内储备没有耗尽。", "The reserve lasts the full 36 months.")}</span>`);
     if (sim.issued > 0) L.push(`${T("市场开门且 mNAV ≥ 1 的月份，用增发支付了", "In months with open markets and mNAV ≥ 1, issuance paid")} ${fmtBig(sim.issued)}${T("（假设增发不稀释每股比特币）。", " (assumed not to dilute BTC per share).")}`);

@@ -1,7 +1,7 @@
 // 交互演示：行为陷阱实验室——(1) 损失厌恶测试：调赌局与损失厌恶系数，看“理性的期望”与“感受的价值”何时分道扬镳；
 // (2) 四个“你”走同一条价格路径：买入持有、纪律再平衡、FOMO 追涨 + 恐慌割肉、FOMO + 杠杆（会被强平），
 // 比较终值、最大回撤与交易次数。价格路径可复现、可重抽。
-import { rng, randn, maxDrawdown, fmtPct, fmtNum } from "./_fin.js";
+import { rng, randn, maxDrawdown, fmtPct, fmtNum, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 export default function mount(root, lang) {
@@ -24,7 +24,7 @@ export default function mount(root, lang) {
         <div class="demo-label">${T("第一部分 · 损失厌恶测试：五五开，赢 X 元或输 100 元", "Part 1 · Loss-aversion test: 50/50 to win $X or lose $100")}</div>
         <div class="demo-grid">
           ${sl("win", T("赢时得到", "Win amount"), 50, 400, 5, "")}
-          ${sl("lam", T("损失厌恶系数 λ", "Loss-aversion coefficient λ"), 1, 3.5, 0.05, "")}
+          ${sl("lam", `${T("损失厌恶系数", "Loss-aversion coefficient")} ${tex(String.raw`\lambda`)}`, 1, 3.5, 0.05, "")}
         </div>
         <div class="stat-row">
           <div class="stat"><div class="k">${T("期望值", "Expected value")}</div><div class="v" id="bt-ev">–</div></div>
@@ -32,6 +32,7 @@ export default function mount(root, lang) {
           <div class="stat"><div class="k">${T("感受上刚好值得的赢额", "Win amount that just feels worth it")}</div><div class="v acc" id="bt-be">–</div></div>
           <div class="stat"><div class="k">${T("你会……", "You would…")}</div><div class="v" id="bt-dec">–</div></div>
         </div>
+        <div class="demo-meta" id="bt-form"></div>
       </div>
       <div class="demo-block">
         <div class="demo-label">${T("第二部分 · 四个“你”走同一条比特币式价格路径（参数为教学假设，不是预测）", "Part 2 · Four yous on the same Bitcoin-like price path (teaching assumptions, not forecasts)")}</div>
@@ -49,8 +50,8 @@ export default function mount(root, lang) {
       </div>
       <div class="demo-log" id="bt-log"></div>
       <p class="demo-tip">${T(
-        "第一部分：把 λ 设成 1（完全理性），任何正期望的赌局都值得；设成 2.25，赢额要到约 250 元你才“感觉”值得（λ 与曲线弯曲共同作用）。第二部分：多换几条路径，比较“FOMO + 恐慌”和“买入持有”——追涨杀跌常常在高点进、低点出，还要付更多交易成本；再看杠杆型，它的方向判断和 FOMO 型一模一样，却经常在第一次深回调里被强平出局。",
-        "Part 1: set λ to 1 (perfectly rational) and any positive-EV bet is worth taking; at 2.25 the win has to reach about $250 before it “feels” worth it (λ and the curve's bend together). Part 2: draw several paths and compare “FOMO + panic” with “buy and hold” — chasing and dumping tends to buy high, sell low and pay more in costs. Then look at the levered trader: its calls are identical to the FOMO trader's, yet it is often liquidated out in the first deep pullback."
+        `第一部分：把 ${tex(String.raw`\lambda`)} 设成 1（完全理性），任何正期望的赌局都值得；设成 2.25，赢额要到约 250 元你才“感觉”值得（${tex(String.raw`\lambda`)} 与曲线弯曲共同作用）。第二部分：多换几条路径，比较“FOMO + 恐慌”和“买入持有”——追涨杀跌常常在高点进、低点出，还要付更多交易成本；再看杠杆型，它的方向判断和 FOMO 型一模一样，却经常在第一次深回调里被强平出局。`,
+        `Part 1: set ${tex(String.raw`\lambda`)} to 1 (perfectly rational) and any positive-EV bet is worth taking; at 2.25 the win has to reach about $250 before it “feels” worth it (${tex(String.raw`\lambda`)} and the curve's bend together). Part 2: draw several paths and compare “FOMO + panic” with “buy and hold” — chasing and dumping tends to buy high, sell low and pay more in costs. Then look at the levered trader: its calls are identical to the FOMO trader's, yet it is often liquidated out in the first deep pullback.`
       )}</p>
     </div>`;
 
@@ -67,6 +68,12 @@ export default function mount(root, lang) {
     const e2 = q("#bt-pv"); e2.textContent = (pv >= 0 ? "+" : "") + fmtNum(pv, 1); e2.className = "v " + (pv >= 0 ? "pos" : "neg");
     q("#bt-be").textContent = fmtNum(be, 0);
     const d = q("#bt-dec"); d.textContent = pv >= 0 ? T("接受", "Accept") : T("拒绝", "Refuse"); d.className = "v " + (pv >= 0 ? "pos" : "neg");
+    const sg = (v) => (v >= 0 ? "+" : "") + v.toFixed(1);
+    q("#bt-form").innerHTML = [
+      tex(String.raw`\text{${T("期望值", "EV")}} = 0.5 \times ${X} - 0.5 \times 100 = ${sg(ev)}`),
+      tex(String.raw`\text{${T("感受的价值", "felt value")}} = 0.5 \times ${X}^{0.88} - 0.5 \times ${lam.toFixed(2)} \times 100^{0.88} = ${sg(pv)}`),
+      tex(String.raw`\text{${T("刚好值得的赢额", "break-even win")}} = 100 \times ${lam.toFixed(2)}^{1/0.88} \approx ${be.toFixed(0)}`),
+    ].join("<br>");
     return { ev, pv };
   }
 
@@ -155,7 +162,7 @@ export default function mount(root, lang) {
     });
     q("#bt-chart").innerHTML = chartBlock(ch, [
       ["var(--btc)", names.hold], ["var(--green)", names.disc], ["var(--blue)", names.fomo], ["var(--red)", names.lev],
-    ]) + `<div class="demo-meta">${T("纵轴为财富的 log10（0 = 起点，1 = 10 倍，−1 = 剩 1/10）。每笔交易成本 0.5%，现金年息 3%，杠杆维持保证金 25%。不构成投资建议。", "Vertical axis is log10 of wealth (0 = start, 1 = 10×, −1 = one-tenth left). Each trade costs 0.5%, cash earns 3% a year, leverage has a 25% maintenance margin. Not investment advice.")}</div>`;
+    ]) + `<div class="demo-meta">${T("纵轴为财富的", "Vertical axis is")} ${tex(String.raw`\log_{10}`)}${T("（0 是起点，1 是 10 倍，−1 是只剩十分之一）。每笔交易成本 0.5%，现金年息 3%，杠杆维持保证金 25%。不构成投资建议。", " of wealth (0 is the start, 1 is ten times, −1 is one-tenth left). Each trade costs 0.5%, cash earns 3% a year, leverage has a 25% maintenance margin. Not investment advice.")}</div>`;
 
     const lines = [];
     if (lt.ev > 0 && lt.pv < 0) lines.push(`<span class="warn">${T("期望为正，但损失厌恶让这个赌局“感觉”不值得——这就是前景理论。", "Positive expected value, yet loss aversion makes the bet feel not worth it — that's prospect theory.")}</span>`);

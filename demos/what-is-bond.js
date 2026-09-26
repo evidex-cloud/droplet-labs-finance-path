@@ -1,6 +1,9 @@
 // 交互演示：债券现金流构建器——设定面值、票息、期限、付息方式与市场收益率，
 // 看一张债券的全部现金流（名义金额 vs 今天的现值），以及价格 = 现值之和、溢价/折价/平价、当期收益率。
-import { bondCashflows, npv, pv, fmtUsd, fmtPct, fmtNum } from "./_fin.js";
+import { bondCashflows, npv, pv, fmtUsd, fmtPct, fmtNum, tex } from "./_fin.js";
+
+// 把格式化好的金额放进 LaTeX：$ → \$，千分位逗号 → {,}
+const tx = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -56,7 +59,11 @@ export default function mount(root, lang) {
 
   const flowsOf = () => {
     if (st.freq === 0 || st.coupon === 0) return [{ t: st.years, cf: st.face }];
-    return bondCashflows(st.face, st.coupon / 100, st.years, st.freq);
+    const fl = bondCashflows(st.face, st.coupon / 100, st.years, st.freq);
+    // 期限短于一个付息周期（如 0.25 年 + 每年付息）时 bondCashflows 返回空数组：
+    // 视为到期一次性支付本金 + 按期限折算的票息，避免后面取 flows[最后一项] 时崩溃
+    if (fl.length) return fl;
+    return [{ t: st.years, cf: st.face * (1 + (st.coupon / 100) * st.years) }];
   };
 
   const drawSvg = (flows, pvs) => {
@@ -128,9 +135,11 @@ export default function mount(root, lang) {
     const lines = [];
     const n = flows.length;
     if (st.freq === 0 || st.coupon === 0) {
-      lines.push(`${T("零息债：只有一笔现金流", "Zero coupon: a single cash flow of ")} ${fmtUsd(st.face, 0)}${T("，在第 ", " in year ")}${fmtNum(st.years, 2)}${T(" 年到账。价格 = ", ". Price = ")}${fmtUsd(st.face, 0)} ÷ (1 + ${fmtNum(st.ytm, 2)}% ÷ 2)^${fmtNum(st.years * 2, 1)} = <b>${fmtUsd(price, 2)}</b>${T("。利息就藏在折价里", ". The interest is hidden in the discount")}${T("（", " (")}${fmtUsd(st.face - price, 2)}${T("）。", ").")}`);
+      lines.push(`${T("零息债：只有一笔现金流", "Zero coupon: a single cash flow of ")} ${fmtUsd(st.face, 0)}${T("，在第 ", " in year ")}${fmtNum(st.years, 2)}${T(" 年到账。", ".")} ${tex(String.raw`\text{${T("价格", "Price")}} = \dfrac{${tx(fmtUsd(st.face, 0))}}{\left(1 + \frac{${fmtNum(st.ytm, 2)}\%}{2}\right)^{${fmtNum(st.years * 2, 1)}}} = \mathbf{${tx(fmtUsd(price, 2))}}`)}${T("。利息就藏在折价里", ". The interest is hidden in the discount")}${T("（", " (")}${fmtUsd(st.face - price, 2)}${T("）。", ").")}`);
     } else {
-      lines.push(`${n} ${T("笔票息，每笔", "coupon payments of")} ${fmtUsd(annualCoupon / perYear, 2)}${T("，最后一笔连同本金", "; the last one arrives with the principal")} ${fmtUsd(st.face, 0)}${T("。名义合计", ". Nominal total")} ${fmtUsd(totalCash, 2)}${T("，按", ", discounted at")} ${fmtNum(st.ytm, 2)}% ${T("折现后只值", "is worth only")} <b>${fmtUsd(price, 2)}</b>${T("。", " today.")}`);
+      // 每笔票息 = 第一笔现金流（若只有一笔，扣掉随它一起到账的本金）；期限短于一个周期时是按期限折算的票息
+      const perCpn = flows[0].cf - (n === 1 ? st.face : 0);
+      lines.push(`${n} ${T("笔票息，每笔", "coupon payments of")} ${fmtUsd(perCpn, 2)}${T("，最后一笔连同本金", "; the last one arrives with the principal")} ${fmtUsd(st.face, 0)}${T("。名义合计", ". Nominal total")} ${fmtUsd(totalCash, 2)}${T("，按", ", discounted at")} ${fmtNum(st.ytm, 2)}% ${T("折现后只值", "is worth only")} <b>${fmtUsd(price, 2)}</b>${T("。", " today.")}`);
     }
     if (kind === "par") lines.push(`<span class="ok">${T("平价：票面利率 = 市场收益率，票息恰好补偿等待的时间，价格等于面值。", "At par: coupon rate = market yield. The coupons exactly pay for the wait, so the price equals face value.")}</span>`);
     else if (kind === "prem") lines.push(`<span class="ok">${T("溢价：票面利率", "Premium: the coupon rate")} ${cpn()}% ${T("高于市场要求的", "is above the")} ${fmtNum(st.ytm, 2)}%${T("，这张借条比新发行的更“慷慨”，买家愿意多付", " the market demands. This IOU is more generous than a new one, so buyers pay")} ${fmtUsd(diff, 2)}${T("。", " extra.")}</span>`);

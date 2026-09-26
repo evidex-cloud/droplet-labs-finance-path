@@ -2,7 +2,10 @@
 // ① 周末保证金缓冲：传统基金份额只能在工作日赎回、T+1 到账，所以要常备闲置现金；
 //    代币化份额 24/7 可直接过户当抵押品，缓冲可以更小。计算每年的机会成本与 N 年累计差额（fv）。
 // ② 资产光谱打分：哪些资产最适合代币化——好处 vs 摩擦。
-import { fv, fmtUsd, fmtPct, fmtBig, fmtNum } from "./_fin.js";
+import { fv, fmtUsd, fmtPct, fmtBig, fmtNum, tex } from "./_fin.js";
+
+// 把格式化好的数字（$、千分位逗号、%）变成 LaTeX 安全的写法
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -79,11 +82,11 @@ export default function mount(root, lang) {
         </div>
         <div class="cmp">
           <div class="cmp-cell hl"><h5>${T("好处（1–5 分）", "Benefits (1–5)")}</h5><div class="stages" id="tw-ben"></div></div>
-          <div class="cmp-cell cold"><h5>${T("摩擦（1–5 分，越高越难）", "Frictions (1–5, higher = harder)")}</h5><div class="stages" id="tw-fric"></div></div>
+          <div class="cmp-cell cold"><h5>${T("摩擦（1–5 分，越高越难）", "Frictions (1–5, higher is harder)")}</h5><div class="stages" id="tw-fric"></div></div>
         </div>
         <div class="stat-row">
           <div class="stat"><div class="k">${T("好处合计", "Benefit total")}</div><div class="v pos" id="tw-bt">–</div></div>
-          <div class="stat"><div class="k">${T("摩擦合计 × 权重", "Friction total × weight")}</div><div class="v neg" id="tw-ft">–</div></div>
+          <div class="stat"><div class="k">${tex(String.raw`\text{${T("摩擦合计", "Friction total")}} \times \text{${T("权重", "weight")}}`)}</div><div class="v neg" id="tw-ft">–</div></div>
           <div class="stat"><div class="k">${T("代币化适合度", "Tokenization fit")}</div><div class="v acc" id="tw-net">–</div></div>
         </div>
         <div class="demo-log" id="tw-log2"></div>
@@ -122,7 +125,7 @@ export default function mount(root, lang) {
     ].map(([lab, h, c]) => `<div class="stage-bar"><span class="lab">${lab}</span><div class="track"><div class="fill" style="width:${Math.max(1.5, (h / maxH) * 100)}%;background:${c}"></div></div><span class="val">${h < 1 ? T("约 3 分钟", "~3 min") : fmtNum(h, 0) + T(" 小时", " h")}</span></div>`).join("");
 
     const lines = [];
-    lines.push(`${T("净收益率（收益率 − 费率）", "Net yield (yield − fee)")} = <b>${fmtPct(net)}</b>${T("。缓冲每少 1 个百分点，每年多赚", ". Each percentage point less buffer earns an extra")} <b>${fmtUsd(st.size * 0.01 * net)}</b>${T("。", " a year.")}`);
+    lines.push(`${tex(String.raw`\text{${T("净收益率", "Net yield")}} = \text{${T("收益率", "yield")}} - \text{${T("费率", "fee")}} = ${st.y >= st.fee ? "" : String.raw`\max(0,\ `}${texv(fmtPct(st.y))} - ${texv(fmtPct(st.fee))}${st.y >= st.fee ? "" : ")"} = \mathbf{${texv(fmtPct(net))}}`)}${T("。缓冲每少 1 个百分点，每年多赚", ". Each percentage point less buffer earns an extra")} <b>${fmtUsd(st.size * 0.01 * net)}</b>${T("。", " a year.")}`);
     lines.push(`${T("通知在", "Call arrives")} ${w.lab}${T("：传统管道", ": the traditional pipe must")} ${w.note}${T("，约", ", about")} <b>${fmtNum(w.oldH, 0)}</b> ${T("小时；这段时间里你只能靠闲置现金顶上——这正是要常备缓冲的原因。", "hours; in the meantime only idle cash can cover the call, which is exactly why the buffer exists.")}`);
     if (st.bufNew >= st.bufOld) lines.push(`<span class="warn">${T("你设的代币化缓冲不比传统小——那代币化在这里就没有省下任何东西。好处来自“能更快挪动”，前提是交易对手愿意接受代币作抵押。", "Your tokenized buffer is no smaller than the traditional one, so tokenization saves nothing here. The benefit comes from moving collateral faster, and only if the counterparty accepts the token.")}</span>`);
     else if (net < 0.005) lines.push(`<span class="warn">${T("净收益率接近 0：闲置现金几乎没有机会成本，代币化的这条好处也跟着消失。零利率年代，没人急着把国债搬上链。", "Net yield is near zero: idle cash costs almost nothing, so this benefit disappears too. In the zero-rate years nobody rushed to put Treasuries on-chain.")}</span>`);

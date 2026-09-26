@@ -38,15 +38,17 @@ The lesson rests on **Idea ③ (liquidity and trust, the plumbing)**: passive mo
   mechanics: `
 ### ① The plumbing of passive money: why additions and deletions are price-insensitive trades
 
-A cap-weighted index fund holds a stock in the amount fund size × the stock's index weight. Once a constituent is deleted, the fund must sell out around the effective date (usually the close of a quarterly or semi-annual review). A simple way to estimate the passive selling:
+A cap-weighted index fund holds a stock in the amount \\(\\text{fund size} \\times \\text{the stock's index weight}\\). Once a constituent is deleted, the fund must sell out around the effective date (usually the close of a quarterly or semi-annual review). A simple way to estimate the passive selling:
 
 $$
-Passive selling ≈ market cap × share held by passive funds tracking that index
-Days to finish ≈ passive selling ÷ (average daily dollar volume × tolerable participation rate)
-Price impact ≈ daily volatility × √(amount sold ÷ average daily volume) (square-root law, Stage 17.1)
+\\begin{aligned} &\\text{Passive selling} \\approx \\text{market cap} \\\\ &\\quad \\times \\text{share held by passive funds} \\\\ &\\qquad \\text{tracking that index} \\end{aligned}
+\\begin{aligned} &\\text{Days to finish} \\\\ &\\approx \\frac{\\text{passive selling}}{\\begin{gathered} \\text{average daily dollar volume} \\\\ {} \\times \\text{tolerable participation rate} \\end{gathered}} \\end{aligned}
+\\begin{aligned} &\\text{Price impact} \\\\ &\\approx \\text{daily volatility} \\\\ &\\quad \\times \\sqrt{\\frac{\\text{amount sold}}{\\text{average daily volume}}} \\end{aligned}
 $$
 
-**An Orange Corp illustration.** Market cap is $1.5 billion. Suppose 8% is held by passive funds tracking one index family: passive selling of about **$120 million.** Daily volume is 5 million shares × $15 = $75 million a day. Selling 20% of daily volume takes 8 trading days. Cram it all into the effective date and, at 4% daily volatility, the impact is about 4% × √1.6 ≈ **5%.** A 5% drop takes mNAV from 1.5 to about 1.43, and the flywheel has lost a chunk of its fuel.
+The last line is the square-root law (Stage 17.1).
+
+**An Orange Corp illustration.** Market cap is $1.5 billion. Suppose 8% is held by passive funds tracking one index family: passive selling of about **$120 million.** Daily volume is \\(5\\text{M shares} \\times \\$15 = \\$75\\text{M a day}\\). Selling 20% of daily volume takes 8 trading days. Cram it all into the effective date and, at 4% daily volatility, the impact is about **\\(4\\% \\times \\sqrt{1.6} \\approx 5\\%\\).** A 5% drop takes mNAV from 1.5 to about 1.43 (\\(1.5 \\times 0.95 \\approx 1.43\\)), and the flywheel has lost a chunk of its fuel.
 
 Three points follow:
 
@@ -142,7 +144,7 @@ An analyst's job is to put **the rules pinned on the wall** and **the control wr
       q: "Orange Corp has a $1.5B market cap; passive funds tracking one index hold 8%; daily dollar volume is $75M. If it is deleted and the funds sell 20% of daily volume, roughly how many trading days does it take?",
       options: ["1 day", "4 days", "8 days", "20 days"],
       answer: 2,
-      explain: "Passive selling ≈ $1.5B × 8% = $120M; each day can absorb $75M × 20% = $15M, so **8 trading days.**",
+      explain: "\\(\\text{Passive selling} \\approx \\$1.5\\text{B} \\times 8\\% = \\$120\\text{M}\\); each day can absorb \\(\\$75\\text{M} \\times 20\\% = \\$15\\text{M}\\), so **\\(\\dfrac{\\$120\\text{M}}{\\$15\\text{M}} = 8\\) trading days.**",
     },
     {
       q: "What did MSCI decide on January 6, 2026?",

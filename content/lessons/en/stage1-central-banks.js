@@ -20,7 +20,7 @@ Think of the Fed as three roles in one:
 
 This lesson rests mainly on **Idea ① — the price of time**: the policy rate is where every interest rate starts, and Stage 2.4 will show that the “risk-free rate” is in turn where all asset pricing starts. It also rests on **Idea ③ — liquidity & trust**: the central bank is the final water source for the financial system's plumbing.
 
-One detail will follow us through the whole course: **the Fed's remote control has only a short cord.** It can hold the overnight rate on target, but 10- and 30-year Treasury yields are set by the market as “the expected path of short rates over many years + extra compensation for bearing long-term risk (the term premium).” When the Fed began cutting in September 2024, the 10-year Treasury yield rose by roughly a full percentage point over the following months, and mortgage rates rose with it. That is why “the 30-year Treasury yield breaks above 5%” can be front-page news — Stage 4.5 takes that headline apart, and Stages 9.1 and 9.2 cover the Fed's full toolkit and how policy transmits.
+One detail will follow us through the whole course: **the Fed's remote control has only a short cord.** It can hold the overnight rate on target, but 10- and 30-year Treasury yields are set by the market as “\\(\\text{the expected path of short rates over many years} + \\text{extra compensation for bearing long-term risk}\\) (the term premium).” When the Fed began cutting in September 2024, the 10-year Treasury yield rose by roughly a full percentage point over the following months, and mortgage rates rose with it. That is why “the 30-year Treasury yield breaks above 5%” can be front-page news — Stage 4.5 takes that headline apart, and Stages 9.1 and 9.2 cover the Fed's full toolkit and how policy transmits.
 
 **In this lesson we break it into five pieces:**
 
@@ -70,14 +70,15 @@ The policy rate is only an overnight rate. Its pass-through to other rates weake
 <tr><td>Overnight rates (SOFR, fed funds)</td><td>IORB, ON RRP and the supply of reserves</td><td>Nearly one-for-one</td></tr>
 <tr><td>Money-fund yields, 3-month T-bills</td><td>The policy rate now and over the next few months</td><td>Very tight</td></tr>
 <tr><td>2-year Treasury</td><td>The market's expected average policy rate over two years</td><td>Tight, but moves in advance</td></tr>
-<tr><td>10- and 30-year Treasuries</td><td>Expected rates over many years + the term premium (inflation risk, deficits and supply, global demand)</td><td>Loose, sometimes opposite</td></tr>
-<tr><td>30-year fixed mortgage</td><td>Roughly the 10-year Treasury + a 1.5–2.5 point spread</td><td>Follows the long end, not overnight</td></tr>
+<tr><td>10- and 30-year Treasuries</td><td>\\(\\text{Expected rates over many years} + \\text{the term premium}\\) (inflation risk, deficits and supply, global demand)</td><td>Loose, sometimes opposite</td></tr>
+<tr><td>30-year fixed mortgage</td><td>\\(\\approx \\text{the 10-year Treasury} + \\text{a}\\ 1.5\\text{–}2.5\\ \\text{point spread}\\)</td><td>Follows the long end, not overnight</td></tr>
 </table>
 
 A simplified formula:
 
 $$
-n-year yield ≈ average expected short rate over the next n years + term premium
+n\\text{-year yield} \\approx \\bar{r}_{n} + \\text{term premium}
+\\bar{r}_{n} = \\text{average expected short rate over the next}\\ n\\ \\text{years}
 $$
 
 So when the Fed cuts, if the market simultaneously worries about inflation returning or about too much Treasury supply and demands a bigger term premium, long yields can perfectly well go up. Take the course's standard example: a 30-year Treasury with a 5% coupon issued at par. If its yield rises from 5% to 6%, its price falls from 100 to about 86.2 (modified duration of about 15.5, Stage 4.4). **The Fed cannot prevent that 14% drop**; it can only influence it indirectly, through expectations and bond purchases (QE). That is the starting point for Stage 4.5, on why a rising 30-year yield is so worrying.

@@ -1,7 +1,10 @@
 // 交互演示：每股比特币计算器——三种分母（基本 / 假设稀释 / 完全稀释）、毛与净，以及每股比特币的复利投影。
 // 默认值 = 橙子公司：10,000 BTC、1 亿股、可转债 1.5 亿（转股价 25）、优先股 1.5 亿、美元储备 3,000 万、股价 15、币价 10 万。
-import { btcPerShare, netReserve, rule72, fmtNum, fmtPct, fmtUsd } from "./_fin.js";
+import { btcPerShare, netReserve, rule72, fmtNum, fmtPct, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
+
+// 把格式化好的数字放进 LaTeX：千分位写成 {,}，$ 与 % 转义
+const texv = (s) => String(s).replace(/\$/g, "\\$").replace(/,/g, "{,}").replace(/%/g, "\\%");
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -116,11 +119,11 @@ export default function mount(root, lang) {
     }).join("");
 
     const lines = [];
-    lines.push(`${T("可转债可转股数", "Shares from the convert")} = ${fmtNum(s.conv, 0)}M ÷ ${fmtUsd(s.convPx, 2)} = <b>${fmtNum(convShares, 2)}M</b>${T("。股价 ", ". Share price ")}${fmtUsd(s.px, 2)} ${itm ? "≥" : "<"} ${T("转股价 ", "conversion price ")}${fmtUsd(s.convPx, 2)} ⇒ ${itm ? T("价内：算进完全稀释股数，不再从净储备中扣除。", "in the money: counted in fully diluted shares and no longer deducted from Net Reserve.") : T("价外：完全稀释股数不含它，但净储备要把它当债务扣掉。", "out of the money: excluded from fully diluted shares but deducted from Net Reserve as debt.")}`);
-    lines.push(`${T("净储备", "Net Reserve")} = ${fmtNum(reserve, 0)} − ${fmtNum(otmDebt, 0)} − ${fmtNum(s.pref, 0)} + ${fmtNum(s.usd, 0)} = <b>${fmtNum(net, 0)}M</b>${T("；÷ ", "; ÷ ")}${fmtNum(shFully, 1)}M ${T("股 = ", "shares = ")}<b>${fmtUsd(netBpsUsd, 2)}</b>${T(" 每股", " per share")}`);
+    lines.push(`${tex(String.raw`\text{${T("可转债可转股数", "Shares from the convert")}} = \frac{${texv(fmtNum(s.conv, 0))}\text{M}}{${texv(fmtUsd(s.convPx, 2))}} = \mathbf{${texv(fmtNum(convShares, 2))}\text{M}}`)}${T("。", ". ")}${tex(String.raw`\text{${T("股价", "Share price")}}\ ${texv(fmtUsd(s.px, 2))} ${itm ? "\\ge" : "<"} \text{${T("转股价", "conversion price")}}\ ${texv(fmtUsd(s.convPx, 2))} \Rightarrow`)} ${itm ? T("价内：算进完全稀释股数，不再从净储备中扣除。", "in the money: counted in fully diluted shares and no longer deducted from Net Reserve.") : T("价外：完全稀释股数不含它，但净储备要把它当债务扣掉。", "out of the money: excluded from fully diluted shares but deducted from Net Reserve as debt.")}`);
+    lines.push(`${tex(String.raw`\text{${T("净储备", "Net Reserve")}} = ${texv(fmtNum(reserve, 0))} - ${texv(fmtNum(otmDebt, 0))} - ${texv(fmtNum(s.pref, 0))} + ${texv(fmtNum(s.usd, 0))} = \mathbf{${texv(fmtNum(net, 0))}\text{M}}`)}${T("；", "; ")}${tex(String.raw`\text{${T("每股净比特币", "Net BTC per share")}} = \frac{${texv(fmtNum(net, 0))}\text{M}}{${texv(fmtNum(shFully, 1))}\text{M}\ \text{${T("股", "shares")}}} = \mathbf{${texv(fmtUsd(netBpsUsd, 2))}}`)}`);
     lines.push(`${T("毛口径（完全稀释）与净口径之差 ", "Gap between gross (fully diluted) and net ")}<b>${fmtPct(gapPct, 1)}</b>${T("：这是优先索取权压在每股上的分量。", ": the weight of senior claims on each share.")}`);
     const mBasic = (s.px * s.shares) / reserve;
-    lines.push(`${T("顺带：市值口径 mNAV = ", "Aside: market-cap mNAV = ")}${fmtNum(mBasic, 2)}x${T("；每花 1 美元买到约 ", "; each dollar of stock buys about ")}<b>${fmtNum(bpsOf(shBasic) / s.px, 0)}</b>${T(" 聪（阶段 16.2）。", " sats (Stage 16.2).")}`);
+    lines.push(`${T("顺带：", "Aside: ")}${tex(String.raw`\text{${T("市值口径", "market-cap")}}\ \mathrm{mNAV} = ${texv(fmtNum(mBasic, 2))}\times`)}${T("；每花 1 美元买到约 ", "; each dollar of stock buys about ")}<b>${fmtNum(bpsOf(shBasic) / s.px, 0)}</b>${T(" 聪（阶段 16.2）。", " sats (Stage 16.2).")}`);
     q("#bps-log").innerHTML = lines.map((l) => `<div>${l}</div>`).join("");
 
     const g = s.g / 100, start = chosen;
@@ -134,7 +137,7 @@ export default function mount(root, lang) {
     q("#bps-chart").innerHTML = chartBlock(res, [["var(--btc)", T("每股比特币（聪）", "BTC per share (sats)")], ["var(--blue)", T("起点", "Starting level")]]);
     const endV = start * Math.pow(1 + g, s.yrs);
     const dbl = g > 0 ? T("约 ", "about ") + fmtNum(rule72(g), 1) + T(" 年翻倍（72 法则）", " years to double (Rule of 72)") : T("增长率不为正，永远不会翻倍", "growth isn't positive, so it never doubles");
-    q("#bps-proj").innerHTML = `${fmtNum(start, 0)} → <b>${fmtNum(endV, 0)}</b>${T(" 聪，", " sats, ")}${fmtNum(endV / start, 2)}x${T("；", "; ")}${dbl}${T("。币价与 mNAV 不变时，股价按同样倍数变化。", ". With the BTC price and mNAV unchanged, the share price moves by the same multiple.")}`;
+    q("#bps-proj").innerHTML = `${tex(String.raw`${texv(fmtNum(start, 0))} \times ${texv(fmtNum(1 + g, 2))}^{${s.yrs}} = \mathbf{${texv(fmtNum(endV, 0))}}`)}${T(" 聪，", " sats, ")}${fmtNum(endV / start, 2)}x${T("；", "; ")}${dbl}${T("。币价与 mNAV 不变时，股价按同样倍数变化。", ". With the BTC price and mNAV unchanged, the share price moves by the same multiple.")}`;
   }
 
   paint();

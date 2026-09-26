@@ -54,12 +54,18 @@ What risks live in that window? Three kinds:
 Replacement-cost risk can be estimated. Price moves grow roughly with the square root of time:
 
 $$
-99%-confidence replacement cost ≈ trade value × 2.33 × annual volatility ÷ √252 × √(settlement days)
-For a $100,000 trade at 30% annual volatility:
-T+3 ≈ $7,600 · T+2 ≈ $6,200 · T+1 ≈ $4,400
+\\text{99\\%-confidence replacement cost} \\approx \\text{trade value} \\times 2.33 \\times \\frac{\\text{annual volatility}}{\\sqrt{252}} \\times \\sqrt{\\text{settlement days}}
 $$
 
-Going from T+2 to T+1 cuts this risk by about **29%** (1 − 1/√2). Clearing houses size margin with similar logic, so T+1 also means the industry has to lock up less margin.
+For a $100,000 trade at 30% annual volatility:
+
+$$
+\\text{T+3}: \\quad \\$100{,}000 \\times 2.33 \\times \\frac{30\\%}{\\sqrt{252}} \\times \\sqrt{3} \\approx \\$7{,}600
+\\text{T+2}: \\quad \\$100{,}000 \\times 2.33 \\times \\frac{30\\%}{\\sqrt{252}} \\times \\sqrt{2} \\approx \\$6{,}200
+\\text{T+1}: \\quad \\$100{,}000 \\times 2.33 \\times \\frac{30\\%}{\\sqrt{252}} \\times \\sqrt{1} \\approx \\$4{,}400
+$$
+
+Going from T+2 to T+1 cuts this risk by about **29%** (\\(1 - \\dfrac{1}{\\sqrt{2}}\\)). Clearing houses size margin with similar logic, so T+1 also means the industry has to lock up less margin.
 
 The cost is that back offices get just one night to finish matching, currency conversion and funding. That's especially tight for overseas investors: a European fund that buys U.S. stocks on Monday afternoon has to turn euros into dollars that same night — the most common complaint about T+1.
 

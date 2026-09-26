@@ -3,7 +3,7 @@
 // 标的按你设定的“真实波动率”走一条可复现的随机路径（可加暴跌跳空），
 // 看已实现波动率怎么从路径里算出来、对冲后的盈亏怎样只取决于“已实现 vs 隐含”，
 // 再一次跑 500 条路径，看卖波动率“多数小赚、偶尔巨亏”的分布形状。
-import { mean, stdev, rng, randn, fmtPct, fmtNum, fmtUsd } from "./_fin.js";
+import { mean, stdev, rng, randn, fmtPct, fmtNum, fmtUsd, tex } from "./_fin.js";
 import { lineChart, chartBlock } from "./_chart.js";
 
 function normCdf(x) {
@@ -161,7 +161,7 @@ export default function mount(root, lang) {
         <div class="stat"><div class="k">${T("最差一条", "Worst path")}</div><div class="v neg">${fmtUsd(worst, 0)}</div></div>
         <div class="stat"><div class="k">${T("最好一条", "Best path")}</div><div class="v pos">${fmtUsd(best, 0)}</div></div>
       </div>
-      <div class="demo-meta">${T("最差 ÷ 平均收益 =", "Worst ÷ average =")} <b>${avg !== 0 ? fmtNum(Math.abs(worst / avg), 1) + "×" : "–"}</b>${T("。卖波动率时这个数字往往很大：一次悬崖吃掉很多次小赚。", ". For short vol this ratio tends to be large: one cliff eats many small wins.")}</div>`;
+      <div class="demo-meta">${tex(String.raw`\left|\dfrac{\text{${T("最差一条", "worst path")}}}{\text{${T("平均盈亏", "average")}}}\right| = ${avg !== 0 ? String.raw`\mathbf{${fmtNum(Math.abs(worst / avg), 1).replace(/,/g, "{,}")}}\times` : String.raw`\text{–}`}`)}${T("。卖波动率时这个数字往往很大：一次悬崖吃掉很多次小赚。", ". For short vol this ratio tends to be large: one cliff eats many small wins.")}</div>`;
   }
 
   root.querySelectorAll("#va-side button").forEach((b) => b.addEventListener("click", () => {

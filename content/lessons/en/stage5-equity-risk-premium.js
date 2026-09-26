@@ -12,9 +12,9 @@ export default {
   intuition: `
 If stocks clearly beat bonds over the long run, why doesn't everyone just own stocks? The answer is hiding in the words “long run.”
 
-Start with the ledger. Roughly speaking, since 1926 U.S. large-company stocks (with dividends reinvested) have returned about 10% a year, long-term Treasury bonds about 5%, short-term Treasury bills about 3%, with inflation around 3%. The gaps look modest, but compounding blows them up to staggering proportions (Stage 2.2): at 10% for 30 years, $1 becomes about $17.40; at 5%, only about $4.30. **Over the same thirty years, stocks end up with four times what bonds do.**
+Start with the ledger. Roughly speaking, since 1926 U.S. large-company stocks (with dividends reinvested) have returned about 10% a year, long-term Treasury bonds about 5%, short-term Treasury bills about 3%, with inflation around 3%. The gaps look modest, but compounding blows them up to staggering proportions (Stage 2.2): at 10% for 30 years, $1 becomes about \\(\\$1 \\times 1.10^{30} \\approx \\$17.40\\); at 5%, only about \\(\\$1 \\times 1.05^{30} \\approx \\$4.30\\). **Over the same thirty years, stocks end up with four times what bonds do.**
 
-That “extra” return has a formal name: the **equity risk premium (ERP)** — the expected return on stocks minus the risk-free rate. Stage 2.4 said “required return = risk-free rate + risk premium,” and Stage 5.3 said “discount rate r = risk-free rate + equity risk premium”; this lesson takes that second term apart. It sits on **Idea ④ — risk & leverage: risk has a price**, and the equity risk premium is the price of stock-market risk.
+That “extra” return has a formal name: the **equity risk premium (ERP)** — the expected return on stocks minus the risk-free rate. Stage 2.4 said \\(\\text{required return} = \\text{risk-free rate} + \\text{risk premium}\\), and Stage 5.3 said \\(\\text{discount rate}\\ r = \\text{risk-free rate} + \\text{equity risk premium}\\); this lesson takes that second term apart. It sits on **Idea ④ — risk & leverage: risk has a price**, and the equity risk premium is the price of stock-market risk.
 
 So what does it cost you? Here are a few episodes you should know by heart:
 
@@ -51,18 +51,18 @@ The three most-quoted kinds of long-run return data (all figures are rough order
 
 A few sources worth knowing. Jeremy Siegel's *Stocks for the Long Run* (first edition 1994) traces U.S. real stock returns back to 1802 and finds a long-run real return of roughly 6.5–7% a year. Dimson, Marsh and Staunton's *Triumph of the Optimists* (2002) and its annual updates cover more than twenty countries since 1900 and conclude that **global stocks have earned less in real terms than U.S. stocks** (the U.S. was one of the century's most successful markets). NYU's Aswath Damodaran publishes annual returns on U.S. stocks, bonds and bills since 1928.
 
-**The magnifying power of compounding** is the part of these numbers most worth remembering. With the Rule of 72 from Stage 2.2: 10% doubles money in about 7.2 years; 5% in about 14.4 years. After thirty years, stocks have doubled more than four times, bonds only about twice. That is why long-horizon savers — pension funds, endowments — are willing to hold most of their assets in stocks.
+**The magnifying power of compounding** is the part of these numbers most worth remembering. With the Rule of 72 from Stage 2.2: 10% doubles money in about \\(\\dfrac{72}{10} = 7.2\\) years; 5% in about \\(\\dfrac{72}{5} = 14.4\\) years. After thirty years, stocks have doubled more than four times, bonds only about twice. That is why long-horizon savers — pension funds, endowments — are willing to hold most of their assets in stocks.
 
 ### ② The equity risk premium: the extra you earn for bearing risk
 
 There are two completely different ways to measure the equity risk premium, and you must keep them apart:
 
 - **Historical ERP (looking back):** the stock returns actually realized, minus the returns on Treasuries or bills. For the U.S. over nearly a century, that is about 6% over bills and about 4–5% over long bonds; global numbers are somewhat lower. The trouble is that it depends on the start and end dates — measured from 2000 to 2009, it was negative.
-- **Implied ERP (looking forward):** back out the return the market “expects” from today's prices, then subtract today's risk-free rate. The simplest version is Stage 5.3's r = E/P + g: if the S&P 500's earnings yield is 4.5% and long-run growth is 4%, the expected return is about 8.5%; subtract a 4.5% Treasury yield and the implied ERP is about 4%. Damodaran's monthly estimate of the U.S. implied ERP has mostly sat in a 4–6% range in recent years.
+- **Implied ERP (looking forward):** back out the return the market “expects” from today's prices, then subtract today's risk-free rate. The simplest version is Stage 5.3's \\(r = \\dfrac{E}{P} + g\\): if the S&P 500's earnings yield is 4.5% and long-run growth is 4%, the expected return is about \\(4.5\\% + 4\\% = 8.5\\%\\); subtract a 4.5% Treasury yield and the implied ERP is about \\(8.5\\% - 4.5\\% = 4\\%\\). Damodaran's monthly estimate of the U.S. implied ERP has mostly sat in a 4–6% range in recent years.
 
 $$
-Implied expected return ≈ earnings yield (E/P) + long-run growth g
-Implied ERP ≈ implied expected return − long-term Treasury yield
+\\text{Implied expected return} \\approx \\text{earnings yield}\\ \\frac{E}{P} + \\text{long-run growth}\\ g
+\\text{Implied}\\ \\mathrm{ERP} \\approx \\text{implied expected return} - \\text{long-term Treasury yield}
 $$
 
 This formula ties straight back to the Stage 4.5 story: **when the 30-year Treasury yield climbs to around 5% and stocks' implied expected return does not climb with it, the equity risk premium gets squeezed** — stocks become “expensive” relative to bonds. That is the second reason rising long yields make stock markets nervous (the first being the discount-rate effect from Stage 5.3).
@@ -85,7 +85,7 @@ More vivid still is the **maximum drawdown**: the fall from the highest peak to 
 <tr><td>2022 rate hikes</td><td>−25%</td><td>about 2 years</td></tr>
 </table>
 
-Note that drawdown arithmetic is **asymmetric**: after a 50% fall you need a 100% gain to get back to even; after an 80% fall you need 400%. That is why Stage 11.3 puts maximum drawdown alongside the Sharpe ratio as a core risk measure.
+Note that drawdown arithmetic is **asymmetric**: after a 50% fall you need a \\(\\dfrac{1}{0.5} - 1 = 100\\%\\) gain to get back to even; after an 80% fall you need \\(\\dfrac{1}{0.2} - 1 = 400\\%\\). That is why Stage 11.3 puts maximum drawdown alongside the Sharpe ratio as a core risk measure.
 
 One more cost is easy to overlook: **time.** Someone who bought U.S. stocks at the start of 2000 had roughly nothing to show for it in total return ten years later; someone who bought Japanese stocks at the end of 1989 waited thirty-four years for the price index to recover. **“The long run” can be too long for a single human life.**
 
@@ -97,7 +97,7 @@ Plot the asset classes by volatility and long-run return and you get a ladder cl
 
 Each rung also falls in its own way. Cash hardly ever drops (though inflation erodes it slowly, Stage 1.4). Long Treasuries are usually calm but can crash when rates surge — a 30-year Treasury fund was cut roughly in half between 2020 and 2023, which is duration from Stage 4.4 doing its work. Big stock-market declines usually come with recessions. Bitcoin went through drawdowns on the order of 75–85% in 2011, 2014–2015, 2018 and 2022 (Stage 12.4).
 
-A common “return per unit of risk” measure is the **Sharpe ratio** = (expected return − risk-free rate) ÷ volatility. For stocks: (10% − 3%) ÷ 17% ≈ 0.4. It gets a proper introduction in Stage 11.3. The ladder does not say “higher is better”; it says **every rung has its price.**
+A common “return per unit of risk” measure is the **Sharpe ratio** \\(= \\dfrac{\\text{expected return} - \\text{risk-free rate}}{\\text{volatility}}\\). For stocks: \\(\\dfrac{10\\% - 3\\%}{17\\%} \\approx 0.4\\). It gets a proper introduction in Stage 11.3. The ladder does not say “higher is better”; it says **every rung has its price.**
 
 ### ⑤ Why “usually”: time, survivorship and volatility drag
 
@@ -108,12 +108,12 @@ Finally, let us unpack the “usually” in “stocks usually win”:
 - **Volatility drag.** What you actually earn is the **geometric** (compound) return, not the arithmetic average. The two differ by roughly half the variance:
 
 $$
-Geometric return ≈ arithmetic return − volatility² ÷ 2
-Stocks: 12% − (0.18)² ÷ 2 ≈ 12% − 1.6% ≈ 10.4%
-A high-vol asset: arithmetic 40%, volatility 70% → 40% − 24.5% ≈ 15.5%
+\\text{Geometric return} \\approx \\text{arithmetic return} - \\frac{\\text{volatility}^{2}}{2}
+\\text{Geometric return}_{\\text{stocks}} \\approx 12\\% - \\frac{0.18^{2}}{2} \\approx 12\\% - 1.6\\% \\approx 10.4\\%
+\\text{Geometric return}_{\\text{high-vol asset}} \\approx 40\\% - \\frac{0.70^{2}}{2} = 40\\% - 24.5\\% \\approx 15.5\\%
 $$
 
-The more volatile the asset, the heavier the drag. An asset that rises 50% and then falls 50% has an arithmetic average of zero but has actually lost 25%. This formula returns again and again — in Stage 11.4 (position sizing and Kelly) and Stage 16.4 (the amplification and path dependence of DAT common stock): **put leverage on a volatile asset, and the drag grows with the square.**
+Here stocks have a 12% arithmetic return and 18% volatility; the high-vol asset has a 40% arithmetic return and 70% volatility. The more volatile the asset, the heavier the drag. An asset that rises 50% and then falls 50% has an arithmetic average of zero but has actually lost 25% (\\(1.5 \\times 0.5 = 0.75\\)). This formula returns again and again — in Stage 11.4 (position sizing and Kelly) and Stage 16.4 (the amplification and path dependence of DAT common stock): **put leverage on a volatile asset, and the drag grows with the square.**
 
 A new-era note: Stage 15.5 compares holding bitcoin directly, a bitcoin ETF, DAT common stock and DAT preferred stock — in effect, new rungs cut into this ladder. DAT preferreds try to offer bond-like income and volatility; DAT common offers a rung “steeper than bitcoin itself.” Understanding the price of each rung is the first step in evaluating those instruments. This lesson covers mechanics and history only; it is not investment advice.
 `,
@@ -132,8 +132,8 @@ Bitcoin is a newer tower, taller and windier, built only fifteen-odd years ago. 
 
   misconceptions: [
     "**“Stocks always beat bonds in the long run.”** — That has been true for most 20-year windows in the U.S. over the past century, but not all of them; Japan's stock price index took thirty-four years to regain its 1989 peak, and U.S. stocks' total return in the 2000s was close to zero. “The long run” may be longer than your investment horizon.",
-    "**“The historical equity risk premium was about 6%, so it will be 6% in future.”** — Historical ERP depends on the start and end dates, and the U.S. is a survivor. More useful is the implied ERP derived from today's valuations: earnings yield + growth − Treasury yield. When long yields rise and stock prices don't fall, the future premium gets thinner.",
-    "**“An average return of 10% a year means my money will be 2.59 times larger in ten years.”** — You earn the geometric return, and high volatility creates “volatility drag”; the range around the average is also very wide, so ten-year outcomes can differ several-fold.",
+    "**“The historical equity risk premium was about 6%, so it will be 6% in future.”** — Historical ERP depends on the start and end dates, and the U.S. is a survivor. More useful is the implied ERP derived from today's valuations: \\(\\text{earnings yield} + \\text{growth} - \\text{Treasury yield}\\). When long yields rise and stock prices don't fall, the future premium gets thinner.",
+    "**“An average return of 10% a year means my money will be \\(1.1^{10} \\approx 2.59\\) times larger in ten years.”** — You earn the geometric return, and high volatility creates “volatility drag”; the range around the average is also very wide, so ten-year outcomes can differ several-fold.",
     "**“High volatility means a bad asset.”** — Volatility is the price tag on risk, not a verdict. A high-volatility asset with a high enough expected return and low correlation with everything else can improve a portfolio in small doses (Stage 11.1). What matters is position size and whether you can survive the drawdowns.",
     "**“Bitcoin has had the best returns of the last fifteen years, so of course it sits at the top of the ladder.”** — Bitcoin's record is very short, its drawdowns very deep, and its structural risks different from stocks' (Stage 12.6). Its position on the chart only describes history; it cannot be extrapolated the way a century of stock data can.",
   ],
@@ -148,7 +148,7 @@ Bitcoin is a newer tower, taller and windier, built only fifteen-odd years ago. 
         "$10 and $5",
       ],
       answer: 2,
-      explain: "1.1³⁰ ≈ 17.4 and 1.05³⁰ ≈ 4.3. The return is only twice as high, but the ending wealth is four times larger — **compounding turns the equity risk premium into a huge wealth gap.**",
+      explain: "\\(1.1^{30} \\approx 17.4\\) and \\(1.05^{30} \\approx 4.3\\). The return is only twice as high, but the ending wealth is four times larger — **compounding turns the equity risk premium into a huge wealth gap.**",
     },
     {
       q: "The S&P 500's earnings yield (E/P) is 4.5%, expected long-run growth is 4%, and the 30-year Treasury yields 5%. What is the rough implied equity risk premium?",
@@ -159,7 +159,7 @@ Bitcoin is a newer tower, taller and windier, built only fifteen-odd years ago. 
         "−0.5%",
       ],
       answer: 1,
-      explain: "Implied expected return ≈ 4.5% + 4% = 8.5%; minus the 5% long-bond yield, the implied ERP ≈ **3.5%**. If long yields rise while stock prices hold steady, stocks lose appeal relative to bonds.",
+      explain: "\\(\\text{Implied expected return} \\approx 4.5\\% + 4\\% = 8.5\\%\\); minus the 5% long-bond yield, the \\(\\text{implied}\\ \\mathrm{ERP} \\approx 8.5\\% - 5\\% =\\) **3.5%**. If long yields rise while stock prices hold steady, stocks lose appeal relative to bonds.",
     },
     {
       q: "An asset rises 50% and then falls 50%; its two-year arithmetic average return is zero. What is the actual outcome?",
@@ -170,7 +170,7 @@ Bitcoin is a newer tower, taller and windier, built only fifteen-odd years ago. 
         "A 25% loss",
       ],
       answer: 3,
-      explain: "1 × 1.5 × 0.5 = 0.75, a **25% loss** — and falling first then rising gives the same result. This is volatility drag: geometric return ≈ arithmetic return − volatility²/2, and the higher the volatility, the heavier the drag.",
+      explain: "\\(1 \\times 1.5 \\times 0.5 = 0.75\\), a **25% loss** — and falling first then rising gives the same result. This is volatility drag: \\(\\text{geometric return} \\approx \\text{arithmetic return} - \\dfrac{\\text{volatility}^{2}}{2}\\), and the higher the volatility, the heavier the drag.",
     },
     {
       q: "Which statement best describes the “equity premium puzzle” (Mehra and Prescott, 1985)?",
@@ -192,7 +192,7 @@ Bitcoin is a newer tower, taller and windier, built only fifteen-odd years ago. 
         "100%",
       ],
       answer: 1,
-      explain: "0.2 is left; getting back to 1 takes a ×5, a **400%** gain. Drawdown arithmetic is asymmetric — which is why bitcoin's repeated −80% drawdowns and stocks' −86% in 1929–32 each took years to repair.",
+      explain: "0.2 is left; getting back to 1 takes \\(\\dfrac{1}{0.2} = 5\\) times as much, a **400%** gain. Drawdown arithmetic is asymmetric — which is why bitcoin's repeated −80% drawdowns and stocks' −86% in 1929–32 each took years to repair.",
     },
   ],
 

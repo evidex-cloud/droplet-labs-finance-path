@@ -58,7 +58,7 @@ A concrete example. Suppose your wallet holds one **0.5 BTC** “note” (one UT
 <tr><td>Input</td><td>Your 0.5 BTC note (spent in full, with your signature attached)</td><td>0.5000</td></tr>
 <tr><td>Output 1</td><td>A new note locked to the merchant</td><td>0.2000</td></tr>
 <tr><td>Output 2</td><td>Change: a new note locked back to a fresh address of yours</td><td>0.2998</td></tr>
-<tr><td>Difference</td><td>Inputs − outputs = <b>the fee</b>, collected by the miner who includes the transaction</td><td>0.0002</td></tr>
+<tr><td>Difference</td><td>\\(\\text{inputs} - \\text{outputs} = \\textbf{the fee}\\), collected by the miner who includes the transaction</td><td>0.0002</td></tr>
 </table>
 
 A few things to notice:
@@ -157,7 +157,7 @@ Villagers don't have to trust any stonecutter: every household keeps a rubbing o
         "0.3 BTC, collected by a bitcoin foundation",
       ],
       answer: 0,
-      explain: "Fee = inputs − outputs = 0.5 − 0.2 − 0.2998 = **0.0002 BTC**, paid to the miner who puts the transaction in a block. It is not a separate line but the implied difference.",
+      explain: "\\(\\text{Fee} = \\text{inputs} - \\text{outputs} = 0.5 - 0.2 - 0.2998 = 0.0002\\ \\text{BTC}\\), paid to the miner who puts the transaction in a block. It is not a separate line but the implied difference.",
     },
     {
       q: "Why is it practically impossible to alter a block from long ago?",

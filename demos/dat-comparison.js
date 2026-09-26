@@ -2,7 +2,7 @@
 // 比特币净值、占总量比例、各层覆盖、地板价、Breakeven ARR、储备月数、两种放大公式、每年为付股息需卖出的持仓比例；
 // 拖动比特币价格冲击看排序怎么变；切换“信用层 / 普通股”视角，高亮各自最在乎的行。
 // 数据日期：Strategy 2026-09-20（部分派生）、Strive 2026-09-18、Metaplanet 持仓 2026-07-02 与借款 2026-03（粗算）。
-import { btcNav, btcRating, btcFloorPrice, breakevenArr, monthsCovered, amplificationStrategy, striveAmpRatio, fmtPct, fmtNum, fmtUsd, fmtBig } from "./_fin.js";
+import { btcNav, btcRating, btcFloorPrice, breakevenArr, monthsCovered, amplificationStrategy, striveAmpRatio, fmtPct, fmtNum, fmtUsd, fmtBig, tex } from "./_fin.js";
 
 export default function mount(root, lang) {
   const en = lang === "en";
@@ -55,7 +55,7 @@ export default function mount(root, lang) {
     [T("债务层覆盖", "Debt-layer coverage"), (c) => (c.debt > 0 ? btcRating(c.nav, c.debt) : Infinity), (v) => (isFinite(v) ? fmtNum(v, 2) + "x" : T("无债务", "no debt")), 1, "credit"],
     [T("最劣后层覆盖", "Most junior layer coverage"), (c) => btcRating(c.nav, c.debt + c.pref), (v) => fmtNum(v, 2) + "x", 1, "credit"],
     [T("最劣后层地板价", "Most junior floor price"), (c) => btcFloorPrice(c.pxs, btcRating(c.nav, c.debt + c.pref)), (v) => fmtUsd(v, 0), -1, "credit"],
-    [T("Breakeven ARR（= 每年付息需卖出的持仓比例）", "Breakeven ARR (= share of holdings sold per year to pay)"), (c) => (c.oblig ? breakevenArr(c.oblig, c.nav) : NaN), (v) => (isFinite(v) ? fmtPct(v, 2) : T("数据不足", "no data")), -1, "both"],
+    [T("Breakeven ARR（即每年付息需卖出的持仓比例）", "Breakeven ARR (the share of holdings sold per year to pay)"), (c) => (c.oblig ? breakevenArr(c.oblig, c.nav) : NaN), (v) => (isFinite(v) ? fmtPct(v, 2) : T("数据不足", "no data")), -1, "both"],
     [T("年度利息与股息", "Annual interest and dividends"), (c) => (c.oblig ? c.oblig : NaN), (v) => (isFinite(v) ? fmtBig(v) : T("数据不足", "no data")), 0, "credit"],
     [T("美元储备覆盖（月）", "USD reserve cover (months)"), (c) => (c.oblig && c.cash != null ? monthsCovered(c.reserve != null ? c.reserve : c.cash, c.oblig) : NaN), (v) => (isFinite(v) ? fmtNum(v, 0) : T("数据不足", "no data")), 1, "credit"],
     [T("放大（Strategy 式）", "Amplification (Strategy-style)"), (c) => amplificationStrategy(c.nav, c.debt, c.pref, c.cash || 0), (v) => (isFinite(v) && v > 0 ? fmtNum(v, 2) + "x" : "–"), 0, "common"],
@@ -92,6 +92,7 @@ export default function mount(root, lang) {
     const heavy = cos.filter((c) => c.oblig && c.oblig / c.pxs / c.btc > 0.05);
     if (heavy.length) L.push(`<span class="warn">${T("若市场关门、储备耗尽，每年需卖出 5% 以上持仓", "If markets shut and the reserve runs out, these must sell over 5% of holdings a year")}${T("：", ": ")}${heavy.map((c) => c.name).join(T("、", ", "))}</span>`);
     if (cos.some((c) => c.secured)) L.push(`<span class="warn">${T("有以比特币质押的借款：这是结构里唯一可能被追加保证金的环节。", "Bitcoin-secured borrowing present: the one link in these structures that can face a margin call.")}</span>`);
+    L.push(`${T("统一公式：", "The shared formulas: ")}${tex(String.raw`\text{${T("最劣后层覆盖", "junior coverage")}} = \dfrac{\text{${T("BTC 储备", "BTC Reserve")}}}{\text{${T("债务", "debt")}} + \text{${T("优先股", "preferred")}}}`)}${T("；", "; ")}${tex(String.raw`\text{${T("地板价", "floor price")}} = \dfrac{\text{${T("比特币价格", "bitcoin price")}}}{\text{${T("覆盖", "coverage")}}}`)}${T("；", "; ")}${tex(String.raw`\text{Breakeven ARR} = \dfrac{\text{${T("年度利息与股息", "annual interest and dividends")}}}{\text{${T("BTC 储备", "BTC Reserve")}}}`)}${T("；", "; ")}${tex(String.raw`\text{${T("杠杆比率", "leverage ratio")}} = \dfrac{\text{${T("债务", "debt")}} + \text{${T("优先股", "preferred")}}}{\text{${T("比特币价值", "bitcoin value")}}}`)}${T("。", ".")}`);
     L.push(`${T("“报告的溢价”一行口径各不相同，不能直接比较（本节 ①）。Metaplanet 的数字混合了不同日期与币种，仅作粗算。仅讲机制，不构成投资建议。", "The “reported premium” row uses different definitions and cannot be compared directly (section ①). Metaplanet's figures mix dates and currencies and are rough. Mechanics only, not investment advice.")}`);
     q("#cmpd-log").innerHTML = L.map((l) => `<div>${l}</div>`).join("");
   };

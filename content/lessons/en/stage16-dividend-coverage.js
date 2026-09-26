@@ -7,7 +7,7 @@ export default {
   prereqs: ["btc-rating", "leverage-coverage"],
 
   oneLiner:
-    "BTC Rating answers \"will the building stand?\"; this lesson answers \"**can the rent be paid?**\" Bitcoin produces no cash, yet preferreds must be paid every month, every half-month, even every day. The cash can only come from four places: **new securities, the USD reserve, selling bitcoin, and operating businesses**. Orange Corp owes $15M a year and holds a $30M reserve → **24 months**; its BTC Breakeven ARR = $15M ÷ $1.0B = **1.5%**. Strategy's USD Reserve of about $5.04B as of 2026-09-20 covers roughly **3.1 years** of about $1.62B in annual obligations (derived). This lesson shows how to count obligations and reserves, what USD Duration and the ARR metrics mean, and how long a DAT can last with capital markets shut.",
+    "BTC Rating answers \"will the building stand?\"; this lesson answers \"**can the rent be paid?**\" Bitcoin produces no cash, yet preferreds must be paid every month, every half-month, even every day. The cash can only come from four places: **new securities, the USD reserve, selling bitcoin, and operating businesses**. Orange Corp owes $15M a year and holds a $30M reserve → **24 months**; its \\(\\text{BTC Breakeven ARR} = \\dfrac{\\$15\\text{M}}{\\$1.0\\text{B}} = \\mathbf{1.5\\%}\\). Strategy's USD Reserve of about $5.04B as of 2026-09-20 covers roughly **3.1 years** of about $1.62B in annual obligations (derived). This lesson shows how to count obligations and reserves, what USD Duration and the ARR metrics mean, and how long a DAT can last with capital markets shut.",
 
   intuition: `
 Someone puts their entire savings into bitcoin and also owes a fixed rent every month. Bitcoin pays no interest, so where does the rent come from? There are only four routes:
@@ -19,10 +19,10 @@ Someone puts their entire savings into bitcoin and also owes a fixed rent every 
 
 A digital asset treasury company (DAT) faces exactly the same problem. Stage 16.5's BTC Rating tells you how many times the company's bitcoin covers its preferreds — an **asset** question: will the building stand? This lesson is about **cash flow**: can the rent be paid? They're not the same: you can live in a very valuable house and still be unable to pay next month's rent.
 
-Orange Corp from Stage 15.1: the convertibles pay 0%, so no interest; Orange-F is $100M × 10% = $10M; Orange-D is $50M × 10% = $5M. **Its annual cash obligation is $15M.** It holds a $30M USD reserve:
+Orange Corp from Stage 15.1: the convertibles pay 0%, so no interest; Orange-F is \\(\\$100\\text{M} \\times 10\\% = \\$10\\text{M}\\); Orange-D is \\(\\$50\\text{M} \\times 10\\% = \\$5\\text{M}\\). **Its annual cash obligation is $15M.** It holds a $30M USD reserve:
 
-- The reserve lasts $30M ÷ $15M × 12 = **24 months** — "months of coverage", the reserve coverage of Stage 6.5.
-- $15M a year is $15M ÷ $1.0B = **1.5%** of the bitcoin reserve — what Strategy calls the **BTC Breakeven ARR**: if bitcoin rises just 1.5% a year, selling only the appreciation pays the dividends and the dollar value of the bitcoin reserve stays constant.
+- The reserve lasts \\(\\dfrac{\\$30\\text{M}}{\\$15\\text{M}} \\times 12 = \\mathbf{24}\\ \\text{months}\\) — "months of coverage", the reserve coverage of Stage 6.5.
+- $15M a year is \\(\\dfrac{\\$15\\text{M}}{\\$1.0\\text{B}} = \\mathbf{1.5\\%}\\) of the bitcoin reserve — what Strategy calls the **BTC Breakeven ARR**: if bitcoin rises just 1.5% a year, selling only the appreciation pays the dividends and the dollar value of the bitcoin reserve stays constant.
 
 Strategy is far larger but built the same way. As of 2026-08-23 its annual interest and dividend obligations were **$1.703B** (STRC alone about $1.197B, roughly $49.9M every half-month), with a **$5.10B** USD Reserve plus $1.59B of "USD Cash"; its BTC Breakeven ARR was **2.63%**. On 2025-12-01 it sold common stock specifically to build this reserve ($1.44B, about 21 months of coverage at the time); in June 2026 the board wrote "at least 12 months of dividends and interest" into policy.
 
@@ -48,7 +48,7 @@ This lesson rests on **Idea ② (balance sheets and claims)** and **Idea ③ (li
 
 Start by listing the rigid cash obligations:
 
-$$ Annual obligations = Σ debt principal × coupon + Σ preferred notional × dividend rate
+$$ \\text{Annual obligations} = \\sum \\text{debt principal} \\times \\text{coupon} + \\sum \\text{preferred notional} \\times \\text{dividend rate}
 
 <table class="pm">
 <tr><th>Orange Corp</th><th>Notional</th><th>Rate</th><th>Annual cash obligation</th><th>Cumulative?</th></tr>
@@ -60,12 +60,12 @@ $$ Annual obligations = Σ debt principal × coupon + Σ preferred notional × d
 
 Strategy's equivalents (always check the latest disclosure):
 
-- Convertible principal of $6.71B carries about **$35M** a year of cash interest (derived: 0.625% × $1.81B + 0.875% × $0.604B + 2.25% × $0.8B; the 0% notes pay nothing).
+- Convertible principal of $6.71B carries about **$35M** a year of cash interest (derived: \\(0.625\\% \\times \\$1.81\\text{B} + 0.875\\% \\times \\$0.604\\text{B} + 2.25\\% \\times \\$0.8\\text{B}\\); the 0% notes pay nothing).
 - Total annual interest and dividends: **$1.703B** (2026-08-23), of which STRC $1.197B; the 10-Q put it at about $1.76B as of 2026-06-30 and 07-24.
-- After September's roughly $656M of STRC buybacks, about **$1.62B** (derived: $1.703B − $0.656B × 12%).
+- After September's roughly $656M of STRC buybacks, about **$1.62B** (derived: \\(\\$1.703\\text{B} - \\$0.656\\text{B} \\times 12\\% \\approx \\$1.62\\text{B}\\)).
 - By 2026-07-26 cumulative preferred dividends paid totalled $1.06B. The company says dividends have been paid in full and on time since its first preferred launched, and expects them to be treated as **return of capital** because it has negative tax earnings and profits (Stage 17.7).
 
-**Payments are getting more frequent.** STRC moved from monthly to semi-monthly on 2026-06-30; on 2026-09-24/25 the board proposed **daily** record dates for STRF, STRC, STRK and STRD, with a special meeting set for 2026-10-28. Strive's SATA has paid daily since 2026-06-15, with annual dividends of **$145.39M** ($1.118B notional × 13%). Frequency doesn't change the annual total, but it tightens cash management: there has to be money every day.
+**Payments are getting more frequent.** STRC moved from monthly to semi-monthly on 2026-06-30; on 2026-09-24/25 the board proposed **daily** record dates for STRF, STRC, STRK and STRD, with a special meeting set for 2026-10-28. Strive's SATA has paid daily since 2026-06-15, with annual dividends of **$145.39M** (\\(\\$1.118\\text{B notional} \\times 13\\%\\)). Frequency doesn't change the annual total, but it tightens cash management: there has to be money every day.
 
 **Terms decide what "can't pay" means** (Stage 6.3):
 
@@ -83,10 +83,11 @@ Strategy's equivalents (always check the latest disclosure):
 
 ### ③ Months of coverage, USD Duration and BTC Duration
 
-$$ Months of coverage = USD reserve ÷ annual obligations × 12
-$$ USD Duration (years) = USD assets ÷ annual obligations; BTC Duration (years) = BTC Reserve ÷ annual obligations
+$$ \\text{Months of coverage} = \\frac{\\text{USD reserve}}{\\text{annual obligations}} \\times 12
+$$ \\text{USD Duration (years)} = \\frac{\\text{USD assets}}{\\text{annual obligations}}
+$$ \\text{BTC Duration (years)} = \\frac{\\text{BTC Reserve}}{\\text{annual obligations}}
 
-Orange Corp: $30M ÷ $15M × 12 = **24 months**; USD Duration = **2 years**; BTC Duration = $1.0B ÷ $15M ≈ **66.7 years**.
+Orange Corp: \\(\\text{months of coverage} = \\dfrac{\\$30\\text{M}}{\\$15\\text{M}} \\times 12 = \\mathbf{24}\\ \\text{months}\\); \\(\\text{USD Duration} = \\mathbf{2}\\ \\text{years}\\); \\(\\text{BTC Duration} = \\dfrac{\\$1.0\\text{B}}{\\$15\\text{M}} \\approx \\mathbf{66.7}\\ \\text{years}\\).
 
 How Strategy's reserves evolved (the USD Reserve is only for preferred dividends and debt interest; USD Cash, created in August 2026, is flexible liquidity that can fund bitcoin purchases, buybacks, note repayment or reserve top-ups):
 
@@ -102,8 +103,8 @@ How Strategy's reserves evolved (the USD Reserve is only for preferred dividends
 
 Some definitional details:
 
-- **Reserve or all USD assets in the numerator?** "Months of coverage" usually uses the USD Reserve alone; Strategy's **USD Duration** uses USD Assets (Reserve plus USD Cash): 6.69 ÷ 1.703 ≈ **3.9 years** on 2026-08-23. Saylor's phrase on 2026-09-25 was a "3.8 year USD duration".
-- **BTC Duration** = BTC Reserve ÷ annual obligations: 64.718 ÷ 1.703 ≈ **38.0 years** on 2026-08-23; on 2026-09-25 Saylor cited "about 42 years of dividend duration" on roughly "$68 billion" of bitcoin. It means that, selling only coins at a constant price, obligations could be met for that many years — with every year of selling shaving BTC per share.
+- **Reserve or all USD assets in the numerator?** "Months of coverage" usually uses the USD Reserve alone; Strategy's **USD Duration** uses USD Assets (Reserve plus USD Cash): \\(\\dfrac{6.69}{1.703} \\approx \\mathbf{3.9}\\ \\text{years}\\) on 2026-08-23. Saylor's phrase on 2026-09-25 was a "3.8 year USD duration".
+- **BTC Duration** \\(= \\dfrac{\\text{BTC Reserve}}{\\text{annual obligations}}\\): \\(\\dfrac{64.718}{1.703} \\approx \\mathbf{38.0}\\ \\text{years}\\) on 2026-08-23; on 2026-09-25 Saylor cited "about 42 years of dividend duration" on roughly "$68 billion" of bitcoin. It means that, selling only coins at a constant price, obligations could be met for that many years — with every year of selling shaving BTC per share.
 - **Policy floor.** Since June 2026 a board policy requires the reserve to cover at least **12 months** of expected dividends and interest, with any other use needing board approval. Strive targets an **18-month** dividend reserve: 12 months in cash plus 6 months in STRC (2026-03-11) — note that part of its reserve is another DAT's preferred, which could itself fall in a crisis.
 
 ### ④ Breakeven, Hurdle and Floor: three ARR metrics
@@ -112,8 +113,8 @@ ARR here means bitcoin's annualized rate of return. Strategy defines three thres
 
 <table class="pm">
 <tr><th>Metric</th><th>Official meaning</th><th>Strategy value</th><th>Orange Corp</th></tr>
-<tr><td><b>BTC Breakeven ARR</b></td><td>"the ratio of Annual Int + Div to the BTC Reserve"</td><td>2.63% (2026-08-23, 1.703 ÷ 64.718); 1.35% (2025-11-28)</td><td>$15M ÷ $1.0B = <b>1.5%</b></td></tr>
-<tr><td><b>BTC Hurdle ARR</b></td><td>"Strategy's current effective cost of credit": if bitcoin's ARR beats it, Net BTC per share appreciates faster than bitcoin</td><td>10.74% (2026-08-23); 10.77% (08-10); 10.8% (07-30). <b>Exact formula not published</b></td><td>Simple analogue: dividends ÷ senior claims = $15M ÷ $300M = 5% (the 0% converts pull the average cost down)</td></tr>
+<tr><td><b>BTC Breakeven ARR</b></td><td>"the ratio of Annual Int + Div to the BTC Reserve" — \\(\\dfrac{\\text{annual interest and dividends}}{\\text{BTC Reserve}}\\)</td><td>2.63% (2026-08-23, \\(\\dfrac{1.703}{64.718}\\)); 1.35% (2025-11-28)</td><td>\\(\\dfrac{\\$15\\text{M}}{\\$1.0\\text{B}} = \\mathbf{1.5\\%}\\)</td></tr>
+<tr><td><b>BTC Hurdle ARR</b></td><td>"Strategy's current effective cost of credit": if bitcoin's ARR beats it, Net BTC per share appreciates faster than bitcoin</td><td>10.74% (2026-08-23); 10.77% (08-10); 10.8% (07-30). <b>Exact formula not published</b></td><td>Simple analogue: \\(\\dfrac{\\text{dividends}}{\\text{senior claims}} = \\dfrac{\\$15\\text{M}}{\\$300\\text{M}} = 5\\%\\) (the 0% converts pull the average cost down)</td></tr>
 <tr><td><b>BTC Floor ARR</b></td><td>The lowest constant ARR over the credit structure's weighted-average duration that keeps 1.0x coverage of net debt and preferred after funding interest and dividends</td><td>−15.64% (2026-08-23); −11.53% (08-10)</td><td>Simplified illustration: about −11% (below)</td></tr>
 </table>
 
@@ -123,7 +124,15 @@ The three answer three different questions:
 - **Hurdle:** how much must bitcoin rise for leverage to be **adding** value rather than **subtracting** it? That's the cost of capital (Stage 16.4, Stage 16.7).
 - **Floor:** how much can bitcoin fall each year and still just cover all senior claims at the end of the weighted-average duration? A "how bad can it get" measure — the more negative, the sturdier.
 
-A simplified Floor ARR for Orange Corp (our own simplified reading; **Strategy's exact method isn't published**): weighted-average duration = (1.5 × 5 + 1 × 11 + 0.5 × 11) ÷ 3 = 8 years; eight years of dividends total $120M; require $1.0B × (1 + g)⁸ − $120M ≥ net senior claims of $270M ($300M − $30M cash) → (1 + g)⁸ ≥ 0.39 → g ≈ **−11%**. In words: bitcoin could fall 11% a year for eight straight years and, after the dividends paid out, the remaining coins would just cover the senior layers.
+A simplified Floor ARR for Orange Corp (our own simplified reading; **Strategy's exact method isn't published**): first the weighted-average duration; eight years of dividends total $120M; net senior claims are \\(\\$300\\text{M} - \\$30\\text{M (cash)} = \\$270\\text{M}\\); then solve for the annual return \\(g\\):
+
+$$
+\\text{weighted-average duration} = \\frac{1.5 \\times 5 + 1 \\times 11 + 0.5 \\times 11}{3} = 8\\ \\text{years}
+\\$1.0\\text{B} \\times (1 + g)^{8} - \\$120\\text{M} \\ge \\$270\\text{M}
+(1 + g)^{8} \\ge 0.39 \\;\\Rightarrow\\; g \\approx \\mathbf{-11\\%}
+$$
+
+In words: bitcoin could fall 11% a year for eight straight years and, after the dividends paid out, the remaining coins would just cover the senior layers.
 
 ### ⑤ The freeze scenario: how long with capital markets shut
 
@@ -131,8 +140,8 @@ The core stress-test question: **what if, from tomorrow, not a single share or p
 
 Orange Corp, with the bitcoin price unchanged:
 
-- Months 1–24: the USD reserve pays; not a coin is touched.
-- From month 25: sell $15M of bitcoin a year = **150 BTC a year** (1.5% of holdings). By the end of year ten, about **8,800 BTC** remain (10,000 − 8 years × 150, constant price).
+- Months 1 through 24: the USD reserve pays; not a coin is touched.
+- From month 25: sell $15M of bitcoin a year, i.e. \\(\\dfrac{\\$15\\text{M}}{\\$100{,}000} = \\mathbf{150}\\ \\text{BTC a year}\\) (1.5% of holdings). By the end of year ten, about **8,800 BTC** remain (\\(10{,}000 - 8 \\times 150 = 8{,}800\\), constant price).
 - If bitcoin drops to $50,000, it must sell **300 BTC a year** (3%), and the F layer's coverage is down to 2.0x.
 
 Strategy's orders of magnitude (derived from September 2026 data): the reserve covers about 3.1 years; after that, funding everything by selling coins at about $1.62B a year and about $84,000 per bitcoin means roughly **19,000 BTC a year** (about 2.3% of 846,000); at $50,000, about 32,000 BTC (3.8%).
@@ -179,18 +188,18 @@ And the "dividends" come in two kinds: "if I can't pay this month, forget it" (n
         "36 months",
       ],
       answer: 1,
-      explain: "Months of coverage = $30M ÷ $15M × 12 = **24 months** (monthsCovered in _fin.js).",
+      explain: "\\(\\text{Months of coverage} = \\dfrac{\\$30\\text{M}}{\\$15\\text{M}} \\times 12 = \\mathbf{24}\\ \\text{months}\\) (monthsCovered in _fin.js).",
     },
     {
       q: "How does Strategy define BTC Breakeven ARR?",
       options: [
-        "Annual interest and dividends ÷ BTC Reserve",
+        "\\(\\text{Annual interest and dividends} \\div \\text{BTC Reserve}\\)",
         "Strategy's current effective cost of credit",
         "The lowest return that keeps 1x coverage after paying dividends",
         "Bitcoin's actual return over the past year",
       ],
       answer: 0,
-      explain: "Official text: \"the ratio of Annual Int + Div to the BTC Reserve\". On 2026-08-23: 1.703 ÷ 64.718 = **2.63%**. The second option is Hurdle ARR, the third is Floor ARR.",
+      explain: "Official text: \"the ratio of Annual Int + Div to the BTC Reserve\". On 2026-08-23: \\(\\dfrac{1.703}{64.718} = \\mathbf{2.63\\%}\\). The second option is Hurdle ARR, the third is Floor ARR.",
     },
     {
       q: "On 2026-08-23 Strategy reported a USD Duration of 3.9 years and a BTC Duration of 38.0 years. What does the latter most accurately mean?",
@@ -198,10 +207,10 @@ And the "dividends" come in two kinds: "if I can't pay this month, forget it" (n
         "Strategy's preferreds mature in 38 years",
         "Bitcoin will double in 38 years",
         "The average term of Strategy's convertibles is 38 years",
-        "At current prices the BTC Reserve could pay about 38 years of annual interest and dividends (64.718 ÷ 1.703)",
+        "At current prices the BTC Reserve could pay about 38 years of annual interest and dividends (\\(64.718 \\div 1.703\\))",
       ],
       answer: 3,
-      explain: "BTC Duration = BTC Reserve ÷ annual obligations = 64.718 ÷ 1.703 ≈ **38.0 years**. The cost: every year of selling shaves BTC per share.",
+      explain: "\\(\\text{BTC Duration} = \\dfrac{\\text{BTC Reserve}}{\\text{annual obligations}} = \\dfrac{64.718}{1.703} \\approx \\mathbf{38.0}\\ \\text{years}\\). The cost: every year of selling shaves BTC per share.",
     },
     {
       q: "With capital markets fully shut and the reserve exhausted, which of these constrains the company **least**?",

@@ -45,22 +45,22 @@ Using this stage's standard teaching assumptions (stocks: 8% expected return, 16
 <tr><td>100% stocks</td><td>8.0%</td><td>16.0%</td><td>0.31</td><td>100%</td></tr>
 <tr><td>60/40</td><td>6.8%</td><td>10.5%</td><td>0.36</td><td>~88%</td></tr>
 <tr><td>Risk parity (~30/70)</td><td>5.9%</td><td>7.5%</td><td>0.39</td><td>50%</td></tr>
-<tr><td>Risk parity × 1.4 leverage</td><td>7.1%</td><td>10.5%</td><td>0.39</td><td>50%</td></tr>
+<tr><td>Risk parity with \\(1.4\\times\\) leverage</td><td>7.1%</td><td>10.5%</td><td>0.39</td><td>50%</td></tr>
 </table>
 
-How do you compute a **risk contribution**? An asset's risk contribution = its weight × its covariance with the whole portfolio ÷ the portfolio's variance. The contributions of all assets add up to exactly 100%. Stocks at 88% in a 60/40 portfolio means: **nearly nine-tenths of every big swing in the portfolio is down to stocks.** Seen through a risk lens, 60/40 is really "a stock portfolio with some shock absorbers."
+How do you compute a **risk contribution**? An asset's \\(\\text{risk contribution} = \\dfrac{\\text{its weight} \\times \\text{its covariance with the whole portfolio}}{\\text{the portfolio's variance}}\\). The contributions of all assets add up to exactly 100%. Stocks at 88% in a 60/40 portfolio means: **nearly nine-tenths of every big swing in the portfolio is down to stocks.** Seen through a risk lens, 60/40 is really "a stock portfolio with some shock absorbers."
 
 <figure><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif"><text x="190" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Dollar weight vs risk contribution</text><text x="112" y="58" text-anchor="end" font-size="11" fill="var(--ink)">60/40 · dollars</text><rect x="120" y="44" width="120" height="22" fill="var(--orange-soft)" stroke="var(--orange)"/><rect x="240" y="44" width="80" height="22" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="180" y="59" text-anchor="middle" font-size="11" fill="var(--ink)">Stocks 60%</text><text x="280" y="59" text-anchor="middle" font-size="11" fill="var(--ink)">Bonds 40%</text><text x="112" y="90" text-anchor="end" font-size="11" fill="var(--ink)">60/40 · risk</text><rect x="120" y="76" width="176" height="22" fill="var(--orange)" stroke="var(--orange)"/><rect x="296" y="76" width="24" height="22" fill="var(--blue)" stroke="var(--blue)"/><text x="208" y="91" text-anchor="middle" font-size="11" fill="var(--surface-2)" font-weight="600">Stocks ~88%</text><text x="325" y="91" font-size="10" fill="var(--muted)">12%</text><text x="112" y="140" text-anchor="end" font-size="11" fill="var(--ink)">Risk parity · dollars</text><rect x="120" y="126" width="60" height="22" fill="var(--orange-soft)" stroke="var(--orange)"/><rect x="180" y="126" width="140" height="22" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="150" y="141" text-anchor="middle" font-size="11" fill="var(--ink)">30%</text><text x="250" y="141" text-anchor="middle" font-size="11" fill="var(--ink)">Bonds 70%</text><text x="112" y="172" text-anchor="end" font-size="11" fill="var(--ink)">Risk parity · risk</text><rect x="120" y="158" width="100" height="22" fill="var(--orange)" stroke="var(--orange)"/><rect x="220" y="158" width="100" height="22" fill="var(--blue)" stroke="var(--blue)"/><text x="170" y="173" text-anchor="middle" font-size="11" fill="var(--surface-2)" font-weight="600">50%</text><text x="270" y="173" text-anchor="middle" font-size="11" fill="var(--surface-2)" font-weight="600">50%</text><text x="220" y="210" text-anchor="middle" font-size="10.5" fill="var(--muted)">Assumes stocks σ 16%, bonds σ 7%, correlation 0.2</text><text x="220" y="228" text-anchor="middle" font-size="10.5" fill="var(--muted)">Six-to-four in dollars, nearly nine-to-one in risk</text><text x="505" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">All Weather: four economic weathers</text><rect x="400" y="40" width="105" height="90" rx="4" fill="var(--green-soft)" stroke="var(--line)"/><rect x="505" y="40" width="105" height="90" rx="4" fill="var(--btc-soft)" stroke="var(--line)"/><rect x="400" y="130" width="105" height="90" rx="4" fill="var(--blue-soft)" stroke="var(--line)"/><rect x="505" y="130" width="105" height="90" rx="4" fill="var(--red-soft)" stroke="var(--line)"/><text x="452" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Growth↑ Inflation↓</text><text x="452" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">Stocks</text><text x="452" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">Corporate credit</text><text x="557" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Growth↑ Inflation↑</text><text x="557" y="82" text-anchor="middle" font-size="10.5" fill="var(--muted)">Commodities, gold</text><text x="557" y="98" text-anchor="middle" font-size="10.5" fill="var(--muted)">Inflation-linked</text><text x="452" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Growth↓ Inflation↓</text><text x="452" y="172" text-anchor="middle" font-size="10.5" fill="var(--muted)">Long nominal</text><text x="452" y="188" text-anchor="middle" font-size="10.5" fill="var(--muted)">Treasuries</text><text x="557" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Growth↓ Inflation↑</text><text x="557" y="172" text-anchor="middle" font-size="10.5" fill="var(--muted)">TIPS, gold</text><text x="557" y="188" text-anchor="middle" font-size="10.5" fill="var(--muted)">(stagflation)</text><text x="505" y="240" text-anchor="middle" font-size="10.5" fill="var(--muted)">Growth and inflation mean surprises vs expectations</text><text x="505" y="258" text-anchor="middle" font-size="10.5" fill="var(--muted)">Equal risk in each box, not equal money</text></svg><figcaption>Left: 60/40 looks balanced in dollars but is heavily concentrated in stock risk; risk parity makes both assets contribute equally. Right: All Weather splits the economy into four "weathers" and puts an asset class that tends to do relatively well in each box.</figcaption></figure>
 
 ### ② Risk parity: allocate by risk, not by dollars
 
-The simplest version of risk parity is **inverse-volatility weighting**: each asset's weight is proportional to one over its volatility. With stocks at 16% and bonds at 7%, the stock weight = (1/16) ÷ (1/16 + 1/7) ≈ 30%, and bonds get about 70%. As long as correlations aren't extreme, that is already very close to "half the risk each."
+The simplest version of risk parity is **inverse-volatility weighting**: each asset's weight is proportional to one over its volatility. With stocks at 16% and bonds at 7%, \\(\\text{stock weight} = \\dfrac{1/16}{1/16 + 1/7} \\approx 30\\%\\), and bonds get about 70%. As long as correlations aren't extreme, that is already very close to "half the risk each."
 
 The benefit is that the portfolio no longer hinges on the performance of a single asset. In the table above, the risk-parity portfolio's Sharpe ratio (0.39) edges out 60/40's (0.36), because it isn't spending most of its risk budget on one source. But its absolute return (5.9%) is lower, and so is its volatility (7.5%). To match 60/40's level of risk you borrow and scale the whole portfolio up by about 1.4 times:
 
 $$
-Levered return = L × portfolio return − (L − 1) × borrowing rate
-= 1.4 × 5.9% − 0.4 × 3% ≈ 7.1%
+\\text{Levered return} = L \\times \\text{portfolio return} - (L - 1) \\times \\text{borrowing rate}
+\\text{Levered return} = 1.4 \\times 5.9\\% - 0.4 \\times 3\\% \\approx 7.1\\%
 $$
 
 **Risk parity's whole logic rests on three assumptions:**
@@ -95,14 +95,14 @@ Why did it flip? Go back to **Idea ①**: stock and bond prices are both **disco
 
 So **the stock–bond correlation isn't a constant; it's a function of the inflation regime** (Stage 9.5). "Bonds are insurance for stocks" mostly holds when inflation is under control and can fail when it isn't. Stage 20.2 extends this observation to every asset class.
 
-**Rebalancing** is the shared discipline behind all of these portfolios. Say a 60/40 portfolio sees stocks rise 20% in a year while bonds stay flat: 60 becomes 72, 40 stays 40, and stocks are now 72/112 ≈ 64.3% of the portfolio. Leave it alone and the portfolio's risk drifts quietly toward stocks. Periodically selling what has risen and buying what has fallen to get back to target is, at heart, a **contrarian** act: it forces you to sell high and buy low, and it keeps any one asset's risk contribution from ballooning. The costs are trading fees, taxes, and selling "too early" during long one-way trends.
+**Rebalancing** is the shared discipline behind all of these portfolios. Say a 60/40 portfolio sees stocks rise 20% in a year while bonds stay flat: \\(60 \\to 72\\), \\(40 \\to 40\\), and stocks are now \\(\\dfrac{72}{112} \\approx 64.3\\%\\) of the portfolio. Leave it alone and the portfolio's risk drifts quietly toward stocks. Periodically selling what has risen and buying what has fallen to get back to target is, at heart, a **contrarian** act: it forces you to sell high and buy low, and it keeps any one asset's risk contribution from ballooning. The costs are trading fees, taxes, and selling "too early" during long one-way trends.
 
 ### ⑤ Where new assets fit: a framework for Bitcoin, preferreds and tokenized Treasuries
 
 **This lesson covers mechanics and analytical frameworks only; it is not investment advice.** With the tools above you can find a box for a new asset and give it a risk budget:
 
 - **Bitcoin.** In the data it behaves more like a **high-volatility risk asset** that is sensitive to global liquidity and real rates (Stages 9.3 and 12.4); in 2022 it fell alongside stocks (about −64% for the year). Supporters argue it could do well over the long run in the "currency debasement, fiscal dominance" box (Stage 9.4). In framework terms, treat it as a **satellite position**: first decide how much of the portfolio's risk you're willing to let it contribute (say, a 10% risk budget), then back out the dollar weight. In Stage 11.1's example, a 5% Bitcoin weight already contributed about 14% of the risk.
-- **Preferred stock (including Bitcoin-backed preferreds issued by DATs).** It behaves like a **long-duration credit asset**. A perpetual preferred's duration is roughly 1/yield (Stage 4.4), so a perpetual yielding 10% has a duration of about 10 years. It also carries the issuer's credit risk, and for a DAT preferred that credit risk is tied to the Bitcoin price (the BTC Rating of Stage 16.5). So it **sits in both the "rates" box and the "risk assets" box at once**, and in a 2022-style "inflation + rate hikes + falling risk assets" environment it can get hit from both sides. Stage 18.1 is devoted to pricing it.
+- **Preferred stock (including Bitcoin-backed preferreds issued by DATs).** It behaves like a **long-duration credit asset**. A perpetual preferred's duration is roughly \\(\\dfrac{1}{\\text{yield}}\\) (Stage 4.4), so a perpetual yielding 10% has a duration of about 10 years. It also carries the issuer's credit risk, and for a DAT preferred that credit risk is tied to the Bitcoin price (the BTC Rating of Stage 16.5). So it **sits in both the "rates" box and the "risk assets" box at once**, and in a 2022-style "inflation + rate hikes + falling risk assets" environment it can get hit from both sides. Stage 18.1 is devoted to pricing it.
 - **Tokenized Treasuries and money-fund shares** (Stage 14.2): risk-wise they are short-term Treasuries and belong in the **cash / risk-free box**. What they change is the plumbing (around-the-clock settlement, use as on-chain collateral — Idea ③), not the portfolio's risk structure.
 - **DAT common stock**: levered Bitcoin exposure plus the swings of the mNAV premium (Stage 16.2). If the portfolio already holds Bitcoin, it **adds no diversification — only more risk on the same factor.**
 
@@ -135,7 +135,7 @@ And a **new asset** like Bitcoin is a very thick, very eye-catching down parka. 
 
   quiz: [
     {
-      q: "Under this lesson's assumptions (stocks σ 16%, bonds σ 7%, correlation 0.2), roughly how much of a 60/40 portfolio's risk comes from stocks?",
+      q: "Under this lesson's assumptions (stocks \\(\\sigma = 16\\%\\), bonds \\(\\sigma = 7\\%\\), correlation 0.2), roughly how much of a 60/40 portfolio's risk comes from stocks?",
       options: [
         "60%, the same as the dollar weight",
         "About 88%",
@@ -143,18 +143,18 @@ And a **new asset** like Bitcoin is a very thick, very eye-catching down parka. 
         "50%, split evenly",
       ],
       answer: 1,
-      explain: "Risk contribution = weight × covariance with the portfolio ÷ portfolio variance. Stocks are volatile, so 60% of the money brings about 88% of the risk. **Six-to-four in dollars, nearly nine-to-one in risk.**",
+      explain: "\\(\\text{Risk contribution} = \\dfrac{\\text{weight} \\times \\text{covariance with the portfolio}}{\\text{portfolio variance}}\\). Stocks are volatile, so 60% of the money brings about 88% of the risk. **Six-to-four in dollars, nearly nine-to-one in risk.**",
     },
     {
       q: "A risk-parity portfolio (~30/70) has about a 5.9% return and 7.5% volatility. How much leverage gets it to 60/40's ~10.5% volatility, and with a 3% borrowing rate, what's the levered return?",
       options: [
-        "2×, about 11.8%",
-        "1.4×, about 8.3% (before borrowing costs)",
+        "\\(2\\times\\), about 11.8%",
+        "\\(1.4\\times\\), about 8.3% (before borrowing costs)",
         "No leverage needed; the return is 5.9%",
-        "1.4×, about 7.1%",
+        "\\(1.4\\times\\), about 7.1%",
       ],
       answer: 3,
-      explain: "L = 10.5% ÷ 7.5% ≈ 1.4; levered return = 1.4 × 5.9% − 0.4 × 3% ≈ 7.1%. **Don't forget to subtract the cost of borrowing** — the higher rates are, the less leverage helps.",
+      explain: "\\(L = 10.5\\% \\div 7.5\\% \\approx 1.4\\); \\(\\text{levered return} = 1.4 \\times 5.9\\% - 0.4 \\times 3\\% \\approx 7.1\\%\\). **Don't forget to subtract the cost of borrowing** — the higher rates are, the less leverage helps.",
     },
     {
       q: "Why did stocks and bonds fall together in 2022?",
@@ -187,7 +187,7 @@ And a **new asset** like Bitcoin is a very thick, very eye-catching down parka. 
         "It has the same risk as a short-term Treasury bill",
       ],
       answer: 1,
-      explain: "A perpetual's duration is about 1/yield (Stage 4.4), and it carries the issuer's credit risk; for a DAT preferred that credit is tied to the Bitcoin price. **So it sits in the \"rates\" box and the \"risk assets\" box at once.**",
+      explain: "A perpetual's duration is about \\(\\dfrac{1}{\\text{yield}}\\) (Stage 4.4), and it carries the issuer's credit risk; for a DAT preferred that credit is tied to the Bitcoin price. **So it sits in the \"rates\" box and the \"risk assets\" box at once.**",
     },
   ],
 
